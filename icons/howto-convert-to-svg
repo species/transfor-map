@@ -1,0 +1,39 @@
+1. download das pdf mit 1 icon per page
+    http://www.greenmap.org/greenhouse/files/gms/GMS_Icon_FlashCards_v3.pdf
+
+2. split into single pages
+   pdftk icons-oneperside.pdf burst
+
+3. convert to svg pdf2svg pg_0001.pdf 1.svg
+    for i in *pdf; do pdf2svg $i $i.svg; done
+
+4. get name from pdf:
+    pdftotext pg_0001.pdf  ... yields pg_0001.txt
+        for i in *pdf; do pdftotext $i; done
+
+5. edit name txt files
+    for i in *txt; do sed -i 's/GreenMap.org//' $i; done
+    for i in *txt; do sed -i 's/Icons © Green Map® System, Inc.//' $i; done
+    for i in *txt; do head -2 $i > $i.head; done
+    for i in *tail; do sed -i 's/\//-/' $i ; done #remove slashes, would destroy filenames
+
+6. svg: remove greenmap bitmap logo
+    for i in *svg; do grep -v "<image " $i > $i.nopic; done
+    for i in *svg; do mv $i.nopic $i; done
+
+7. rename svg's
+    for i in *svg; do mv $i "$(cat ${i%%.pdf.svg}.txt.head.tail).newname.svg"; done
+    for i in *svg; do mv "$i" "${i%%.newname.svg}.svg"; done
+
+8. cut svgs 360 v unten oder 630 v oben
+    convert -crop 700x630+0+0 Abandoned_Site.svg out.svg HAUT NET HIN, da svg
+
+9. convert to png
+    for i in *; do inkscape $i --export-png=`echo $i | sed -e 's/svg$/png/'`; done
+  crop png
+    convert -crop 512x512+130+80 Abandoned_Site.png Abandoned_Site-crop.png
+
+    for i in *; do inkscape $i --export-png=`echo $i | sed -e 's/svg$/png/'|sed -e 's/ /_/g'`; done
+    for i in *; do convert -crop 568x568+96+50 $i crop/"${i%%.png}.crop.png"; done
+    for i in *png; do mv "$i" "${i%%.crop.png}.png"; done
+
