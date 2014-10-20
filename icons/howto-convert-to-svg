@@ -37,3 +37,6 @@
     for i in *; do convert -crop 568x568+96+50 $i crop/"${i%%.png}.crop.png"; done
     for i in *png; do mv "$i" "${i%%.crop.png}.png"; done
 
+10. rezize to size
+    mkdir 16
+    for i in *png; do convert $i -resize 16x16 16/$i; done
