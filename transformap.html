@@ -53,7 +53,8 @@
 
 
       //var poiUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];node(BBOX)[amenity=restaurant];out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
-      var restaurantUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[fulfills:needs=food]);out;(way(BBOX)[amenity=restaurant];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
+      var restaurantUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[fullfills_needs:food=yes]);out;(way(BBOX)[fullfills_needs:food=yes];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
+      var restaurantUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)["fullfills_needs:food"=yes]);out;(way(BBOX)["fullfills_needs:food"=yes];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
 
       function bindPopupOnData(data) {
         var lmarker = L.marker([data.lat, data.lon], {
