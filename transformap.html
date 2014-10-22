@@ -48,15 +48,21 @@
           }
 
         }
+        r.append($('<tr>').append($('<th>').text("OSM-Object:")).append($('<td>').text("$-ID"))); //FIXME
         return $('<div>').append(r).html();
       }
 
 
-      //var poiUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];node(BBOX)[amenity=restaurant];out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
-      var restaurantUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[fullfills_needs:food=yes]);out;(way(BBOX)[fullfills_needs:food=yes];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
-      var restaurantUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)["fullfills_needs:food"=yes]);out;(way(BBOX)["fullfills_needs:food"=yes];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
+      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[~"fullfills_needs:.*"~".*"]);out;(way(BBOX)[~"fullfills_needs:.*"~".*"];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
+
+      // try to catch relations too
+      //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"];way(BBOX)[~"fullfills_needs:.*"~".*"];rel(BBOX)[~"fullfills_needs:.*"~".*"];);out%20meta;>;out%20meta%20qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
+      //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"]);out;(way(BBOX)[~"fullfills_needs:.*"~".*"];node(w));out;(rel(BBOX)[~"fullfills_needs:.*"~".*"];>;);out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
 
       function bindPopupOnData(data) {
+        // set icon dependent on tags
+        var myicon = 42;
+
         var lmarker = L.marker([data.lat, data.lon], {
           icon: restaurantIcon,
           title: data.tags.name
@@ -84,7 +90,7 @@
         parseOverpassJSON(data, nodeFunction, wayFunction, null);
       }
 
-      $.getJSON(restaurantUrl, handleNodeWayRelations);
+      $.getJSON(allUrl, handleNodeWayRelations);
 
     }
 
@@ -96,6 +102,12 @@
       padding: 0;
       margin: 0;
     }
+
+    .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
+    .leaflet-marker-icon:hover { background: yellow; }
+    div.leaflet-popup-content { width: auto !important; }
+    .leaflet-control-container .leaflet-left { left: auto !important; right: 10px !important; }
+
     html, body, #map {
       height: 100%;
     }
