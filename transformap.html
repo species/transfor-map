@@ -131,6 +131,9 @@
       margin: 0;
       height: 100%;
     }
+    nav a {
+      text-decoration: none;
+    }
 
 /* FIXME readd after clusters working
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
@@ -142,10 +145,71 @@
       height: 90%;
     }
   </style>
+  <style>
+  .mmmactive {
+  background: #333;
+}
+
+.mmmnavbar {
+  background: #000;
+  font: 12pt sans-serif;
+  line-height: 3em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index:1005;
+}
+
+.mmmnavbar a {
+  color: #fff;
+}
+
+.mmmnavbar a:hover {
+  text-decoration: none;
+}
+
+.mmmnavbar ul {
+  margin: 0;
+  padding: 0;
+}
+
+.mmmnavbar ul li {
+  display: inline;
+  padding: 1em;
+  color: #fff;
+}
+
+.mmmnavbar ul li:hover {
+  background: #444;
+  font-style: bold;
+}
+
+#mmmnavtitle {
+  font-weight: bold;
+}
+
+#mmmnavtitle:hover {
+  background: #000;
+}
+#content {
+  position: absolute;
+  top: 48px;
+  width: 100%;
+  height: 100%;
+}
+
+  </style>
 </head>
 <body>
-  <h1>TransforMap</h1>
+<nav class="mmmnavbar">
+<ul>
+<li id="mmmnavtitle" class="mmmactive">TransforMap</li><a href="http://blog.14mmm.org"><li>Blog</li></a><a href="http://discourse.14mmm.org"><li>Discourse</li></a><a href="https://wiki.14mmm.org"><li>Wiki</li></a>
+</ul>
+</nav>
+<div id="content">
   <div id="map"></div>
+</div>
 </body>
 </html>
 
