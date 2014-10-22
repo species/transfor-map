@@ -31,10 +31,10 @@
         iconAnchor: new L.Point(8, 8),
       });
 
-      function fillPopup(tags) {
+      function fillPopup(tags,type,id) {
         var r = $('<table>');
         for (key in tags) {
-          if ( key == 'website' || key == 'url' || key == 'contact:website' ) {
+          if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, ...
             var value = tags[key];
             var teststr=/^http/;
             if ( ! teststr.test(value) )
@@ -48,7 +48,8 @@
           }
 
         }
-        r.append($('<tr>').append($('<th>').text("OSM-Object:")).append($('<td>').text("$-ID"))); //FIXME
+        r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
+        r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').text(id)));
         return $('<div>').append(r).html();
       }
 
@@ -67,11 +68,11 @@
           icon: restaurantIcon,
           title: data.tags.name
         });
-        lmarker.bindPopup(fillPopup(data.tags)).addTo(map);
+        lmarker.bindPopup(fillPopup(data.tags,data.type,data.id)).addTo(map);
       }
 
       function nodeFunction(data) {
-        if (! data.tags || ! data.tags.amenity ) return;
+        if (! data.tags || ! data.tags.name ) return;
         bindPopupOnData(data);
       }
       function wayFunction(data) {
@@ -80,6 +81,8 @@
         var centroid = $.geo.centroid(data.geometry);
         //var style = {};
         centroid.tags = data.tags;
+        centroid.id = data.id;
+        centroid.type = data.type;
         centroid.lon = centroid.coordinates[0];
         centroid.lat = centroid.coordinates[1];
         bindPopupOnData(centroid);
