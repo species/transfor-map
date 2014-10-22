@@ -75,14 +75,19 @@
         var myicon = 42;
 
         var need_tags = [];
+        var needs_string = "";
         for (key in data.tags) {
           var value = data.tags[key];
-          var teststr=/^fullfills_needs:/;
-          if ( teststr.test(value) )
+          var teststr=/^fullfills_needs/;
+          if ( teststr.test(value) ) {
             needs_value = value.substring(16);
-            need_tags.push()
-            data.needs 
+            //need_tags.push(needs_value);
+            needs_string = needs_string + needs_value + "; ";
+          }
+            else
+            needs_string = needs_string + ".";
         }
+        data.tags.needs = needs_string;
         
 
         var lmarker = L.marker([data.lat, data.lon], {
