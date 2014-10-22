@@ -81,14 +81,26 @@
           if ( key.indexOf(teststr) >= 0 ) {
             needs_value = key.substring(16);
             //need_tags.push(needs_value);
-            needs_string = needs_string + needs_value + "; ";
+            if ( needs_string != "" )
+              needs_string = needs_string + "; ";
+            needs_string = needs_string + needs_value;
           }
         }
         data.tags.needs = needs_string;
-        
+        var icon_url = "";
+        if (needs_string.indexOf(";") >= 0) // more than one item, take generic icon
+          icon_url = "assets/transformap/pngs/16/fulfills_needs.png";
+        else
+          icon_url = "assets/transformap/pngs/16/fulfills_needs." + needs_string + ".png";
+
+        var needs_icon = L.icon({
+          iconUrl: icon_url,
+          iconSize: new L.Point(16, 16),
+          iconAnchor: new L.Point(8, 8),
+        });
 
         var lmarker = L.marker([data.lat, data.lon], {
-          icon: restaurantIcon,
+          icon: needs_icon,
           title: data.tags.name
         });
         lmarker.bindPopup(fillPopup(data.tags,data.type,data.id));
