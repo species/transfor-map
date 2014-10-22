@@ -77,15 +77,12 @@
         var need_tags = [];
         var needs_string = "";
         for (key in data.tags) {
-          var value = data.tags[key];
-          var teststr=/^fullfills_needs/;
-          if ( teststr.test(value) ) {
-            needs_value = value.substring(16);
+          var teststr = "fullfills_needs";
+          if ( key.indexOf(teststr) >= 0 ) {
+            needs_value = key.substring(16);
             //need_tags.push(needs_value);
             needs_string = needs_string + needs_value + "; ";
           }
-            else
-            needs_string = needs_string + ".";
         }
         data.tags.needs = needs_string;
         
