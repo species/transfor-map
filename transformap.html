@@ -7,9 +7,13 @@
   <style>
     .hover { background-color:red; }
   </style>
+  <link rel="stylesheet" href="Leaflet.markercluster/dist/MarkerCluster.css" /> <!-- FIXME when ready, change to cdn -->
+  <link rel="stylesheet" href="Leaflet.markercluster/dist/MarkerCluster.Default.css" /> <!-- FIXME when ready, change to cdn -->
+
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+  <script src="Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script> <!-- FIXME when ready, change to cdn and rm "-src" -->
   <script src="map.js"></script>
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
   <script>
@@ -25,6 +29,10 @@
       if (map.getZoom() < 14) {
         return;
       }
+
+      //create layer for Cluster Markers 
+      var markers = L.markerClusterGroup({maxClusterRadius: 40});
+
       var restaurantIcon = L.icon({
         iconUrl: 'icons/transformap/pngs/16/fulfills_needs.food.png',
         iconSize: new L.Point(16, 16),
@@ -34,7 +42,7 @@
       function fillPopup(tags,type,id) {
         var r = $('<table>');
         for (key in tags) {
-          if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, ...
+          if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
             var value = tags[key];
             var teststr=/^http/;
             if ( ! teststr.test(value) )
@@ -68,7 +76,9 @@
           icon: restaurantIcon,
           title: data.tags.name
         });
-        lmarker.bindPopup(fillPopup(data.tags,data.type,data.id)).addTo(map);
+        lmarker.bindPopup(fillPopup(data.tags,data.type,data.id));
+        // lmarker.addTo(map); // old simple one
+        markers.addLayer(lmarker);
       }
 
       function nodeFunction(data) {
@@ -95,6 +105,9 @@
 
       $.getJSON(allUrl, handleNodeWayRelations);
 
+      // add layer of cluster-markers. FIXME who destroys the old one after update?
+      map.addLayer(markers);
+
     }
 
   </script>
@@ -106,8 +119,10 @@
       height: 100%;
     }
 
+/* FIXME readd after clusters working
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }
+*/ 
     div.leaflet-popup-content { width: auto !important; }
 
     #map {
