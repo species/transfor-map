@@ -15,12 +15,14 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
   <script src="Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script> <!-- FIXME when ready, change to cdn and rm "-src" -->
   <script src="map.js"></script>
+  <script src="leaflet-hash.js"></script>
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
   <script>
     var map, ids = {};
     $(function () {
       map = initMap();
       map.zoomIn();
+      var hash = new L.Hash(map);
       loadPoi();
       map.on('moveend', loadPoi);
     });
