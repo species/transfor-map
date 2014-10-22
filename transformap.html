@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     .hover { background-color:red; }
-    .leaflet-marker-icon:hover { background-color:green; }
   </style>
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
   <script src="map.js"></script>
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
   <script>
@@ -72,7 +72,7 @@
       }
 
       function nodeFunction(data) {
-        if (! data.tags || ! data.tags.name ) return;
+        if (! data.tags || ! data.tags.name || data.tags.entrance ) return;
         bindPopupOnData(data);
       }
       function wayFunction(data) {
@@ -98,25 +98,25 @@
     }
 
   </script>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.css" />
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
   <style>
-    body {
+    body, html {
       padding: 0;
       margin: 0;
+      height: 100%;
     }
 
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }
     div.leaflet-popup-content { width: auto !important; }
-    .leaflet-control-container .leaflet-left { left: auto !important; right: 10px !important; }
 
-    html, body, #map {
-      height: 100%;
+    #map {
+      height: 90%;
     }
   </style>
 </head>
 <body>
+  <h1>TransforMap</h1>
   <div id="map"></div>
 </body>
 </html>
