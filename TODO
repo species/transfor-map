@@ -1,8 +1,31 @@
 catch relations too
 different icons
-clustering
 popup language translation
 popup links to tags
-permalinks
+permalinks ~OK done with hash in browser url.
 
 layers with different needs
+
+maxzoom auf 19
+
+clustering
+  https://github.com/Leaflet/Leaflet.markercluster
+    latest version requires leaflet 0.7 - we are using 0.4.4 -switch OK
+
+  Leaflet.markercluster dl ok, eingebunden
+
+    var markers = L.markerClusterGroup(); //call on each update? -OK
+    for i
+      var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title }); //exactly the same as original Leaflet -OK
+      marker.bindPopup(title); //seems also to be the same -OK
+
+      markers.addLayer(marker); 
+
+    map.addLayer(markers); //try to add only on Map-init -OK
+
+  was designed for static data, could be a problem on update? -OK seems to be no prob
+  TODO: 
+    • generic icons
+    • reduce cluster distance -OK auf 40
+    
+
