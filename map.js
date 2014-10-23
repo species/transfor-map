@@ -17,11 +17,12 @@ function initMap() {
   map = new L.Map('map', {
     center: new L.LatLng(47.07, 15.43),
       zoom: 13,
-      layers: osm,
+      layers: MapQuestOpen_OSM,
   });
 
   map.getControl = function () {
     var ctrl = new L.Control.Layers({
+       'MapQuestOpen': MapQuestOpen_OSM,
        'OpenSteetMap': osm,
        'My OSM': my_osm,
        'Contours': contours,
@@ -30,7 +31,6 @@ function initMap() {
        //'MapBox Simple': mapbox_simple,
        //'OpenSteetMap (no labels)': osm_no,
        'OpenSteetMap (black/white)': osm_bw,
-       'MapQuestOpen': MapQuestOpen_OSM,
     });
     return function () {
       return ctrl;
