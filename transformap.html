@@ -19,6 +19,7 @@
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
   <script>
     var map, ids = {};
+    var marker_initialized = 0;
     $(function () {
       map = initMap();
       map.zoomIn();
@@ -32,14 +33,15 @@
         return;
       }
 
+      // remove old marker layer if created in a prior run
+      //if (marker_initialized == 1) {
+      //  map.removeLayer(markers);
+      //  marker_initialized = 1;
+      //}
       //create layer for Cluster Markers 
       var markers = L.markerClusterGroup({maxClusterRadius: 40});
 
-      var restaurantIcon = L.icon({
-        iconUrl: 'assets/transformap/pngs/16/fulfills_needs.food.png',
-        iconSize: new L.Point(16, 16),
-        iconAnchor: new L.Point(8, 8),
-      });
+      var iconsize = 24;
 
       function fillPopup(tags,type,id) {
         var r = $('<table>');
@@ -72,8 +74,6 @@
 
       function bindPopupOnData(data) {
         // set icon dependent on tags
-        var myicon = 42;
-
         var need_tags = [];
         var needs_string = "";
         for (key in data.tags) {
@@ -89,14 +89,17 @@
         data.tags.needs = needs_string;
         var icon_url = "";
         if (needs_string.indexOf(";") >= 0) // more than one item, take generic icon
-          icon_url = "assets/transformap/pngs/16/fulfills_needs.png";
+          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs.png";
         else
-          icon_url = "assets/transformap/pngs/16/fulfills_needs." + needs_string + ".png";
+          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs." + needs_string + ".png";
+
+        if ((needs_string.split(";").length - 1  == 1) && (needs_string.indexOf("beverages") >= 0) && (needs_string.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
+          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs.food.png";
 
         var needs_icon = L.icon({
           iconUrl: icon_url,
-          iconSize: new L.Point(16, 16),
-          iconAnchor: new L.Point(8, 8),
+          iconSize: new L.Point(iconsize, iconsize),
+          iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
         });
 
         var lmarker = L.marker([data.lat, data.lon], {

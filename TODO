@@ -1,5 +1,5 @@
 catch relations too
-different icons
+different icons -OK
 popup language translation
 popup links to tags
 permalinks ~OK done with hash in browser url.
@@ -7,6 +7,8 @@ permalinks ~OK done with hash in browser url.
 layers with different needs
 
 maxzoom auf 19
+
+popup: name on top
 
 clustering
   https://github.com/Leaflet/Leaflet.markercluster
@@ -25,7 +27,7 @@ clustering
 
   was designed for static data, could be a problem on update? -OK seems to be no prob
   TODO: 
-    • generic icons
+    • generic icons for clusters
     • reduce cluster distance -OK auf 40
     
 
