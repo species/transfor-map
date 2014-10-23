@@ -6,7 +6,9 @@ function initMap() {
   var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')}),
       my_osm = new L.TileLayer('/tiles/osm/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')}),
       contours = new L.TileLayer('/tiles/contours/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')});
-      osm_bw = new L.TileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {opacity: 0.5, attribution: [attr_osm, attr_overpass].join(', ')}),
+      osm_bw = new L.TileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {opacity: 0.8, attribution: [attr_osm, attr_overpass].join(', ')}),
+       MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {              attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                    subdomains: '1234' });
       //osm_no = new L.TileLayer('http://{s}.www.toolserver.org/tiles/osm-no-labels/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')}),
       //mapbox_streets = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png", {attribution: [attr_mapbox, attr_osm, attr_overpass].join(', ')}),
       //mapbox_light = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-light/{z}/{x}/{y}.png", {attribution: [attr_mapbox, attr_osm, attr_overpass].join(', ')}),
@@ -15,11 +17,12 @@ function initMap() {
   map = new L.Map('map', {
     center: new L.LatLng(47.07, 15.43),
       zoom: 13,
-      layers: osm,
+      layers: MapQuestOpen_OSM,
   });
 
   map.getControl = function () {
     var ctrl = new L.Control.Layers({
+       'MapQuestOpen': MapQuestOpen_OSM,
        'OpenSteetMap': osm,
        'My OSM': my_osm,
        'Contours': contours,
