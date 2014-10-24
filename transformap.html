@@ -71,7 +71,7 @@
 
         }
         r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
-        r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').text(id)));
+        r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + id + '</a>')));
         return $('<div>').append(r).html();
       }
 
