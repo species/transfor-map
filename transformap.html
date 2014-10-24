@@ -57,8 +57,15 @@
               
             var htlink = '<a href="' + value + '">' + value + '</a>';
             r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
-          }
-          else {
+          } else if (key == 'contact:email' || key == 'email') {
+            var value = tags[key];
+            var teststr=/^mailto:/;
+            if ( ! teststr.test(value) )
+              value = "mailto:" + value;
+            var htlink = '<a href="' + value + '">' + tags[key] + '</a>';
+            r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
+
+          } else {
             r.append($('<tr>').append($('<th>').text(key)).append($('<td>').text(tags[key])));
           }
 
