@@ -44,7 +44,10 @@
       var iconsize = 24;
 
       function fillPopup(tags,type,id) {
+
         var r = $('<table>');
+        r.prepend($('<h1>').text(tags["name"]));
+
         for (key in tags) {
           if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
             var value = tags[key];
@@ -156,7 +159,8 @@
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }
 */ 
-    div.leaflet-popup-content { width: auto !important; }
+div.leaflet-popup-content { width: auto !important; }
+.leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; }
 
     #map {
       height: 90%;
