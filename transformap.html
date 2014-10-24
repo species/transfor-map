@@ -44,7 +44,10 @@
       var iconsize = 24;
 
       function fillPopup(tags,type,id) {
+
         var r = $('<table>');
+        r.prepend($('<h1>').text(tags["name"]));
+
         for (key in tags) {
           if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
             var value = tags[key];
@@ -54,14 +57,21 @@
               
             var htlink = '<a href="' + value + '">' + value + '</a>';
             r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
-          }
-          else {
+          } else if (key == 'contact:email' || key == 'email') {
+            var value = tags[key];
+            var teststr=/^mailto:/;
+            if ( ! teststr.test(value) )
+              value = "mailto:" + value;
+            var htlink = '<a href="' + value + '">' + tags[key] + '</a>';
+            r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
+
+          } else {
             r.append($('<tr>').append($('<th>').text(key)).append($('<td>').text(tags[key])));
           }
 
         }
         r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
-        r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').text(id)));
+        r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + id + '</a>')));
         return $('<div>').append(r).html();
       }
 
@@ -156,7 +166,8 @@
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }
 */ 
-    div.leaflet-popup-content { width: auto !important; }
+div.leaflet-popup-content { width: auto !important; }
+.leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; }
 
     #map {
       height: 90%;
