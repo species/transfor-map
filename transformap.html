@@ -46,7 +46,6 @@
       function fillPopup(tags,type,id) {
 
         var r = $('<table>');
-        r.prepend($('<h1>').text(tags["name"]));
 
         for (key in tags) {
           if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
@@ -72,7 +71,12 @@
         }
         r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
         r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + id + '</a>')));
-        return $('<div>').append(r).html();
+
+        var s = $('<div>');
+        s.append(r);
+        var retval = $('<div>').append(s);
+        retval.prepend($('<h1>').text(tags["name"]));
+        return retval.html();
       }
 
 
@@ -168,6 +172,9 @@
 */ 
 div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; }
+
+.leaflet-popup-content div table { margin: 0 15px; }
+.leaflet-popup-content div { max-height: 600px; overflow:auto; }
 
     #map {
       height: 90%;
