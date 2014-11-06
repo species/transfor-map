@@ -80,7 +80,7 @@
       }
 
 
-      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[~"fullfills_needs:.*"~".*"]);out;(way(BBOX)[~"fullfills_needs:.*"~".*"];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
+      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[~"full?fill?s_needs:.*"~".*"]);out;(way(BBOX)[~"full?fill?s_needs:.*"~".*"];node(w));out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
 
       // try to catch relations too
       //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"];way(BBOX)[~"fullfills_needs:.*"~".*"];rel(BBOX)[~"fullfills_needs:.*"~".*"];);out%20meta;>;out%20meta%20qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
