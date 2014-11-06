@@ -91,9 +91,9 @@
         var need_tags = [];
         var needs_string = "";
         for (key in data.tags) {
-          var teststr = "fullfills_needs";
+          var teststr = "fulfils_needs:";
           if ( key.indexOf(teststr) >= 0 ) {
-            needs_value = key.substring(16);
+            needs_value = key.substring(14);
             //need_tags.push(needs_value);
             if ( needs_string != "" )
               needs_string = needs_string + "; ";
