@@ -8,8 +8,6 @@ layers with different needs
 
 maxzoom auf 19
 
-popup: name on top -OK
-
 clustering
   https://github.com/Leaflet/Leaflet.markercluster
     latest version requires leaflet 0.7 - we are using 0.4.4 -switch OK
@@ -25,9 +23,34 @@ clustering
 
     map.addLayer(markers); //try to add only on Map-init -OK
 
-  was designed for static data, could be a problem on update? -OK seems to be no prob (in some browsers)
+  was designed for static data, could be a problem on update? -OK seems to be no prob
   TODO: 
-    • generic icons for clusters
+    • generic icons -OK
+    • generic icons for clusters 
     • reduce cluster distance -OK auf 40
     
+translations via transifex
+
+implement API (at first via sourced JSON file)
+    what is needed:
+        an array called "needs" where for each need, the corresponding OSM-objects are stored in an arrays as tuples, e.g. 
+            needs = { 
+                "food+drink" : [
+                      { "amenity" : "pub" , "food" : "yes" } ,
+                      { "amenity" : "restaurant" } ,
+                      { "shop" : "butcher" },
+                      ...
+                    ]
+        but to show them on transformap, they additionally need:
+            either
+                political_identity:* - wobei wir hier die ganze liste als array angeben
+
+    wenn sortiert nach commons, dann brauchen wir eine Liste aller Objekte, die "commons" sind:
+      commons = [ 
+        { amenity : "drinking_water", "access" : "¬private|¬no" } ,
+        { leisure : "playground", "access" : "¬private|¬no" } ,
+        { "service:bicycle:diy" : "yes" },
+        { "service:bicycle:tools" : "yes" },
+
+  how to fetch translations? should be fetched realtime (at loading of website)
 
