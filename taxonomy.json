@@ -1,0 +1,18 @@
+{ "needs" : {
+    "food+drink" : [ 
+      { "amenity" : "pub" , "food" : "yes" } ,
+      { "amenity" : "restaurant" } ,
+      { "shop" : "butcher" },
+      { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
+    ]
+  },
+  "political_identity" : {
+    "commons" : [
+      { "amenity" : "drinking_water", "access" : "¬private|¬no" } ,
+      { "leisure" : "playground", "access" : "¬private|¬no" } ,
+      { "service:bicycle:diy" : "yes" },
+      { "service:bicycle:tools" : "yes" }
+    ]
+  }
+}
+
