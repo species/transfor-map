@@ -101,26 +101,22 @@
 
       function bindPopupOnData(data) {
         // set icon dependent on tags
-        var need_tags = [];
-        var needs_string = "";
+        data.tags.needs = "";
         for (key in data.tags) {
-          var teststr = "fulfils_needs:";
-          if ( key.indexOf(teststr) >= 0 ) {
+          if ( key.indexOf("fulfils_needs:") >= 0 ) {
             needs_value = key.substring(14);
-            //need_tags.push(needs_value);
-            if ( needs_string != "" )
-              needs_string = needs_string + "; ";
-            needs_string = needs_string + needs_value;
+            if ( data.tags.needs != "" )
+              data.tags.needs = data.tags.needs + "; ";
+            data.tags.needs = data.tags.needs + needs_value;
           }
         }
-        data.tags.needs = needs_string;
         var icon_url = "";
-        if (needs_string.indexOf(";") >= 0) // more than one item, take generic icon
+        if (data.tags.needs.indexOf(";") >= 0) // more than one item, take generic icon
           icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs.png";
         else
-          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs." + needs_string + ".png";
+          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs." + data.tags.needs + ".png";
 
-        if ((needs_string.split(";").length - 1  == 1) && (needs_string.indexOf("beverages") >= 0) && (needs_string.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
+        if ((data.tags.needs.split(";").length - 1  == 1) && (data.tags.needs.indexOf("beverages") >= 0) && (data.tags.needs.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
           icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs.food.png";
 
         var needs_icon = L.icon({
