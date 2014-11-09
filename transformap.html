@@ -78,10 +78,35 @@
             r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
 
           } else {
-            r.append($('<tr>').append($('<th>').text(key)).append($('<td>').text(tags[key])));
+            var keytext = key;
+            var valuetext = tags[key];
+
+            /* display label:* instead of key */ /* FIXME TODO doesn't work*/  
+            var found = 0; // use for break outer loops
+
+            for ( groupname in taxonomy ) { // e.g. "fulfils_needs" : {}=group 
+              group = taxonomy[groupname];
+              // items = array of e.g. [ { "transformap:key" :"food+drink", ... }, { }, ... ]
+              var count_items = group["items"].length;
+              for (var i = 0; i < count_items; i++) { // 
+                for (item in group["items"][i]) {
+                  if(item["osm:key"] == keytext && item["osm:values"].indexOf(valuetext) >= 0 ) {
+                    keytext = item.label["en"];
+                    found = 1;
+                    break;
+                  }
+                }
+                if(found)
+                  break;
+              } 
+              if(found)
+                break;
+            } 
+
+            r.append($('<tr>').append($('<th>').text(keytext)).append($('<td>').text(valuetext)));
           }
 
-        }
+        } // end for (key in tags)
         r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
         r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + id + '</a>')));
 
@@ -162,7 +187,6 @@
       map.addLayer(markers);
 
     }
-
   </script>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
   <style>
