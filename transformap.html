@@ -59,9 +59,12 @@
       function fillPopup(tags,type,id) {
 
         var r = $('<table>');
+        var tags_to_ignore = [ "name" , "ref" ];
 
         for (key in tags) {
-          if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
+          if ( tags_to_ignore.indexOf(key) >= 0) {
+            continue;
+          } else if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
             var value = tags[key];
             var teststr=/^http/;
             if ( ! teststr.test(value) )
@@ -81,26 +84,22 @@
             var keytext = key;
             var valuetext = tags[key];
 
-            /* display label:* instead of key */ /* FIXME TODO doesn't work*/  
+            /* display label:* instead of key */ 
             var found = 0; // use for break outer loops
 
             for ( groupname in taxonomy ) { // e.g. "fulfils_needs" : {}=group 
               group = taxonomy[groupname];
-              // items = array of e.g. [ { "transformap:key" :"food+drink", ... }, { }, ... ]
               var count_items = group["items"].length;
-              for (var i = 0; i < count_items; i++) { // 
-                for (item in group["items"][i]) {
-                  if(item["osm:key"] == keytext && item["osm:values"].indexOf(valuetext) >= 0 ) {
-                    keytext = item.label["en"];
-                    found = 1;
-                    break;
-                  }
-                }
-                if(found)
+              for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
+                item = group["items"][i];
+                if(item["osm:key"] == keytext) {
+                  keytext = item.label["en"];
+                  found = 1;
                   break;
+                }
               } 
-              if(found)
-                break;
+              if(found == 1)
+                break; // for ( groupname in taxonomy ) 
             } 
 
             r.append($('<tr>').append($('<th>').text(keytext)).append($('<td>').text(valuetext)));
