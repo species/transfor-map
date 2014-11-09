@@ -45,6 +45,24 @@
           { "shop" : "butcher" },
           { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
         ]
+      },
+      {
+        "transformap:key" : "participation", 
+        "osm:key" : "fulfils_needs:participation",
+        "osm:values" : [ "yes" ],
+        "label" : {
+          "en" : "provides: contribute & participate ",
+          "de" : "Bietet: beitragen & mitmachen"
+        },
+        "description" : {
+          "en" : "Here is a place, where your contribution is needed. You can share your skills, contribute to a project, initiate activities, or deliberate on public issues.",
+          "de" : "Beitragen erwünscht! Hier kannst Du Dich und Deine Fähigkeiten einbringen, zu einem Projekt beitragen, ein solches initiieren, oder Dich an Debatten beteiligen,  die uns alle angehen."
+        },
+        "osm:objects" : [ 
+          { "amenity" : "hackerspace" },
+          { "leisure" : "hackerspace" },
+          { "club" : "*" } 
+        ]
       }
 
     ]
