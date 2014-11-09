@@ -20,8 +20,8 @@ each group has the following properties:
   },
   // then, an array of entries follow:
   items : [ 
-    { "food+drink" : {
     // each item has the following properties:
+    "transformap:key" : "food+drink", // internal transformap primary key
     "osm:key" : "osm-key",
     "osm:values" : [ "array", "of", "possible", "osm-values" ],
     "label" : { "same syntax" : "as above" },

@@ -10,72 +10,43 @@
     },
     "items" : [ 
       {
-        "food+drink" : {
-          "osm:key" : "fulfils_needs:food+drink",
-          "osm:values" : [ "yes" ],
-          "label" : {
-            "en" : "provides: food & drink",
-            "de" : "Bietet: Essen & Getränke"
-          },
-          "description" : {
-            "en" : "",
-            "de" : ""
-          },
-          "osm:objects" : [ 
-            { "amenity" : "pub" , "food" : "yes" } ,
-            { "amenity" : "restaurant" } ,
-            { "shop" : "butcher" },
-            { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
-          ]
-        }
-      } 
-    ]
-  },
-
-  "political_identity" : {
-    "label" : { 
-      "en" : "Self-description of a community",
-      "de" : "Vielfalt der Alternativen"
-    },
-    "description" : {
-      "en" : "There are many alternatives to the dominant economic model and to the \"usual\" way of producing goods and services. All these alternatives have developed for decades, they are organized in different \"tribes\" and self-identify in different ways. Here are some of the labels these \"tribes\" use to describe themselves.",
-      "de" : "Es gibt viele Alternativen zum derzeit dominanten Wirtschaftsmodell und zur \"gewöhnlichen\" Art, Produkte und Dienstleistungen herzustellen. All diese haben sich über Jahrzehnte entwickelt und sind in verschiedenen \"Szenen\" organisiert. Einige davon sind hier aufgeführt. Zu finden sind die Selbstbeschreibungen dieser alternativen Ansätze."
-    },
-    "items" : [
+        "transformap:key" : "food+drink",
+        "osm:key" : "fulfils_needs:food+drink",
+        "osm:values" : [ "yes" ],
+        "label" : {
+          "en" : "provides: food & drink",
+          "de" : "Bietet: Essen & Getränke"
+        },
+        "description" : {
+          "en" : "",
+          "de" : ""
+        },
+        "osm:objects" : [ 
+          { "amenity" : "pub" , "food" : "yes" } ,
+          { "amenity" : "restaurant" } ,
+          { "shop" : "butcher" },
+          { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
+        ]
+      },
       {
-        "commons" : {
-          "osm:key" : "political_identity:commons",
-          "osm:values" : [ "yes" ],
-          "label" : { 
-            "en" : "Commons",
-            "de" : "Commons"
-          },
-          "description" : {
-            "en" : "Places, projects and initiatives where a given community or network collectively (re-)produces, stewards, shares or develops something",
-            "de" : "Räume, Projekte und Initiativen, in denen eine Gemeinschaft oder ein Netzwerk etwas herstellt, erhält, teilt und weiterentwickelt."
-          },
-          "osm:objects" : [
-            { "amenity" : "drinking_water", "access" : "¬private|¬no" } ,
-            { "leisure" : "playground", "access" : "¬private|¬no" } ,
-            { "service:bicycle:diy" : "yes" },
-            { "service:bicycle:tools" : "yes" }
-          ]
-        }
+        "transformap:key" : "water", 
+        "osm:key" : "fulfils_needs:water",
+        "osm:values" : [ "yes" ],
+        "label" : {
+          "en" : "provides: water",
+          "de" : "Bietet: Wasser"
+        },
+        "description" : {
+          "en" : "",
+          "de" : ""
+        },
+        "osm:objects" : [ 
+          { "amenity" : "drinking_water" } ,
+          { "shop" : "butcher" },
+          { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
+        ]
       }
-    ]
-  },
 
-  "group name" : {
-    "label" : { 
-      "en" : "",
-      "de" : ""
-    },
-    "description" : {
-      "en" : "",
-      "de" : ""
-    },
-    "commons" : [
-      { "service:bicycle:tools" : "yes" }
     ]
   }
 }
