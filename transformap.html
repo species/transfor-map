@@ -93,7 +93,7 @@
               for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
                 item = group["items"][i];
                 if(item["osm:key"] == keytext) {
-                  keytext = item.label["en"];
+                  keytext = ". " + item.label["en"] + " :";
                   found = 1;
                   break;
                 }
