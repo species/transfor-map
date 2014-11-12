@@ -124,11 +124,13 @@
        *
        * overpass syntax:
        * [out:json][timeout:180][bbox:BBOX];
-       * first OR-CLAUSE: (node[param1][param2])out;(way[param1][param2];node(w));out;
-       * n'th OR-Clause:  (node[param3][param4])out;(way[param1][param2];node(w));out;
+       * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;
+       * n'th OR-Clause:  node[param3][param4];out;(way[param1][param2];node(w));out;
+       * 
+       * human readable length of query is not important, query speed is!
       */
 
-      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];(node[~"full?fill?s_needs:.*"~".*"]);out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;'.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()); 
+      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;(rel[~"full?fill?s_needs:.*"~".*"];);out;'.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()); 
 
       // try to catch relations too
       //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"];way(BBOX)[~"fullfills_needs:.*"~".*"];rel(BBOX)[~"fullfills_needs:.*"~".*"];);out%20meta;>;out%20meta%20qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
