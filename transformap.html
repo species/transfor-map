@@ -188,9 +188,48 @@
         bindPopupOnData(centroid);
         return;
       };
+      function relationFunction(data) {
+        // calculate mean coordinates as center
+        // for all members, calculate centroid
+        // then calculate mean over all nodes and centroids.
+        var centroids = [];
+        var sum_lon = 0;
+        var sum_lat = 0;
+        console.log(data);
+        for (var i = 0; i < data.members.length; i++) {
+          var p = data.members[i];
+          var centroid;
+          switch (p.type) {
+            case 'node':
+              centroid = p.obj.coordinates;
+              centroids.push(centroid);
+              break;
+            case 'way':
+              // fixme test with relations and way-members
+              var centroid_point = $.geo.centroid(p.obj.geometry);
+              centroid = centroid_point.coordinates;
+              entroids.push(centroid);
+              break;
+          }
+          sum_lon += centroid[0];
+          sum_lat += centroid[1];
+        }
+        console.log(centroids);
+        var sum_centroid = { 
+          id : data.id,
+          lon : sum_lon / data.members.length,
+          lat : sum_lat / data.members.length,
+          tags : data.tags,
+          type : data.type
+        }
+
+        console.log(sum_centroid);
+        bindPopupOnData(sum_centroid);
+        // todo: in the long term, all areas should be displayed as areas (as in overpass turbo)
+      }
 
       function handleNodeWayRelations(data) {
-        parseOverpassJSON(data, nodeFunction, wayFunction, null);
+        parseOverpassJSON(data, nodeFunction, wayFunction, relationFunction);
       }
 
       $.getJSON(allUrl, handleNodeWayRelations);
