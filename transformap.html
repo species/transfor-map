@@ -124,13 +124,13 @@
        *
        * overpass syntax:
        * [out:json][timeout:180][bbox:BBOX];
-       * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;
-       * n'th OR-Clause:  node[param3][param4];out;(way[param1][param2];node(w));out;
+       * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
+       * n'th OR-Clause:  node[param3][param4];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
        * 
        * human readable length of query is not important, query speed is!
       */
 
-      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;(rel[~"full?fill?s_needs:.*"~".*"];);out;'.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()); 
+      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;rel[~"full?fill?s_needs:.*"~".*"];out;'.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()); 
 
       // try to catch relations too
       //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"];way(BBOX)[~"fullfills_needs:.*"~".*"];rel(BBOX)[~"fullfills_needs:.*"~".*"];);out%20meta;>;out%20meta%20qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
@@ -149,12 +149,12 @@
         }
         var icon_url = "";
         if (data.tags.needs.indexOf(";") >= 0) // more than one item, take generic icon
-          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs.png";
+          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.png";
         else
-          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs." + data.tags.needs + ".png";
+          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs." + data.tags.needs + ".png";
 
         if ((data.tags.needs.split(";").length - 1  == 1) && (data.tags.needs.indexOf("beverages") >= 0) && (data.tags.needs.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
-          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfills_needs.food.png";
+          icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.food.png";
 
         var needs_icon = L.icon({
           iconUrl: icon_url,
