@@ -4,8 +4,6 @@ function initMap() {
       attr_overpass = 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>';
 
   var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')}),
-      my_osm = new L.TileLayer('/tiles/osm/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')}),
-      contours = new L.TileLayer('/tiles/contours/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')});
       osm_bw = new L.TileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {opacity: 0.8, attribution: [attr_osm, attr_overpass].join(', ')}),
        MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {              attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
                     subdomains: '1234' });
@@ -24,8 +22,6 @@ function initMap() {
     var ctrl = new L.Control.Layers({
        'MapQuestOpen': MapQuestOpen_OSM,
        'OpenSteetMap': osm,
-       'My OSM': my_osm,
-       'Contours': contours,
        //'MapBox Streets': mapbox_streets,
        //'MapBox Light': mapbox_light,
        //'MapBox Simple': mapbox_simple,
