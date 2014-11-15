@@ -36,3 +36,14 @@ implement API (at first via sourced JSON file)
 
   how to fetch translations? should be fetched realtime (at loading of website)
 
+todo: auf transformap.co nicht EINE karte, sondern 'Kacheln' oder so als Link zu vielen Karten:
+	* Bio-Karte
+	* Regional-Karten
+	* Gratis-Karte
+	* Beduerfnis-karte
+	* Politsche Karte
+	* fairtrade-Karte
+	* Gartenkarte
+	* ...
+
+den ganzen JS-Code in eine eigene Datei auslagern, um die karte leicht einbindbar zu machen!
