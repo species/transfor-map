@@ -59,7 +59,7 @@
       function fillPopup(tags,type,id) {
 
         var r = $('<table>');
-        var tags_to_ignore = [ "name" , "ref" ];
+        var tags_to_ignore = [ "name" , "ref", "needs" ];
 
         for (key in tags) {
           if ( tags_to_ignore.indexOf(key) >= 0) {
@@ -167,7 +167,6 @@
           title: data.tags.name
         });
         lmarker.bindPopup(fillPopup(data.tags,data.type,data.id));
-        // lmarker.addTo(map); // old simple one
         markers.addLayer(lmarker);
       }
 
