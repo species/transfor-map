@@ -35,6 +35,20 @@ translations via transifex
 
 implement API (at first via sourced JSON file)
 
+parallell loading problems
+  FIXME if panning before loading of pois complete, a second set gets added 
+  TODO wen panning/zooming, old layer gets removed before new one gets added - nice animation is missing now
+    FIXME when clicking on a POI with popup near edge of map, map pans and removes old layer...
+  FIX is not to remove old layer, instead add items only if they do not exist... 
+    -> no second set
+    -> animations work
+    -> pois stay if zooming out < 12
+
+    way to go: -OK WORKS :-)
+      have an array of new markers to add 
+        add them at end with addLayers(layerArray)
+      array gets filled on the go, if not in global list of osm-ids.
+
 
   how to fetch translations? should be fetched realtime (at loading of website)
 

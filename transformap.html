@@ -46,13 +46,13 @@
       };
     http_request.send(null);
 
-    var map, ids = {};
-    var marker_initialized = 0;
+    var map, ids, markers = {};
     $(function () {
       map = initMap();
       map.zoomIn();
       var hash = new L.Hash(map);
-      loadPoi();
+      markers = L.markerClusterGroup({maxClusterRadius: 40});
+      map.addLayer(markers);
       map.on('moveend', loadPoi);
     });
 

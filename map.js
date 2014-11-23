@@ -90,19 +90,14 @@ function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRela
   }
 }
 
+var marker_table = {};
+
+
 function loadPoi() {
-  if (map.getZoom() < 12) {
+  if (map.getZoom() < 12 ) {
     return;
   }
   var query = overpass_query;
-
-  // remove old marker layer if created in a prior run
-  //if (marker_initialized == 1) {
-  //  map.removeLayer(markers);
-  //  marker_initialized = 1;
-  //}
-  //create layer for Cluster Markers 
-  var markers = L.markerClusterGroup({maxClusterRadius: 40});
 
   var iconsize = 24;
 
@@ -170,6 +165,12 @@ function loadPoi() {
   var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
 
   function bindPopupOnData(data) {
+    // first: check if no item with this osm-id exists...
+    var hashtable_key = data.type + data.id;
+    if(marker_table[hashtable_key] == 1) //object already there
+      return;
+    marker_table[hashtable_key] = 1;
+
     // set icon dependent on tags
     data.tags.needs = "";
     for (key in data.tags) {
@@ -265,8 +266,5 @@ function loadPoi() {
   }
 
   $.getJSON(allUrl, handleNodeWayRelations);
-
-  // add layer of cluster-markers. FIXME who destroys the old one after update?
-  map.addLayer(markers);
 
 }
