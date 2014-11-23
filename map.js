@@ -109,13 +109,22 @@ function loadPoi() {
     for (key in tags) {
       if ( tags_to_ignore.indexOf(key) >= 0) {
         continue;
-      } else if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
+      } else if ( key == 'website' || key == 'url' || key == 'contact:website' ||  key == 'contact:url') { //TODO: , facebook, …
         var value = tags[key];
-        var teststr=/^http/;
+        var teststr=/^http/; //http[s] is implicit here
         if ( ! teststr.test(value) )
           value = "http://" + value;
           
         var htlink = '<a href="' + value + '">' + value + '</a>';
+        r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
+      } else if (key == 'wikipedia') { // wikipedia - TODO key="wikipedia:de"
+        var value = tags[key];
+        var begin = "";
+        var teststr=/^http/; //http[s] is implicit here
+        if ( ! teststr.test(value) )
+          begin = "https://wikipedia.org/wiki/";
+
+        var htlink = '<a href="' + begin + value + '">' + value + '</a>';
         r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else if (key == 'contact:email' || key == 'email') {
         var value = tags[key];
@@ -138,7 +147,7 @@ function loadPoi() {
           for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
             item = group["items"][i];
             if(item["osm:key"] == keytext) {
-              keytext = ". " + item.label["en"] + " :"; //FIXME ". " for displaying a translated value
+              keytext = "<em>" + item.label["en"] + "</em>"; //FIXME ". " for displaying a translated value
               found = 1;
               break;
             }
@@ -147,10 +156,12 @@ function loadPoi() {
             break; // for ( groupname in taxonomy ) 
         } 
 
-        r.append($('<tr>').append($('<th>').text(keytext)).append($('<td>').text(valuetext)));
+        r.append($('<tr>').append($('<th>').append(keytext)).append($('<td>').text(valuetext)));
       }
 
     } // end for (key in tags)
+    r.append($('<tr>').append($('<th>').append("&nbsp;")).append($('<td>').append("&nbsp;"))); // spacer
+
     r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
     r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + id + '</a>')));
 
@@ -190,6 +201,9 @@ function loadPoi() {
     if ((data.tags.needs.split(";").length - 1  == 1) && (data.tags.needs.indexOf("beverages") >= 0) && (data.tags.needs.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
       icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.food.png";
 
+    if(!data.tags.needs)
+      icon_url = "assets/transformap/pngs/" + iconsize + "/unknown.png";
+
     var needs_icon = L.icon({
       iconUrl: icon_url,
       iconSize: new L.Point(iconsize, iconsize),
@@ -228,7 +242,7 @@ function loadPoi() {
     var centroids = [];
     var sum_lon = 0;
     var sum_lat = 0;
-    console.log(data);
+    //console.log(data);
     for (var i = 0; i < data.members.length; i++) {
       var p = data.members[i];
       var centroid;
@@ -247,7 +261,7 @@ function loadPoi() {
       sum_lon += centroid[0];
       sum_lat += centroid[1];
     }
-    console.log(centroids);
+    //console.log(centroids);
     var sum_centroid = { 
       id : data.id,
       lon : sum_lon / data.members.length,
@@ -256,7 +270,7 @@ function loadPoi() {
       type : data.type
     }
 
-    console.log(sum_centroid);
+    //console.log(sum_centroid);
     bindPopupOnData(sum_centroid);
     // todo: in the long term, all areas should be displayed as areas (as in overpass turbo)
   }
