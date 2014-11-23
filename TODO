@@ -3,7 +3,8 @@ different icons -OK
 den ganzen JS-Code in eine eigene Datei auslagern, um die karte leicht einbindbar zu machen! -OK in map.js
 permalinks ~OK done with hash in browser url.
 popup language translation
-popup links to tags
+popup links to tags (to osm-wiki - what does this tag mean?)
+statistics: how many POIs loaded (like overpass-turbo)
 
 layers with different needs
 
@@ -29,13 +30,13 @@ clustering
     • generic icons -OK
     • reduce cluster distance -OK auf 40
     • generic icons for clusters 
-    • there seems to be more than one layer ... - remove the old!
+    • there seems to be more than one layer ... - remove the old! -OK
     
 translations via transifex
 
 implement API (at first via sourced JSON file)
 
-parallell loading problems
+parallell loading problems -OK done
   FIXME if panning before loading of pois complete, a second set gets added 
   TODO wen panning/zooming, old layer gets removed before new one gets added - nice animation is missing now
     FIXME when clicking on a POI with popup near edge of map, map pans and removes old layer...
