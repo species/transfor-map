@@ -2,7 +2,7 @@ file format of taxonomy.json:
 
 it represents the Transformap Taxonomy as Tree of objects with the following properties:
 
-base is a group
+base is a block of grouped taxonomy entries
   "group name" : {
     $properties
   }
@@ -20,15 +20,19 @@ each group has the following properties:
   },
   // then, an array of entries follow:
   items : [ 
-    // each item has the following properties:
-    "transformap:key" : "food+drink", // internal transformap primary key
-    "osm:key" : "osm-key",
-    "osm:values" : [ "array", "of", "possible", "osm-values" ],
-    "label" : { "same syntax" : "as above" },
-    "description" : { "same syntax" : "as above" },
-    "osm:objects" : [ 
-      // an array of possible key-value combinations, which items implies this TransforTax entry.
-      { "amenity" : "pub" , "food" : "yes" } , // e.g. implies our  "food+drink"  - ALL tags must be fulfilled, AND-Conjunction!
-      { "amenity" : "restaurant" } 
-    ]
+    {
+        // each item has the following properties:
+        "transformap:key" : "food+drink", // internal transformap primary key
+        "osm:key" : "osm-key",
+        "osm:values" : [ "array", "of", "possible", "osm-values" ],
+        "label" : { "same syntax" : "as above" },
+        "description" : { "same syntax" : "as above" },
+        "osm:objects" : [ 
+          // an array of possible key-value combinations, which items implies this TransforTax entry.
+          { "amenity" : "pub" , "food" : "yes" } , // e.g. implies our  "food+drink"  - ALL tags must be fulfilled, AND-Conjunction!
+          { "amenity" : "restaurant" } 
+        ]
+    },
+    {"transformap:key" : "water", ... }
+  ]
 

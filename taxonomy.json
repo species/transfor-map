@@ -10,12 +10,12 @@
     },
     "items" : [ 
       {
-        "transformap:key" : "food+drink",
-        "osm:key" : "fulfils_needs:food+drink",
+        "transformap:key" : "food",
+        "osm:key" : "fulfils_needs:food",
         "osm:values" : [ "yes" ],
         "label" : {
-          "en" : "provides: food & drink",
-          "de" : "Bietet: Essen & Getränke"
+          "en" : "provides: food",
+          "de" : "Bietet: Essen"
         },
         "description" : {
           "en" : "",
@@ -23,7 +23,10 @@
         },
         "osm:objects" : [ 
           { "amenity" : "pub" , "food" : "yes" } ,
+          { "amenity" : "bar" , "food" : "yes" } ,
+          { "amenity" : "cafe" , "food" : "yes" } ,
           { "amenity" : "restaurant" } ,
+          { "amenity" : "fast_food" } ,
           { "shop" : "butcher" },
           { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
         ]
