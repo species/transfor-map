@@ -1,8 +1,9 @@
-catch relations too
+catch relations too -OK
 different icons -OK
+den ganzen JS-Code in eine eigene Datei auslagern, um die karte leicht einbindbar zu machen! -OK in map.js
+permalinks ~OK done with hash in browser url.
 popup language translation
 popup links to tags
-permalinks ~OK done with hash in browser url.
 
 layers with different needs
 
@@ -26,8 +27,9 @@ clustering
   was designed for static data, could be a problem on update? -OK seems to be no prob
   TODO: 
     • generic icons -OK
-    • generic icons for clusters 
     • reduce cluster distance -OK auf 40
+    • generic icons for clusters 
+    • there seems to be more than one layer ... - remove the old!
     
 translations via transifex
 
@@ -46,4 +48,3 @@ todo: auf transformap.co nicht EINE karte, sondern 'Kacheln' oder so als Link zu
 	* Gartenkarte
 	* ...
 
-den ganzen JS-Code in eine eigene Datei auslagern, um die karte leicht einbindbar zu machen!
