@@ -46,7 +46,8 @@ parallell loading problems
 
     way to go: -OK WORKS :-)
       have an array of new markers to add 
-        add them at end with addLayers(layerArray)
+        add them at end with addLayers(layerArray) -NOK to be done.
+          paralellisation problem: if there are 2 loadPOIs running, they cannot handle an array of new markers correctly in an easy way. -TODO later
       array gets filled on the go, if not in global list of osm-ids.
 
 
