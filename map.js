@@ -147,7 +147,7 @@ function loadPoi() {
           for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
             item = group["items"][i];
             if(item["osm:key"] == keytext) {
-              keytext = ". " + item.label["en"] + " :"; //FIXME ". " for displaying a translated value
+              keytext = "<em>" + item.label["en"] + "</em>"; //FIXME ". " for displaying a translated value
               found = 1;
               break;
             }
@@ -156,7 +156,7 @@ function loadPoi() {
             break; // for ( groupname in taxonomy ) 
         } 
 
-        r.append($('<tr>').append($('<th>').text(keytext)).append($('<td>').text(valuetext)));
+        r.append($('<tr>').append($('<th>').append(keytext)).append($('<td>').text(valuetext)));
       }
 
     } // end for (key in tags)
