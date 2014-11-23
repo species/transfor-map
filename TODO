@@ -1,8 +1,9 @@
-catch relations too
+catch relations too -OK
 different icons -OK
+den ganzen JS-Code in eine eigene Datei auslagern, um die karte leicht einbindbar zu machen! -OK in map.js
+permalinks ~OK done with hash in browser url.
 popup language translation
 popup links to tags
-permalinks ~OK done with hash in browser url.
 
 layers with different needs
 
@@ -26,12 +27,28 @@ clustering
   was designed for static data, could be a problem on update? -OK seems to be no prob
   TODO: 
     • generic icons -OK
-    • generic icons for clusters 
     • reduce cluster distance -OK auf 40
+    • generic icons for clusters 
+    • there seems to be more than one layer ... - remove the old!
     
 translations via transifex
 
 implement API (at first via sourced JSON file)
+
+parallell loading problems
+  FIXME if panning before loading of pois complete, a second set gets added 
+  TODO wen panning/zooming, old layer gets removed before new one gets added - nice animation is missing now
+    FIXME when clicking on a POI with popup near edge of map, map pans and removes old layer...
+  FIX is not to remove old layer, instead add items only if they do not exist... 
+    -> no second set
+    -> animations work
+    -> pois stay if zooming out < 12
+
+    way to go: -OK WORKS :-)
+      have an array of new markers to add 
+        add them at end with addLayers(layerArray) -NOK to be done.
+          paralellisation problem: if there are 2 loadPOIs running, they cannot handle an array of new markers correctly in an easy way. -TODO later
+      array gets filled on the go, if not in global list of osm-ids.
 
 
   how to fetch translations? should be fetched realtime (at loading of website)
@@ -46,4 +63,3 @@ todo: auf transformap.co nicht EINE karte, sondern 'Kacheln' oder so als Link zu
 	* Gartenkarte
 	* ...
 
-den ganzen JS-Code in eine eigene Datei auslagern, um die karte leicht einbindbar zu machen!

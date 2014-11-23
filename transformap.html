@@ -32,16 +32,7 @@
     */
     var overpass_query = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;rel[~"full?fill?s_needs:.*"~".*"];out;'; 
 
-    var map, ids = {};
-    var marker_initialized = 0;
-    $(function () {
-      map = initMap();
-      map.zoomIn();
-      var hash = new L.Hash(map);
-      loadPoi();
-      map.on('moveend', loadPoi);
-    });
-
+    // fetch taxonomy, containing all translations, and implicit affiliations
     // taken from Wikipedia:JSON
     var url = "taxonomy.json";
     var taxonomy;
@@ -54,6 +45,17 @@
           }
       };
     http_request.send(null);
+
+    var map, ids, markers = {};
+    $(function () {
+      map = initMap();
+      map.zoomIn();
+      var hash = new L.Hash(map);
+      markers = L.markerClusterGroup({maxClusterRadius: 40});
+      map.addLayer(markers);
+      map.on('moveend', loadPoi);
+    });
+
 
   </script>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
