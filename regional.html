@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TransforMap</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .hover { background-color:red; }
+  </style>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/ac0b77b16f5fc858b1a3f8117d79eb15d337898c/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/ac0b77b16f5fc858b1a3f8117d79eb15d337898c/dist/MarkerCluster.Default.css" />
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+  <script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/ac0b77b16f5fc858b1a3f8117d79eb15d337898c/dist/leaflet.markercluster.js"></script>
+  <script src="leaflet-hash.js"></script>
+  <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
+  <script src="map.js"></script>
+  <script>
+    /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
+    /* what to we show on TransforMap.co? 
+     * needs:* +
+     * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
+     *
+     * overpass syntax:
+     * [out:json][timeout:180][bbox:BBOX];
+     * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
+     * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
+     * 
+     * human readable length of query is not important, query speed is!
+     */
+    var overpass_start = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];';
+
+    // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
+ //   var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
+    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"="yes"' ] ];
+
+    var overpass_query_string = "";
+
+    var nr_of_or_clauses = query_array.length;
+    for (var i = 0; i < nr_of_or_clauses; i++) {
+      var anded_tags = query_array[i];
+      var anded_querystring = "";
+      var nr_of_and_clauses = anded_tags.length;
+      for (var j=0; j < nr_of_and_clauses; j++) {
+        anded_querystring += "[" + anded_tags[j] + "]";
+      }
+
+      overpass_query_string += "node" + anded_querystring + ";out;";
+      overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
+      overpass_query_string += "rel" + anded_querystring + ";out;";
+    }
+
+    var overpass_query = overpass_start + overpass_query_string;
+    console.log(overpass_query);
+
+    // fetch taxonomy, containing all translations, and implicit affiliations
+    // taken from Wikipedia:JSON
+    var url = "taxonomy.json";
+    var taxonomy;
+    var http_request = new XMLHttpRequest();
+    http_request.open("GET", url, true);
+    http_request.onreadystatechange = function () {
+          var done = 4, ok = 200;
+          if (http_request.readyState === done && http_request.status === ok) {
+              taxonomy = JSON.parse(http_request.responseText);
+          }
+      };
+    http_request.send(null);
+
+    var map, ids, markers = {};
+    $(function () {
+      map = initMap();
+      map.zoomIn();
+      var hash = new L.Hash(map);
+      markers = L.markerClusterGroup({maxClusterRadius: 40});
+      map.addLayer(markers);
+      map.on('moveend', loadPoi);
+    });
+
+
+  </script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
+  <style>
+    body, html {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+    nav a {
+      text-decoration: none;
+    }
+
+/* FIXME readd after clusters working
+    .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
+    .leaflet-marker-icon:hover { background: yellow; }
+*/ 
+div.leaflet-popup-content { width: auto !important; }
+.leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; }
+
+.leaflet-popup-content div table { margin: 0 15px; }
+.leaflet-popup-content div { max-height: 600px; overflow:auto; }
+
+    #map {
+      height: 90%;
+    }
+  </style>
+  <style>
+  .mmmactive {
+  background: #333;
+}
+
+.mmmnavbar {
+  background: #000;
+  font: 12pt sans-serif;
+  line-height: 3em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index:1005;
+}
+
+.mmmnavbar a {
+  color: #fff;
+}
+
+.mmmnavbar a:hover {
+  text-decoration: none;
+}
+
+.mmmnavbar ul {
+  margin: 0;
+  padding: 0;
+}
+
+.mmmnavbar ul li {
+  display: inline;
+  padding: 1em;
+  color: #fff;
+}
+
+.mmmnavbar ul li:hover {
+  background: #444;
+  font-style: bold;
+}
+
+#mmmnavtitle {
+  font-weight: bold;
+}
+
+#mmmnavtitle:hover {
+  background: #000;
+}
+#content {
+  position: absolute;
+  top: 48px;
+  width: 100%;
+  height: 100%;
+}
+
+  </style>
+</head>
+<body>
+<nav class="mmmnavbar">
+<ul>
+<li id="mmmnavtitle" class="mmmactive">TransforMap</li><a href="http://blog.14mmm.org"><li>Blog</li></a><a href="http://discourse.14mmm.org"><li>Discourse</li></a><a href="https://wiki.14mmm.org"><li>Wiki</li></a>
+</ul>
+</nav>
+<div id="content">
+  <div id="map"></div>
+</div>
+</body>
+</html>
+
