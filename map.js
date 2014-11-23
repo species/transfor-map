@@ -109,7 +109,7 @@ function loadPoi() {
     for (key in tags) {
       if ( tags_to_ignore.indexOf(key) >= 0) {
         continue;
-      } else if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
+      } else if ( key == 'website' || key == 'url' || key == 'contact:website' ||  key == 'contact:url') { //TODO: , facebook, …
         var value = tags[key];
         var teststr=/^http/; //http[s] is implicit here
         if ( ! teststr.test(value) )
@@ -160,6 +160,8 @@ function loadPoi() {
       }
 
     } // end for (key in tags)
+    r.append($('<tr>').append($('<th>').append("&nbsp;")).append($('<td>').append("&nbsp;"))); // spacer
+
     r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
     r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + id + '</a>')));
 
