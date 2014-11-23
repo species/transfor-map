@@ -27,7 +27,9 @@
           { "amenity" : "cafe" , "food" : "yes" } ,
           { "amenity" : "restaurant" } ,
           { "amenity" : "fast_food" } ,
+          { "amenity" : "marketplace" } ,
           { "shop" : "butcher" },
+          { "shop" : "supermarket" },
           { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
         ]
       },
