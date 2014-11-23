@@ -26,7 +26,7 @@
       map = initMap();
       map.zoomIn();
       var hash = new L.Hash(map);
-      loadPoi(overpass_query);
+      loadPoi();
       map.on('moveend', loadPoi);
     });
 
@@ -44,10 +44,11 @@
     http_request.send(null);
 
 
-    function loadPoi(query) {
+    function loadPoi() {
       if (map.getZoom() < 12) {
         return;
       }
+      var query = overpass_query;
 
       // remove old marker layer if created in a prior run
       //if (marker_initialized == 1) {
