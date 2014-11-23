@@ -201,6 +201,9 @@ function loadPoi() {
     if ((data.tags.needs.split(";").length - 1  == 1) && (data.tags.needs.indexOf("beverages") >= 0) && (data.tags.needs.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
       icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.food.png";
 
+    if(!data.tags.needs)
+      icon_url = "assets/transformap/pngs/" + iconsize + "/unknown.png";
+
     var needs_icon = L.icon({
       iconUrl: icon_url,
       iconSize: new L.Point(iconsize, iconsize),

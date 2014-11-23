@@ -29,8 +29,29 @@
      * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
      * 
      * human readable length of query is not important, query speed is!
-    */
-    var overpass_query = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;rel[~"full?fill?s_needs:.*"~".*"];out;'; 
+     */
+    var overpass_start = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];';
+
+    // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
+    var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
+
+    var overpass_query_string = "";
+
+    var nr_of_or_clauses = query_array.length;
+    for (var i = 0; i < nr_of_or_clauses; i++) {
+      var anded_tags = query_array[i];
+      var anded_querystring = "";
+      var nr_of_and_clauses = anded_tags.length;
+      for (var j=0; j < nr_of_and_clauses; j++) {
+        anded_querystring += "[" + anded_tags[j] + "]";
+      }
+
+      overpass_query_string += "node" + anded_querystring + ";out;";
+      overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
+      overpass_query_string += "rel" + anded_querystring + ";out;";
+    }
+
+    var overpass_query = overpass_start + overpass_query_string;
 
     // fetch taxonomy, containing all translations, and implicit affiliations
     // taken from Wikipedia:JSON
