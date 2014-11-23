@@ -18,6 +18,18 @@
   <script src="leaflet-hash.js"></script>
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
   <script>
+    /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
+    /* what to we show on TransforMap.co? 
+     * needs:* +
+     * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
+     *
+     * overpass syntax:
+     * [out:json][timeout:180][bbox:BBOX];
+     * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
+     * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
+     * 
+     * human readable length of query is not important, query speed is!
+    */
     var overpass_query = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;rel[~"full?fill?s_needs:.*"~".*"];out;'; 
 
     var map, ids = {};
@@ -97,7 +109,7 @@
               for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
                 item = group["items"][i];
                 if(item["osm:key"] == keytext) {
-                  keytext = ". " + item.label["en"] + " :";
+                  keytext = ". " + item.label["en"] + " :"; //FIXME ". " for displaying a translated value
                   found = 1;
                   break;
                 }
@@ -121,25 +133,7 @@
       }
 
 
-      /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
-      /* what to we show on TransforMap.co? 
-       * needs:* +
-       * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
-       *
-       * overpass syntax:
-       * [out:json][timeout:180][bbox:BBOX];
-       * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
-       * n'th OR-Clause:  node[param3][param4];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
-       * 
-       * human readable length of query is not important, query speed is!
-      */
-
-
       var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
-
-      // try to catch relations too
-      //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"];way(BBOX)[~"fullfills_needs:.*"~".*"];rel(BBOX)[~"fullfills_needs:.*"~".*"];);out%20meta;>;out%20meta%20qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
-      //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"]);out;(way(BBOX)[~"fullfills_needs:.*"~".*"];node(w));out;(rel(BBOX)[~"fullfills_needs:.*"~".*"];>;);out;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
 
       function bindPopupOnData(data) {
         // set icon dependent on tags
