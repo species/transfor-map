@@ -18,13 +18,15 @@
   <script src="leaflet-hash.js"></script>
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
   <script>
+    var overpass_query = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;rel[~"full?fill?s_needs:.*"~".*"];out;'; 
+
     var map, ids = {};
     var marker_initialized = 0;
     $(function () {
       map = initMap();
       map.zoomIn();
       var hash = new L.Hash(map);
-      loadPoi();
+      loadPoi(overpass_query);
       map.on('moveend', loadPoi);
     });
 
@@ -41,7 +43,8 @@
       };
     http_request.send(null);
 
-    function loadPoi() {
+
+    function loadPoi(query) {
       if (map.getZoom() < 14) {
         return;
       }
@@ -130,7 +133,8 @@
        * human readable length of query is not important, query speed is!
       */
 
-      var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];node[~"full?fill?s_needs:.*"~".*"];out;(way[~"full?fill?s_needs:.*"~".*"];node(w));out;rel[~"full?fill?s_needs:.*"~".*"];out;'.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()); 
+
+      var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
 
       // try to catch relations too
       //var allUrl = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(node(BBOX)[~"fullfills_needs:.*"~".*"];way(BBOX)[~"fullfills_needs:.*"~".*"];rel(BBOX)[~"fullfills_needs:.*"~".*"];);out%20meta;>;out%20meta%20qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()); 
