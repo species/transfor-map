@@ -239,7 +239,7 @@ function loadPoi() {
     var centroids = [];
     var sum_lon = 0;
     var sum_lat = 0;
-    console.log(data);
+    //console.log(data);
     for (var i = 0; i < data.members.length; i++) {
       var p = data.members[i];
       var centroid;
@@ -258,7 +258,7 @@ function loadPoi() {
       sum_lon += centroid[0];
       sum_lat += centroid[1];
     }
-    console.log(centroids);
+    //console.log(centroids);
     var sum_centroid = { 
       id : data.id,
       lon : sum_lon / data.members.length,
@@ -267,7 +267,7 @@ function loadPoi() {
       type : data.type
     }
 
-    console.log(sum_centroid);
+    //console.log(sum_centroid);
     bindPopupOnData(sum_centroid);
     // todo: in the long term, all areas should be displayed as areas (as in overpass turbo)
   }
