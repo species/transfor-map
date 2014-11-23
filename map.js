@@ -111,11 +111,20 @@ function loadPoi() {
         continue;
       } else if ( key == 'website' || key == 'url' || key == 'contact:website' ) { //TODO: wikipedia, facebook, contact:email, …
         var value = tags[key];
-        var teststr=/^http/;
+        var teststr=/^http/; //http[s] is implicit here
         if ( ! teststr.test(value) )
           value = "http://" + value;
           
         var htlink = '<a href="' + value + '">' + value + '</a>';
+        r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
+      } else if (key == 'wikipedia') { // wikipedia - TODO key="wikipedia:de"
+        var value = tags[key];
+        var begin = "";
+        var teststr=/^http/; //http[s] is implicit here
+        if ( ! teststr.test(value) )
+          begin = "https://wikipedia.org/wiki/";
+
+        var htlink = '<a href="' + begin + value + '">' + value + '</a>';
         r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else if (key == 'contact:email' || key == 'email') {
         var value = tags[key];
