@@ -74,11 +74,17 @@
       var hash = new L.Hash(map);
       markers = L.markerClusterGroup({maxClusterRadius: 40});
       map.addLayer(markers);
+      loadPoi();
       map.on('moveend', loadPoi);
     });
 
 
   </script>
+  <noscript>
+    <br><hr><br>
+    <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+    <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+  </noscript>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
   <style>
     body, html {
