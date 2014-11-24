@@ -76,6 +76,7 @@
       var hash = new L.Hash(map);
       markers = L.markerClusterGroup({maxClusterRadius: 40});
       map.addLayer(markers);
+      loadPoi();
       map.on('moveend', loadPoi);
     });
 
@@ -168,6 +169,11 @@ div.leaflet-popup-content { width: auto !important; }
 <li id="mmmnavtitle" class="mmmactive">TransforMap</li><a href="http://blog.14mmm.org"><li>Blog</li></a><a href="http://discourse.14mmm.org"><li>Discourse</li></a><a href="https://wiki.14mmm.org"><li>Wiki</li></a>
 </ul>
 </nav>
+  <noscript>
+    <br><hr><br>
+    <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+    <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+  </noscript>
 <div id="content">
   <div id="map"></div>
 </div>
