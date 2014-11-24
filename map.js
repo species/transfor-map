@@ -147,7 +147,7 @@ function loadPoi() {
           for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
             item = group["items"][i];
             if(item["osm:key"] == keytext) {
-              keytext = "<em>" + item.label["en"] + "</em>"; //FIXME ". " for displaying a translated value
+              keytext = "<em>" + item.label["en"] + "</em>"; //<em> for displaying a translated value
               found = 1;
               break;
             }

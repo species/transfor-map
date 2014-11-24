@@ -55,8 +55,8 @@ parallell loading problems -OK done
   how to fetch translations? should be fetched realtime (at loading of website)
 
 todo: auf transformap.co nicht EINE karte, sondern 'Kacheln' oder so als Link zu vielen Karten:
-	* Bio-Karte
-	* Regional-Karten
+	* Bio-Karte -OK
+	* Regional-Karten -OK
 	* Gratis-Karte
 	* Beduerfnis-karte
 	* Politsche Karte
@@ -64,3 +64,7 @@ todo: auf transformap.co nicht EINE karte, sondern 'Kacheln' oder so als Link zu
 	* Gartenkarte
 	* ...
 
+todo:
+• eigene Icon-Sets für die unterkarten...
+• "fork me at github"-badge
+• icons © greenmap
