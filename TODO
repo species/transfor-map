@@ -71,3 +71,5 @@ todo:
 • opening_hours support einbauen (is it open now?)
 • "Download this Data" - Link (Overpass-Export)
 • edit in JOSM / iD -Link einbauen
+• Search box (for e.g. jump to location)
+• 'Locate me' Button instead of automatic geolocation on load
