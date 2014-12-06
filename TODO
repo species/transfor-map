@@ -1,73 +1,37 @@
-catch relations too -OK
-different icons -OK
-den ganzen JS-Code in eine eigene Datei auslagern, um die karte leicht einbindbar zu machen! -OK in map.js
-permalinks ~OK done with hash in browser url.
-popup language translation
-popup links to tags (to osm-wiki - what does this tag mean?)
-statistics: how many POIs loaded (like overpass-turbo)
-
-layers with different needs
-
-maxzoom auf 19
+• icons © greenmap -OK
+• permalinks ~OK done with hash in browser url.
+• different icon-sets for the distinct maps
+• "fork me at github"-badge
+• opening_hours support  (is it open now?)
+• "Download this data" - Link (Overpass-Export)
+• edit in JOSM / iD -Link 
+• Search box (for e.g. jump to location)
+• 'Locate me' button instead of automatic geolocation on load
+• in Popup „Route here“ with link to OSRM
+• popup language translation
+• popup links to tags (to osm-wiki - what does this tag mean?)
+• statistics: how many POIs loaded (like overpass-turbo)
+• layers with different needs
+• maxzoom up to 19
 
 clustering
-  https://github.com/Leaflet/Leaflet.markercluster
-    latest version requires leaflet 0.7 - we are using 0.4.4 -switch OK
-
-  Leaflet.markercluster dl ok, eingebunden
-
-    var markers = L.markerClusterGroup(); //call on each update? -OK
-    for i
-      var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title }); //exactly the same as original Leaflet -OK
-      marker.bindPopup(title); //seems also to be the same -OK
-
-      markers.addLayer(marker); 
-
-    map.addLayer(markers); //try to add only on Map-init -OK
-
-  was designed for static data, could be a problem on update? -OK seems to be no prob
+  Leaflet.markercluster -OK
   TODO: 
-    • generic icons -OK
-    • reduce cluster distance -OK auf 40
     • generic icons for clusters 
-    • there seems to be more than one layer ... - remove the old! -OK
     
 translations via transifex
+  how to fetch translations? should be fetched realtime (at loading of website)
 
 implement API (at first via sourced JSON file)
 
-parallell loading problems -OK done
-  FIXME if panning before loading of pois complete, a second set gets added 
-  TODO wen panning/zooming, old layer gets removed before new one gets added - nice animation is missing now
-    FIXME when clicking on a POI with popup near edge of map, map pans and removes old layer...
-  FIX is not to remove old layer, instead add items only if they do not exist... 
-    -> no second set
-    -> animations work
-    -> pois stay if zooming out < 12
 
-    way to go: -OK WORKS :-)
-      have an array of new markers to add 
-        add them at end with addLayers(layerArray) -NOK to be done.
-          paralellisation problem: if there are 2 loadPOIs running, they cannot handle an array of new markers correctly in an easy way. -TODO later
-      array gets filled on the go, if not in global list of osm-ids.
-
-
-  how to fetch translations? should be fetched realtime (at loading of website)
-
-todo: auf transformap.co nicht EINE karte, sondern 'Kacheln' oder so als Link zu vielen Karten:
-	* Bio-Karte -OK
-	* Regional-Karten -OK
-	* Gratis-Karte
-	* Beduerfnis-karte
-	* Politsche Karte
-	* fairtrade-Karte
-	* Gartenkarte
+todo: on transformap.co not ONE karte, but many .... tiled 'previews' n' with link to distinct maps
+	* Organic map -OK
+	* Regional map -OK
+	* Gratis-map
+	* Needs-karte
+	* Political Map
+	* fairtrade-Map
+	* garden-map
 	* ...
 
-todo:
-• eigene Icon-Sets für die unterkarten...
-• "fork me at github"-badge
-• icons © greenmap -OK
-• opening_hours support einbauen (is it open now?)
-• "Download this Data" - Link (Overpass-Export)
-• edit in JOSM / iD -Link einbauen
