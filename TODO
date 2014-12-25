@@ -1,11 +1,16 @@
 • icons © greenmap -OK
 • permalinks ~OK done with hash in browser url.
+• "fork me at github"-badge -OK
 • different icon-sets for the distinct maps
-• "fork me at github"-badge
 • opening_hours support  (is it open now?)
 • "Download this data" - Link (Overpass-Export)
 • edit in JOSM / iD -Link 
 • Search box (for e.g. jump to location)
+  http://mapbbcode.org/leaflet.html very primitive, but works - takes first Nominatim hit, no possibility to choose :-/
+  http://labs.easyblog.it/maps/leaflet-search/examples/nominatim.html - good looking and functionality, but: hangs on map load, BG map displayed and pannable only after some time :-/
+    -OK fixed with resorting to add search code at last
+  https://github.com/smeijer/L.GeoSearch Demo not working, have to try
+  Overpass Turbo implementation: - dunno from where he has ist, seems to be copied.
 • 'Locate me' button instead of automatic geolocation on load
 • in Popup „Route here“ with link to OSRM
 • popup language translation
