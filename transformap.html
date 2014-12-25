@@ -82,6 +82,9 @@
   </script>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
   <style>
+
+    * { box-sizing: border-box; }
+
     body, html {
       padding: 0;
       margin: 0;
@@ -102,10 +105,11 @@ div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content div { max-height: 600px; overflow:auto; }
 
     #map {
-      height: 90%;
+      height: 100%;
+      overflow: hidden;
     }
-  </style>
-  <style>
+
+
   .mmmactive {
   background: #333;
 }
@@ -155,8 +159,9 @@ div.leaflet-popup-content { width: auto !important; }
 #content {
   position: absolute;
   top: 48px;
+  bottom: 0px;
+  overflow:hidden;
   width: 100%;
-  height: 100%;
 }
 
   </style>
@@ -164,18 +169,31 @@ div.leaflet-popup-content { width: auto !important; }
 <body>
 <nav class="mmmnavbar">
 <ul>
-<li id="mmmnavtitle" class="mmmactive">TransforMap</li><a href="http://blog.14mmm.org"><li>Blog</li></a><a href="http://discourse.14mmm.org"><li>Discourse</li></a><a href="https://wiki.14mmm.org"><li>Wiki</li></a>
+  <li id="mmmnavtitle" class="mmmactive">TransforMap</li>
+  <a href="http://blog.14mmm.org">
+    <li>Blog</li>
+  </a>
+  <a href="http://discourse.14mmm.org">
+    <li>Discourse</li>
+  </a>
+  <a href="https://wiki.14mmm.org">
+    <li>Wiki</li>
+  </a>
 </ul>
 </nav>
-  <noscript>
-    <br><hr><br>
-    <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
-    <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
-  </noscript>
+
+<noscript>
+  <br><hr><br>
+  <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+</noscript>
+
 <div id="content">
   <div id="map"></div>
 </div>
+
 <a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
+
 </body>
 </html>
 
