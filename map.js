@@ -48,13 +48,6 @@ function initMap() {
     }
   }
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      var center = new L.LatLng(position.coords.latitude, position.coords.longitude);
-      map.setView(center, 13);
-    });
-  }
-
   return map;
 }
 
