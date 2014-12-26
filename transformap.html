@@ -13,6 +13,11 @@
 
   <link rel="stylesheet" href="leaflet-search.min.css" />
 
+  <link href='L.Control.Locate.mine.css' rel='stylesheet' />
+  <!--[if lt IE 9]>
+    <link href='L.Control.Locate.ie.min.css' rel='stylesheet' />
+  <![endif]-->
+
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
 
@@ -20,6 +25,8 @@
   <script src="http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster.js"></script>
   <script src="leaflet-hash.js"></script>
   <script src="leaflet-search.min.js"></script>
+
+  <script src='L.Control.Locate.mine.js'></script>
 
   <script src="map.js"></script>
   <script>
@@ -72,7 +79,7 @@
       };
     http_request.send(null);
 
-    var map, ids, markers = {};
+    var map, ids, markers, lc = {};
     $(function () {
       map = initMap();
       map.zoomIn();
@@ -95,8 +102,17 @@
         zoom:12
       }) );
 
-    });
 
+      lc = L.control.locate({
+        position: 'topleft',
+        showPopup: false,
+        strings: {
+                title: "Jump to my location!"
+            }
+      }
+      ).addTo(map);
+      
+    });
 
   </script>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
