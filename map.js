@@ -51,6 +51,32 @@ function initMap() {
   return map;
 }
 
+function addSearch() {
+  map.addControl( new L.Control.Search({
+    url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+    jsonpParam: 'json_callback',
+    propertyName: 'display_name',
+    propertyLoc: ['lat','lon'],
+    circleLocation: false,
+    markerLocation: false,
+    autoType: false,
+    autoCollapse: false,
+    minLength: 2,
+    zoom:12
+  }) );
+
+}
+function addLocate() {
+lc = L.control.locate({
+        position: 'topleft',
+        showPopup: false,
+        strings: {
+                title: "Jump to my location!"
+            }
+      }
+      ).addTo(map);
+}
+
 function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRelation) {
   var nodes = {}, ways = {};
   for (var i = 0; i < overpassJSON.elements.length; i++) {

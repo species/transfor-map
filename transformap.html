@@ -81,36 +81,16 @@
 
     var map, ids, markers, lc = {};
     $(function () {
+      markers = L.markerClusterGroup({maxClusterRadius: 40});
       map = initMap();
       map.zoomIn();
       var hash = new L.Hash(map);
-      markers = L.markerClusterGroup({maxClusterRadius: 40});
       map.addLayer(markers);
       loadPoi();
       map.on('moveend', loadPoi);
 
-      map.addControl( new L.Control.Search({
-        url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
-        jsonpParam: 'json_callback',
-        propertyName: 'display_name',
-        propertyLoc: ['lat','lon'],
-        circleLocation: false,
-        markerLocation: false,
-        autoType: false,
-        autoCollapse: false,
-        minLength: 2,
-        zoom:12
-      }) );
-
-
-      lc = L.control.locate({
-        position: 'topleft',
-        showPopup: false,
-        strings: {
-                title: "Jump to my location!"
-            }
-      }
-      ).addTo(map);
+      addSearch();
+      addLocate();
       
     });
 
