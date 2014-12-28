@@ -184,7 +184,7 @@ function loadPoi() {
 
   function bindPopupOnData(data) {
     // first: check if no item with this osm-id exists...
-    var hashtable_key = data.type + data.id;
+    var hashtable_key = data.type + data.id; // e.g. "node1546484546"
     if(marker_table[hashtable_key] == 1) //object already there
       return;
     marker_table[hashtable_key] = 1;
