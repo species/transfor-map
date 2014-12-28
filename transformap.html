@@ -65,6 +65,10 @@
 
     var overpass_query = overpass_start + overpass_query_string;
 
+
+
+
+    var map, ids, markers, lc = {};
     var attr = { 
       osm : 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
       osm_tiles : 'Tiles &copy; OSM - <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>',
@@ -73,11 +77,21 @@
       greenmap : 'Icons &copy; <a href="http://www.greenmap.org">greenmap.org</a>',
       overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
     }
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', ')});
+    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', { attribution: [attr.osm, attr.mapbox, attr.overpass, attr.greenmap].join(', '), subdomains: '1234' });
 
-    var map, ids, markers, lc = {};
+    var base_maps = {
+      'MapQuestOpen': MapQuestOpen_OSM,
+      'OpenSteetMap - Mapnik': osm, 
+    };
+    markers = L.markerClusterGroup({maxClusterRadius: 40});
+    var overlay_maps = {
+      "Needs" : markers
+    };
+
     $(function () {
-      markers = L.markerClusterGroup({maxClusterRadius: 40});
-      map = initMap(attr);
+
+      map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps);
       map.zoomIn();
       var hash = new L.Hash(map);
       map.addLayer(markers);

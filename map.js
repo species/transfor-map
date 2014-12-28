@@ -13,37 +13,15 @@ http_request.onreadystatechange = function () {
   };
 http_request.send(null);
 
-function initMap(attr) {
-
-  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', ')}),
-      //osm_bw = new L.TileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {opacity: 0.8, attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', ')}),
-      MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', { attribution: [attr.osm, attr.mapbox, attr.overpass, attr.greenmap].join(', '), subdomains: '1234' });
-      //osm_no = new L.TileLayer('http://{s}.www.toolserver.org/tiles/osm-no-labels/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')}),
-      //mapbox_streets = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png", {attribution: [attr_mapbox, attr_osm, attr_overpass].join(', ')}),
-      //mapbox_light = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-light/{z}/{x}/{y}.png", {attribution: [attr_mapbox, attr_osm, attr_overpass].join(', ')}),
-      //mapbox_simple = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-simple/{z}/{x}/{y}.png", {attribution: [attr_mapbox, attr_osm, attr_overpass].join(', ')});
-
+function initMap(defaultlayer,base_maps,overlay_maps) {
   map = new L.Map('map', {
     center: new L.LatLng(47.07, 15.43),
       zoom: 13,
-      layers: MapQuestOpen_OSM,
+      layers: defaultlayer,
   });
 
-  map.getControl = function () {
-    var ctrl = new L.Control.Layers({
-       'MapQuestOpen': MapQuestOpen_OSM,
-       'OpenSteetMap - Mapnik': osm,
-       //'MapBox Streets': mapbox_streets,
-       //'MapBox Light': mapbox_light,
-       //'MapBox Simple': mapbox_simple,
-       //'OpenSteetMap (no labels)': osm_no,
-       //'OpenSteetMap (black/white)': osm_bw,
-    });
-    return function () {
-      return ctrl;
-    }
-  }();
-  map.addControl(map.getControl());
+  var ctrl = new L.Control.Layers(base_maps,overlay_maps)
+  map.addControl(ctrl);
 
   L.LatLngBounds.prototype.toOverpassBBoxString = function (){
     var a = this._southWest,
