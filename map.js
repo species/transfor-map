@@ -106,7 +106,6 @@ function loadPoi() {
   if (map.getZoom() < 12 ) {
     return;
   }
-  var query = overpass_query;
 
   var iconsize = 24;
 
@@ -152,6 +151,7 @@ function loadPoi() {
 
         for ( groupname in taxonomy ) { // e.g. "fulfils_needs" : {}=group 
           group = taxonomy[groupname];
+
           var count_items = group["items"].length;
           for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
             item = group["items"][i];
@@ -181,8 +181,6 @@ function loadPoi() {
     return retval.html();
   }
 
-
-  var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
 
   function bindPopupOnData(data) {
     // first: check if no item with this osm-id exists...
@@ -288,6 +286,8 @@ function loadPoi() {
     parseOverpassJSON(data, nodeFunction, wayFunction, relationFunction);
   }
 
+  var query = overpass_query;
+  var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
   $.getJSON(allUrl, handleNodeWayRelations);
 
 }
