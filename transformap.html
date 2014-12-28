@@ -84,7 +84,7 @@
       'MapQuestOpen': MapQuestOpen_OSM,
       'OpenSteetMap - Mapnik': osm, 
     };
-    markers = L.markerClusterGroup({maxClusterRadius: 40});
+    markers = L.markerClusterGroup({maxClusterRadius: 40, removeOutsideVisibleBounds : false});
     var overlay_maps = {
       "Needs" : markers
     };
