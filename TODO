@@ -15,7 +15,8 @@ Done:
 • different icon-sets for the distinct maps
 • opening_hours support  (is it open now?)
 • "Download this data" - Link (Overpass-Export)
-• edit in JOSM / iD -Link 
+• edit in JOSM / iD -Link
+• Display coordinates
 • in Popup „Route here“ with link to OSRM
 • popup language translation
 • popup links to tags (to osm-wiki - what does this tag mean?)
@@ -34,7 +35,7 @@ translations via transifex
 implement API (at first via sourced JSON file)
 
 
-todo: on transformap.co not ONE karte, but many .... tiled 'previews' n' with link to distinct maps
+todo: on transformap.co not ONE map, but many .... tiled 'previews' n' with link to distinct maps
 	* Organic map -OK
 	* Regional map -OK
 	* Gratis-map
