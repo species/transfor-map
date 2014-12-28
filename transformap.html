@@ -65,20 +65,6 @@
 
     var overpass_query = overpass_start + overpass_query_string;
 
-    // fetch taxonomy, containing all translations, and implicit affiliations
-    // taken from Wikipedia:JSON
-    var url = "taxonomy.json";
-    var taxonomy;
-    var http_request = new XMLHttpRequest();
-    http_request.open("GET", url, true);
-    http_request.onreadystatechange = function () {
-          var done = 4, ok = 200;
-          if (http_request.readyState === done && http_request.status === ok) {
-              taxonomy = JSON.parse(http_request.responseText);
-          }
-      };
-    http_request.send(null);
-
     var map, ids, markers, lc = {};
     $(function () {
       markers = L.markerClusterGroup({maxClusterRadius: 40});

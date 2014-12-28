@@ -1,3 +1,18 @@
+/* this part must be in global namespace */
+// fetch taxonomy, containing all translations, and implicit affiliations
+// taken from Wikipedia:JSON
+var url = "taxonomy.json";
+var taxonomy;
+var http_request = new XMLHttpRequest();
+http_request.open("GET", url, true);
+http_request.onreadystatechange = function () {
+      var done = 4, ok = 200;
+      if (http_request.readyState === done && http_request.status === ok) {
+          taxonomy = JSON.parse(http_request.responseText);
+      }
+  };
+http_request.send(null);
+
 function initMap() {
   var attr_osm = 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
       attr_mapbox = 'Tiles &copy; <a href="http://mapbox.com/about/maps/">MapBox</a>',
@@ -76,6 +91,7 @@ lc = L.control.locate({
       }
       ).addTo(map);
 }
+
 
 function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRelation) {
   var nodes = {}, ways = {};
