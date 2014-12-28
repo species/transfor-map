@@ -13,15 +13,11 @@ http_request.onreadystatechange = function () {
   };
 http_request.send(null);
 
-function initMap() {
-  var attr_osm = 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
-      attr_mapbox = 'Tiles &copy; <a href="http://mapbox.com/about/maps/">MapBox</a>',
-      attr_greenmap = 'Icons &copy; <a href="http://www.greenmap.org">greenmap.org</a>',
-      attr_overpass = 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>';
+function initMap(attr) {
 
-  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass, attr_greenmap].join(', ')}),
-      osm_bw = new L.TileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {opacity: 0.8, attribution: [attr_osm, attr_overpass, attr_greenmap].join(', ')}),
-      MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', { attribution: [attr_mapbox, attr_osm, attr_overpass, attr_greenmap].join(', '), subdomains: '1234' });
+  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', ')}),
+      //osm_bw = new L.TileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {opacity: 0.8, attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', ')}),
+      MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', { attribution: [attr.osm, attr.mapbox, attr.overpass, attr.greenmap].join(', '), subdomains: '1234' });
       //osm_no = new L.TileLayer('http://{s}.www.toolserver.org/tiles/osm-no-labels/{z}/{x}/{y}.png', {attribution: [attr_osm, attr_overpass].join(', ')}),
       //mapbox_streets = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png", {attribution: [attr_mapbox, attr_osm, attr_overpass].join(', ')}),
       //mapbox_light = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-light/{z}/{x}/{y}.png", {attribution: [attr_mapbox, attr_osm, attr_overpass].join(', ')}),
@@ -36,12 +32,12 @@ function initMap() {
   map.getControl = function () {
     var ctrl = new L.Control.Layers({
        'MapQuestOpen': MapQuestOpen_OSM,
-       'OpenSteetMap': osm,
+       'OpenSteetMap - Mapnik': osm,
        //'MapBox Streets': mapbox_streets,
        //'MapBox Light': mapbox_light,
        //'MapBox Simple': mapbox_simple,
        //'OpenSteetMap (no labels)': osm_no,
-       'OpenSteetMap (black/white)': osm_bw,
+       //'OpenSteetMap (black/white)': osm_bw,
     });
     return function () {
       return ctrl;
