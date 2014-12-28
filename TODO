@@ -19,11 +19,20 @@ Done:
 • Display coordinates
 • in Popup „Route here“ with link to OSRM
 • popup language translation
+• reduce queries to Overpass-Server
+  · when zooming in below 12, do not query
+  · keep (how?) a "List" of visited places, and do not query if we were already there
 • popup links to tags (to osm-wiki - what does this tag mean?)
 • statistics: how many POIs loaded (like overpass-turbo)
 • layers with different needs
     1st step: layer checkbox(es) in layer-menu -OK
     2nd step: more layers (different overpass-queries)
+      question: 
+        ? one query, and sort into different layers → goal should be to reduce queries
+        ? more queries, and feed each into its own layer?
+      ? what if an object belongs to more than one layer?
+      ? how to do clustering?
+
     3rd step: generate overpass-queries from taxonomy.json
 
 • maxzoom up to 19
