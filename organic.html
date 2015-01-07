@@ -9,13 +9,25 @@
   </style>
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+  <link rel="stylesheet" href="leaflet-search.min.css" />
+
+  <link href='L.Control.Locate.mine.css' rel='stylesheet' />
+  <!--[if lt IE 9]>
+    <link href='L.Control.Locate.ie.min.css' rel='stylesheet' />
+  <![endif]-->
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-  <script src="https://cdn.rawgit.com/Leaflet/Leaflet.markercluster/ac0b77b16f5fc858b1a3f8117d79eb15d337898c/dist/leaflet.markercluster.js"></script>
-  <script src="leaflet-hash.js"></script>
   <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
+
+  <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+  <script src="http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script src="leaflet-hash.js"></script>
+  <script src="leaflet-search.min.js"></script>
+
+  <script src='L.Control.Locate.mine.js'></script>
+
   <script src="map.js"></script>
   <script>
     /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
@@ -33,8 +45,7 @@
     var overpass_start = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];';
 
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
- //   var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
-    var query_array = [  [ '"organic"~"yes|only|limited"' ] ];
+    var query_array = [ [ '"organic"~"yes|only|limited"' ] ];
 
     var overpass_query_string = "";
 
@@ -53,37 +64,55 @@
     }
 
     var overpass_query = overpass_start + overpass_query_string;
-    console.log(overpass_query);
 
-    // fetch taxonomy, containing all translations, and implicit affiliations
-    // taken from Wikipedia:JSON
-    var url = "taxonomy.json";
-    var taxonomy;
-    var http_request = new XMLHttpRequest();
-    http_request.open("GET", url, true);
-    http_request.onreadystatechange = function () {
-          var done = 4, ok = 200;
-          if (http_request.readyState === done && http_request.status === ok) {
-              taxonomy = JSON.parse(http_request.responseText);
-          }
-      };
-    http_request.send(null);
 
-    var map, ids, markers = {};
+
+
+    var map, ids, markers, lc = {};
+    var attr = { 
+      osm : 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
+      osm_tiles : 'Tiles &copy; OSM - <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>',
+      search : 'Search by OSM - <a href="http://wiki.openstreetmap.org/wiki/Nominatim">Nominatim</a>',
+      mapbox : 'Tiles &copy; <a href="http://mapbox.com/about/maps/">MapBox</a>',
+      greenmap : 'Icons &copy; <a href="http://www.greenmap.org">greenmap.org</a>',
+      overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
+    }
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', ')});
+    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', { attribution: [attr.osm, attr.mapbox, attr.overpass, attr.greenmap].join(', '), subdomains: '1234' });
+
+    var base_maps = {
+      'MapQuestOpen': MapQuestOpen_OSM,
+      'OpenSteetMap - Mapnik': osm, 
+    };
+    markers = new L.markerClusterGroup({maxClusterRadius: 40}); //do not use removeOutsideVisibleBounds, it's broken!
+    var overlay_maps = {
+      "Needs" : markers
+    };
+
     $(function () {
-      map = initMap();
+
+      map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps);
       map.zoomIn();
-      var hash = new L.Hash(map);
-      markers = L.markerClusterGroup({maxClusterRadius: 40});
+
+      var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
       map.addLayer(markers);
+
       loadPoi();
       map.on('moveend', loadPoi);
-    });
 
+      addSearch();
+      addLocate();
+      L.control.scale({imperial: false}).addTo(map);
+
+    });
 
   </script>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
   <style>
+
+    * { box-sizing: border-box; }
+
     body, html {
       padding: 0;
       margin: 0;
@@ -107,8 +136,8 @@ div.leaflet-popup-content { width: auto !important; }
       height: 100%;
       overflow: hidden;
     }
-  </style>
-  <style>
+
+
   .mmmactive {
   background: #333;
 }
@@ -155,7 +184,6 @@ div.leaflet-popup-content { width: auto !important; }
 #mmmnavtitle:hover {
   background: #000;
 }
-
 #content {
   position: absolute;
   top: 48px;
@@ -169,15 +197,24 @@ div.leaflet-popup-content { width: auto !important; }
 <body>
 <nav class="mmmnavbar">
 <ul>
-<li id="mmmnavtitle" class="mmmactive">TransforMap</li><a href="http://blog.14mmm.org"><li>Blog</li></a><a href="http://discourse.14mmm.org"><li>Discourse</li></a><a href="https://wiki.14mmm.org"><li>Wiki</li></a>
+  <li id="mmmnavtitle" class="mmmactive">TransforMap</li>
+  <a href="http://blog.14mmm.org">
+    <li>Blog</li>
+  </a>
+  <a href="http://discourse.14mmm.org">
+    <li>Discourse</li>
+  </a>
+  <a href="https://wiki.14mmm.org">
+    <li>Wiki</li>
+  </a>
 </ul>
 </nav>
 
-  <noscript>
-    <br><hr><br>
-    <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
-    <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
-  </noscript>
+<noscript>
+  <br><hr><br>
+  <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+</noscript>
 
 <div id="content">
   <div id="map"></div>

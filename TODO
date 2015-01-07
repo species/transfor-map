@@ -11,6 +11,7 @@ Done:
 • 'Locate me' button instead of automatic geolocation on load
   https://github.com/domoritz/leaflet-locatecontrol doesn't work with latest jquery and leaflet
     try to rewrite to version with minimal function. -OK
+• adding POIs from overpass to marker layer with bulk methods -OK
 
 • different icon-sets for the distinct maps
 • opening_hours support  (is it open now?)
@@ -24,7 +25,20 @@ Done:
 • layers with different needs
     1st step: layer checkbox(es) in layer-menu -OK
     2nd step: more layers (different overpass-queries)
+      question: 
+        ? one query, and sort into different layers → goal should be to reduce queries
+        ? more queries, and feed each into its own layer?
+      ? what if an object belongs to more than one layer?
+      ? how to do clustering?
+        must be done over ALL layers → only one layer possible!
+        → we cannot use Leaflet layer switcher 
+
     3rd step: generate overpass-queries from taxonomy.json
+
+Performance:
+• reduce queries to Overpass-Server
+  · when zooming in below 12, do not query
+  · keep (how?) a "List" of visited places, and do not query if we were already there
 
 • maxzoom up to 19
 

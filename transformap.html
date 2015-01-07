@@ -84,7 +84,7 @@
       'MapQuestOpen': MapQuestOpen_OSM,
       'OpenSteetMap - Mapnik': osm, 
     };
-    markers = L.markerClusterGroup({maxClusterRadius: 40});
+    markers = new L.markerClusterGroup({maxClusterRadius: 40}); //do not use removeOutsideVisibleBounds, it's broken!
     var overlay_maps = {
       "Needs" : markers
     };
@@ -93,8 +93,11 @@
 
       map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps);
       map.zoomIn();
-      var hash = new L.Hash(map);
+
+      var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
       map.addLayer(markers);
+
       loadPoi();
       map.on('moveend', loadPoi);
 

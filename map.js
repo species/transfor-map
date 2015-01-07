@@ -69,6 +69,7 @@ lc = L.control.locate({
 
 function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRelation) {
   var nodes = {}, ways = {};
+  var new_markers = [];
   for (var i = 0; i < overpassJSON.elements.length; i++) {
     var p = overpassJSON.elements[i];
     switch (p.type) {
@@ -77,7 +78,12 @@ function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRela
         p.geometry = {type: 'Point', coordinates: p.coordinates};
         nodes[p.id] = p;
         // p has type=node, id, lat, lon, tags={k:v}, coordinates=[lon,lat], geometry
-        if (typeof callbackNode === 'function') callbackNode(p);
+        if (typeof callbackNode === 'function') 
+        {
+          var retval = callbackNode(p);
+          if (retval)
+            new_markers.push(retval);
+        }
         break;
       case 'way':
         p.coordinates = p.nodes.map(function (id) {
@@ -86,17 +92,29 @@ function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRela
         p.geometry = {type: 'LineString', coordinates: p.coordinates};
         ways[p.id] = p;
         // p has type=way, id, tags={k:v}, nodes=[id], coordinates=[[lon,lat]], geometry
-        if (typeof callbackWay === 'function') callbackWay(p);
+        if (typeof callbackWay === 'function') 
+        {
+          var retval = callbackWay(p);
+          if (retval)
+            new_markers.push(retval);
+        }
         break;
       case 'relation':
         p.members.map(function (mem) {
           mem.obj = (mem.type == 'way' ? ways : nodes)[mem.ref];
         });
         // p has type=relaton, id, tags={k:v}, members=[{role, obj}]
-        if (typeof callbackRelation === 'function') callbackRelation(p);
+        if (typeof callbackRelation === 'function') 
+        {
+          var retval = callbackRelation(p);
+          if (retval)
+            new_markers.push(retval);
+        }
         break;
     }
   }
+  markers.addLayers(new_markers);
+  new_markers = [];
 }
 
 var marker_table = {};
@@ -106,7 +124,6 @@ function loadPoi() {
   if (map.getZoom() < 12 ) {
     return;
   }
-  var query = overpass_query;
 
   var iconsize = 24;
 
@@ -152,6 +169,7 @@ function loadPoi() {
 
         for ( groupname in taxonomy ) { // e.g. "fulfils_needs" : {}=group 
           group = taxonomy[groupname];
+
           var count_items = group["items"].length;
           for (var i = 0; i < count_items; i++) { // loop over each item in group["items"]
             item = group["items"][i];
@@ -182,11 +200,9 @@ function loadPoi() {
   }
 
 
-  var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
-
   function bindPopupOnData(data) {
     // first: check if no item with this osm-id exists...
-    var hashtable_key = data.type + data.id;
+    var hashtable_key = data.type + data.id; // e.g. "node1546484546"
     if(marker_table[hashtable_key] == 1) //object already there
       return;
     marker_table[hashtable_key] = 1;
@@ -224,12 +240,13 @@ function loadPoi() {
       title: data.tags.name
     });
     lmarker.bindPopup(fillPopup(data.tags,data.type,data.id));
-    markers.addLayer(lmarker);
+    return lmarker;
   }
 
   function nodeFunction(data) {
-    if (! data.tags || ! data.tags.name || data.tags.entrance ) return;
-    bindPopupOnData(data);
+    if (! data.tags || ! data.tags.name || data.tags.entrance ) // no retval if node is just member of a way
+      return null;
+    return bindPopupOnData(data);
   }
   function wayFunction(data) {
     //calculate centre of polygon
@@ -241,8 +258,7 @@ function loadPoi() {
     centroid.type = data.type;
     centroid.lon = centroid.coordinates[0];
     centroid.lat = centroid.coordinates[1];
-    bindPopupOnData(centroid);
-    return;
+    return bindPopupOnData(centroid);
   };
   function relationFunction(data) {
     // calculate mean coordinates as center
@@ -280,7 +296,7 @@ function loadPoi() {
     }
 
     //console.log(sum_centroid);
-    bindPopupOnData(sum_centroid);
+    return bindPopupOnData(sum_centroid);
     // todo: in the long term, all areas should be displayed as areas (as in overpass turbo)
   }
 
@@ -288,6 +304,8 @@ function loadPoi() {
     parseOverpassJSON(data, nodeFunction, wayFunction, relationFunction);
   }
 
+  var query = overpass_query;
+  var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
   $.getJSON(allUrl, handleNodeWayRelations);
 
 }
