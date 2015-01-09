@@ -69,7 +69,12 @@ lc = L.control.locate({
 
 function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRelation) {
   var nodes = {}, ways = {};
+
+  //overpass returns elements unsorted: rels, nodes, ways - should be nodes, ways, rels
+  var rels = []; // to handle them last
+
   var new_markers = [];
+  console.log(overpassJSON.elements);
   for (var i = 0; i < overpassJSON.elements.length; i++) {
     var p = overpassJSON.elements[i];
     switch (p.type) {
@@ -100,19 +105,39 @@ function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRela
         }
         break;
       case 'relation':
-        p.members.map(function (mem) {
-          mem.obj = (mem.type == 'way' ? ways : nodes)[mem.ref];
-        });
-        // p has type=relaton, id, tags={k:v}, members=[{role, obj}]
-        if (typeof callbackRelation === 'function') 
-        {
-          var retval = callbackRelation(p);
-          if (retval)
-            new_markers.push(retval);
-        }
+        rels.push(p);
         break;
     }
   }
+  console.log("nodes count:" + Object.keys(nodes).length + " ways count:" + Object.keys(ways).length);
+  for (var i = 0; i < rels.length; i++) {
+    var p = rels[i];
+    p.members.map(function (mem) {
+        if (mem.type == 'node') {
+
+          if(!nodes[mem.ref])
+            console.log("mem.type=node" + mem.ref);
+
+          mem.obj = nodes[mem.ref];
+        } else if (mem.type == 'way') {
+
+          if(!ways[mem.ref])
+            console.log("mem.type=way" + mem.ref); //FIXME this seems to come from overpass query not returning childs of rels... change query!
+
+          mem.obj = ways[mem.ref];
+        } else
+          console.log("mem.type=" + mem.type);// FIXME handle rels of rels
+    });
+    // p has type=relaton, id, tags={k:v}, members=[{role, obj}]
+    if (typeof callbackRelation === 'function') 
+    {
+      var retval = callbackRelation(p);
+      if (retval)
+        new_markers.push(retval);
+    }
+   
+  }
+  
   markers.addLayers(new_markers);
   new_markers = [];
 }
@@ -267,7 +292,7 @@ function loadPoi() {
     var centroids = [];
     var sum_lon = 0;
     var sum_lat = 0;
-    //console.log(data);
+    console.log(data);
     for (var i = 0; i < data.members.length; i++) {
       var p = data.members[i];
       var centroid;
@@ -277,10 +302,12 @@ function loadPoi() {
           centroids.push(centroid);
           break;
         case 'way':
-          // fixme test with relations and way-members
-          var centroid_point = $.geo.centroid(p.obj.geometry);
-          centroid = centroid_point.coordinates;
-          entroids.push(centroid);
+          console.log(p);
+          if (p.role != "outer") {// FIXME add handling of rel members
+            var centroid_point = $.geo.centroid(p.obj.geometry);
+            centroid = centroid_point.coordinates;
+            entroids.push(centroid);
+          } 
           break;
       }
       sum_lon += centroid[0];
