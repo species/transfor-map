@@ -60,7 +60,7 @@
 
       overpass_query_string += "node" + anded_querystring + ";out;";
       overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
-      overpass_query_string += "rel" + anded_querystring + ";out;";
+      overpass_query_string += "rel" + anded_querystring + ";>;out;";
     }
 
     var overpass_query = overpass_start + overpass_query_string;
