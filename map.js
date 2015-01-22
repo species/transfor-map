@@ -233,15 +233,15 @@ function loadPoi() {
     marker_table[hashtable_key] = 1;
 
     // set icon dependent on tags
-    data.tags.needs = "";
-    for (key in data.tags) {
-      if ( key.indexOf("fulfils_needs:") >= 0 ) {
+    data.tags.needs = data.tags.provides;
+    /*for (key in data.tags) {
+      if ( key.indexOf("provides:") >= 0 ) {
         needs_value = key.substring(14);
         if ( data.tags.needs != "" )
           data.tags.needs = data.tags.needs + "; ";
         data.tags.needs = data.tags.needs + needs_value;
       }
-    }
+    }*/
     var icon_url = "";
     if (data.tags.needs.indexOf(";") >= 0) // more than one item, take generic icon
       icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.png";
