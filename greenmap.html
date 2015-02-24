@@ -45,7 +45,7 @@
     var overpass_start = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];';
 
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
-    var query_array = [ [ '"leisure"~"park|garden|playground"', '"name"' ] ];
+    var query_array = [ [ '"leisure"~"^park|garden|playground"', '"name"' ] ];
 
     var overpass_query_string = "";
 

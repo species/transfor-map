@@ -110,6 +110,8 @@ function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRela
     }
   }
   console.log("nodes count:" + Object.keys(nodes).length + " ways count:" + Object.keys(ways).length);
+
+  // handle relations last
   for (var i = 0; i < rels.length; i++) {
     var p = rels[i];
     p.members.map(function (mem) {
@@ -233,15 +235,10 @@ function loadPoi() {
     marker_table[hashtable_key] = 1;
 
     // set icon dependent on tags
-    data.tags.needs = data.tags.provides;
-    /*for (key in data.tags) {
-      if ( key.indexOf("provides:") >= 0 ) {
-        needs_value = key.substring(14);
-        if ( data.tags.needs != "" )
-          data.tags.needs = data.tags.needs + "; ";
-        data.tags.needs = data.tags.needs + needs_value;
-      }
-    }*/
+    if(data.tags.topic)
+      data.tags.needs = data.tags.topic;
+    else
+      data.tags.needs = data.tags.provides;
     var icon_url = "";
     if (data.tags.needs.indexOf(";") >= 0) // more than one item, take generic icon
       icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.png";
@@ -331,8 +328,130 @@ function loadPoi() {
     parseOverpassJSON(data, nodeFunction, wayFunction, relationFunction);
   }
 
+  function handleNodes(overpassJSON) {
+    console.log("handleNodes called");
+    var new_markers = [];
+    for (var i = 0; i < overpassJSON.elements.length; i++) {
+      var p = overpassJSON.elements[i];
+      p.coordinates = [p.lon, p.lat];
+      p.geometry = {type: 'Point', coordinates: p.coordinates};
+
+      var retval = nodeFunction(p);
+      if (retval)
+        new_markers.push(retval);
+    }
+    markers.addLayers(new_markers);
+    new_markers = [];
+  }
+
+  function handleWays(overpassJSON) {
+    console.log("handleWays called");
+    var new_markers = [];
+    var nodes = {};
+    for (var i = 0; i < overpassJSON.elements.length; i++) {
+      var p = overpassJSON.elements[i];
+      switch (p.type) {
+        case 'node':
+          p.coordinates = [p.lon, p.lat];
+          p.geometry = {type: 'Point', coordinates: p.coordinates};
+          nodes[p.id] = p;
+          break;
+        case 'way':
+          p.coordinates = p.nodes.map(function (id) {
+            return nodes[id].coordinates;
+          });
+          p.geometry = {type: 'LineString', coordinates: p.coordinates};
+
+          var retval = wayFunction(p);
+          if (retval)
+            new_markers.push(retval);
+      }
+    }
+
+    markers.addLayers(new_markers);
+    new_markers = [];
+  }
+
+  function handleRelations(overpassJSON) {
+    console.log("handleRelations called");
+    var nodes = {}, ways = {};
+
+    //overpass returns elements unsorted: rels, nodes, ways - should be nodes, ways, rels
+    var rels = []; // to handle them last
+
+    var new_markers = [];
+    console.log(overpassJSON.elements);
+    for (var i = 0; i < overpassJSON.elements.length; i++) {
+      var p = overpassJSON.elements[i];
+      switch (p.type) {
+        case 'node':
+          p.coordinates = [p.lon, p.lat];
+          p.geometry = {type: 'Point', coordinates: p.coordinates};
+          nodes[p.id] = p;
+          break;
+        case 'way':
+          p.coordinates = p.nodes.map(function (id) {
+            return nodes[id].coordinates;
+          });
+          p.geometry = {type: 'LineString', coordinates: p.coordinates};
+          ways[p.id] = p;
+          break;
+        case 'relation':
+          rels.push(p);
+          break;
+      }
+    }
+    console.log("nodes count:" + Object.keys(nodes).length + "; ways count:" + Object.keys(ways).length + "; rel count: " + rels.length);
+
+    // handle relations last
+    for (var i = 0; i < rels.length; i++) {
+      var p = rels[i];
+      p.members.map(function (mem) {
+          if (mem.type == 'node') {
+
+            if(!nodes[mem.ref])
+              console.log("mem.type=node missing: " + mem.ref);
+
+            mem.obj = nodes[mem.ref];
+          } else if (mem.type == 'way') {
+
+            if(!ways[mem.ref])
+              console.log("mem.type=way missing: " + mem.ref); //FIXME this seems to come from overpass query not returning childs of rels... change query!
+
+            mem.obj = ways[mem.ref];
+          } else
+            console.log("mem.type=" + mem.type);// FIXME handle rels of rels
+      });
+      // p has type=relaton, id, tags={k:v}, members=[{role, obj}]
+      var retval = relationFunction(p);
+      if (retval)
+        new_markers.push(retval);
+     
+    }
+    
+    markers.addLayers(new_markers);
+    new_markers = [];
+  }
+
   var query = overpass_query;
+
+  var node_query = overpass_query_nodes;
+  var way_query = overpass_query_ways;
+  var rel_query = overpass_query_rels;
+
+
   var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
-  $.getJSON(allUrl, handleNodeWayRelations);
+
+  var node_url = node_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
+  var way_url = way_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
+  var rel_url = rel_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
+
+// $.getJSON(allUrl, handleNodeWayRelations);
+
+  $.getJSON(node_url, handleNodes);
+  $.getJSON(way_url, handleWays);
+  $.getJSON(rel_url, handleRelations);
+
+  console.log("loadPOI called");
 
 }
