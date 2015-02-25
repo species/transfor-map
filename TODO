@@ -14,7 +14,6 @@ Done:
 • adding POIs from overpass to marker layer with bulk methods -OK
 
 Todo:
-• different icon-sets for the distinct maps
 • opening_hours support  (is it open now?)
 • "Download this data" - Link (Overpass-Export)
 • edit in JOSM / iD -Link
@@ -36,12 +35,21 @@ Todo:
 
     3rd step: generate overpass-queries from taxonomy.json
 
+• different icon-sets for the distinct maps
+  base-folder for each map
+    pois
+    needs
+    identities
+    interaction
+    freemap -> pois?
+    greenmap -> pois?
+
 Performance:
 • reduce queries to Overpass-Server
   · when zooming in below 12, do not query
   · keep (how?) a "List" of visited places, and do not query if we were already there
   · At first, download nodes, then ways, then rels (should speed up display significantly) -OK
-    Todo: check ways in rels, nodes working
+    Todo: check ways in rels, nodes working -OK
 
 
 • maxzoom up to 19

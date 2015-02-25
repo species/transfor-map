@@ -47,7 +47,10 @@
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
     var query_array = [ [ '"leisure"~"^park|garden|playground"', '"name"' ] ];
-    var query_array = [ [ '"leisure"~"^park|garden|playground"', '"access"!~"no|private"' ] ];
+    var query_array = [ [ '"leisure"~"^park|garden|playground|dog_park"', '"access"!~"no|private|customers"' ] ];
+
+    var icon_foldername = "pois";
+    var icon_tags = [ "leisure" ];
 
     var overpass_query_string = "";
     var overpass_query_string_nodes = "";
