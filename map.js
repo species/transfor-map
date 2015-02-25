@@ -235,22 +235,24 @@ function loadPoi() {
     marker_table[hashtable_key] = 1;
 
     // set icon dependent on tags
-    if(data.tags.topic)
-      data.tags.needs = data.tags.topic;
-    else
-      data.tags.needs = data.tags.provides;
+    var icon_tag = ""; //OSM key for choosing icon
+    for (var i = 0; i < icon_tags.length; i++) {
+      var key = icon_tags[i];
+      if(data.tags[key]) {
+        icon_tag = key;
+        break;
+      }
+    }
+
     var icon_url = "";
-    if(!data.tags.needs) {
-      icon_url = "assets/transformap/pngs/" + iconsize + "/unknown.png";
+    if(!icon_tag) {
+      icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/unknown.png";
     } else {
 
-      if (data.tags.needs.indexOf(";") >= 0) // more than one item, take generic icon
-        icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.png";
+      if (data.tags[icon_tag].indexOf(";") >= 0) // more than one item, take generic icon
+        icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/generic.png";
       else
-        icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs." + data.tags.needs + ".png";
-
-      if ((data.tags.needs.split(";").length - 1  == 1) && (data.tags.needs.indexOf("beverages") >= 0) && (data.tags.needs.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
-        icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.food.png";
+        icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/" + icon_tag + "=" + data.tags[icon_tag] + ".png";
     }
 
     var needs_icon = L.icon({
