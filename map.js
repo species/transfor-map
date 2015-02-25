@@ -240,16 +240,18 @@ function loadPoi() {
     else
       data.tags.needs = data.tags.provides;
     var icon_url = "";
-    if (data.tags.needs.indexOf(";") >= 0) // more than one item, take generic icon
-      icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.png";
-    else
-      icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs." + data.tags.needs + ".png";
-
-    if ((data.tags.needs.split(";").length - 1  == 1) && (data.tags.needs.indexOf("beverages") >= 0) && (data.tags.needs.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
-      icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.food.png";
-
-    if(!data.tags.needs)
+    if(!data.tags.needs) {
       icon_url = "assets/transformap/pngs/" + iconsize + "/unknown.png";
+    } else {
+
+      if (data.tags.needs.indexOf(";") >= 0) // more than one item, take generic icon
+        icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.png";
+      else
+        icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs." + data.tags.needs + ".png";
+
+      if ((data.tags.needs.split(";").length - 1  == 1) && (data.tags.needs.indexOf("beverages") >= 0) && (data.tags.needs.indexOf("food") >= 0 ) ) //only the two items beverages food share the same icon
+        icon_url = "assets/transformap/pngs/" + iconsize + "/fulfils_needs.food.png";
+    }
 
     var needs_icon = L.icon({
       iconUrl: icon_url,
@@ -300,15 +302,18 @@ function loadPoi() {
           break;
         case 'way':
           console.log(p);
-          if (p.role != "outer") {// FIXME add handling of rel members
+          if (p.role == "outer") {// FIXME add handling of rel members
             var centroid_point = $.geo.centroid(p.obj.geometry);
             centroid = centroid_point.coordinates;
-            entroids.push(centroid);
+            centroids.push(centroid);
           } 
           break;
       }
-      sum_lon += centroid[0];
-      sum_lat += centroid[1];
+      if(centroid.length != 0) {
+        sum_lon += centroid[0];
+        sum_lat += centroid[1];
+      } else
+        console.log("centroid empty!");
     }
     //console.log(centroids);
     var sum_centroid = { 
