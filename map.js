@@ -370,8 +370,6 @@ function loadPoi() {
   var way_url = way_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
   var rel_url = rel_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
 
-// $.getJSON(allUrl, handleNodeWayRelations);
-
   $.getJSON(node_url, handleNodes);
   $.getJSON(way_url, handleWays);
   $.getJSON(rel_url, handleRelations);
