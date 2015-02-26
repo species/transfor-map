@@ -66,86 +66,7 @@ lc = L.control.locate({
       ).addTo(map);
 }
 
-
-function parseOverpassJSON(overpassJSON, callbackNode, callbackWay, callbackRelation) {
-  var nodes = {}, ways = {};
-
-  //overpass returns elements unsorted: rels, nodes, ways - should be nodes, ways, rels
-  var rels = []; // to handle them last
-
-  var new_markers = [];
-  console.log(overpassJSON.elements);
-  for (var i = 0; i < overpassJSON.elements.length; i++) {
-    var p = overpassJSON.elements[i];
-    switch (p.type) {
-      case 'node':
-        p.coordinates = [p.lon, p.lat];
-        p.geometry = {type: 'Point', coordinates: p.coordinates};
-        nodes[p.id] = p;
-        // p has type=node, id, lat, lon, tags={k:v}, coordinates=[lon,lat], geometry
-        if (typeof callbackNode === 'function') 
-        {
-          var retval = callbackNode(p);
-          if (retval)
-            new_markers.push(retval);
-        }
-        break;
-      case 'way':
-        p.coordinates = p.nodes.map(function (id) {
-          return nodes[id].coordinates;
-        });
-        p.geometry = {type: 'LineString', coordinates: p.coordinates};
-        ways[p.id] = p;
-        // p has type=way, id, tags={k:v}, nodes=[id], coordinates=[[lon,lat]], geometry
-        if (typeof callbackWay === 'function') 
-        {
-          var retval = callbackWay(p);
-          if (retval)
-            new_markers.push(retval);
-        }
-        break;
-      case 'relation':
-        rels.push(p);
-        break;
-    }
-  }
-  console.log("nodes count:" + Object.keys(nodes).length + " ways count:" + Object.keys(ways).length);
-
-  // handle relations last
-  for (var i = 0; i < rels.length; i++) {
-    var p = rels[i];
-    p.members.map(function (mem) {
-        if (mem.type == 'node') {
-
-          if(!nodes[mem.ref])
-            console.log("mem.type=node" + mem.ref);
-
-          mem.obj = nodes[mem.ref];
-        } else if (mem.type == 'way') {
-
-          if(!ways[mem.ref])
-            console.log("mem.type=way" + mem.ref); //FIXME this seems to come from overpass query not returning childs of rels... change query!
-
-          mem.obj = ways[mem.ref];
-        } else
-          console.log("mem.type=" + mem.type);// FIXME handle rels of rels
-    });
-    // p has type=relaton, id, tags={k:v}, members=[{role, obj}]
-    if (typeof callbackRelation === 'function') 
-    {
-      var retval = callbackRelation(p);
-      if (retval)
-        new_markers.push(retval);
-    }
-   
-  }
-  
-  markers.addLayers(new_markers);
-  new_markers = [];
-}
-
 var marker_table = {};
-
 
 function loadPoi() {
   if (map.getZoom() < 12 ) {
@@ -329,10 +250,6 @@ function loadPoi() {
     //console.log(sum_centroid);
     return bindPopupOnData(sum_centroid);
     // todo: in the long term, all areas should be displayed as areas (as in overpass turbo)
-  }
-
-  function handleNodeWayRelations(data) {
-    parseOverpassJSON(data, nodeFunction, wayFunction, relationFunction);
   }
 
   function handleNodes(overpassJSON) {
