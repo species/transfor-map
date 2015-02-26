@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TransforMap</title>
+  <title>Organic TransforMap</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
@@ -47,7 +47,13 @@
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var query_array = [ [ '"organic"~"yes|only|limited"' ] ];
 
+    var icon_foldername = "pois";
+    var icon_tags = [ "shop","amenity","leisure" ];
+
     var overpass_query_string = "";
+    var overpass_query_string_nodes = "";
+    var overpass_query_string_ways = "";
+    var overpass_query_string_rels = "";
 
     var nr_of_or_clauses = query_array.length;
     for (var i = 0; i < nr_of_or_clauses; i++) {
@@ -61,9 +67,16 @@
       overpass_query_string += "node" + anded_querystring + ";out;";
       overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
       overpass_query_string += "rel" + anded_querystring + ";out;";
+
+      overpass_query_string_nodes += "node" + anded_querystring + ";out;";
+      overpass_query_string_ways += "(way" + anded_querystring + ";node(w));out;";
+      overpass_query_string_rels += "rel" + anded_querystring + ";out;>;out;";
     }
 
     var overpass_query = overpass_start + overpass_query_string;
+    var overpass_query_nodes = overpass_start + overpass_query_string_nodes;
+    var overpass_query_ways = overpass_start + overpass_query_string_ways;
+    var overpass_query_rels = overpass_start + overpass_query_string_rels;
 
 
 
@@ -104,7 +117,7 @@
       addSearch();
       addLocate();
       L.control.scale({imperial: false}).addTo(map);
-
+      
     });
 
   </script>
