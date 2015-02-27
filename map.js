@@ -72,6 +72,7 @@ function loadPoi() {
   if (map.getZoom() < 12 ) {
     return;
   }
+  console.log("loadPOI called");
 
   var iconsize = 24;
 
@@ -214,7 +215,7 @@ function loadPoi() {
     var centroids = [];
     var sum_lon = 0;
     var sum_lat = 0;
-    console.log(data);
+    //console.log(data);
     for (var i = 0; i < data.members.length; i++) {
       var p = data.members[i];
       var centroid;
@@ -224,7 +225,7 @@ function loadPoi() {
           centroids.push(centroid);
           break;
         case 'way':
-          console.log(p);
+          //console.log(p);
           if (p.role == "outer") {// FIXME add handling of rel members
             var centroid_point = $.geo.centroid(p.obj.geometry);
             centroid = centroid_point.coordinates;
@@ -264,8 +265,10 @@ function loadPoi() {
       if (retval)
         new_markers.push(retval);
     }
+    var number = new_markers.length;
     markers.addLayers(new_markers);
     new_markers = [];
+    console.log("handleNodes done, " + number + " added.");
   }
 
   function handleWays(overpassJSON) {
@@ -292,8 +295,10 @@ function loadPoi() {
       }
     }
 
+    var number = new_markers.length;
     markers.addLayers(new_markers);
     new_markers = [];
+    console.log("handleWays done, " + number + " added.");
   }
 
   function handleRelations(overpassJSON) {
@@ -304,7 +309,7 @@ function loadPoi() {
     var rels = []; // to handle them last
 
     var new_markers = [];
-    console.log(overpassJSON.elements);
+    //console.log(overpassJSON.elements);
     for (var i = 0; i < overpassJSON.elements.length; i++) {
       var p = overpassJSON.elements[i];
       switch (p.type) {
@@ -325,7 +330,7 @@ function loadPoi() {
           break;
       }
     }
-    console.log("nodes count:" + Object.keys(nodes).length + "; ways count:" + Object.keys(ways).length + "; rel count: " + rels.length);
+    //console.log("nodes count:" + Object.keys(nodes).length + "; ways count:" + Object.keys(ways).length + "; rel count: " + rels.length);
 
     // handle relations last
     for (var i = 0; i < rels.length; i++) {
@@ -353,8 +358,10 @@ function loadPoi() {
      
     }
     
+    var number = new_markers.length;
     markers.addLayers(new_markers);
     new_markers = [];
+    console.log("handleRelations done, " + number + " added.");
   }
 
   var query = overpass_query;
@@ -370,10 +377,12 @@ function loadPoi() {
   var way_url = way_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
   var rel_url = rel_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
 
+  var progress_div = document.getElementById('loading');
+  //  node: getJSON [x] | 
+  console.log("loadPOI: before JSON calls");
   $.getJSON(node_url, handleNodes);
   $.getJSON(way_url, handleWays);
   $.getJSON(rel_url, handleRelations);
 
-  console.log("loadPOI called");
 
 }
