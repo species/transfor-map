@@ -43,6 +43,8 @@ Todo:
     interaction
     freemap -> pois?
     greenmap -> pois?
+    
+• fixed worldwide clusters for z=0-12! (download daily via script to server)
 
 Performance:
 • reduce queries to Overpass-Server
