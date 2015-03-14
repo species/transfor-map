@@ -67,12 +67,22 @@ lc = L.control.locate({
 }
 
 var marker_table = {};
+var old_zoom = map.getZoom();
 
 function loadPoi() {
   if (map.getZoom() < 12 ) {
     return;
   }
-  console.log("loadPOI called");
+  var current_zoom = map.getZoom();
+  console.log("loadPOI called, z" + current_zoom);
+  if(current_zoom > old_zoom && current_zoom != 12) {
+    console.log("zooming in, POI already loaded, nothing to to");
+    old_zoom = current_zoom;
+    return;
+  }
+  old_zoom = current_zoom;
+
+
 
   var iconsize = 24;
 
