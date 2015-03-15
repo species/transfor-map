@@ -119,6 +119,7 @@
       addSearch();
       addLocate();
       L.control.scale({imperial: false}).addTo(map);
+      L.control.mousePosition().addTo(map);
       
     });
 
@@ -215,6 +216,19 @@ div.leaflet-popup-content { width: auto !important; }
   background-color:white;
   padding:5px;
   display:none;
+}
+
+
+/* taken from https://github.com/ardhi/Leaflet.MousePosition, 
+License: MIT, see MIT-LICENCE-Leaflet.MousePosition.txt */
+
+.leaflet-container .leaflet-control-mouseposition {
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 5px #bbb;
+  padding: 0 5px;
+  margin:0;
+  color: #333;
+  font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 

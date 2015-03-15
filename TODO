@@ -17,7 +17,7 @@ Todo:
 • opening_hours support  (is it open now?)
 • "Download this data" - Link (Overpass-Export)
 • edit in JOSM / iD -Link
-• Display coordinates
+• Display coordinates -OK
 • in Popup „Route here“ with link to OSRM
 • popup language translation
 • popup links to tags (to osm-wiki - what does this tag mean?)
@@ -48,7 +48,7 @@ Todo:
 
 Performance:
 • reduce queries to Overpass-Server
-  · when zooming in below 12, do not query
+  · when zooming in below 12, do not query -OK
   · keep (how?) a "List" of visited places, and do not query if we were already there
   · At first, download nodes, then ways, then rels (should speed up display significantly) -OK
     Todo: check ways in rels, nodes working -OK
