@@ -67,7 +67,7 @@ lc = L.control.locate({
 }
 
 var marker_table = {};
-var old_zoom = 1;
+var old_zoom = 20;
 
 function loadPoi() {
   if (map.getZoom() < 12 ) {
@@ -82,14 +82,50 @@ function loadPoi() {
   }
   old_zoom = current_zoom;
 
+  function url_ify(link,linktext) {
+    var teststr_email=/@/;
+    var teststr_phone=/^[0-9-+]*$/;
+    if (teststr_email.test(link)) {
+      return '<a href="mailto:' + link + '">' + linktext + '</a>';
+    } else if (teststr_phone.test(link)) {
+      return '<a href="tel:' + link + '">' + linktext + '</a>';
+    } else {
+      var teststr=/^http/; //http[s] is implicit here
+      if ( ! teststr.test(link) )
+        link = "http://" + link;
+      return  '<a href="' + link + '">' + linktext + '</a>';
+    }
 
+ //   return  '<a href="' + ('/^http/'.test(link) ? link : "http://" + link ) + '">' + linktext + '</a>';
+  }
 
   var iconsize = 24;
 
   function fillPopup(tags,type,id) {
 
     var r = $('<table>');
-    var tags_to_ignore = [ "name" , "ref", "needs" ];
+    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone" ];
+
+    r.append($('<tr>').append($('<td>').append(
+              (tags["addr:street"] ? (tags["addr:street"] + " ") : "" ) +
+              (tags["addr:housenumber"] ? tags["addr:housenumber"] : "" ) + 
+              ( (tags["addr:housenumber"] || tags["addr:street"]) ? "<br>" : "" ) +
+              (tags["addr:postcode"] ? (tags["addr:postcode"] + " ") : "" ) +
+              (tags["addr:city"] ? tags["addr:city"] : "" ) + 
+              (tags["addr:country"] ? " - " + tags["addr:country"] : "")
+              ))
+        .append($('<td>').append(
+            (tags["website"] ? (url_ify(tags["website"],"website") + "<br>") : "" ) +
+            (tags["url"] ? (url_ify(tags["url"],"website") + "<br>") : "" ) +
+            (tags["contact:website"] ? (url_ify(tags["contact:website"],"website") + "<br>") : "" ) +
+            (tags["contact:url"] ? (url_ify(tags["contact:url"],"website") + "<br>") : "" ) +
+
+            (tags["email"] ? (url_ify(tags["email"],"email") + "<br>") : "" )+
+            (tags["contact:email"] ? (url_ify(tags["contact:email"],"email") + "<br>") : "" ) +
+
+            (tags["phone"] ? (url_ify(tags["phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" ) +
+            (tags["contact:phone"] ? (url_ify(tags["contact:phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" )
+          )));
 
     for (key in tags) {
       if ( tags_to_ignore.indexOf(key) >= 0) {
@@ -148,8 +184,7 @@ function loadPoi() {
     } // end for (key in tags)
     r.append($('<tr>').append($('<th>').append("&nbsp;")).append($('<td>').append("&nbsp;"))); // spacer
 
-    r.append($('<tr>').append($('<th>').text("OSM-Type:")).append($('<td>').text(type)));
-    r.append($('<tr>').append($('<th>').text("OSM-ID:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + id + '</a>')));
+    r.append($('<tr>').append($('<th>').text("link to OSM:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + type + " " + id + '</a>')));
 
     var s = $('<div>');
     s.append(r);
