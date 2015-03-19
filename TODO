@@ -15,6 +15,8 @@ Done:
 
 Todo:
 • opening_hours support  (is it open now?)
+  <script src="http://openingh.openstreetmap.de/evaluation_tool/node_modules/suncalc/suncalc.js"></script>
+  <script src="http://openingh.openstreetmap.de/evaluation_tool/opening_hours.js"></script>
 • "Download this data" - Link (Overpass-Export)
 • edit in JOSM / iD -Link
 • Display coordinates -OK
