@@ -1,0 +1,107 @@
+* { box-sizing: border-box; }
+
+body, html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+nav a {
+  text-decoration: none;
+}
+
+/* FIXME readd after clusters working
+    .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
+    .leaflet-marker-icon:hover { background: yellow; }
+*/
+div.leaflet-popup-content { width: auto !important; }
+.leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; padding:0 5px; margin-bottom:2px; }
+
+.leaflet-popup-content div table { margin: 0; }
+.leaflet-popup-content div table th + td { padding-left: 5px; min-width:130px; } /* for tel-nrs and link to osm (node123456789)*/
+.leaflet-popup-content div table tr:first-child td { vertical-align:top; padding-bottom:10px; } /* addr+contact data on top*/
+.leaflet-popup-content div table tr:first-child td + td { text-align:right; }
+.leaflet-popup-content div { max-height: 600px; overflow:auto; }
+
+    #map {
+      height: 100%;
+      overflow: hidden;
+    }
+
+
+  .mmmactive {
+  background: #333;
+}
+
+.mmmnavbar {
+  background: #000;
+  font: 12pt sans-serif;
+  line-height: 3em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index:1005;
+}
+
+.mmmnavbar a {
+  color: #fff;
+}
+
+.mmmnavbar a:hover {
+  text-decoration: none;
+}
+
+.mmmnavbar ul {
+  margin: 0;
+  padding: 0;
+}
+
+.mmmnavbar ul li {
+  display: inline;
+  padding: 1em;
+  color: #fff;
+}
+
+.mmmnavbar ul li:hover {
+  background: #444;
+  font-style: bold;
+}
+
+#mmmnavtitle {
+  font-weight: bold;
+}
+
+#mmmnavtitle:hover {
+  background: #000;
+}
+#content {
+  position: absolute;
+  top: 48px;
+  bottom: 0px;
+  overflow:hidden;
+  width: 100%;
+}
+
+#loading {
+  position: absolute;
+  top: 60px;
+  left:45px;
+  border: 1px solid green;
+  background-color:white;
+  padding:5px;
+  display:none;
+}
+
+
+/* taken from https://github.com/ardhi/Leaflet.MousePosition, 
+License: MIT, see MIT-LICENCE-Leaflet.MousePosition.txt */
+
+.leaflet-container .leaflet-control-mouseposition {
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 5px #bbb;
+  padding: 0 5px;
+  margin:0;
+  color: #333;
+  font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
