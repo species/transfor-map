@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
   <link rel="stylesheet" href="leaflet-search.min.css" />
+  <link rel="stylesheet" href="transformap.css" />
 
   <link href='L.Control.Locate.mine.css' rel='stylesheet' />
   <!--[if lt IE 9]>
@@ -123,90 +124,6 @@
 
   </script>
   <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
-  <style>
-
-    * { box-sizing: border-box; }
-
-    body, html {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-    }
-    nav a {
-      text-decoration: none;
-    }
-
-/* FIXME readd after clusters working
-    .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
-    .leaflet-marker-icon:hover { background: yellow; }
-*/ 
-div.leaflet-popup-content { width: auto !important; }
-.leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; }
-
-.leaflet-popup-content div table { margin: 0 15px; }
-.leaflet-popup-content div { max-height: 600px; overflow:auto; }
-
-    #map {
-      height: 100%;
-      overflow: hidden;
-    }
-
-
-  .mmmactive {
-  background: #333;
-}
-
-.mmmnavbar {
-  background: #000;
-  font: 12pt sans-serif;
-  line-height: 3em;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index:1005;
-}
-
-.mmmnavbar a {
-  color: #fff;
-}
-
-.mmmnavbar a:hover {
-  text-decoration: none;
-}
-
-.mmmnavbar ul {
-  margin: 0;
-  padding: 0;
-}
-
-.mmmnavbar ul li {
-  display: inline;
-  padding: 1em;
-  color: #fff;
-}
-
-.mmmnavbar ul li:hover {
-  background: #444;
-  font-style: bold;
-}
-
-#mmmnavtitle {
-  font-weight: bold;
-}
-
-#mmmnavtitle:hover {
-  background: #000;
-}
-#content {
-  position: absolute;
-  top: 48px;
-  bottom: 0px;
-  overflow:hidden;
-  width: 100%;
-}
-
-  </style>
 </head>
 <body>
 <nav class="mmmnavbar">
