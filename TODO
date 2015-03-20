@@ -12,6 +12,8 @@ Done:
   https://github.com/domoritz/leaflet-locatecontrol doesn't work with latest jquery and leaflet
     try to rewrite to version with minimal function. -OK
 • adding POIs from overpass to marker layer with bulk methods -OK
+• Display coordinates -OK
+• "loading" - indicator for node/way/relations -OK
 
 Todo:
 • opening_hours support  (is it open now?)
@@ -19,7 +21,6 @@ Todo:
   <script src="http://openingh.openstreetmap.de/evaluation_tool/opening_hours.js"></script>
 • "Download this data" - Link (Overpass-Export)
 • edit in JOSM / iD -Link
-• Display coordinates -OK
 • in Popup „Route here“ with link to OSRM
 • popup language translation
 • popup links to tags (to osm-wiki - what does this tag mean?)

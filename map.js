@@ -69,6 +69,14 @@ lc = L.control.locate({
 var marker_table = {};
 var old_zoom = 20;
 
+var pid_counter_node = 0;
+var pid_counter_way = 0;
+var pid_counter_rel = 0;
+
+var mutex_node = 0;
+var mutex_way = 0;
+var mutex_rel = 0;
+
 function loadPoi() {
   if (map.getZoom() < 12 ) {
     return;
@@ -299,7 +307,9 @@ function loadPoi() {
   }
 
   function handleNodes(overpassJSON) {
-    console.log("handleNodes called");
+    var pid = pid_counter_node++;
+    console.log("handleNodes called (pid " + pid + ")");
+
     var new_markers = [];
     for (var i = 0; i < overpassJSON.elements.length; i++) {
       var p = overpassJSON.elements[i];
@@ -313,11 +323,18 @@ function loadPoi() {
     var number = new_markers.length;
     markers.addLayers(new_markers);
     new_markers = [];
-    console.log("handleNodes done, " + number + " added.");
+    console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
+    mutex_node--;
+    if(mutex_node == 0) {
+      var loading_indicator = document.getElementById("loading_node");
+      loading_indicator.style.display = "none";
+    }
   }
 
   function handleWays(overpassJSON) {
-    console.log("handleWays called");
+    var pid = pid_counter_way++;
+    console.log("handleWays called (pid " + pid + ")");
+
     var new_markers = [];
     var nodes = {};
     for (var i = 0; i < overpassJSON.elements.length; i++) {
@@ -343,11 +360,17 @@ function loadPoi() {
     var number = new_markers.length;
     markers.addLayers(new_markers);
     new_markers = [];
-    console.log("handleWays done, " + number + " added.");
+    console.log("handleWays (pid " + pid + ") done, " + number + " added.");
+    mutex_way--;
+    if(mutex_way == 0) {
+      var loading_indicator = document.getElementById("loading_way");
+      loading_indicator.style.display = "none";
+    }
   }
 
   function handleRelations(overpassJSON) {
-    console.log("handleRelations called");
+    var pid = pid_counter_rel++;
+    console.log("handleRelations called (pid " + pid + ")");
     var nodes = {}, ways = {};
 
     //overpass returns elements unsorted: rels, nodes, ways - should be nodes, ways, rels
@@ -406,7 +429,12 @@ function loadPoi() {
     var number = new_markers.length;
     markers.addLayers(new_markers);
     new_markers = [];
-    console.log("handleRelations done, " + number + " added.");
+    console.log("handleRelations (pid " + pid + ") done, " + number + " added.");
+    mutex_rel--;
+    if(mutex_rel == 0) {
+      var loading_indicator = document.getElementById("loading_rel");
+      loading_indicator.style.display = "none";
+    }
   }
 
   var query = overpass_query;
@@ -422,11 +450,24 @@ function loadPoi() {
   var way_url = way_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
   var rel_url = rel_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
 
-  var progress_div = document.getElementById('loading');
   //  node: getJSON [x] | 
-  console.log("loadPOI: before JSON calls");
+
+  console.log("loadPOI: before JSON call node");
+    mutex_node++;
+    var loading_indicator_node = document.getElementById("loading_node");
+    loading_indicator_node.style.display = "block";
   $.getJSON(node_url, handleNodes);
+
+  console.log("loadPOI: before JSON call way");
+    mutex_way++;
+    var loading_indicator_way = document.getElementById("loading_way");
+    loading_indicator_way.style.display = "block";
   $.getJSON(way_url, handleWays);
+
+  console.log("loadPOI: before JSON call rel");
+    mutex_rel++;
+    var loading_indicator_rel = document.getElementById("loading_rel");
+    loading_indicator_rel.style.display = "block";
   $.getJSON(rel_url, handleRelations);
 
 

@@ -82,14 +82,27 @@ div.leaflet-popup-content { width: auto !important; }
   width: 100%;
 }
 
-#loading {
+.loading {
   position: absolute;
   top: 60px;
   left:45px;
-  border: 1px solid green;
-  background-color:white;
+/*  border: 1.5px solid black;
+  border-radius:5px;*/
+  background-image:url("assets/20px-Mf_node.svg.png");
+  background-position:center;
+  background-repeat:no-repeat;
   padding:5px;
+  width:66px;
+  height:66px;
   display:none;
+}
+#loading_way {
+  left: 100px;
+  background-image:url("assets/20px-Mf_way.svg.png");
+}
+#loading_rel {
+  left: 155px;
+  background-image:url("assets/20px-Mf_Relation.svg.png");
 }
 
 
