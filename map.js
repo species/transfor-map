@@ -77,8 +77,43 @@ var mutex_node = 0;
 var mutex_way = 0;
 var mutex_rel = 0;
 
+var on_start_loaded = 0;
+
+var iconsize = 24;
+
 function loadPoi() {
   if (map.getZoom() < 12 ) {
+    if(on_start_loaded)
+      return;
+
+    console.log(pois_lz);
+    if(pois_lz) { 
+      console.log("adding lz POIs");
+
+      console.log("loadPOI: before JSON call node");
+        mutex_node++;
+        var loading_indicator_node = document.getElementById("loading_node");
+        loading_indicator_node.style.display = "block";
+        loading_indicator_node.title = mutex_node;
+      handleNodes(pois_lz); 
+
+      console.log("loadPOI: before JSON call way");
+        mutex_way++;
+        var loading_indicator_way = document.getElementById("loading_way");
+        loading_indicator_way.style.display = "block";
+        loading_indicator_way.title = mutex_way;
+      handleWays(pois_lz); 
+
+      console.log("loadPOI LZ: before JSON call rel");
+        mutex_rel++;
+        var loading_indicator_rel = document.getElementById("loading_rel");
+        loading_indicator_rel.style.display = "block";
+        loading_indicator_rel.title = mutex_rel;
+      handleRelations(pois_lz); 
+
+      on_start_loaded = 1;
+    }
+
     return;
   }
   var current_zoom = map.getZoom();
@@ -106,8 +141,6 @@ function loadPoi() {
 
  //   return  '<a href="' + ('/^http/'.test(link) ? link : "http://" + link ) + '">' + linktext + '</a>';
   }
-
-  var iconsize = 24;
 
   function fillPopup(tags,type,id) {
 
@@ -209,6 +242,13 @@ function loadPoi() {
       return;
     marker_table[hashtable_key] = 1;
 
+    if(!data.tags) {
+      console.log("no tags on:");
+      console.log(data);
+      return;
+    }
+
+
     // set icon dependent on tags
     var icon_tag = ""; //OSM key for choosing icon
     for (var i = 0; i < icon_tags.length; i++) {
@@ -274,23 +314,38 @@ function loadPoi() {
       var centroid;
       switch (p.type) {
         case 'node':
-          centroid = p.obj.coordinates;
-          centroids.push(centroid);
+
+          if(!p.obj) {
+            console.log("!p.obj: ");
+            console.log(p);
+          } else {
+            centroid = p.obj.coordinates;
+            centroids.push(centroid);
+          }
           break;
         case 'way':
           //console.log(p);
           if (p.role == "outer") {// FIXME add handling of rel members
-            var centroid_point = $.geo.centroid(p.obj.geometry);
-            centroid = centroid_point.coordinates;
-            centroids.push(centroid);
+            if(!p.obj) {
+              console.log("!p.obj: ");
+              console.log(p);
+            } else {
+              var centroid_point = $.geo.centroid(p.obj.geometry);
+              centroid = centroid_point.coordinates;
+              centroids.push(centroid);
+            }
           } 
           break;
       }
-      if(centroid.length != 0) {
-        sum_lon += centroid[0];
-        sum_lat += centroid[1];
+      if(centroid){
+        if(centroid.length != 0) {
+          sum_lon += centroid[0];
+          sum_lat += centroid[1];
+        } else
+          console.log("centroid empty!");
       } else
-        console.log("centroid empty!");
+        console.log("centroid nonexisting!");
+
     }
     //console.log(centroids);
     var sum_centroid = { 
@@ -313,6 +368,8 @@ function loadPoi() {
     var new_markers = [];
     for (var i = 0; i < overpassJSON.elements.length; i++) {
       var p = overpassJSON.elements[i];
+      if(p.type != 'node')
+        continue;
       p.coordinates = [p.lon, p.lat];
       p.geometry = {type: 'Point', coordinates: p.coordinates};
 
@@ -325,10 +382,13 @@ function loadPoi() {
     new_markers = [];
     console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
     mutex_node--;
+    var loading_indicator = document.getElementById("loading_node");
     if(mutex_node == 0) {
-      var loading_indicator = document.getElementById("loading_node");
       loading_indicator.style.display = "none";
+    } else {
+      loading_indicator.title = mutex_node;
     }
+
   }
 
   function handleWays(overpassJSON) {
@@ -362,9 +422,11 @@ function loadPoi() {
     new_markers = [];
     console.log("handleWays (pid " + pid + ") done, " + number + " added.");
     mutex_way--;
+    var loading_indicator = document.getElementById("loading_way");
     if(mutex_way == 0) {
-      var loading_indicator = document.getElementById("loading_way");
       loading_indicator.style.display = "none";
+    } else {
+      loading_indicator.title = mutex_way;
     }
   }
 
@@ -431,9 +493,11 @@ function loadPoi() {
     new_markers = [];
     console.log("handleRelations (pid " + pid + ") done, " + number + " added.");
     mutex_rel--;
+    var loading_indicator = document.getElementById("loading_rel");
     if(mutex_rel == 0) {
-      var loading_indicator = document.getElementById("loading_rel");
       loading_indicator.style.display = "none";
+    } else {
+      loading_indicator.title = mutex_rel;
     }
   }
 
@@ -456,18 +520,21 @@ function loadPoi() {
     mutex_node++;
     var loading_indicator_node = document.getElementById("loading_node");
     loading_indicator_node.style.display = "block";
+    loading_indicator_node.title = mutex_node;
   $.getJSON(node_url, handleNodes);
 
   console.log("loadPOI: before JSON call way");
     mutex_way++;
     var loading_indicator_way = document.getElementById("loading_way");
     loading_indicator_way.style.display = "block";
+    loading_indicator_way.title = mutex_way;
   $.getJSON(way_url, handleWays);
 
   console.log("loadPOI: before JSON call rel");
     mutex_rel++;
     var loading_indicator_rel = document.getElementById("loading_rel");
     loading_indicator_rel.style.display = "block";
+    loading_indicator_rel.title = mutex_rel;
   $.getJSON(rel_url, handleRelations);
 
 
@@ -525,3 +592,16 @@ L.Map.addInitHook(function () {
 L.control.mousePosition = function (options) {
     return new L.Control.MousePosition(options);
 };
+
+var url_pois_lz = "all.json";
+var pois_lz;
+var http_request_lz = new XMLHttpRequest();
+http_request_lz.open("GET", url_pois_lz, true);
+http_request_lz.onreadystatechange = function () {
+      var done = 4, ok = 200;
+      if (http_request_lz.readyState === done && http_request_lz.status === ok) {
+          pois_lz = JSON.parse(http_request_lz.responseText);
+      }
+  };
+http_request_lz.send(null);
+
