@@ -139,7 +139,6 @@ function loadPoi() {
       return  '<a href="' + link + '">' + linktext + '</a>';
     }
 
- //   return  '<a href="' + ('/^http/'.test(link) ? link : "http://" + link ) + '">' + linktext + '</a>';
   }
 
   function fillPopup(tags,type,id) {
@@ -148,7 +147,7 @@ function loadPoi() {
     var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone" ];
 
     r.append($('<tr>').append($('<td>').append(
-              (tags["addr:street"] ? (tags["addr:street"] + " ") : "" ) +
+              (tags["addr:street"] ? (tags["addr:street"] + "&nbsp;") : "" ) +
               (tags["addr:housenumber"] ? tags["addr:housenumber"] : "" ) + 
               ( (tags["addr:housenumber"] || tags["addr:street"]) ? "<br>" : "" ) +
               (tags["addr:postcode"] ? (tags["addr:postcode"] + " ") : "" ) +
