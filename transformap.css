@@ -82,6 +82,32 @@ div.leaflet-popup-content { width: auto !important; }
   width: 100%;
 }
 
+
+#maps li {
+  display:block;
+  padding:5px;
+  border: 2px solid gray;
+  border-radius:5px;
+  margin:5px;
+  width: 215px;
+  float:left;
+}
+#maps h4 {
+  margin: 0 3px;
+  text-align: center;
+}
+
+#notificationbar {
+  position: absolute;
+  top: 60px;
+  left: 250px;
+  border: 1.5px solid black;
+  padding:3px;
+  border-radius:3px;
+  display:none;
+  background: #D6D2D0;
+}
+
 .loading {
   position: absolute;
   top: 60px;
