@@ -26,6 +26,7 @@ Todo:
 • popup links to tags (to osm-wiki - what does this tag mean?)
 • statistics: how many POIs loaded (like overpass-turbo)
 • display image (from wikipedia or "image="-Tag
+• addresses: show street if member of associatedStreet Relation
 • layers with different needs
     1st step: layer checkbox(es) in layer-menu -OK
     2nd step: more layers (different overpass-queries)
