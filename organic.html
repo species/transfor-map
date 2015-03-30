@@ -4,9 +4,6 @@
   <title>Organic TransforMap</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    .hover { background-color:red; }
-  </style>
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -67,7 +64,7 @@
 
       overpass_query_string += "node" + anded_querystring + ";out;";
       overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
-      overpass_query_string += "rel" + anded_querystring + ";out;";
+      overpass_query_string += "rel" + anded_querystring + ";out;>;out;";
 
       overpass_query_string_nodes += "node" + anded_querystring + ";out;";
       overpass_query_string_ways += "(way" + anded_querystring + ";node(w));out;";
@@ -150,6 +147,11 @@
 <div id="content">
   <div id="map"></div>
 </div>
+
+<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />
+<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />
+<img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />
+<div id="notificationbar">Please zoom in to update POIs!</div>
 
 <a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
 
