@@ -80,17 +80,28 @@ div.leaflet-popup-content { width: auto !important; }
   bottom: 0px;
   overflow:hidden;
   width: 100%;
+
 }
 
+html {
+  background: url("assets/background_smaller.png") repeat-x scroll 0px 0px,
+              url("assets/background-rep.png") repeat scroll 0px 0px,
+              none repeat scroll 0% 0% #f5f1e8;
+}
+
+.startpage {
+  padding:0 20px;
+}
 
 #maps li {
   display:block;
   padding:5px;
   border: 2px solid gray;
   border-radius:5px;
-  margin:5px;
+  margin:10px;
   width: 215px;
   float:left;
+  background: #f5f1e8;
 }
 #maps h4 {
   margin: 0 3px;
