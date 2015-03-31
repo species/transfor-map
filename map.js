@@ -291,12 +291,14 @@ function loadPoi() {
         icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/" + icon_tag + "=" + data.tags[icon_tag] + ".png";
     }
 
+    var bgcolor = (window.background_color) ? window.background_color["key"] : "color_undef";
+
     var needs_icon = L.icon({
       iconUrl: icon_url,
       iconSize: new L.Point(iconsize, iconsize),
       iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
       popupAnchor: new L.Point(0, - iconsize / 2),
-      className: data.tags[background_color["key"]],
+      className: data.tags[bgcolor],
     });
 
     var lmarker = L.marker([data.lat, data.lon], {
