@@ -108,6 +108,19 @@ html {
   text-align: center;
 }
 
+.leaflet-marker-icon.only {
+  background:#00B100;
+  border-radius:5px;
+}
+.leaflet-marker-icon.yes {
+  background:yellow;
+  border-radius:5px;
+}
+.leaflet-marker-icon.limited {
+  background:#ff8000;
+  border-radius:5px;
+}
+
 #notificationbar {
   position: absolute;
   top: 60px;

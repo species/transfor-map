@@ -295,7 +295,8 @@ function loadPoi() {
       iconUrl: icon_url,
       iconSize: new L.Point(iconsize, iconsize),
       iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
-      popupAnchor: new L.Point(0, - iconsize / 2)
+      popupAnchor: new L.Point(0, - iconsize / 2),
+      className: data.tags[background_color["key"]],
     });
 
     var lmarker = L.marker([data.lat, data.lon], {
