@@ -167,7 +167,7 @@ function loadPoi() {
             (tags["email"] ? (url_ify(tags["email"],"email") + "<br>") : "" )+
             (tags["contact:email"] ? (url_ify(tags["contact:email"],"email") + "<br>") : "" ) +
 
-            (tags["phone"] ? (url_ify(tags["phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" ) +
+            (tags["phone"] ? (url_ify(tags["phone"],"Tel: " + tags["phone"]) + "<br>") : "" ) +
             (tags["contact:phone"] ? (url_ify(tags["contact:phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" )
           )));
 
