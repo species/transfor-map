@@ -120,6 +120,19 @@ function loadPoi() {
   }
   notificationbar.style.display = "none";
 
+  // if Graz (start position, gets called once first) do nothing
+  var centre = map.getCenter();
+  if (centre.lat == 47.07 && centre.lng == 15.43) {
+    var splitstr = window.location.href.split('#');
+    if (splitstr[1]) {
+      var coords_href = splitstr[1].split('/');
+      if ( coords_href[1] == 47.07 && coords_href[2] == 15.43 )
+        console.log("look, we are in Graz");
+      else
+        return;
+    }
+  }
+
   var current_zoom = map.getZoom();
   console.log("loadPOI called, z" + current_zoom);
   if(current_zoom > old_zoom && current_zoom != 12) {
