@@ -161,7 +161,7 @@ function loadPoi() {
   function fillPopup(tags,type,id) {
 
     var r = $('<table>');
-    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone" ];
+    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer" ];
 
     r.append($('<tr>').append($('<td>').append(
               (tags["addr:street"] ? (tags["addr:street"] + "&nbsp;") : "" ) +
@@ -169,7 +169,8 @@ function loadPoi() {
               ( (tags["addr:housenumber"] || tags["addr:street"]) ? ",<br>" : "" ) +
               (tags["addr:postcode"] ? (tags["addr:postcode"] + " ") : "" ) +
               (tags["addr:city"] ? tags["addr:city"] : "" ) + 
-              (tags["addr:country"] ? " - " + tags["addr:country"] : "")
+              (tags["addr:suburb"] ? "-" + tags["addr:suburb"] : "") +
+              (tags["addr:country"] ? "<br>" + tags["addr:country"] : "")
               ))
         .append($('<td>').append(
             (tags["website"] ? (url_ify(tags["website"],"website") + "<br>") : "" ) +
