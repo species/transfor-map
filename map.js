@@ -153,7 +153,7 @@ function loadPoi() {
     r.append($('<tr>').append($('<td>').append(
               (tags["addr:street"] ? (tags["addr:street"] + "&nbsp;") : "" ) +
               (tags["addr:housenumber"] ? tags["addr:housenumber"] : "" ) + 
-              ( (tags["addr:housenumber"] || tags["addr:street"]) ? "<br>" : "" ) +
+              ( (tags["addr:housenumber"] || tags["addr:street"]) ? ",<br>" : "" ) +
               (tags["addr:postcode"] ? (tags["addr:postcode"] + " ") : "" ) +
               (tags["addr:city"] ? tags["addr:city"] : "" ) + 
               (tags["addr:country"] ? " - " + tags["addr:country"] : "")
@@ -248,6 +248,10 @@ function loadPoi() {
     if(!data.tags) {
       console.log("no tags on:");
       console.log(data);
+      return;
+    }
+    if(data.tags.disused == "yes" || data.tags.opening_hours == "off" || data.tags["disused:shop"] || data.tags["disused:amenity"]) {
+      console.log("object disused:" + data.type + data.id);
       return;
     }
 
