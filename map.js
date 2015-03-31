@@ -161,7 +161,7 @@ function loadPoi() {
   function fillPopup(tags,type,id) {
 
     var r = $('<table>');
-    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer" ];
+    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer","room","indoor" ];
 
     r.append($('<tr>').append($('<td>').append(
               (tags["addr:street"] ? (tags["addr:street"] + "&nbsp;") : "" ) +
