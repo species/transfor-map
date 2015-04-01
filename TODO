@@ -14,6 +14,7 @@ Done:
 • adding POIs from overpass to marker layer with bulk methods -OK
 • Display coordinates -OK
 • "loading" - indicator for node/way/relations -OK
+• fix loading of Graz POIs at start -OK
 
 Todo:
 • opening_hours support  (is it open now?)
@@ -28,6 +29,7 @@ Todo:
 • display image (from wikipedia or "image="-Tag
 • addresses: show street if member of associatedStreet Relation
 • icons: rewrite to have all in one file (less http requests)
+• markers: implement retine using property iconRetinaUrl (iconsize * 2) 
 • layers with different needs
     1st step: layer checkbox(es) in layer-menu -OK
     2nd step: more layers (different overpass-queries)
@@ -38,6 +40,9 @@ Todo:
       ? how to do clustering?
         must be done over ALL layers → only one layer possible!
         → we cannot use Leaflet layer switcher 
+        → must use MarkerCluster function!
+          removeLayers is too slow when bulk removing
+          → clearLayers then addLayers
 
     3rd step: generate overpass-queries from taxonomy.json
 
@@ -51,8 +56,16 @@ Todo:
     interaction
     freemap -> pois?
     greenmap -> pois?
+    organic -OK
+      pois, but with colors:
+        only: green
+        yes: yellow
+        limited: orange
+      or background or bg-image?
+        
     
 • fixed worldwide clusters for z=0-12! (download daily via script to server)
+  ~OK done for identities + needs
 
 Performance:
 • reduce queries to Overpass-Server
@@ -80,7 +93,7 @@ todo: on transformap.co not ONE map, but many .... tiled 'previews' n' with link
 	* Regional map -OK
 	* Gratis-map
 	* Needs-karte
-	* Political Map
+	* Political Map -OK
 	* fairtrade-Map
 	* garden-map
 	* ...
