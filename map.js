@@ -13,6 +13,10 @@ http_request.onreadystatechange = function () {
   };
 http_request.send(null);
 
+function toggleLayer(key,value) {
+  alert(key + "=" + value);
+}
+
 function initMap(defaultlayer,base_maps,overlay_maps) {
   map = new L.Map('map', {
     center: new L.LatLng(47.07, 15.43),
@@ -35,6 +39,27 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     for (k in this.options.svg) {
       this._path.setAttribute(k, this.options.svg[k]);
     }
+  }
+
+  // handmade dynamic LayerSwitcher
+  if (window.switch_layertags ) {
+    $('body').append('<ul id="layerswitcher"></ul>');
+    var layerswitcher =  document.getElementById("layerswitcher");
+    for (var i = 0; i < switch_layertags.length; i++) {
+      var current_item = switch_layertags[i]; // { key : value }
+      var current_value,current_key;
+      for (key in current_item) { // misusing 1-for-"loop" for extract key/value
+        current_key = key;
+        current_value = current_item[key];
+      }
+      var li = document.createElement("li");
+      var textnode = document.createTextNode(current_key + " = " + current_value );
+      li.appendChild( textnode);
+      var functiontext = "toggleLayer('" + current_key + "','" + current_value + "');"
+      li.setAttribute('onClick',functiontext);
+      layerswitcher.appendChild( li );
+      }
+    layerswitcher.style.display = "block";
   }
 
   return map;
@@ -633,4 +658,3 @@ if (window.url_pois_lz) {
 } else {
   console.log("XMLHttpRequest for pois_lz NOT sent, no url");
 }
-  

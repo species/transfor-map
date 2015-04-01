@@ -48,6 +48,7 @@
     var icon_foldername = "pois";
     var icon_tags = [ "shop","amenity","leisure" ];
     var background_color = { key: "organic" };
+    var switch_layertags = [ { organic : "only" }, { organic : "yes" }, { organic: "limited" } ];
 
     var overpass_query_string = "";
     var overpass_query_string_nodes = "";
@@ -156,6 +157,13 @@
 
 <a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
 
+<!--
+<ul id=layerswitcher>
+  <li onClick="alert(1);"> Layer 1 </li>
+  <li onClick="alert(2);"> Layer 2 </li>
+  <li onClick="alert(3);"> Layer 3 </li>
+</ul>
+-->
 </body>
 </html>
 

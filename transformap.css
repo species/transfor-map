@@ -155,6 +155,30 @@ html {
   background-image:url("assets/20px-Mf_Relation.svg.png");
 }
 
+#layerswitcher {
+  position:absolute;
+  z-index:100;
+  background:green;
+  border-radius:3px;
+  border:1px solid black;
+  right: 20px;
+  box-shadow: 0 0 5px #bbb;
+  padding: 0px;
+  top: 150px;
+}
+#layerswitcher li {
+  list-style: none;
+  border-top:1px grey solid;
+  margin:0;
+  padding: 5px;
+  cursor:pointer;
+}
+#layerswitcher li:hover {
+  background:#00B100;
+}
+#layerswitcher li:first-child {
+  border-top:none;
+}
 
 /* taken from https://github.com/ardhi/Leaflet.MousePosition, 
 License: MIT, see MIT-LICENCE-Leaflet.MousePosition.txt */
