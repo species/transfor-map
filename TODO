@@ -30,6 +30,7 @@ Todo:
 • addresses: show street if member of associatedStreet Relation
 • icons: rewrite to have all in one file (less http requests)
 • markers: implement retine using property iconRetinaUrl (iconsize * 2) 
+• implement 60s timeout on queries, and make that also recognised by loading indicators
 • layers with different needs
     1st step: layer checkbox(es) in layer-menu -OK
     2nd step: more layers (different overpass-queries)
