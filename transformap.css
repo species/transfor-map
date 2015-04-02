@@ -108,17 +108,21 @@ html {
   text-align: center;
 }
 
-.leaflet-marker-icon.only {
+.leaflet-marker-icon.organic.only {
   background:#00B100;
   border-radius:5px;
 }
-.leaflet-marker-icon.yes {
+.leaflet-marker-icon.organic.yes {
   background:yellow;
   border-radius:5px;
 }
-.leaflet-marker-icon.limited {
+.leaflet-marker-icon.organic.limited {
   background:#ff8000;
   border-radius:5px;
+}
+
+.leaflet-marker-icon.topic {
+  border-bottom: black 2px solid;
 }
 
 #notificationbar {
