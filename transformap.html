@@ -26,6 +26,9 @@
 
   <script src='L.Control.Locate.mine.js'></script>
 
+  <script>
+    var url_pois_lz = "all.json";
+  </script>
   <script src="map.js"></script>
   <script>
     /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
@@ -48,6 +51,7 @@
 
     var icon_foldername = "needs";
     var icon_tags = [ "topic", "provides" ];
+    var class_selector_key = { key: "topic" };
 
     var overpass_query_string = "";
     var overpass_query_string_nodes = "";
@@ -153,6 +157,7 @@
 <img src="assets/ajax-loader.gif" id="loading_node" class="loading" />
 <img src="assets/ajax-loader.gif" id="loading_way" class="loading" />
 <img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />
+<div id="notificationbar">Please zoom in to update POIs!</div>
 
 <a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
 

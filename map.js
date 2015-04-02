@@ -13,6 +13,10 @@ http_request.onreadystatechange = function () {
   };
 http_request.send(null);
 
+function toggleLayer(key,value) {
+  alert(key + "=" + value);
+}
+
 function initMap(defaultlayer,base_maps,overlay_maps) {
   map = new L.Map('map', {
     center: new L.LatLng(47.07, 15.43),
@@ -35,6 +39,27 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     for (k in this.options.svg) {
       this._path.setAttribute(k, this.options.svg[k]);
     }
+  }
+
+  // handmade dynamic LayerSwitcher
+  if (window.switch_layertags ) {
+    $('body').append('<ul id="layerswitcher"></ul>');
+    var layerswitcher =  document.getElementById("layerswitcher");
+    for (var i = 0; i < switch_layertags.length; i++) {
+      var current_item = switch_layertags[i]; // { key : value }
+      var current_value,current_key;
+      for (key in current_item) { // misusing 1-for-"loop" for extract key/value
+        current_key = key;
+        current_value = current_item[key];
+      }
+      var li = document.createElement("li");
+      var textnode = document.createTextNode(current_key + " = " + current_value );
+      li.appendChild( textnode);
+      var functiontext = "toggleLayer('" + current_key + "','" + current_value + "');"
+      li.setAttribute('onClick',functiontext);
+      layerswitcher.appendChild( li );
+      }
+    layerswitcher.style.display = "block";
   }
 
   return map;
@@ -82,7 +107,9 @@ var on_start_loaded = 0;
 var iconsize = 24;
 
 function loadPoi() {
+  var notificationbar =  document.getElementById("notificationbar");
   if (map.getZoom() < 12 ) {
+    notificationbar.style.display = "block";
     if(on_start_loaded)
       return;
 
@@ -116,6 +143,21 @@ function loadPoi() {
 
     return;
   }
+  notificationbar.style.display = "none";
+
+  // if Graz (start position, gets called once first) do nothing
+  var centre = map.getCenter();
+  if (centre.lat == 47.07 && centre.lng == 15.43) {
+    var splitstr = window.location.href.split('#');
+    if (splitstr[1]) {
+      var coords_href = splitstr[1].split('/');
+      if ( coords_href[1] == 47.07 && coords_href[2] == 15.43 )
+        console.log("look, we are in Graz");
+      else
+        return;
+    }
+  }
+
   var current_zoom = map.getZoom();
   console.log("loadPOI called, z" + current_zoom);
   if(current_zoom > old_zoom && current_zoom != 12) {
@@ -144,15 +186,16 @@ function loadPoi() {
   function fillPopup(tags,type,id) {
 
     var r = $('<table>');
-    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone" ];
+    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer","room","indoor" ];
 
     r.append($('<tr>').append($('<td>').append(
               (tags["addr:street"] ? (tags["addr:street"] + "&nbsp;") : "" ) +
               (tags["addr:housenumber"] ? tags["addr:housenumber"] : "" ) + 
-              ( (tags["addr:housenumber"] || tags["addr:street"]) ? "<br>" : "" ) +
+              ( (tags["addr:housenumber"] || tags["addr:street"]) ? ",<br>" : "" ) +
               (tags["addr:postcode"] ? (tags["addr:postcode"] + " ") : "" ) +
               (tags["addr:city"] ? tags["addr:city"] : "" ) + 
-              (tags["addr:country"] ? " - " + tags["addr:country"] : "")
+              (tags["addr:suburb"] ? "-" + tags["addr:suburb"] : "") +
+              (tags["addr:country"] ? "<br>" + tags["addr:country"] : "")
               ))
         .append($('<td>').append(
             (tags["website"] ? (url_ify(tags["website"],"website") + "<br>") : "" ) +
@@ -163,7 +206,7 @@ function loadPoi() {
             (tags["email"] ? (url_ify(tags["email"],"email") + "<br>") : "" )+
             (tags["contact:email"] ? (url_ify(tags["contact:email"],"email") + "<br>") : "" ) +
 
-            (tags["phone"] ? (url_ify(tags["phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" ) +
+            (tags["phone"] ? (url_ify(tags["phone"],"Tel: " + tags["phone"]) + "<br>") : "" ) +
             (tags["contact:phone"] ? (url_ify(tags["contact:phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" )
           )));
 
@@ -246,6 +289,10 @@ function loadPoi() {
       console.log(data);
       return;
     }
+    if(data.tags.disused == "yes" || data.tags.opening_hours == "off" || data.tags["disused:shop"] || data.tags["disused:amenity"]) {
+      console.log("object disused:" + data.type + data.id);
+      return;
+    }
 
 
     // set icon dependent on tags
@@ -269,10 +316,14 @@ function loadPoi() {
         icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/" + icon_tag + "=" + data.tags[icon_tag] + ".png";
     }
 
+    var bgcolor = (window.background_color) ? window.background_color["key"] : "color_undef";
+
     var needs_icon = L.icon({
       iconUrl: icon_url,
       iconSize: new L.Point(iconsize, iconsize),
       iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
+      popupAnchor: new L.Point(0, - iconsize / 2),
+      className: data.tags[bgcolor],
     });
 
     var lmarker = L.marker([data.lat, data.lon], {
@@ -592,15 +643,18 @@ L.control.mousePosition = function (options) {
     return new L.Control.MousePosition(options);
 };
 
-var url_pois_lz = "all.json";
 var pois_lz;
-var http_request_lz = new XMLHttpRequest();
-http_request_lz.open("GET", url_pois_lz, true);
-http_request_lz.onreadystatechange = function () {
-      var done = 4, ok = 200;
-      if (http_request_lz.readyState === done && http_request_lz.status === ok) {
-          pois_lz = JSON.parse(http_request_lz.responseText);
-      }
-  };
-http_request_lz.send(null);
-
+if (window.url_pois_lz) {
+  var http_request_lz = new XMLHttpRequest();
+  http_request_lz.open("GET", url_pois_lz, true);
+  http_request_lz.onreadystatechange = function () {
+        var done = 4, ok = 200;
+        if (http_request_lz.readyState === done && http_request_lz.status === ok) {
+            pois_lz = JSON.parse(http_request_lz.responseText);
+        }
+    };
+  http_request_lz.send(null);
+  console.log("XMLHttpRequest for pois_lz sent");
+} else {
+  console.log("XMLHttpRequest for pois_lz NOT sent, no url");
+}
