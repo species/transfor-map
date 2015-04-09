@@ -59,7 +59,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       li.setAttribute('onClick',functiontext);
       layerswitcher.appendChild( li );
       }
-    layerswitcher.style.display = "block";
+    layerswitcher.style.display = "none";
   }
 
   return map;
@@ -316,14 +316,14 @@ function loadPoi() {
         icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/" + icon_tag + "=" + data.tags[icon_tag] + ".png";
     }
 
-    var bgcolor = (window.background_color) ? window.background_color["key"] : "color_undef";
+    var icon_class = (window.class_selector_key && data.tags[window.class_selector_key["key"]]) ? window.class_selector_key["key"] : "color_undef";
 
     var needs_icon = L.icon({
       iconUrl: icon_url,
       iconSize: new L.Point(iconsize, iconsize),
       iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
       popupAnchor: new L.Point(0, - iconsize / 2),
-      className: data.tags[bgcolor],
+      className: data.tags[icon_class] + " " + icon_class,
     });
 
     var lmarker = L.marker([data.lat, data.lon], {
