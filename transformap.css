@@ -159,6 +159,53 @@ html {
   background-image:url("assets/20px-Mf_Relation.svg.png");
 }
 
+#mapswitcher {
+  position:absolute;
+  z-index:100;
+  background:#D6D2D0;
+  background-image:url("assets/arrow-down.png");
+  background-position:right 5px top 8px;
+  background-repeat:no-repeat;
+  border-radius:3px;
+  border:1px solid black;
+  right: 200px;
+  box-shadow: 0 0 5px #bbb;
+  padding: 0px;
+  top: 45px;
+}
+#mapswitcher li {
+  list-style: none;
+  margin:0;
+  cursor:pointer;
+  display:none;
+}
+#mapswitcher li:hover {
+  background:gray;
+}
+#mapswitcher li.current {
+  display:block;
+}
+#mapswitcher li.current a {
+  text-decoration:none;
+  color:black;
+}
+#mapswitcher:hover li {
+  display:block;
+  border-top:1px grey solid;
+}
+#mapswitcher:hover li:first-child {
+  border-top:none;
+}
+#mapswitcher:hover li.current {
+  background:gray;
+}
+#mapswitcher a {
+  display:block;
+  padding: 5px 40px 5px 5px;
+  height:100%;
+  width:100%;
+}
+
 #layerswitcher {
   position:absolute;
   z-index:100;
@@ -183,6 +230,7 @@ html {
 #layerswitcher li:first-child {
   border-top:none;
 }
+
 
 /* taken from https://github.com/ardhi/Leaflet.MousePosition, 
 License: MIT, see MIT-LICENCE-Leaflet.MousePosition.txt */

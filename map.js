@@ -62,6 +62,41 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     layerswitcher.style.display = "none";
   }
 
+  // switching to other maps
+  $('body').append('<ul id="mapswitcher"></ul>');
+  var mapswitcher = document.getElementById("mapswitcher");
+  var different_maps = [ 
+    { url : "identities.html" ,
+      name : "TransforMap of Identities" } ,
+    { url : "transformap.html" ,
+      name : "Needs-based TransforMap" } ,
+    { url : "organic.html" ,
+      name : "Organic TransforMap" } ,
+    { url : "regional.html" ,
+      name : "Regional TransforMap" } ,
+    { url : "greenmap.html" ,
+      name : "Green TransforMap" } ,
+    ];
+  for (var i = 0; i < different_maps.length; i++) {
+    var current_item = different_maps[i]; 
+    var li = document.createElement("li");
+    
+    var alink = document.createElement("a");
+    var linktext = document.createTextNode(current_item["name"]);
+    alink.appendChild(linktext);
+    alink.setAttribute('href',current_item["url"]);
+    if(current_item["name"] == document.title) {
+      li.setAttribute('class',"current");
+    }
+
+    li.appendChild(alink);
+
+    mapswitcher.appendChild( li );
+    }
+  mapswitcher.style.display = "block";
+
+  map.on('moveend', updateLinks);
+
   return map;
 }
 
@@ -589,6 +624,21 @@ function loadPoi() {
 
 
 }
+
+function updateLinks() {
+  var centre = map.getCenter();
+  var maps_container = document.getElementById("mapswitcher");
+  var childs = maps_container.childNodes;
+  for ( var i=0; i < childs.length; i++) {
+    var li_child = childs[i];
+    var a_child = li_child.firstChild;
+    var href = a_child.getAttribute ("href");
+    var splitstr = href.split('#');
+    href = splitstr[0] + "#" + map.getZoom() + "/" + centre.lat + "/" + centre.lng;
+    a_child.setAttribute("href",href);
+  }
+}
+
 
 /* taken from https://github.com/ardhi/Leaflet.MousePosition 
 Licence: MIT, see file MIT-LICENCE-Leaflet.MousePosition.txt */
