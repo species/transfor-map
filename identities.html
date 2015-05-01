@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin,latin-ext" />
 
   <link rel="stylesheet" href="leaflet-search.min.css" />
   <link rel="stylesheet" href="transformap.css" />
@@ -32,7 +33,7 @@
   <script src="map.js"></script>
   <script>
     /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
-    /* what to we show on TransforMap.co? 
+    /* what to we show on TransforMap.co?
      * needs:* +
      * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
      *
@@ -40,7 +41,7 @@
      * [out:json][timeout:180][bbox:BBOX];
      * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
      * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
-     * 
+     *
      * human readable length of query is not important, query speed is!
      */
     var overpass_start = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];';
@@ -84,7 +85,7 @@
 
 
     var map, ids, markers, lc = {};
-    var attr = { 
+    var attr = {
       osm : 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
       osm_tiles : 'Tiles &copy; OSM - <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>',
       search : 'Search by OSM - <a href="http://wiki.openstreetmap.org/wiki/Nominatim">Nominatim</a>',
@@ -97,7 +98,7 @@
 
     var base_maps = {
       'MapQuestOpen': MapQuestOpen_OSM,
-      'OpenSteetMap - Mapnik': osm, 
+      'OpenSteetMap - Mapnik': osm,
     };
     markers = new L.markerClusterGroup({maxClusterRadius: 40}); //do not use removeOutsideVisibleBounds, it's broken!
     var overlay_maps = {
@@ -120,7 +121,7 @@
       addLocate();
       L.control.scale({imperial: false}).addTo(map);
       L.control.mousePosition().addTo(map);
-      
+
     });
 
   </script>
@@ -166,4 +167,3 @@
 
 </body>
 </html>
-
