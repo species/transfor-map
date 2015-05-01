@@ -4,6 +4,7 @@ body, html {
   padding: 0;
   margin: 0;
   height: 100%;
+  font-family: "PT Sans", sans-serif;
 }
 nav a {
   text-decoration: none;
@@ -29,54 +30,63 @@ div.leaflet-popup-content { width: auto !important; }
 
 
   .mmmactive {
-  background: #333;
 }
 
 .mmmnavbar {
-  background: #000;
-  font: 12pt sans-serif;
-  line-height: 3em;
+  font-size: 14px;
+  background: #455473;
+  box-shadow: #AAAAAA 0px 3px 5px 0px;
+  height: 50px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index:1005;
+  color:#FFF;
+  font: normal normal 400 14px/20px "PT Sans";
+  vertical-align:middle;
+  text-align:center;
 }
 
 .mmmnavbar a {
-  color: #fff;
+  color: #DDDDDD;
+  height:100%;
 }
 
 .mmmnavbar a:hover {
   text-decoration: none;
+  color:#FFF;
 }
 
 .mmmnavbar ul {
-  margin: 0;
-  padding: 0;
+	width:939px;
+	margin:0;
+	padding:0;
 }
 
 .mmmnavbar ul li {
   display: inline;
-  padding: 1em;
-  color: #fff;
+  vertical-align:middle;
+  height:50px;
+  padding:10px;
+}
+.mmmnavbar ul li img {
+	vertical-align:middle;
+	margin:10px;
 }
 
 .mmmnavbar ul li:hover {
   background: #444;
-  font-style: bold;
 }
 
 #mmmnavtitle {
-  font-weight: bold;
 }
 
 #mmmnavtitle:hover {
-  background: #000;
 }
 #content {
   position: absolute;
-  top: 48px;
+  top: 50px;
   bottom: 0px;
   overflow:hidden;
   width: 100%;
@@ -159,6 +169,53 @@ html {
   background-image:url("assets/20px-Mf_Relation.svg.png");
 }
 
+#mapswitcher {
+  position:absolute;
+  z-index:100;
+  background:#D6D2D0;
+  background-image:url("assets/arrow-down.png");
+  background-position:right 5px top 8px;
+  background-repeat:no-repeat;
+  border-radius:3px;
+  border:1px solid black;
+  right: 200px;
+  box-shadow: 0 0 5px #bbb;
+  padding: 0px;
+  top: 45px;
+}
+#mapswitcher li {
+  list-style: none;
+  margin:0;
+  cursor:pointer;
+  display:none;
+}
+#mapswitcher li:hover {
+  background:gray;
+}
+#mapswitcher li.current {
+  display:block;
+}
+#mapswitcher li.current a {
+  text-decoration:none;
+  color:black;
+}
+#mapswitcher:hover li {
+  display:block;
+  border-top:1px grey solid;
+}
+#mapswitcher:hover li:first-child {
+  border-top:none;
+}
+#mapswitcher:hover li.current {
+  background:gray;
+}
+#mapswitcher a {
+  display:block;
+  padding: 5px 40px 5px 5px;
+  height:100%;
+  width:100%;
+}
+
 #layerswitcher {
   position:absolute;
   z-index:100;
@@ -183,6 +240,7 @@ html {
 #layerswitcher li:first-child {
   border-top:none;
 }
+
 
 /* taken from https://github.com/ardhi/Leaflet.MousePosition, 
 License: MIT, see MIT-LICENCE-Leaflet.MousePosition.txt */
