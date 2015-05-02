@@ -76,7 +76,7 @@ function addSearch() {
     autoType: false,
     autoCollapse: false,
     minLength: 2,
-    zoom:12
+    zoom:16
   }) );
 
 }
