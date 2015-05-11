@@ -149,6 +149,11 @@ padding:0px;
   border-radius:5px;
 }
 
+.leaflet-marker-icon.k-identity {
+  background:white;
+  border-radius:5px;
+}
+
 .leaflet-marker-icon.topic {
   border-bottom: black 2px solid;
 }
