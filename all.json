@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API",
   "osm3s": {
-    "timestamp_osm_base": "2015-03-20T15:10:01Z",
+    "timestamp_osm_base": "2015-05-11T08:59:01Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -35,6 +35,54 @@
     "topic": "housing;land",
     "website": "http://www.syndikat.org/",
     "wikipedia": "de:Mietshäuser Syndikat"
+  }
+},
+{
+  "type": "node",
+  "id": 2100141691,
+  "lat": 47.0736047,
+  "lon": 15.4296604,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "7",
+    "addr:postcode": "8020",
+    "addr:street": "Kinkgasse",
+    "contact:email": "info@bikecityguide.org",
+    "contact:facebook": "https://www.facebook.com/BikeCityGuide.org",
+    "contact:google_plus": "https://plus.google.com/u/0/109581642239712778385/posts",
+    "contact:twitter": "http://twitter.com/BikeCityGuide",
+    "contact:website": "http://www.bikecityguide.org",
+    "contact:youtube": "http://www.youtube.com/BikeCityGuide",
+    "level": "1",
+    "name": "BikeCityGuide",
+    "office": "company",
+    "official_name": "BikeCityGuide Apps GmbH",
+    "operator": "BikeCityGuide Apps GmbH",
+    "phone": "+43 316 228 724",
+    "source": "survey",
+    "topic": "mobility",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2338519517,
+  "lat": 51.3435440,
+  "lon": 9.8574346,
+  "tags": {
+    "addr:city": "Witzenhausen",
+    "addr:country": "DE",
+    "addr:housename": "Baustelle für Wandel",
+    "addr:housenumber": "20",
+    "addr:postcode": "37213",
+    "addr:street": "Brückenstraße",
+    "identity": "transition_initiative",
+    "interaction": "diy_and_dit",
+    "name": "Transition Town",
+    "shop": "doityourself",
+    "topic": "participation",
+    "website": "http://ttwitzenhausen.de"
   }
 },
 {
@@ -78,6 +126,7 @@
     "interaction": "cousing;diy_and_dit",
     "mode_of_organisation:self_managed": "yes",
     "name": "Lendwirbel Büro",
+    "office": "yes",
     "payment:donations": "yes",
     "production_input:money:crowdfunding": "yes",
     "production_input:natural_recources:democratic": "yes",
@@ -230,6 +279,7 @@
     "mode_of_organisation:scale_of_activity": "regional",
     "mode_of_organisation:self_managed": "yes",
     "name": "Transition Graz Büro",
+    "office": "yes",
     "operator": "Verein Transition Graz",
     "owner": "Lendwirbelhaus",
     "payment:donations": "yes",
@@ -254,9 +304,11 @@
     "addr:housenumber": "182",
     "addr:postcode": "8042",
     "addr:street": "Sankt-Peter-Hauptstraße",
+    "club": "yes",
     "contact:email": "mastalier@tele2.at",
     "contact:phone": "+43 316 40260620",
-    "description": "Traegerverein der Regionalwaehrung Styrrion",
+    "description": "Trägerverein der Regionalwährung Styrrion",
+    "identity": "community_based_currencies",
     "mode_of_organisation:ownership_structure": "Verein",
     "mode_of_organisation:purpose": "for_members",
     "mode_of_organisation:scale_of_activity": "regional",
@@ -285,6 +337,232 @@
     "provides": "clothes;culture;food;community;participation",
     "topic": "learning_opportunities",
     "website": "http://csoa.blablaxpress.org/"
+  }
+},
+{
+  "type": "node",
+  "id": 3414249300,
+  "lat": 52.3774744,
+  "lon": 13.1429375,
+  "tags": {
+    "addr:city": "Potsdam",
+    "addr:housenumber": "17",
+    "addr:postcode": "14480",
+    "addr:street": "Waldhornweg",
+    "club": "charity",
+    "contact:email": "info@rueckenwind-aspb.de",
+    "contact:phone": "033160035010",
+    "contact:website": "http://www.aspb-potsdam.de/",
+    "identity": "commons",
+    "interaction": "lending;gifting;cousing;rebuying_reselling;buying_and_selling",
+    "name": "rückenwind-Arbeits- und Sozialprojekte Brandenburg e.V.",
+    "provides": "objects_of_utility;learning_opportunities;community",
+    "service": "bicycle",
+    "shop": "furniture",
+    "topic": "learning_opportunities"
+  }
+},
+{
+  "type": "node",
+  "id": 3493297735,
+  "lat": 47.0709856,
+  "lon": 15.4273005,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "27",
+    "addr:postcode": "8020",
+    "addr:street": "Annenstraße",
+    "club": "yes",
+    "contact:email": "office@openspace.co.at",
+    "contact:phone": "+43 316 714060",
+    "description": "Jugendliche helfen Jugendlichen",
+    "name": "Open Space",
+    "provides": "community",
+    "source": "data.graz.gv.at",
+    "topic": "community",
+    "website": "http://www.openspace.co.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493402553,
+  "lat": 47.0697625,
+  "lon": 15.4324675,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "12",
+    "addr:postcode": "8020",
+    "addr:street": "Belgiergasse",
+    "club": "yes",
+    "name": "Verein gegen Tierfabriken",
+    "provides": "participation",
+    "short_name": "VGT",
+    "topic": "safety",
+    "website": "http://vgt.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403111,
+  "lat": 47.0664224,
+  "lon": 15.4481270,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "interesse@amnestygraz.at",
+    "name": "Amnesty International",
+    "provides": "learning_opportunities;participation",
+    "source": "survey",
+    "topic": "safety;learning_opportunities;participation",
+    "website": "http://graz.amnesty.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403112,
+  "lat": 47.0664163,
+  "lon": 15.4481338,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "gruppe.graz@greenpeace.or.at",
+    "identity": "Greenpeace",
+    "name": "Greenpeace Freiwilligenteam Graz",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "health;clothes;learning_opportunities;community;land;environment",
+    "website": "http://greenpeace.or.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403113,
+  "lat": 47.0664150,
+  "lon": 15.4481251,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "name": "Rettet die Mur",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "environment",
+    "website": "http://rettetdiemur.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493408994,
+  "lat": 47.0764155,
+  "lon": 15.4514857,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "6a",
+    "addr:postcode": "8010",
+    "addr:street": "Schubertstraße",
+    "level": "2",
+    "name": "Aktionsbündnis Graz",
+    "provides": "participation",
+    "topic": "culture;safety;spaces;learning_opportunities;community;participation",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3493418069,
+  "lat": 47.0693906,
+  "lon": 15.4501688,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "12",
+    "addr:postcode": "8010",
+    "addr:street": "Rechbauerstraße",
+    "name": "HTU",
+    "provides": "objects_of_utility;learning_opportunities;community;participation",
+    "topic": "culture;safety;spaces;objects_of_utility;learning_opportunities;community;participation"
+  }
+},
+{
+  "type": "node",
+  "id": 3499080403,
+  "lat": 47.0655824,
+  "lon": 15.4506278,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "15",
+    "addr:postcode": "8010",
+    "addr:street": "Brockmanngasse",
+    "club": "yes",
+    "interaction": "diy_and_dit",
+    "internet_access": "yes",
+    "name": "Funkfeuer Graz",
+    "operator": "Funkfeuer Graz - Verein zur Förderung freier Netze",
+    "provides": "learning_opportunities;participation",
+    "source": "survey",
+    "topic": "telecommunication",
+    "website": "http://graz.funkfeuer.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3499080404,
+  "lat": 47.0592134,
+  "lon": 15.4377631,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "7",
+    "addr:postcode": "8010",
+    "addr:street": "Leitnergasse",
+    "club": "yes",
+    "contact:email": "verein@mur.at",
+    "contact:fax": "+43 316 821 451 26",
+    "contact:phone": "+43 316 821 451 55",
+    "description": "ISP für unabhängige Künstler",
+    "name": "mur.at",
+    "office": "it",
+    "opening_hours": "Tu-Fr 11:00-16:00",
+    "operator": "mur.at - Verein zur Förderung von Netzwerkkunst",
+    "topic": "telecommunication",
+    "website": "https://secure.mur.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3499241834,
+  "lat": 48.1925720,
+  "lon": 16.3366079,
+  "tags": {
+    "addr:city": "Wien",
+    "addr:country": "AT",
+    "addr:flats": "14",
+    "addr:housenumber": "10",
+    "addr:postcode": "1150",
+    "addr:street": "Gebrüder-Lang-Gasse",
+    "contact:email": "office@getactive.org",
+    "contact:facebook": "https://www.facebook.com/getactive",
+    "contact:phone": "+43 699 81634148",
+    "full_name": "Get Active! für eine nachhaltige Welt",
+    "identity": "transition_initiative",
+    "name": "Get Active!",
+    "topic": "learning_opportunities;participation",
+    "website": "http://getactive.org"
   }
 },
 {
@@ -324,6 +602,126 @@
 },
 {
   "type": "node",
+  "id": 1102987839,
+  "lat": 47.0764882,
+  "lon": 15.4514711
+},
+{
+  "type": "node",
+  "id": 1102987840,
+  "lat": 47.0765064,
+  "lon": 15.4514567
+},
+{
+  "type": "node",
+  "id": 1102987841,
+  "lat": 47.0765090,
+  "lon": 15.4515280
+},
+{
+  "type": "node",
+  "id": 1102987842,
+  "lat": 47.0764324,
+  "lon": 15.4513223
+},
+{
+  "type": "node",
+  "id": 1102987843,
+  "lat": 47.0762475,
+  "lon": 15.4514682
+},
+{
+  "type": "node",
+  "id": 1102987844,
+  "lat": 47.0763231,
+  "lon": 15.4516747
+},
+{
+  "type": "node",
+  "id": 1102987845,
+  "lat": 47.0764722,
+  "lon": 15.4513634
+},
+{
+  "type": "node",
+  "id": 1102987846,
+  "lat": 47.0764530,
+  "lon": 15.4513786
+},
+{
+  "type": "node",
+  "id": 1138385347,
+  "lat": 47.0747953,
+  "lon": 15.4053500
+},
+{
+  "type": "node",
+  "id": 1138385349,
+  "lat": 47.0745321,
+  "lon": 15.4054402
+},
+{
+  "type": "node",
+  "id": 1138385351,
+  "lat": 47.0744916,
+  "lon": 15.4053361
+},
+{
+  "type": "node",
+  "id": 1138385360,
+  "lat": 47.0745298,
+  "lon": 15.4055479
+},
+{
+  "type": "node",
+  "id": 1138385373,
+  "lat": 47.0744894,
+  "lon": 15.4054383
+},
+{
+  "type": "node",
+  "id": 1138385381,
+  "lat": 47.0744272,
+  "lon": 15.4055432
+},
+{
+  "type": "node",
+  "id": 1138385383,
+  "lat": 47.0744237,
+  "lon": 15.4057090
+},
+{
+  "type": "node",
+  "id": 1138385387,
+  "lat": 47.0746400,
+  "lon": 15.4057189
+},
+{
+  "type": "node",
+  "id": 1138385389,
+  "lat": 47.0747928,
+  "lon": 15.4054670
+},
+{
+  "type": "node",
+  "id": 1138385403,
+  "lat": 47.0745765,
+  "lon": 15.4054571
+},
+{
+  "type": "node",
+  "id": 1138385405,
+  "lat": 47.0746437,
+  "lon": 15.4055444
+},
+{
+  "type": "node",
+  "id": 1138385406,
+  "lat": 47.0745747,
+  "lon": 15.4055413
+},
+{
+  "type": "node",
   "id": 1217284635,
   "lat": 50.6468881,
   "lon": 5.5730324
@@ -354,6 +752,63 @@
 },
 {
   "type": "node",
+  "id": 1817849787,
+  "lat": 47.0764641,
+  "lon": 15.4513698,
+  "tags": {
+    "entrance": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2014738553,
+  "lat": 52.3952961,
+  "lon": 13.1196030
+},
+{
+  "type": "node",
+  "id": 2014738606,
+  "lat": 52.3953269,
+  "lon": 13.1198760
+},
+{
+  "type": "node",
+  "id": 2014738661,
+  "lat": 52.3954096,
+  "lon": 13.1195686
+},
+{
+  "type": "node",
+  "id": 2014738690,
+  "lat": 52.3954405,
+  "lon": 13.1198415
+},
+{
+  "type": "node",
+  "id": 2133701752,
+  "lat": 47.0744255,
+  "lon": 15.4056250
+},
+{
+  "type": "node",
+  "id": 2133701758,
+  "lat": 47.0745305,
+  "lon": 15.4055150,
+  "tags": {
+    "entrance": "main"
+  }
+},
+{
+  "type": "node",
+  "id": 2133701759,
+  "lat": 47.0745753,
+  "lon": 15.4055130,
+  "tags": {
+    "entrance": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 2381440529,
   "lat": 52.4001643,
   "lon": 13.0766745
@@ -375,6 +830,30 @@
   "id": 2381440532,
   "lat": 52.4003058,
   "lon": 13.0766164
+},
+{
+  "type": "node",
+  "id": 2644068110,
+  "lat": 52.3952842,
+  "lon": 13.1197020
+},
+{
+  "type": "node",
+  "id": 2644068112,
+  "lat": 52.3952941,
+  "lon": 13.1197892
+},
+{
+  "type": "node",
+  "id": 2644068114,
+  "lat": 52.3953065,
+  "lon": 13.1196953
+},
+{
+  "type": "node",
+  "id": 2644068116,
+  "lat": 52.3953164,
+  "lon": 13.1197824
 },
 {
   "type": "node",
@@ -413,6 +892,39 @@
   "lon": 13.0765977
 },
 {
+  "type": "node",
+  "id": 3328121350,
+  "lat": 52.3954264,
+  "lon": 13.1197166,
+  "tags": {
+    "entrance": "main"
+  }
+},
+{
+  "type": "node",
+  "id": 3487780936,
+  "lat": 51.3435855,
+  "lon": 9.8573865
+},
+{
+  "type": "node",
+  "id": 3487780937,
+  "lat": 51.3435001,
+  "lon": 9.8574144
+},
+{
+  "type": "node",
+  "id": 3487780938,
+  "lat": 51.3435280,
+  "lon": 9.8575870
+},
+{
+  "type": "node",
+  "id": 3487780939,
+  "lat": 51.3436095,
+  "lon": 9.8575644
+},
+{
   "type": "way",
   "id": 27491058,
   "nodes": [
@@ -427,6 +939,76 @@
     "name": "Spartacus",
     "provides": "food+drink;culture",
     "topic": "spaces"
+  }
+},
+{
+  "type": "way",
+  "id": 95061964,
+  "nodes": [
+    1102987842,
+    1102987843,
+    1102987844,
+    1102987841,
+    1102987839,
+    1102987840,
+    1102987845,
+    1817849787,
+    1102987846,
+    1102987842
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "6a",
+    "addr:postcode": "8010",
+    "addr:street": "Schubertstraße",
+    "building": "office",
+    "name": "ÖH Uni Graz",
+    "provides": "mobility;culture;safety;objects_of_utility;learning_opportunities;community;participation",
+    "source": "Bing",
+    "topic": "culture;safety;housing;learning_opportunities;community;participation",
+    "website": "http://www.oehunigraz.at"
+  }
+},
+{
+  "type": "way",
+  "id": 98394531,
+  "nodes": [
+    1138385381,
+    2133701752,
+    1138385383,
+    1138385387,
+    1138385405,
+    1138385406,
+    2133701759,
+    1138385403,
+    1138385389,
+    1138385347,
+    1138385351,
+    1138385373,
+    1138385349,
+    2133701758,
+    1138385360,
+    1138385381
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "20a",
+    "addr:postcode": "8020",
+    "addr:street": "Lilienthalgasse",
+    "building": "yes",
+    "contact:email": "vinzihaus@vinzi.at",
+    "contact:fax": "+43 316 58 58 11",
+    "contact:mobile": "+43 676 94 30 378",
+    "contact:phone": "+43 316 58 58 00",
+    "name": "VinziHaus",
+    "office": "ngo",
+    "opening_hours": "Mo-Fr 09:00-13:00",
+    "operator": "Vinzenzgemeinschaft Eggenberg",
+    "provides": "community",
+    "source": "data.graz.gv.at",
+    "topic": "safety;housing;community"
   }
 },
 {
@@ -457,6 +1039,47 @@
 },
 {
   "type": "way",
+  "id": 190868099,
+  "nodes": [
+    2644068110,
+    2644068114,
+    2014738553,
+    2014738661,
+    3328121350,
+    2014738690,
+    2014738606,
+    2644068116,
+    2644068112,
+    2644068110
+  ],
+  "tags": {
+    "addr:city": "Potsdam",
+    "addr:country": "DE",
+    "addr:housenumber": "164",
+    "addr:postcode": "14482",
+    "addr:street": "Rudolf-Breitscheid-Straße",
+    "addr:suburb": "Babelsberg",
+    "amenity": "bicycle_repair_station",
+    "building": "yes",
+    "contact:email": "info@foerderverein-inwole.de",
+    "contact:fax": "+49 331 70 47 66 81",
+    "contact:phone": "+49 331 70 47 66 80",
+    "identity": "commons",
+    "interaction": "bartering;gifting",
+    "long_operator": "Verein zur Förderung innovativer Wohn- und Lebensformen e.V.",
+    "mode_of_organisation:scale_of_activity": "local",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "Projekthaus Potsdam",
+    "operator": "INWOLE e.V.",
+    "provides": "food+drink;culture;spaces;learning_opportunities;community;participation",
+    "shop": "variety_store",
+    "topic": "food+drink;culture;housing;community;participation",
+    "tourism": "hostel",
+    "website": "http://projekthaus-potsdam.de"
+  }
+},
+{
+  "type": "way",
   "id": 229569836,
   "nodes": [
     2381440530,
@@ -477,6 +1100,8 @@
     "addr:housenumber": "15",
     "addr:street": "Am Babelsberger Park",
     "building": "yes",
+    "cuisine": "Vokü",
+    "diet": "vegan",
     "interaction": "gifting;diy_and_dit",
     "name": "la datscha",
     "provides": "food+drink;culture;clothes;learning_opportunities",
@@ -485,6 +1110,56 @@
     "topic": "spaces;clothes;learning_opportunities",
     "topic:land": "urban",
     "website": "http://ladatscha.blogsport.de/"
+  }
+},
+{
+  "type": "way",
+  "id": 341649964,
+  "nodes": [
+    3487780936,
+    3487780937,
+    3487780938,
+    3487780939,
+    3487780936
+  ],
+  "tags": {
+    "building": "yes",
+    "name": "Ecobytes",
+    "topic": "spirituality"
+  }
+},
+{
+  "type": "relation",
+  "id": 4862286,
+  "members": [
+    {
+      "type": "node",
+      "ref": 3493403112,
+      "role": ""
+    },
+    {
+      "type": "node",
+      "ref": 3493403113,
+      "role": ""
+    },
+    {
+      "type": "node",
+      "ref": 3493403111,
+      "role": ""
+    }
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "description": "Gemeinschaftsbüro",
+    "name": "Initiativenbüro",
+    "office": "yes",
+    "provides": "spaces",
+    "source": "survey",
+    "topic": "spaces",
+    "type": "site"
   }
 },
 {
@@ -622,6 +1297,7 @@
     "description": "realraum - hackerspace in Graz. Labor für Elektronik, Computer und Technik Geeks",
     "drink:club-mate": "yes",
     "identity": "commons",
+    "interaction": "diy_and_dit",
     "internet_access": "yes",
     "leisure": "hackerspace",
     "mode_of_organisation:ownership_structure": "Verein",
@@ -638,6 +1314,29 @@
 },
 {
   "type": "node",
+  "id": 708415397,
+  "lat": 48.2088204,
+  "lon": 16.3426393,
+  "tags": {
+    "addr:city": "Wien",
+    "addr:country": "AT",
+    "addr:housenumber": "124-126/3/1a",
+    "addr:postcode": "1080",
+    "addr:street": "Lerchenfelder Straße",
+    "amenity": "library",
+    "contact:email": "info@a-bibliothek.org",
+    "contact:email:pgp": "yes",
+    "fee": "yes",
+    "interaction": "lending",
+    "name": "Anarchistische Bibliothek",
+    "opening_hours": "Mo 18:00-20:00",
+    "provides": "learning_opportunities",
+    "website": "https://a-bibliothek.org",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
   "id": 762758193,
   "lat": 48.2090656,
   "lon": 16.3427829,
@@ -647,7 +1346,7 @@
     "addr:housenumber": "33",
     "addr:postcode": "1080",
     "addr:street": "Pfeilgasse",
-    "identity": "alternatives_to_the_cash_economy",
+    "identity": "demonetized_economy",
     "interaction": "gifting",
     "name": "Schenke",
     "provides": "objects_of_utility;clothes",
@@ -769,6 +1468,33 @@
 },
 {
   "type": "node",
+  "id": 1835636998,
+  "lat": 47.0682153,
+  "lon": 15.4333678,
+  "tags": {
+    "access": "private",
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "25",
+    "addr:postcode": "8020",
+    "addr:street": "Griesgasse",
+    "amenity": "bar",
+    "description": "Vereinslokal",
+    "fee": "yes",
+    "internet_access": "no",
+    "mode_of_organisation:ownership_structure": "Verein",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "Club wakuum",
+    "provides": "culture;spaces;learning_opportunities;community;participation",
+    "smoking": "yes",
+    "smoking:outside": "yes",
+    "sport": "table_soccer",
+    "website": "http://www.wakmusic.at",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
   "id": 1936662693,
   "lat": 47.0708872,
   "lon": 15.4424893,
@@ -836,6 +1562,8 @@
     "addr:street": "Lindenstraße",
     "alcohol": "no",
     "amenity": "cafe",
+    "contact:facebook": "https://facebook.com/madiapotsdam",
+    "contact:website": "http://madia-potsdam.de/",
     "cuisine": "regional",
     "diet:vegan": "only",
     "food": "yes",
@@ -849,8 +1577,6 @@
     "organic": "only",
     "provides": "food+drink;water;culture;spaces;clothes;learning_opportunities;participation",
     "smoking": "no",
-    "url:facebook": "https://facebook.com/madiapotsdam",
-    "website": "http://madia-potsdam.de/",
     "wheelchair": "limited",
     "wheelchair:description": "Barrierfreies WC vorhanden, 1 Stufe am Eingang"
   }
@@ -864,7 +1590,7 @@
     "access": "private",
     "addr:city": "Potsdam",
     "addr:street": "Friedrich-Engels-Straße",
-    "amenity": "food cooperative",
+    "amenity": "food_coop",
     "fee": "yes",
     "indoor": "yes",
     "interaction": "rebuying_reselling",
@@ -930,15 +1656,16 @@
     "addr:housenumber": "9",
     "addr:postcode": "8020",
     "addr:street": "Feuerbachgasse",
-    "amenity:old": "cafe",
+    "amenity": "cafe",
     "contact:facebook": "https://www.facebook.com/kunsthure",
     "contact:phone": "+43 660 1656212",
     "name": "CuntRa Filmcafe",
     "old_name": "CuntRa - La Kunsthure",
+    "opening_hours": "Mo-Th 16:00-23:45; Fr-Sa 16:00-04:00",
     "provides": "culture",
-    "shop": "construction",
     "shop:old": "art",
     "source": "survey",
+    "start_date": "27.3.2015",
     "website": "http://cuntralakunsthure.blogspot.co.at/"
   }
 },
@@ -988,7 +1715,7 @@
     "addr:housenumber": "20",
     "addr:postcode": "8020",
     "addr:street": "Kernstockgasse",
-    "amenity": "community_center",
+    "amenity": "community_centre",
     "contact:email": "nachbarschaften@mur.at",
     "contact:mobile": "+43 676 87426146",
     "contact:phone": "+43 316 711606",
@@ -1019,6 +1746,52 @@
     "provides": "spaces",
     "source": "commons",
     "website": "http://berlin.thinkfarm.de"
+  }
+},
+{
+  "type": "node",
+  "id": 2471606240,
+  "lat": 47.0699014,
+  "lon": 15.4297029,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "12",
+    "addr:postcode": "8020",
+    "addr:street": "Kernstockgasse",
+    "amenity": "social_facility",
+    "capacity": "80",
+    "contact:email": "vinzinest@vinzi.at",
+    "contact:phone": "+43 316 58 58 02",
+    "fee": "yes",
+    "fee:amount": "1€",
+    "name": "Vinzinest",
+    "opening_hours": "Mo-Su 16:00-22:00",
+    "provides": "food+drink;housing",
+    "social_facility": "shelter",
+    "social_facility:for": "homeless,migrant,men",
+    "website": "http://www.vinzi.at/de/vinzinest/"
+  }
+},
+{
+  "type": "node",
+  "id": 2471611443,
+  "lat": 47.0643069,
+  "lon": 15.4417010,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "59",
+    "addr:postcode": "8010",
+    "addr:street": "Grazbachgasse",
+    "contact:email": "vinzishop@vinzi.at",
+    "contact:phone": "+43 316 58 58 07",
+    "name": "Vinzishop",
+    "opening_hours": "Mo-Fr 10:00-18:00",
+    "provides": "clothes",
+    "shop": "clothes",
+    "source": "website",
+    "website": "http://www.vinzi.at/de/vinzishop-graz/"
   }
 },
 {
@@ -1183,6 +1956,7 @@
     "addr:street": "Theodor-Körner-Straße",
     "commons": "food+drink",
     "description": "community supported agriculture",
+    "farm_boxes": "pickup",
     "name": "GeLaWi Kleine Farm (Abholpunkt)",
     "provides": "food+drink",
     "website": "http://www.kleinefarm.org/"
@@ -1213,6 +1987,7 @@
     "addr:street": "Brockmanngasse",
     "commons": "hackerspace",
     "identity": "p2p_economy",
+    "interaction": "diy_and_dit",
     "leisure": "hackerspace",
     "mode_of_organisation:self_managed": "yes",
     "name": "Open Biolab Graz Austria (OLGA)",
@@ -1315,6 +2090,22 @@
 },
 {
   "type": "node",
+  "id": 2516558171,
+  "lat": 52.3992927,
+  "lon": 13.0549258,
+  "tags": {
+    "addr:housenumber": "28",
+    "addr:street": "Charlottenstraße",
+    "description": "Umsonstladen",
+    "interaction": "gifting;cousing;diy_and_dit",
+    "name": "Umverteiler",
+    "provides": "objects_of_utility;learning_opportunities",
+    "shop": "convenience",
+    "website": "http://umverteiler.de/"
+  }
+},
+{
+  "type": "node",
   "id": 2530416097,
   "lat": 47.0654768,
   "lon": 15.4416214,
@@ -1324,10 +2115,8 @@
     "addr:housenumber": "13",
     "addr:postcode": "8010",
     "addr:street": "Schönaugasse",
-    "contact:phone": "+43 664 73727383",
     "diet:vegan": "only",
-    "facebook": "https://www.facebook.com/amikarovegano",
-    "name": "amikarovegano",
+    "name": "Greißlerei Vegankost",
     "provides": "food+drink",
     "shop": "convenience"
   }
@@ -1353,6 +2142,7 @@
     "opening_hours": "Mo-Fr 12:00-14:00",
     "operator": "Caritas",
     "provides": "health",
+    "social_facility": "ambulatory_care",
     "source": "survey",
     "start_date": "1999",
     "website": "http://www.caritas-steiermark.at/hilfe-einrichtungen/fuer-menschen-in-not/gesundheit/marienambulanz/"
@@ -1392,7 +2182,7 @@
   "tags": {
     "addr:housenumber": "10",
     "contact:email": "alter.terre@gmail.com",
-    "contact:phone": "04 72 87 04 75",
+    "contact:phone": "+33 4 72 87 04 75",
     "identity": "subsistance_economy;permaculture;collaborative_economy",
     "name": "Alter & Terre",
     "provides": "community;participation",
@@ -1553,6 +2343,7 @@
     "addr:housenumber": "11",
     "addr:postcode": "8010",
     "addr:street": "Inffeldgasse",
+    "amenity": "fablab",
     "contact:email": "matthias.friessnig@tugraz.at",
     "contact:name": "Dipl.-Ing. Matthias Friessnig",
     "contact:phone": "+43 316 873-7299",
@@ -1627,6 +2418,7 @@
     "interaction": "cousing;diy_and_dit",
     "mode_of_organisation:self_managed": "yes",
     "name": "Lendwirbel Büro",
+    "office": "yes",
     "payment:donations": "yes",
     "production_input:money:crowdfunding": "yes",
     "production_input:natural_recources:democratic": "yes",
@@ -1822,6 +2614,7 @@
     "mode_of_organisation:scale_of_activity": "regional",
     "mode_of_organisation:self_managed": "yes",
     "name": "Transition Graz Büro",
+    "office": "yes",
     "operator": "Verein Transition Graz",
     "owner": "Lendwirbelhaus",
     "payment:donations": "yes",
@@ -1852,7 +2645,7 @@
     "interaction": "gifting",
     "level": "1",
     "name": "Unsonst(T)Raum",
-    "opening_hours": "Mo-Fr 10:00-12:00;Tu 10:00-12:00,16:00-18:00;Th 17:00-19:00",
+    "opening_hours": "Mo-Fr 10:00-12:00; Tu 10:00-12:00,16:00-18:00; Th 17:00-19:00",
     "production_input:money:gift": "partially",
     "provides": "safety;objects_of_utility;clothes;learning_opportunities;community;participation",
     "shop": "charity",
@@ -2095,7 +2888,7 @@
     "addr:postcode": "1050",
     "addr:street": "Schönbrunner Straße",
     "interaction": "cousing",
-    "name": "MakerSpace Vienna",
+    "name": "Selbermacherei, MakerSpace Vienna",
     "provides": "spaces;objects_of_utility;clothes;learning_opportunities;community",
     "website": "http://www.makeraustria.at"
   }
@@ -2115,9 +2908,9 @@
     "building": "office",
     "description": "coworking space",
     "designation": "Coworking",
+    "email": "matteo@torino.talentgarden.org",
     "indoor": "yes",
     "interaction": "cousing",
-    "mail": "matteo@torino.talentgarden.org",
     "name": "Talent Garden",
     "phone": "+39 340 2668788",
     "provides": "learning_opportunities;community;participation",
@@ -2238,21 +3031,27 @@
 },
 {
   "type": "node",
-  "id": 3320669684,
-  "lat": 47.0518587,
-  "lon": 15.4280666,
+  "id": 3338417593,
+  "lat": 54.3215173,
+  "lon": 10.1251989,
   "tags": {
-    "addr:city": "Graz",
-    "addr:country": "AT",
-    "addr:housenumber": "66",
-    "addr:postcode": "8020",
-    "addr:street": "Triester Straße",
-    "amenity": "community_centre",
-    "contact:email": "office@stadtteilzentrum-graz.at",
-    "contact:phone": "+43 316 273112",
-    "name": "Stadtteilzentrum Triesterstraße",
-    "provides": "community",
-    "website": "www.stadtteilzentrum-graz.at"
+    "addr:city": "Kiel",
+    "addr:country": "DE",
+    "addr:housenumber": "10",
+    "addr:postcode": "24103",
+    "addr:street": "Kronshagener Weg",
+    "bulk_purchase": "only",
+    "contact:email": "info@unverpackt-kiel.de",
+    "contact:phone": "+49 152 3170 2438",
+    "description": "Alle Lebensmittel unverpackt",
+    "name": "unverpackt",
+    "opening_hours": "Mo-Fr 10:00-18:00;Th 10:00-19:00; Sa 10:00-14:00",
+    "organic": "yes",
+    "phone": "+49 431 6408 0248",
+    "provides": "food+drink",
+    "shop": "convenience",
+    "start_date": "02.02.2015",
+    "website": "www.unverpackt-kiel.de"
   }
 },
 {
@@ -2333,43 +3132,6 @@
 },
 {
   "type": "node",
-  "id": 3354681820,
-  "lat": 47.0545315,
-  "lon": 15.4742300,
-  "tags": {
-    "addr:city": "Graz",
-    "addr:country": "AT",
-    "addr:housenumber": "85",
-    "addr:postcode": "8010",
-    "addr:street": "St. Peter Hauptstraße",
-    "amenity": "community_centre",
-    "name": "Nachbarschaftszentrum St. Peter",
-    "operator": "WIKI Kinderbetreuungs GmbH",
-    "phone": "+43 676 5777 140",
-    "provides": "community"
-  }
-},
-{
-  "type": "node",
-  "id": 3354681821,
-  "lat": 47.0861509,
-  "lon": 15.4216751,
-  "tags": {
-    "addr:city": "Graz",
-    "addr:country": "AT",
-    "addr:housenumber": "7",
-    "addr:postcode": "8020",
-    "addr:street": "Kalvariengürtel",
-    "amenity": "community_centre",
-    "name": "Projekt NANET - Nachbarschaftsnetzwerk Floßlend",
-    "opening_hours": "Tu 14:00-17:30; Th 10:00-12:00",
-    "operator": "Friedensbüro Graz",
-    "provides": "community",
-    "website": "http://www.friedensbuero-graz.at/cms/service-angebote/konfprev/gemeinwesenarbeit/"
-  }
-},
-{
-  "type": "node",
   "id": 3354681840,
   "lat": 47.0518587,
   "lon": 15.4280666,
@@ -2425,6 +3187,32 @@
     "opening_hours": "24/7",
     "provides": "food+drink",
     "website": "https://foodsharing.de/karte"
+  }
+},
+{
+  "type": "node",
+  "id": 3379723134,
+  "lat": 47.0745517,
+  "lon": 15.4054759,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "20a",
+    "addr:postcode": "8020",
+    "addr:street": "Lilienthalgasse",
+    "amenity": "social_facility",
+    "capacity": "25",
+    "contact:email": "vinzitel@vinzi.at",
+    "contact:fax": "+43 316 58 58 18",
+    "contact:phone": "+43 316 58 58 05",
+    "description": "Notschlafstelle für Inländer",
+    "name": "Vinzitel",
+    "opening_hours": "24/7",
+    "operator": "Vinzenzgemeinschaft Eggenberg",
+    "provides": "housing;clothes",
+    "social_facility": "shelter",
+    "social_facility:for": "homeless,nonmigrant",
+    "website": "http://www.vinzi.at/de/vinzitel/"
   }
 },
 {
@@ -2489,6 +3277,605 @@
     "smoking:outside": "yes",
     "start_date": "2012"
   }
+},
+{
+  "type": "node",
+  "id": 3414249300,
+  "lat": 52.3774744,
+  "lon": 13.1429375,
+  "tags": {
+    "addr:city": "Potsdam",
+    "addr:housenumber": "17",
+    "addr:postcode": "14480",
+    "addr:street": "Waldhornweg",
+    "club": "charity",
+    "contact:email": "info@rueckenwind-aspb.de",
+    "contact:phone": "033160035010",
+    "contact:website": "http://www.aspb-potsdam.de/",
+    "identity": "commons",
+    "interaction": "lending;gifting;cousing;rebuying_reselling;buying_and_selling",
+    "name": "rückenwind-Arbeits- und Sozialprojekte Brandenburg e.V.",
+    "provides": "objects_of_utility;learning_opportunities;community",
+    "service": "bicycle",
+    "shop": "furniture",
+    "topic": "learning_opportunities"
+  }
+},
+{
+  "type": "node",
+  "id": 3414288842,
+  "lat": 52.3891713,
+  "lon": 13.0771495,
+  "tags": {
+    "club": "yes",
+    "description": "GETUP \"Gmeinschaft für Ethik, Tierbefreiung und Umwelt Potsdam\"",
+    "interaction": "diy_and_dit",
+    "leisure": "garden+community",
+    "name": "freiLand",
+    "provides": "food+drink;learning_opportunities"
+  }
+},
+{
+  "type": "node",
+  "id": 3419458694,
+  "lat": 47.0764592,
+  "lon": 15.4186705,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "61a",
+    "addr:postcode": "8020",
+    "addr:street": "Babenbergerstraße",
+    "amenity": "social_facility",
+    "capacity": "15",
+    "contact:phone": "+43 316 58 58 06",
+    "description": "für inländische Frauen mit oder ohne Kinder",
+    "name": "Haus Rosalie",
+    "opening_hours": "24/7",
+    "operator": "Vinzenzgemeinschaft Soeur Rosalie-VinziHelp",
+    "provides": "food+drink;housing;clothes",
+    "social_facility": "shelter",
+    "social_facility:for": "homeless,women,native",
+    "source": "website",
+    "start_date": "2005",
+    "website": "http://www.vinzi.at/de/haus-rosalie/"
+  }
+},
+{
+  "type": "node",
+  "id": 3419458710,
+  "lat": 47.0748954,
+  "lon": 15.4051167,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "42",
+    "addr:postcode": "8020",
+    "addr:street": "Vinzenzgasse",
+    "amenity": "social_facility",
+    "contact:email": "vinzihelp@vinzi.at",
+    "contact:fax": "+43 316 58 24 02-9",
+    "contact:phone": "+43 316 58 24 02-12",
+    "name": "VinziHelp",
+    "provides": "community",
+    "social_facility": "outreach",
+    "social_facility:for": "women",
+    "start_date": "2004",
+    "website": "http://www.vinzi.at/de/vinzihelp/"
+  }
+},
+{
+  "type": "node",
+  "id": 3419458711,
+  "lat": 47.0829091,
+  "lon": 15.4067957,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "43",
+    "addr:postcode": "8020",
+    "addr:street": "Wolkensteingasse",
+    "amenity": "social_facility",
+    "capacity": "8",
+    "contact:email": "vinzilife@vinzi.at",
+    "contact:fax": "+43 0316 58 10 12",
+    "contact:phone": "+43 0316 58 12 58",
+    "name": "VinziLife",
+    "operator": "Vinzenzgemeinschaft Soeur Rosalie-VinziHelp",
+    "provides": "housing;clothes;community;participation;spirituality",
+    "social_facility": "shelter",
+    "social_facility:for": "mental_health,women,homeless",
+    "source": "website",
+    "website": "http://www.vinzi.at/de/vinzilife/"
+  }
+},
+{
+  "type": "node",
+  "id": 3419458712,
+  "lat": 47.0788752,
+  "lon": 15.4659892,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "6",
+    "addr:postcode": "8010",
+    "addr:street": "Riesstraße",
+    "amenity": "social_facility",
+    "capacity": "6",
+    "contact:email": "vinzimed@vinzi.at",
+    "contact:fax": "+43 316 32 61 66",
+    "contact:phone": "+43 316 58 58 03",
+    "name": "VinziMed",
+    "provides": "housing;health",
+    "social_facility": "ambulatory_care",
+    "social_facility:for": "diseased,homeless",
+    "source": "website",
+    "website": "http://www.vinzi.at/de/vinzimed/"
+  }
+},
+{
+  "type": "node",
+  "id": 3419458713,
+  "lat": 47.0702256,
+  "lon": 15.4295512,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "7",
+    "addr:postcode": "8020",
+    "addr:street": "Dominikanergasse",
+    "amenity": "social_facility",
+    "capacity": "24",
+    "contact:email": "vinzischutz@vinzi.at",
+    "contact:mobile": "+43 676 87 42 31",
+    "contact:phone": "+43 316 58 58 04",
+    "name": "VinziSchutz",
+    "opening_hours": "Mo-Su 18:00-07:00",
+    "provides": "food+drink;housing",
+    "social_facility": "shelter",
+    "social_facility:for": "homeless,migrant,women",
+    "source": "website",
+    "website": "http://www.vinzi.at/de/vinzischutz/"
+  }
+},
+{
+  "type": "node",
+  "id": 3431504238,
+  "lat": 52.3992558,
+  "lon": 13.0549363,
+  "tags": {
+    "cuisine": "Vokü",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "name": "Voksküche Olga",
+    "provides": "food+drink;community"
+  }
+},
+{
+  "type": "node",
+  "id": 3431561296,
+  "lat": 52.3950656,
+  "lon": 13.0340206,
+  "tags": {
+    "diet": "vegan",
+    "name": "CvO",
+    "provides": "food+drink;community"
+  }
+},
+{
+  "type": "node",
+  "id": 3431561297,
+  "lat": 52.3950476,
+  "lon": 13.0340136,
+  "tags": {
+    "club": "sport",
+    "name": "Stadtteilnetzwerk Potsdam-West e.V. - Westkurve",
+    "provides": "participation;community"
+  }
+},
+{
+  "type": "node",
+  "id": 3437287472,
+  "lat": 47.0679966,
+  "lon": 15.4446928,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:postcode": "8010",
+    "addr:street": "Gleisdorfer Gasse",
+    "contact:email": "decrinisma@a1.net",
+    "contact:fax": "+43 316 822123-15",
+    "contact:mobile": "+43 664 9100182",
+    "contact:phone": "+43 316 822123",
+    "diet:gluten_free": "yes",
+    "name": "Reformhaus Brantner",
+    "opening_hours": "Mo-Fr 08:00-13:00,14:30-18:00; Sa 08:00-12:30",
+    "organic": "yes",
+    "provides": "food+drink",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 3455224825,
+  "lat": 47.0757869,
+  "lon": 15.4289684,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "25",
+    "addr:postcode": "8020",
+    "addr:street": "Keplerstraße",
+    "commons": "bicycleservicestation",
+    "compressed_air": "yes",
+    "fee": "no",
+    "interaction": "diy_and_dit",
+    "name": "Fahrradservice Box",
+    "operator": "Stadt Graz",
+    "provides": "objects_of_utility",
+    "service:bicycle:pump": "yes",
+    "service:bicycle:tools": "yes",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 3467643435,
+  "lat": 47.0815791,
+  "lon": 15.4676781,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "3",
+    "addr:postcode": "8010",
+    "addr:street": "Schmiedgasse",
+    "commons": "bicycleservicestation",
+    "compressed_air": "yes",
+    "covered": "yes",
+    "name": "Fahrradservice Box",
+    "opening_hours": "Mo-Fr 07:00-18:00",
+    "provides": "objects_of_utility",
+    "service:bicycle:pump": "yes",
+    "service:bicycle:tools": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3467643436,
+  "lat": 47.0817063,
+  "lon": 15.4677293,
+  "tags": {
+    "commons": "bicycleservicestation",
+    "compressed_air": "yes",
+    "covered": "yes",
+    "name": "Fahrradservice Box",
+    "provides": "objects_of_utility",
+    "service:bicycle:pump": "yes",
+    "service:bicycle:tools": "yes",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 3487789149,
+  "lat": 51.3435708,
+  "lon": 9.8575118,
+  "tags": {
+    "identity": "commons",
+    "name": "Containerbar",
+    "provides": "food+drink"
+  }
+},
+{
+  "type": "node",
+  "id": 3493111359,
+  "lat": 48.1935628,
+  "lon": 16.3550622,
+  "tags": {
+    "addr:city": "Wien",
+    "addr:country": "AT",
+    "addr:housenumber": "31",
+    "addr:postcode": "1050",
+    "addr:street": "Grüngasse",
+    "construction": "bank",
+    "contact:email": "info@mitgruenden.at",
+    "identity": "economy_for_the_common_good",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "Bank für Gemeinwohl",
+    "operator:type": "Genossenschaft",
+    "provides": "participation",
+    "website": "http://mitgruenden.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493146816,
+  "lat": 47.0441761,
+  "lon": 15.4206595,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "60",
+    "addr:postcode": "8053",
+    "addr:street": "Am Wagrain",
+    "contact:email": "graz@gartenakademie.co.at",
+    "description": "Kurse für ästhetische Gartengestaltung im Einklang mit der Natur",
+    "name": "Gartenakademie",
+    "office": "company",
+    "provides": "learning_opportunities",
+    "source": "survey",
+    "website": "http://www.gartenakademie.co.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493297735,
+  "lat": 47.0709856,
+  "lon": 15.4273005,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "27",
+    "addr:postcode": "8020",
+    "addr:street": "Annenstraße",
+    "club": "yes",
+    "contact:email": "office@openspace.co.at",
+    "contact:phone": "+43 316 714060",
+    "description": "Jugendliche helfen Jugendlichen",
+    "name": "Open Space",
+    "provides": "community",
+    "source": "data.graz.gv.at",
+    "topic": "community",
+    "website": "http://www.openspace.co.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493402553,
+  "lat": 47.0697625,
+  "lon": 15.4324675,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "12",
+    "addr:postcode": "8020",
+    "addr:street": "Belgiergasse",
+    "club": "yes",
+    "name": "Verein gegen Tierfabriken",
+    "provides": "participation",
+    "short_name": "VGT",
+    "topic": "safety",
+    "website": "http://vgt.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403111,
+  "lat": 47.0664224,
+  "lon": 15.4481270,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "interesse@amnestygraz.at",
+    "name": "Amnesty International",
+    "provides": "learning_opportunities;participation",
+    "source": "survey",
+    "topic": "safety;learning_opportunities;participation",
+    "website": "http://graz.amnesty.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403112,
+  "lat": 47.0664163,
+  "lon": 15.4481338,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "gruppe.graz@greenpeace.or.at",
+    "identity": "Greenpeace",
+    "name": "Greenpeace Freiwilligenteam Graz",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "health;clothes;learning_opportunities;community;land;environment",
+    "website": "http://greenpeace.or.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403113,
+  "lat": 47.0664150,
+  "lon": 15.4481251,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "name": "Rettet die Mur",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "environment",
+    "website": "http://rettetdiemur.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493408994,
+  "lat": 47.0764155,
+  "lon": 15.4514857,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "6a",
+    "addr:postcode": "8010",
+    "addr:street": "Schubertstraße",
+    "level": "2",
+    "name": "Aktionsbündnis Graz",
+    "provides": "participation",
+    "topic": "culture;safety;spaces;learning_opportunities;community;participation",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3493418069,
+  "lat": 47.0693906,
+  "lon": 15.4501688,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "12",
+    "addr:postcode": "8010",
+    "addr:street": "Rechbauerstraße",
+    "name": "HTU",
+    "provides": "objects_of_utility;learning_opportunities;community;participation",
+    "topic": "culture;safety;spaces;objects_of_utility;learning_opportunities;community;participation"
+  }
+},
+{
+  "type": "node",
+  "id": 3498473237,
+  "lat": 47.0521752,
+  "lon": 15.4275172,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "66",
+    "addr:postcode": "8020",
+    "addr:street": "Triester Straße",
+    "fixme": "genaue Lage",
+    "garden:type": "community",
+    "interaction": "cousing",
+    "leisure": "garden",
+    "name": "Stadtteilzentrum Triesterstraße",
+    "provides": "food+drink;participation"
+  }
+},
+{
+  "type": "node",
+  "id": 3498515297,
+  "lat": 47.0905223,
+  "lon": 15.5055139,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "238",
+    "addr:postcode": "8047",
+    "addr:street": "Riesstraße",
+    "building": "Jurte",
+    "contact:email": "doris@BildungsgartenDesLebens.at",
+    "contact:phone": "+43 650 4000 831",
+    "description": "Kinderbetreuung - Schule - Weiterbildung",
+    "name": "Bildungsgarten des Lebens",
+    "operator": "Doris Rogy",
+    "provides": "learning_opportunities",
+    "website": "http://bildungsgartendeslebens.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3498515299,
+  "lat": 47.0390771,
+  "lon": 15.4592817,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "102",
+    "addr:postcode": "8041",
+    "addr:street": "Liebenauer Hauptstraße",
+    "fixme": "genaue Lage",
+    "garden:type": "community",
+    "leisure": "garden",
+    "name": "Garten für ALLE",
+    "operator": "SMZ Liebenau",
+    "provides": "food+drink;participation"
+  }
+},
+{
+  "type": "node",
+  "id": 3498515300,
+  "lat": 47.0991619,
+  "lon": 15.4504645,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "89",
+    "addr:postcode": "8043",
+    "addr:street": "Mariagrüner Straße",
+    "contact:phone": "+43 316 382139",
+    "fixme": "genaue Lage",
+    "garden:type": "community",
+    "interaction": "cousing",
+    "leisure": "garden",
+    "name": "Generationen- Mitmach- Garten",
+    "operator": "Lieselotte Stauber",
+    "owner": "Lieselotte Stauber",
+    "provides": "food+drink;community;participation",
+    "start_date": "Spring 2011"
+  }
+},
+{
+  "type": "node",
+  "id": 3499080403,
+  "lat": 47.0655824,
+  "lon": 15.4506278,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "15",
+    "addr:postcode": "8010",
+    "addr:street": "Brockmanngasse",
+    "club": "yes",
+    "interaction": "diy_and_dit",
+    "internet_access": "yes",
+    "name": "Funkfeuer Graz",
+    "operator": "Funkfeuer Graz - Verein zur Förderung freier Netze",
+    "provides": "learning_opportunities;participation",
+    "source": "survey",
+    "topic": "telecommunication",
+    "website": "http://graz.funkfeuer.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3505713672,
+  "lat": 47.0699946,
+  "lon": 15.4288468,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "20",
+    "addr:postcode": "8020",
+    "addr:street": "Kernstockgasse",
+    "contact:email": "nachbarschaften@mur.at",
+    "contact:facebook": "https://www.facebook.com/allerleihladen",
+    "contact:phone": "+43 676 4068816",
+    "fee": "no",
+    "identity": "demonetized_economy",
+    "interaction": "lending",
+    "name": "AllerLEIHLaden",
+    "provides": "objects_of_utility",
+    "shop": "convenience",
+    "source": "facebook",
+    "start_date": "2.5.2015",
+    "website": "http://www.allerleihladen.at"
+  }
+},
+{
+  "type": "node",
+  "id": 33054361,
+  "lat": 47.0784884,
+  "lon": 15.4662528
 },
 {
   "type": "node",
@@ -2558,6 +3945,18 @@
 },
 {
   "type": "node",
+  "id": 370432563,
+  "lat": 47.0291612,
+  "lon": 15.7083890
+},
+{
+  "type": "node",
+  "id": 370432567,
+  "lat": 47.0285746,
+  "lon": 15.7097625
+},
+{
+  "type": "node",
   "id": 437517021,
   "lat": 47.1004119,
   "lon": 15.4533559
@@ -2567,6 +3966,174 @@
   "id": 437517022,
   "lat": 47.1011685,
   "lon": 15.4529759
+},
+{
+  "type": "node",
+  "id": 441787238,
+  "lat": 52.4081337,
+  "lon": 13.0653391
+},
+{
+  "type": "node",
+  "id": 441787239,
+  "lat": 52.4079609,
+  "lon": 13.0654523
+},
+{
+  "type": "node",
+  "id": 441787240,
+  "lat": 52.4079032,
+  "lon": 13.0651971
+},
+{
+  "type": "node",
+  "id": 441787241,
+  "lat": 52.4074099,
+  "lon": 13.0655291
+},
+{
+  "type": "node",
+  "id": 441787242,
+  "lat": 52.4074568,
+  "lon": 13.0656852
+},
+{
+  "type": "node",
+  "id": 441787243,
+  "lat": 52.4073270,
+  "lon": 13.0657920
+},
+{
+  "type": "node",
+  "id": 441787244,
+  "lat": 52.4069251,
+  "lon": 13.0653361
+},
+{
+  "type": "node",
+  "id": 441787245,
+  "lat": 52.4074229,
+  "lon": 13.0652115
+},
+{
+  "type": "node",
+  "id": 441787246,
+  "lat": 52.4074660,
+  "lon": 13.0653266
+},
+{
+  "type": "node",
+  "id": 441787247,
+  "lat": 52.4076561,
+  "lon": 13.0652045
+},
+{
+  "type": "node",
+  "id": 441787248,
+  "lat": 52.4078596,
+  "lon": 13.0649270
+},
+{
+  "type": "node",
+  "id": 441787249,
+  "lat": 52.4073237,
+  "lon": 13.0652836
+},
+{
+  "type": "node",
+  "id": 441787250,
+  "lat": 52.4073359,
+  "lon": 13.0653097
+},
+{
+  "type": "node",
+  "id": 441787251,
+  "lat": 52.4072976,
+  "lon": 13.0653323
+},
+{
+  "type": "node",
+  "id": 441787252,
+  "lat": 52.4071924,
+  "lon": 13.0650431
+},
+{
+  "type": "node",
+  "id": 441787253,
+  "lat": 52.4069709,
+  "lon": 13.0654469
+},
+{
+  "type": "node",
+  "id": 441787254,
+  "lat": 52.4071452,
+  "lon": 13.0652678
+},
+{
+  "type": "node",
+  "id": 441787256,
+  "lat": 52.4072264,
+  "lon": 13.0654683
+},
+{
+  "type": "node",
+  "id": 441787257,
+  "lat": 52.4081835,
+  "lon": 13.0649142
+},
+{
+  "type": "node",
+  "id": 441787258,
+  "lat": 52.4080366,
+  "lon": 13.0649441
+},
+{
+  "type": "node",
+  "id": 441787259,
+  "lat": 52.4081760,
+  "lon": 13.0644494
+},
+{
+  "type": "node",
+  "id": 441787260,
+  "lat": 52.4080747,
+  "lon": 13.0644479
+},
+{
+  "type": "node",
+  "id": 441787261,
+  "lat": 52.4080696,
+  "lon": 13.0647928
+},
+{
+  "type": "node",
+  "id": 441787262,
+  "lat": 52.4079932,
+  "lon": 13.0648505
+},
+{
+  "type": "node",
+  "id": 441787263,
+  "lat": 52.4080815,
+  "lon": 13.0649209
+},
+{
+  "type": "node",
+  "id": 441787264,
+  "lat": 52.4080770,
+  "lon": 13.0649085
+},
+{
+  "type": "node",
+  "id": 441787265,
+  "lat": 52.4072250,
+  "lon": 13.0651773
+},
+{
+  "type": "node",
+  "id": 441787266,
+  "lat": 52.4072453,
+  "lon": 13.0651526
 },
 {
   "type": "node",
@@ -2614,6 +4181,30 @@
   "id": 495371348,
   "lat": 49.9400006,
   "lon": 11.5767222
+},
+{
+  "type": "node",
+  "id": 672654237,
+  "lat": 52.4048259,
+  "lon": 13.0092271
+},
+{
+  "type": "node",
+  "id": 672654238,
+  "lat": 52.4042906,
+  "lon": 13.0092855
+},
+{
+  "type": "node",
+  "id": 672654240,
+  "lat": 52.4043001,
+  "lon": 13.0095181
+},
+{
+  "type": "node",
+  "id": 672654241,
+  "lat": 52.4048354,
+  "lon": 13.0094595
 },
 {
   "type": "node",
@@ -2749,6 +4340,48 @@
 },
 {
   "type": "node",
+  "id": 982622718,
+  "lat": 47.0789744,
+  "lon": 15.4667788
+},
+{
+  "type": "node",
+  "id": 982622728,
+  "lat": 47.0787756,
+  "lon": 15.4662910
+},
+{
+  "type": "node",
+  "id": 982622775,
+  "lat": 47.0786293,
+  "lon": 15.4667153
+},
+{
+  "type": "node",
+  "id": 982622957,
+  "lat": 47.0786358,
+  "lon": 15.4661442
+},
+{
+  "type": "node",
+  "id": 982623061,
+  "lat": 47.0787662,
+  "lon": 15.4667646
+},
+{
+  "type": "node",
+  "id": 982623209,
+  "lat": 47.0789401,
+  "lon": 15.4663140
+},
+{
+  "type": "node",
+  "id": 1036075681,
+  "lat": 48.3656179,
+  "lon": 15.4214278
+},
+{
+  "type": "node",
   "id": 1048260583,
   "lat": 47.0745213,
   "lon": 15.4437009
@@ -2871,6 +4504,126 @@
   "id": 1092787882,
   "lat": 47.0784371,
   "lon": 15.4470345
+},
+{
+  "type": "node",
+  "id": 1102987839,
+  "lat": 47.0764882,
+  "lon": 15.4514711
+},
+{
+  "type": "node",
+  "id": 1102987840,
+  "lat": 47.0765064,
+  "lon": 15.4514567
+},
+{
+  "type": "node",
+  "id": 1102987841,
+  "lat": 47.0765090,
+  "lon": 15.4515280
+},
+{
+  "type": "node",
+  "id": 1102987842,
+  "lat": 47.0764324,
+  "lon": 15.4513223
+},
+{
+  "type": "node",
+  "id": 1102987843,
+  "lat": 47.0762475,
+  "lon": 15.4514682
+},
+{
+  "type": "node",
+  "id": 1102987844,
+  "lat": 47.0763231,
+  "lon": 15.4516747
+},
+{
+  "type": "node",
+  "id": 1102987845,
+  "lat": 47.0764722,
+  "lon": 15.4513634
+},
+{
+  "type": "node",
+  "id": 1102987846,
+  "lat": 47.0764530,
+  "lon": 15.4513786
+},
+{
+  "type": "node",
+  "id": 1138385347,
+  "lat": 47.0747953,
+  "lon": 15.4053500
+},
+{
+  "type": "node",
+  "id": 1138385349,
+  "lat": 47.0745321,
+  "lon": 15.4054402
+},
+{
+  "type": "node",
+  "id": 1138385351,
+  "lat": 47.0744916,
+  "lon": 15.4053361
+},
+{
+  "type": "node",
+  "id": 1138385360,
+  "lat": 47.0745298,
+  "lon": 15.4055479
+},
+{
+  "type": "node",
+  "id": 1138385373,
+  "lat": 47.0744894,
+  "lon": 15.4054383
+},
+{
+  "type": "node",
+  "id": 1138385381,
+  "lat": 47.0744272,
+  "lon": 15.4055432
+},
+{
+  "type": "node",
+  "id": 1138385383,
+  "lat": 47.0744237,
+  "lon": 15.4057090
+},
+{
+  "type": "node",
+  "id": 1138385387,
+  "lat": 47.0746400,
+  "lon": 15.4057189
+},
+{
+  "type": "node",
+  "id": 1138385389,
+  "lat": 47.0747928,
+  "lon": 15.4054670
+},
+{
+  "type": "node",
+  "id": 1138385403,
+  "lat": 47.0745765,
+  "lon": 15.4054571
+},
+{
+  "type": "node",
+  "id": 1138385405,
+  "lat": 47.0746437,
+  "lon": 15.4055444
+},
+{
+  "type": "node",
+  "id": 1138385406,
+  "lat": 47.0745747,
+  "lon": 15.4055413
 },
 {
   "type": "node",
@@ -3033,6 +4786,78 @@
 },
 {
   "type": "node",
+  "id": 1364839715,
+  "lat": 47.0580076,
+  "lon": 15.4327288
+},
+{
+  "type": "node",
+  "id": 1364839717,
+  "lat": 47.0580101,
+  "lon": 15.4327017
+},
+{
+  "type": "node",
+  "id": 1364839721,
+  "lat": 47.0580151,
+  "lon": 15.4329532
+},
+{
+  "type": "node",
+  "id": 1364839746,
+  "lat": 47.0580758,
+  "lon": 15.4326988
+},
+{
+  "type": "node",
+  "id": 1364839747,
+  "lat": 47.0580769,
+  "lon": 15.4327551
+},
+{
+  "type": "node",
+  "id": 1364839751,
+  "lat": 47.0580937,
+  "lon": 15.4329346
+},
+{
+  "type": "node",
+  "id": 1364839763,
+  "lat": 47.0581033,
+  "lon": 15.4330223
+},
+{
+  "type": "node",
+  "id": 1364839794,
+  "lat": 47.0581846,
+  "lon": 15.4329131
+},
+{
+  "type": "node",
+  "id": 1364839800,
+  "lat": 47.0581943,
+  "lon": 15.4330007
+},
+{
+  "type": "node",
+  "id": 1364839857,
+  "lat": 47.0582632,
+  "lon": 15.4327110
+},
+{
+  "type": "node",
+  "id": 1364839866,
+  "lat": 47.0582814,
+  "lon": 15.4328768
+},
+{
+  "type": "node",
+  "id": 1364839868,
+  "lat": 47.0582829,
+  "lon": 15.4328898
+},
+{
+  "type": "node",
   "id": 1399832174,
   "lat": 47.0997318,
   "lon": 15.4526267
@@ -3060,6 +4885,45 @@
   "id": 1399832203,
   "lat": 47.1003119,
   "lon": 15.4526865
+},
+{
+  "type": "node",
+  "id": 1404509447,
+  "lat": 47.0279507,
+  "lon": 15.7084724
+},
+{
+  "type": "node",
+  "id": 1404509451,
+  "lat": 47.0280557,
+  "lon": 15.7064441
+},
+{
+  "type": "node",
+  "id": 1404509466,
+  "lat": 47.0282319,
+  "lon": 15.7087405
+},
+{
+  "type": "node",
+  "id": 1404509468,
+  "lat": 47.0283325,
+  "lon": 15.7062176
+},
+{
+  "type": "node",
+  "id": 1404509481,
+  "lat": 47.0289491,
+  "lon": 15.7083127
+},
+{
+  "type": "node",
+  "id": 1404592489,
+  "lat": 52.4047431,
+  "lon": 13.0092361,
+  "tags": {
+    "entrance": "yes"
+  }
 },
 {
   "type": "node",
@@ -3170,6 +5034,60 @@
 },
 {
   "type": "node",
+  "id": 1584303866,
+  "lat": 47.0786491,
+  "lon": 15.4667777
+},
+{
+  "type": "node",
+  "id": 1584303874,
+  "lat": 47.0786952,
+  "lon": 15.4661591
+},
+{
+  "type": "node",
+  "id": 1584303922,
+  "lat": 47.0788684,
+  "lon": 15.4667716
+},
+{
+  "type": "node",
+  "id": 1641759582,
+  "lat": 52.3927195,
+  "lon": 13.0216589
+},
+{
+  "type": "node",
+  "id": 1641759585,
+  "lat": 52.3927337,
+  "lon": 13.0218479
+},
+{
+  "type": "node",
+  "id": 1641759598,
+  "lat": 52.3928083,
+  "lon": 13.0216410
+},
+{
+  "type": "node",
+  "id": 1641759599,
+  "lat": 52.3928225,
+  "lon": 13.0218300
+},
+{
+  "type": "node",
+  "id": 1669024937,
+  "lat": 52.4078797,
+  "lon": 13.0650217
+},
+{
+  "type": "node",
+  "id": 1669024938,
+  "lat": 52.4076446,
+  "lon": 13.0651554
+},
+{
+  "type": "node",
   "id": 1717961989,
   "lat": 41.5103861,
   "lon": 1.7030502
@@ -3245,6 +5163,15 @@
   "id": 1717962013,
   "lat": 41.5123195,
   "lon": 1.7029391
+},
+{
+  "type": "node",
+  "id": 1817849787,
+  "lat": 47.0764641,
+  "lon": 15.4513698,
+  "tags": {
+    "entrance": "yes"
+  }
 },
 {
   "type": "node",
@@ -3372,6 +5299,30 @@
 },
 {
   "type": "node",
+  "id": 2133701752,
+  "lat": 47.0744255,
+  "lon": 15.4056250
+},
+{
+  "type": "node",
+  "id": 2133701758,
+  "lat": 47.0745305,
+  "lon": 15.4055150,
+  "tags": {
+    "entrance": "main"
+  }
+},
+{
+  "type": "node",
+  "id": 2133701759,
+  "lat": 47.0745753,
+  "lon": 15.4055130,
+  "tags": {
+    "entrance": "yes"
+  }
+},
+{
+  "type": "node",
   "id": 2300037661,
   "lat": 41.5104574,
   "lon": 1.7034433
@@ -3405,6 +5356,12 @@
   "id": 2300037868,
   "lat": 41.5124846,
   "lon": 1.7034906
+},
+{
+  "type": "node",
+  "id": 2333039914,
+  "lat": 48.3662339,
+  "lon": 15.4210387
 },
 {
   "type": "node",
@@ -3560,6 +5517,36 @@
   "id": 2510425461,
   "lat": 47.0935306,
   "lon": 15.4393240
+},
+{
+  "type": "node",
+  "id": 2510447791,
+  "lat": 47.0903995,
+  "lon": 15.5062025
+},
+{
+  "type": "node",
+  "id": 2510447792,
+  "lat": 47.0903618,
+  "lon": 15.5059989
+},
+{
+  "type": "node",
+  "id": 2510447793,
+  "lat": 47.0902541,
+  "lon": 15.5059000
+},
+{
+  "type": "node",
+  "id": 2510447794,
+  "lat": 47.0902138,
+  "lon": 15.5060226
+},
+{
+  "type": "node",
+  "id": 2510447795,
+  "lat": 47.0902501,
+  "lon": 15.5062776
 },
 {
   "type": "node",
@@ -3943,6 +5930,226 @@
   "lon": 15.3378541
 },
 {
+  "type": "node",
+  "id": 3465129479,
+  "lat": 46.7998409,
+  "lon": 15.1926137
+},
+{
+  "type": "node",
+  "id": 3465129480,
+  "lat": 46.7999295,
+  "lon": 15.1924611
+},
+{
+  "type": "node",
+  "id": 3465129486,
+  "lat": 46.8000998,
+  "lon": 15.1934595
+},
+{
+  "type": "node",
+  "id": 3465129488,
+  "lat": 46.8001179,
+  "lon": 15.1937679
+},
+{
+  "type": "node",
+  "id": 3465130093,
+  "lat": 46.8001350,
+  "lon": 15.1924381
+},
+{
+  "type": "node",
+  "id": 3465130097,
+  "lat": 46.8001815,
+  "lon": 15.1931742
+},
+{
+  "type": "node",
+  "id": 3465130103,
+  "lat": 46.8003839,
+  "lon": 15.1922387
+},
+{
+  "type": "node",
+  "id": 3465130109,
+  "lat": 46.8005043,
+  "lon": 15.1941783
+},
+{
+  "type": "node",
+  "id": 3465130115,
+  "lat": 46.8005428,
+  "lon": 15.1940165
+},
+{
+  "type": "node",
+  "id": 3465130120,
+  "lat": 46.8006054,
+  "lon": 15.1926843
+},
+{
+  "type": "node",
+  "id": 3465130123,
+  "lat": 46.8006423,
+  "lon": 15.1942792
+},
+{
+  "type": "node",
+  "id": 3465130128,
+  "lat": 46.8007628,
+  "lon": 15.1945442
+},
+{
+  "type": "node",
+  "id": 3465130129,
+  "lat": 46.8007401,
+  "lon": 15.1930855
+},
+{
+  "type": "node",
+  "id": 3465130136,
+  "lat": 46.8009249,
+  "lon": 15.1945700
+},
+{
+  "type": "node",
+  "id": 3465130137,
+  "lat": 46.8009008,
+  "lon": 15.1940376
+},
+{
+  "type": "node",
+  "id": 3465130138,
+  "lat": 46.8012476,
+  "lon": 15.1943190
+},
+{
+  "type": "node",
+  "id": 3465130139,
+  "lat": 46.8012829,
+  "lon": 15.1941971
+},
+{
+  "type": "node",
+  "id": 3465130140,
+  "lat": 46.8012669,
+  "lon": 15.1940446
+},
+{
+  "type": "node",
+  "id": 3465337215,
+  "lat": 46.8005785,
+  "lon": 15.1932090
+},
+{
+  "type": "node",
+  "id": 3465337216,
+  "lat": 46.8009985,
+  "lon": 15.1943186
+},
+{
+  "type": "node",
+  "id": 3465337217,
+  "lat": 46.8011394,
+  "lon": 15.1935935
+},
+{
+  "type": "node",
+  "id": 3465601498,
+  "lat": 52.4047286,
+  "lon": 13.0092379
+},
+{
+  "type": "node",
+  "id": 3465601503,
+  "lat": 52.4044063,
+  "lon": 13.0092728
+},
+{
+  "type": "node",
+  "id": 3465601504,
+  "lat": 52.4042922,
+  "lon": 13.0093235
+},
+{
+  "type": "node",
+  "id": 3465601509,
+  "lat": 52.4047642,
+  "lon": 13.0092338
+},
+{
+  "type": "node",
+  "id": 3482366856,
+  "lat": 47.0782101,
+  "lon": 15.4475256,
+  "tags": {
+    "entrance": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3482366857,
+  "lat": 47.0782630,
+  "lon": 15.4476677
+},
+{
+  "type": "node",
+  "id": 3493098837,
+  "lat": 48.3651927,
+  "lon": 15.4213178
+},
+{
+  "type": "node",
+  "id": 3493098838,
+  "lat": 48.3652682,
+  "lon": 15.4216995
+},
+{
+  "type": "node",
+  "id": 3493098839,
+  "lat": 48.3661423,
+  "lon": 15.4207250
+},
+{
+  "type": "node",
+  "id": 3493132369,
+  "lat": 47.0289762,
+  "lon": 15.7097635
+},
+{
+  "type": "node",
+  "id": 3493132370,
+  "lat": 47.0293597,
+  "lon": 15.7095134
+},
+{
+  "type": "node",
+  "id": 3493366452,
+  "lat": 47.1156265,
+  "lon": 16.3477781
+},
+{
+  "type": "node",
+  "id": 3493366455,
+  "lat": 47.1159921,
+  "lon": 16.3473261
+},
+{
+  "type": "node",
+  "id": 3493366456,
+  "lat": 47.1159996,
+  "lon": 16.3484296
+},
+{
+  "type": "node",
+  "id": 3493366467,
+  "lat": 47.1163651,
+  "lon": 16.3479776
+},
+{
   "type": "way",
   "id": 25348274,
   "nodes": [
@@ -3984,6 +6191,56 @@
 },
 {
   "type": "way",
+  "id": 37679768,
+  "nodes": [
+    441787262,
+    441787261,
+    441787260,
+    441787259,
+    441787257,
+    441787263,
+    441787264,
+    441787258,
+    441787238,
+    441787239,
+    441787240,
+    441787241,
+    441787242,
+    441787243,
+    441787256,
+    441787254,
+    441787253,
+    441787244,
+    441787252,
+    441787266,
+    441787265,
+    441787251,
+    441787250,
+    441787249,
+    441787245,
+    441787246,
+    441787247,
+    1669024938,
+    1669024937,
+    441787248,
+    441787262
+  ],
+  "tags": {
+    "addr:city": "Potsdam",
+    "addr:country": "DE",
+    "addr:housenumber": "64",
+    "addr:postcode": "14469",
+    "addr:street": "Am Neuen Garten",
+    "amenity": "arts_centre",
+    "building": "yes",
+    "leisure": "garden+community+permaculture",
+    "name": "Treffpunkt Freizeit",
+    "old_name": "Pionierhaus",
+    "provides": "community;learning_opportunities;culture"
+  }
+},
+{
+  "type": "way",
   "id": 40757171,
   "nodes": [
     495371347,
@@ -4009,6 +6266,34 @@
     "shop": "bakery",
     "website": "http://www.baeckerei-lang.de",
     "wheelchair": "limited"
+  }
+},
+{
+  "type": "way",
+  "id": 53151344,
+  "nodes": [
+    672654237,
+    3465601509,
+    1404592489,
+    3465601498,
+    3465601503,
+    672654238,
+    3465601504,
+    672654240,
+    672654241,
+    672654237
+  ],
+  "tags": {
+    "addr:city": "Potsdam-Eiche",
+    "addr:country": "DE",
+    "addr:housenumber": "133",
+    "addr:postcode": "14469",
+    "addr:street": "Kaiser-Friedrich-Straße",
+    "alt_name": "T 3",
+    "building": "yes",
+    "building:levels": "6",
+    "interaction": "diy_and_dit",
+    "provides": "objects_of_utility"
   }
 },
 {
@@ -4097,6 +6382,44 @@
 },
 {
   "type": "way",
+  "id": 84573657,
+  "nodes": [
+    982623209,
+    982622718,
+    1584303922,
+    982623061,
+    1584303866,
+    982622775,
+    33054361,
+    982622957,
+    1584303874,
+    982622728,
+    982623209
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housename": "Vinzidorf",
+    "addr:housenumber": "900",
+    "addr:postcode": "8010",
+    "addr:street": "Leonhardplatz",
+    "amenity": "social_facility",
+    "capacity": "32",
+    "contact:email": "vinzidorf@vinzi.at",
+    "contact:fax": "+43 316 32 61 66",
+    "contact:phone": "+43 316 58 58 03",
+    "name": "Vinzidorf",
+    "operator": "Vinzenzgemeinschaft Benedict Labre",
+    "provides": "housing",
+    "social_facility": "ambulatory_care",
+    "social_facility:for": "homeless;men",
+    "source": "GeoImage.at",
+    "start_date": "1992",
+    "website": "http://www.vinzi.at/de/vinzidorf/"
+  }
+},
+{
+  "type": "way",
   "id": 90346253,
   "nodes": [
     1048260608,
@@ -4130,6 +6453,76 @@
 },
 {
   "type": "way",
+  "id": 95061964,
+  "nodes": [
+    1102987842,
+    1102987843,
+    1102987844,
+    1102987841,
+    1102987839,
+    1102987840,
+    1102987845,
+    1817849787,
+    1102987846,
+    1102987842
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "6a",
+    "addr:postcode": "8010",
+    "addr:street": "Schubertstraße",
+    "building": "office",
+    "name": "ÖH Uni Graz",
+    "provides": "mobility;culture;safety;objects_of_utility;learning_opportunities;community;participation",
+    "source": "Bing",
+    "topic": "culture;safety;housing;learning_opportunities;community;participation",
+    "website": "http://www.oehunigraz.at"
+  }
+},
+{
+  "type": "way",
+  "id": 98394531,
+  "nodes": [
+    1138385381,
+    2133701752,
+    1138385383,
+    1138385387,
+    1138385405,
+    1138385406,
+    2133701759,
+    1138385403,
+    1138385389,
+    1138385347,
+    1138385351,
+    1138385373,
+    1138385349,
+    2133701758,
+    1138385360,
+    1138385381
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "20a",
+    "addr:postcode": "8020",
+    "addr:street": "Lilienthalgasse",
+    "building": "yes",
+    "contact:email": "vinzihaus@vinzi.at",
+    "contact:fax": "+43 316 58 58 11",
+    "contact:mobile": "+43 676 94 30 378",
+    "contact:phone": "+43 316 58 58 00",
+    "name": "VinziHaus",
+    "office": "ngo",
+    "opening_hours": "Mo-Fr 09:00-13:00",
+    "operator": "Vinzenzgemeinschaft Eggenberg",
+    "provides": "community",
+    "source": "data.graz.gv.at",
+    "topic": "safety;housing;community"
+  }
+},
+{
+  "type": "way",
   "id": 113160936,
   "nodes": [
     1284137180,
@@ -4152,6 +6545,37 @@
     "source": "Bing, Website & survey",
     "topic": "learning_opportunities;community;participation",
     "website": "http://casanica.org/"
+  }
+},
+{
+  "type": "way",
+  "id": 122066195,
+  "nodes": [
+    1364839751,
+    1364839721,
+    1364839715,
+    1364839717,
+    1364839746,
+    1364839747,
+    1364839857,
+    1364839866,
+    1364839868,
+    1364839794,
+    1364839800,
+    1364839763,
+    1364839751
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "98a",
+    "addr:postcode": "8020",
+    "addr:street": "Lagergasse",
+    "amenity": "community_centre",
+    "building": "yes",
+    "name": "Volkshaus",
+    "operator": "KPÖ",
+    "provides": "culture"
   }
 },
 {
@@ -4186,6 +6610,29 @@
     "provides": "spaces",
     "website": "http://www.freiland-potsdam.de",
     "wheelchair": "limited"
+  }
+},
+{
+  "type": "way",
+  "id": 151354852,
+  "nodes": [
+    1641759599,
+    1641759585,
+    1641759582,
+    1641759598,
+    1641759599
+  ],
+  "tags": {
+    "addr:city": "Potsdam",
+    "addr:country": "DE",
+    "addr:housenumber": "51 E",
+    "addr:postcode": "14471",
+    "addr:street": "Geschwister-Scholl-Straße",
+    "amenity": "network of neighbours",
+    "building": "yes",
+    "name": "Stadtteilnetzwerk Potsdam-West",
+    "provides": "community, culture, safety",
+    "source": "bingMap"
   }
 },
 {
@@ -4297,17 +6744,21 @@
     "addr:postcode": "14482",
     "addr:street": "Rudolf-Breitscheid-Straße",
     "addr:suburb": "Babelsberg",
+    "amenity": "bicycle_repair_station",
     "building": "yes",
     "contact:email": "info@foerderverein-inwole.de",
     "contact:fax": "+49 331 70 47 66 81",
     "contact:phone": "+49 331 70 47 66 80",
     "identity": "commons",
+    "interaction": "bartering;gifting",
     "long_operator": "Verein zur Förderung innovativer Wohn- und Lebensformen e.V.",
     "mode_of_organisation:scale_of_activity": "local",
     "mode_of_organisation:self_managed": "yes",
     "name": "Projekthaus Potsdam",
     "operator": "INWOLE e.V.",
-    "provides": "culture;housing;spaces;objects_of_utility;learning_opportunities",
+    "provides": "food+drink;culture;spaces;learning_opportunities;community;participation",
+    "shop": "variety_store",
+    "topic": "food+drink;culture;housing;community;participation",
     "tourism": "hostel",
     "website": "http://projekthaus-potsdam.de"
   }
@@ -4417,6 +6868,8 @@
     "addr:housenumber": "15",
     "addr:street": "Am Babelsberger Park",
     "building": "yes",
+    "cuisine": "Vokü",
+    "diet": "vegan",
     "interaction": "gifting;diy_and_dit",
     "name": "la datscha",
     "provides": "food+drink;culture;clothes;learning_opportunities",
@@ -4476,8 +6929,10 @@
     1091927356,
     1091927315,
     1091927320,
+    3482366856,
     1091927323,
     1091927349,
+    3482366857,
     2510385155,
     833763318,
     2510385156,
@@ -4617,6 +7072,37 @@
     "provides": "food+drink;culture;spaces;learning_opportunities;community;participation;land",
     "provides:land": "rurban",
     "start_date": "2012"
+  }
+},
+{
+  "type": "way",
+  "id": 243665947,
+  "nodes": [
+    2510447791,
+    2510447792,
+    2510447793,
+    2510447794,
+    2510447795,
+    2510447791
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "238",
+    "addr:postcode": "8047",
+    "addr:street": "Riesstraße",
+    "commons": "communitygarden",
+    "contact:email": "riesparadies@lists.lnxnt.org",
+    "contact:fax": "+43 316 30 19 60",
+    "contact:phone": "+43 316 30 19 60",
+    "garden:type": "community",
+    "identity": "permaculture",
+    "interaction": "cousing",
+    "leisure": "garden",
+    "name": "Ries Paradies",
+    "provides": "food+drink;community;participation",
+    "start_date": "2013",
+    "website": "https://riesparadies.wordpress.com/"
   }
 },
 {
@@ -4842,6 +7328,147 @@
   }
 },
 {
+  "type": "way",
+  "id": 339329245,
+  "nodes": [
+    3465129488,
+    3465129486,
+    3465130097,
+    3465129479,
+    3465129480,
+    3465130093,
+    3465130103,
+    3465130120,
+    3465130129,
+    3465337215,
+    3465130137,
+    3465337217,
+    3465130140,
+    3465130139,
+    3465130138,
+    3465337216,
+    3465130136,
+    3465130128,
+    3465130123,
+    3465130109,
+    3465130115,
+    3465129488
+  ],
+  "tags": {
+    "addr:city": "Deutschlandsberg",
+    "addr:country": "AT",
+    "addr:housenumber": "32",
+    "addr:postcode": "8530",
+    "addr:street": "Warnblickweg",
+    "contact:email": "wieserhoisl@riseup.net",
+    "contact:phone": "+43 3462 26870",
+    "csa": "source",
+    "identity": "economy_for_the_common_good",
+    "landuse": "farmyard",
+    "name": "Hofkollektiv Wieserhoisl",
+    "organic": "yes",
+    "provides": "food+drink;learning_opportunities;land",
+    "provides:land": "rural",
+    "start_date": "Spring 2008",
+    "website": "http://www.wieserhoisl.at/"
+  }
+},
+{
+  "type": "way",
+  "id": 342287393,
+  "nodes": [
+    3493098839,
+    2333039914,
+    1036075681,
+    3493098838,
+    3493098837,
+    3493098839
+  ],
+  "tags": {
+    "addr:city": "Spitz an der Donau",
+    "addr:country": "AT",
+    "addr:housenumber": "6",
+    "addr:postcode": "3620",
+    "addr:street": "Gärtnerweg",
+    "contact:email": "eg@donaugarten.at",
+    "contact:facebook": "donaugarten",
+    "contact:phone": "+43 676 5340580",
+    "delivery": "yes",
+    "description": "Feine Suppen aus besten Zutaten",
+    "diet:gluten_free": "yes",
+    "diet:lactose_free": "yes",
+    "diet:nut_free": "yes",
+    "diet:soy_free": "yes",
+    "diet:vegetarian": "yes",
+    "landuse": "farmyard",
+    "name": "DonauGarten",
+    "operator": "Eva Grünberger",
+    "organic": "no",
+    "provides": "food+drink",
+    "regional": "yes",
+    "shop": "farm",
+    "website": "http://donaugarten.at"
+  }
+},
+{
+  "type": "way",
+  "id": 342291664,
+  "nodes": [
+    1404509447,
+    1404509466,
+    370432567,
+    3493132369,
+    3493132370,
+    370432563,
+    1404509481,
+    1404509468,
+    1404509451,
+    1404509447
+  ],
+  "tags": {
+    "addr:city": "Sankt Margarethen an der Raab",
+    "addr:country": "AT",
+    "addr:housenumber": "2",
+    "addr:postcode": "8321",
+    "addr:street": "Goggitsch",
+    "contact:email": "familie_herzog@gmx.at",
+    "contact:name": "Hansi und Teresa Herzog",
+    "interaction": "cousing",
+    "landuse": "farm",
+    "name": "Kleiner Hof",
+    "provides": "food+drink;housing;community;participation",
+    "start_date": "2015",
+    "website": "http://kleinerhof.wordpress.com"
+  }
+},
+{
+  "type": "way",
+  "id": 342320594,
+  "nodes": [
+    3493366452,
+    3493366456,
+    3493366467,
+    3493366455,
+    3493366452
+  ],
+  "tags": {
+    "addr:city": "Güssing",
+    "addr:country": "AT",
+    "addr:housenumber": "57",
+    "addr:postcode": "7540",
+    "addr:street": "Punitz",
+    "description": "Spezialisierung auf alte Sorten",
+    "identity": "permaculture;subsistence_economy",
+    "interaction": "bartering;gifting;cousing;diy_and_dit",
+    "landuse": "farmyard",
+    "name": "Lichtlwichtlhof",
+    "organic": "yes",
+    "provides": "food+drink;culture;learning_opportunities;community;spirituality",
+    "shop": "garden_centre",
+    "start_date": "2015"
+  }
+},
+{
   "type": "relation",
   "id": 4189401,
   "members": [
@@ -4897,143 +7524,38 @@
   }
 },
 {
-  "type": "node",
-  "id": 1838845835,
-  "lat": 52.4739765,
-  "lon": 13.4162698
-},
-{
-  "type": "node",
-  "id": 1838845836,
-  "lat": 52.4741223,
-  "lon": 13.4176162
-},
-{
-  "type": "node",
-  "id": 1838845837,
-  "lat": 52.4747890,
-  "lon": 13.4161320
-},
-{
-  "type": "node",
-  "id": 1838845838,
-  "lat": 52.4749127,
-  "lon": 13.4173931
-},
-{
-  "type": "node",
-  "id": 2012981723,
-  "lat": 47.0753756,
-  "lon": 15.4332162,
-  "tags": {
-    "entrance": "yes",
-    "wheelchair": "no"
-  }
-},
-{
-  "type": "node",
-  "id": 2496235208,
-  "lat": 52.4744780,
-  "lon": 13.4175152
-},
-{
-  "type": "node",
-  "id": 2510218855,
-  "lat": 47.0753934,
-  "lon": 15.4331594,
+  "type": "relation",
+  "id": 4862286,
+  "members": [
+    {
+      "type": "node",
+      "ref": 3493403112,
+      "role": ""
+    },
+    {
+      "type": "node",
+      "ref": 3493403113,
+      "role": ""
+    },
+    {
+      "type": "node",
+      "ref": 3493403111,
+      "role": ""
+    }
+  ],
   "tags": {
     "addr:city": "Graz",
-    "addr:country": "AT",
-    "addr:housenumber": "45",
-    "addr:postcode": "8020",
-    "addr:street": "Lendkai",
-    "contact:email": "info@spektral.at",
-    "contact:phone": "+43 699 1313 8714",
-    "diet:vegan": "yes",
-    "diet:vegetarian": "only",
-    "drink:club-mate": "yes",
-    "identity": "commons",
-    "internet_access": "terminal;wlan",
-    "internet_access:fee": "no",
-    "mode_of_organisation:ownership_structure": "Verein",
-    "mode_of_organisation:purpose": "non_profit",
-    "mode_of_organisation:self_managed": "yes",
-    "name": "spektral",
-    "opening_hours": "We 17:00-20:00",
-    "operator": "Verein Free Future Forces",
-    "payment:bitcoin": "yes",
-    "provides": "spaces;clothes;community;participation",
-    "smoking": "no",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "description": "Gemeinschaftsbüro",
+    "name": "Initiativenbüro",
+    "office": "yes",
+    "provides": "spaces",
     "source": "survey",
-    "website": "http://www.spektral.at",
-    "wheelchair": "no"
+    "topic": "spaces",
+    "type": "site"
   }
-},
-{
-  "type": "node",
-  "id": 2510959552,
-  "lat": 47.0753483,
-  "lon": 15.4331565,
-  "tags": {
-    "addr:city": "Graz",
-    "addr:country": "AT",
-    "addr:housenumber": "45",
-    "addr:postcode": "8020",
-    "addr:street": "Lendkai",
-    "description": "Offene Werkstatt; Kellereingang, Leiter nach unten",
-    "entrance": "side",
-    "identity": "commons",
-    "interaction": "diy_and_dit",
-    "internet_access": "wlan",
-    "mode_of_organisation:ownership_structure": "Verein",
-    "mode_of_organisation:self_managed": "yes",
-    "name": "Traumwerk",
-    "operator": "Traumwerk",
-    "provides": "learning_opportunities;participation",
-    "source": "survey",
-    "website": "http://www.traumwerk.in/doku.php",
-    "wheelchair": "no"
-  }
-},
-{
-  "type": "node",
-  "id": 3354681841,
-  "lat": 47.0753824,
-  "lon": 15.4331742,
-  "tags": {
-    "description": "Umsonstladen",
-    "identity": "commons",
-    "interaction": "gifting",
-    "mode_of_organisation:self_managed": "yes",
-    "name": "Umverteiler",
-    "opening_hours": "We 17:00-20:00",
-    "provides": "objects_of_utility;clothes"
-  }
-},
-{
-  "type": "node",
-  "id": 3393621811,
-  "lat": 52.4749127,
-  "lon": 13.4173931
-},
-{
-  "type": "way",
-  "id": 173060106,
-  "nodes": [
-    1838845838,
-    2496235208,
-    1838845836,
-    1838845835
-  ]
-},
-{
-  "type": "way",
-  "id": 332251381,
-  "nodes": [
-    1838845835,
-    1838845837,
-    3393621811
-  ]
 }
 
   ]
