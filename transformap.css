@@ -21,6 +21,7 @@ div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content div table tr:first-child td { vertical-align:top; padding-bottom:10px; } /* addr+contact data on top*/
 .leaflet-popup-content div table tr:first-child td + td { text-align:right; }
 .leaflet-popup-content div { max-height: 600px; overflow:auto; }
+.leaflet-popup-content div table tr.tag td { }
 
     #map {
       height: 100%;
