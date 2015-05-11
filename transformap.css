@@ -45,14 +45,23 @@ div.leaflet-popup-content { width: auto !important; }
   z-index:1005;
   color:#FFF;
   font: normal normal 400 14px/20px "PT Sans";
+  font-family: "PT Sans", sans-serif;
   vertical-align:middle;
   text-align:center;
 }
 
-.mmmnavbar a {
+.mmmnavbar li a {
   color: #DDDDDD;
   height:100%;
+  display:block;
+  line-height:50px;
+  padding-left:10px;
+  padding-right:10px;
 }
+.mmmnavbar li:first-child a {
+padding:0px;
+}
+
 
 .mmmnavbar a:hover {
   text-decoration: none;
@@ -60,17 +69,25 @@ div.leaflet-popup-content { width: auto !important; }
 }
 
 .mmmnavbar ul {
-	width:939px;
-	margin:0;
+	max-width:939px;
+	margin:0 0 0 -470px; 
 	padding:0;
+    position:absolute;
+    top:0px;
+    left:50%;
+    height:50px;
 }
 
 .mmmnavbar ul li {
   display: inline;
-  vertical-align:middle;
+  float:left;
   height:50px;
-  padding:10px;
+  /*padding:10px;*/
 }
+.mmmnavbar ul li:first-child {
+    float:normal;
+}
+
 .mmmnavbar ul li img {
 	vertical-align:middle;
 	margin:10px;
@@ -94,11 +111,11 @@ div.leaflet-popup-content { width: auto !important; }
 
 }
 
-html {
+/*html {
   background: url("assets/background_smaller.png") repeat-x scroll 0px 0px,
               url("assets/background-rep.png") repeat scroll 0px 0px,
               none repeat scroll 0% 0% #f5f1e8;
-}
+}*/
 
 .startpage {
   padding:0 20px;
@@ -183,6 +200,8 @@ html {
   box-shadow: 0 0 5px #bbb;
   padding: 0px;
   top: 45px;
+
+  top: -245px; /*deactivate*/
 }
 #mapswitcher li {
   list-style: none;
@@ -211,7 +230,7 @@ html {
   background:gray;
 }
 #mapswitcher a {
-  display:none;
+  display:block;
   padding: 5px 40px 5px 5px;
   height:100%;
   width:100%;
