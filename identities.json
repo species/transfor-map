@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API",
   "osm3s": {
-    "timestamp_osm_base": "2015-03-30T20:59:02Z",
+    "timestamp_osm_base": "2015-05-11T09:22:02Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -262,6 +262,54 @@
     "smoking": "no",
     "source": "survey",
     "website": "http://www.gmota.at"
+  }
+},
+{
+  "type": "node",
+  "id": 2338519517,
+  "lat": 51.3435440,
+  "lon": 9.8574346,
+  "tags": {
+    "addr:city": "Witzenhausen",
+    "addr:country": "DE",
+    "addr:housename": "Baustelle für Wandel",
+    "addr:housenumber": "20",
+    "addr:postcode": "37213",
+    "addr:street": "Brückenstraße",
+    "identity": "transition_initiative",
+    "interaction": "diy_and_dit",
+    "name": "Transition Town",
+    "shop": "doityourself",
+    "topic": "participation",
+    "website": "http://ttwitzenhausen.de"
+  }
+},
+{
+  "type": "node",
+  "id": 2480003652,
+  "lat": 47.0661968,
+  "lon": 15.4287526,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "42",
+    "addr:postcode": "8020",
+    "addr:street": "Dreihackengasse",
+    "amenity": "cafe",
+    "contact:email": "cafe@postgarage.at",
+    "contact:phone": "+43 699 11606605",
+    "diet:lactose_free": "yes",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "only",
+    "entrance": "yes",
+    "identity": "collaborative_economy",
+    "name": "Postgarage cafe",
+    "opening_hours": "Mo-Su 10:00-22:00; Th-Sa 10:00-01:00",
+    "organic": "yes",
+    "regional": "yes",
+    "source": "website",
+    "website": "http://www.postgarage-cafe.at",
+    "wheelchair": "limited"
   }
 },
 {
@@ -713,7 +761,7 @@
     "interaction": "gifting",
     "level": "1",
     "name": "Unsonst(T)Raum",
-    "opening_hours": "Mo-Fr 10:00-12:00;Tu 10:00-12:00,16:00-18:00;Th 17:00-19:00",
+    "opening_hours": "Mo-Fr 10:00-12:00; Tu 10:00-12:00,16:00-18:00; Th 17:00-19:00",
     "production_input:money:gift": "partially",
     "provides": "safety;objects_of_utility;clothes;learning_opportunities;community;participation",
     "shop": "charity",
@@ -798,6 +846,31 @@
     "opening_hours": "24/7",
     "provides": "food+drink",
     "website": "https://foodsharing.de/karte"
+  }
+},
+{
+  "type": "node",
+  "id": 3149601076,
+  "lat": 47.0468450,
+  "lon": 15.4836356,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "182",
+    "addr:postcode": "8042",
+    "addr:street": "Sankt-Peter-Hauptstraße",
+    "club": "yes",
+    "contact:email": "mastalier@tele2.at",
+    "contact:phone": "+43 316 40260620",
+    "description": "Trägerverein der Regionalwährung Styrrion",
+    "identity": "community_based_currencies",
+    "mode_of_organisation:ownership_structure": "Verein",
+    "mode_of_organisation:purpose": "for_members",
+    "mode_of_organisation:scale_of_activity": "regional",
+    "name": "STYRRION-Service",
+    "opening_hours": "We 14:00-15:30; SH,PH off",
+    "topic": "participation",
+    "website": "http://www.styrrion.at/"
   }
 },
 {
@@ -1055,12 +1128,112 @@
     "contact:phone": "033160035010",
     "contact:website": "http://www.aspb-potsdam.de/",
     "identity": "commons",
-    "interaction": "lending, gifting, cousing, rebuying_reselling, buying_and_selling",
+    "interaction": "lending;gifting;cousing;rebuying_reselling;buying_and_selling",
     "name": "rückenwind-Arbeits- und Sozialprojekte Brandenburg e.V.",
-    "provides": "learning_opportunities, community, objects_of_utility",
+    "provides": "objects_of_utility;learning_opportunities;community",
     "service": "bicycle",
     "shop": "furniture",
     "topic": "learning_opportunities"
+  }
+},
+{
+  "type": "node",
+  "id": 3487789149,
+  "lat": 51.3435708,
+  "lon": 9.8575118,
+  "tags": {
+    "identity": "commons",
+    "name": "Containerbar",
+    "provides": "food+drink"
+  }
+},
+{
+  "type": "node",
+  "id": 3493111359,
+  "lat": 48.1935628,
+  "lon": 16.3550622,
+  "tags": {
+    "addr:city": "Wien",
+    "addr:country": "AT",
+    "addr:housenumber": "31",
+    "addr:postcode": "1050",
+    "addr:street": "Grüngasse",
+    "construction": "bank",
+    "contact:email": "info@mitgruenden.at",
+    "identity": "economy_for_the_common_good",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "Bank für Gemeinwohl",
+    "operator:type": "Genossenschaft",
+    "provides": "participation",
+    "website": "http://mitgruenden.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403112,
+  "lat": 47.0664163,
+  "lon": 15.4481338,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "gruppe.graz@greenpeace.or.at",
+    "identity": "Greenpeace",
+    "name": "Greenpeace Freiwilligenteam Graz",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "health;clothes;learning_opportunities;community;land;environment",
+    "website": "http://greenpeace.or.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3499241834,
+  "lat": 48.1925720,
+  "lon": 16.3366079,
+  "tags": {
+    "addr:city": "Wien",
+    "addr:country": "AT",
+    "addr:flats": "14",
+    "addr:housenumber": "10",
+    "addr:postcode": "1150",
+    "addr:street": "Gebrüder-Lang-Gasse",
+    "contact:email": "office@getactive.org",
+    "contact:facebook": "https://www.facebook.com/getactive",
+    "contact:phone": "+43 699 81634148",
+    "full_name": "Get Active! für eine nachhaltige Welt",
+    "identity": "transition_initiative",
+    "name": "Get Active!",
+    "topic": "learning_opportunities;participation",
+    "website": "http://getactive.org"
+  }
+},
+{
+  "type": "node",
+  "id": 3505713672,
+  "lat": 47.0699946,
+  "lon": 15.4288468,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "20",
+    "addr:postcode": "8020",
+    "addr:street": "Kernstockgasse",
+    "contact:email": "nachbarschaften@mur.at",
+    "contact:facebook": "https://www.facebook.com/allerleihladen",
+    "contact:phone": "+43 676 4068816",
+    "fee": "no",
+    "identity": "demonetized_economy",
+    "interaction": "lending",
+    "name": "AllerLEIHLaden",
+    "provides": "objects_of_utility",
+    "shop": "convenience",
+    "source": "facebook",
+    "start_date": "2.5.2015",
+    "website": "http://www.allerleihladen.at"
   }
 },
 {
@@ -1708,6 +1881,36 @@
 },
 {
   "type": "node",
+  "id": 2510447791,
+  "lat": 47.0903995,
+  "lon": 15.5062025
+},
+{
+  "type": "node",
+  "id": 2510447792,
+  "lat": 47.0903618,
+  "lon": 15.5059989
+},
+{
+  "type": "node",
+  "id": 2510447793,
+  "lat": 47.0902541,
+  "lon": 15.5059000
+},
+{
+  "type": "node",
+  "id": 2510447794,
+  "lat": 47.0902138,
+  "lon": 15.5060226
+},
+{
+  "type": "node",
+  "id": 2510447795,
+  "lat": 47.0902501,
+  "lon": 15.5062776
+},
+{
+  "type": "node",
   "id": 2644068110,
   "lat": 52.3952842,
   "lon": 13.1197020
@@ -1938,6 +2141,172 @@
   "lon": 15.3378541
 },
 {
+  "type": "node",
+  "id": 3465129479,
+  "lat": 46.7998409,
+  "lon": 15.1926137
+},
+{
+  "type": "node",
+  "id": 3465129480,
+  "lat": 46.7999295,
+  "lon": 15.1924611
+},
+{
+  "type": "node",
+  "id": 3465129486,
+  "lat": 46.8000998,
+  "lon": 15.1934595
+},
+{
+  "type": "node",
+  "id": 3465129488,
+  "lat": 46.8001179,
+  "lon": 15.1937679
+},
+{
+  "type": "node",
+  "id": 3465130093,
+  "lat": 46.8001350,
+  "lon": 15.1924381
+},
+{
+  "type": "node",
+  "id": 3465130097,
+  "lat": 46.8001815,
+  "lon": 15.1931742
+},
+{
+  "type": "node",
+  "id": 3465130103,
+  "lat": 46.8003839,
+  "lon": 15.1922387
+},
+{
+  "type": "node",
+  "id": 3465130109,
+  "lat": 46.8005043,
+  "lon": 15.1941783
+},
+{
+  "type": "node",
+  "id": 3465130115,
+  "lat": 46.8005428,
+  "lon": 15.1940165
+},
+{
+  "type": "node",
+  "id": 3465130120,
+  "lat": 46.8006054,
+  "lon": 15.1926843
+},
+{
+  "type": "node",
+  "id": 3465130123,
+  "lat": 46.8006423,
+  "lon": 15.1942792
+},
+{
+  "type": "node",
+  "id": 3465130128,
+  "lat": 46.8007628,
+  "lon": 15.1945442
+},
+{
+  "type": "node",
+  "id": 3465130129,
+  "lat": 46.8007401,
+  "lon": 15.1930855
+},
+{
+  "type": "node",
+  "id": 3465130136,
+  "lat": 46.8009249,
+  "lon": 15.1945700
+},
+{
+  "type": "node",
+  "id": 3465130137,
+  "lat": 46.8009008,
+  "lon": 15.1940376
+},
+{
+  "type": "node",
+  "id": 3465130138,
+  "lat": 46.8012476,
+  "lon": 15.1943190
+},
+{
+  "type": "node",
+  "id": 3465130139,
+  "lat": 46.8012829,
+  "lon": 15.1941971
+},
+{
+  "type": "node",
+  "id": 3465130140,
+  "lat": 46.8012669,
+  "lon": 15.1940446
+},
+{
+  "type": "node",
+  "id": 3465337215,
+  "lat": 46.8005785,
+  "lon": 15.1932090
+},
+{
+  "type": "node",
+  "id": 3465337216,
+  "lat": 46.8009985,
+  "lon": 15.1943186
+},
+{
+  "type": "node",
+  "id": 3465337217,
+  "lat": 46.8011394,
+  "lon": 15.1935935
+},
+{
+  "type": "node",
+  "id": 3482366856,
+  "lat": 47.0782101,
+  "lon": 15.4475256,
+  "tags": {
+    "entrance": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3482366857,
+  "lat": 47.0782630,
+  "lon": 15.4476677
+},
+{
+  "type": "node",
+  "id": 3493366452,
+  "lat": 47.1156265,
+  "lon": 16.3477781
+},
+{
+  "type": "node",
+  "id": 3493366455,
+  "lat": 47.1159921,
+  "lon": 16.3473261
+},
+{
+  "type": "node",
+  "id": 3493366456,
+  "lat": 47.1159996,
+  "lon": 16.3484296
+},
+{
+  "type": "node",
+  "id": 3493366467,
+  "lat": 47.1163651,
+  "lon": 16.3479776
+},
+{
   "type": "way",
   "id": 61399924,
   "nodes": [
@@ -2146,7 +2515,7 @@
     "operator": "INWOLE e.V.",
     "provides": "food+drink;culture;spaces;learning_opportunities;community;participation",
     "shop": "variety_store",
-    "topic": "housing, community, culture, food+drink, participation",
+    "topic": "food+drink;culture;housing;community;participation",
     "tourism": "hostel",
     "website": "http://projekthaus-potsdam.de"
   }
@@ -2251,8 +2620,10 @@
     1091927356,
     1091927315,
     1091927320,
+    3482366856,
     1091927323,
     1091927349,
+    3482366857,
     2510385155,
     833763318,
     2510385156,
@@ -2350,6 +2721,37 @@
     "provides": "food+drink;culture;spaces;learning_opportunities;community;participation;land",
     "provides:land": "rurban",
     "start_date": "2012"
+  }
+},
+{
+  "type": "way",
+  "id": 243665947,
+  "nodes": [
+    2510447791,
+    2510447792,
+    2510447793,
+    2510447794,
+    2510447795,
+    2510447791
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "238",
+    "addr:postcode": "8047",
+    "addr:street": "Riesstraße",
+    "commons": "communitygarden",
+    "contact:email": "riesparadies@lists.lnxnt.org",
+    "contact:fax": "+43 316 30 19 60",
+    "contact:phone": "+43 316 30 19 60",
+    "garden:type": "community",
+    "identity": "permaculture",
+    "interaction": "cousing",
+    "leisure": "garden",
+    "name": "Ries Paradies",
+    "provides": "food+drink;community;participation",
+    "start_date": "2013",
+    "website": "https://riesparadies.wordpress.com/"
   }
 },
 {
@@ -2497,6 +2899,79 @@
     "source": "geoimage.at",
     "start_date": "2014",
     "website": "http://sonnenfleck.at/"
+  }
+},
+{
+  "type": "way",
+  "id": 339329245,
+  "nodes": [
+    3465129488,
+    3465129486,
+    3465130097,
+    3465129479,
+    3465129480,
+    3465130093,
+    3465130103,
+    3465130120,
+    3465130129,
+    3465337215,
+    3465130137,
+    3465337217,
+    3465130140,
+    3465130139,
+    3465130138,
+    3465337216,
+    3465130136,
+    3465130128,
+    3465130123,
+    3465130109,
+    3465130115,
+    3465129488
+  ],
+  "tags": {
+    "addr:city": "Deutschlandsberg",
+    "addr:country": "AT",
+    "addr:housenumber": "32",
+    "addr:postcode": "8530",
+    "addr:street": "Warnblickweg",
+    "contact:email": "wieserhoisl@riseup.net",
+    "contact:phone": "+43 3462 26870",
+    "csa": "source",
+    "identity": "economy_for_the_common_good",
+    "landuse": "farmyard",
+    "name": "Hofkollektiv Wieserhoisl",
+    "organic": "yes",
+    "provides": "food+drink;learning_opportunities;land",
+    "provides:land": "rural",
+    "start_date": "Spring 2008",
+    "website": "http://www.wieserhoisl.at/"
+  }
+},
+{
+  "type": "way",
+  "id": 342320594,
+  "nodes": [
+    3493366452,
+    3493366456,
+    3493366467,
+    3493366455,
+    3493366452
+  ],
+  "tags": {
+    "addr:city": "Güssing",
+    "addr:country": "AT",
+    "addr:housenumber": "57",
+    "addr:postcode": "7540",
+    "addr:street": "Punitz",
+    "description": "Spezialisierung auf alte Sorten",
+    "identity": "permaculture;subsistence_economy",
+    "interaction": "bartering;gifting;cousing;diy_and_dit",
+    "landuse": "farmyard",
+    "name": "Lichtlwichtlhof",
+    "organic": "yes",
+    "provides": "food+drink;culture;learning_opportunities;community;spirituality",
+    "shop": "garden_centre",
+    "start_date": "2015"
   }
 }
 

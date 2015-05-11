@@ -15,7 +15,7 @@ only POIs below z12 are loaded on demand, for z0-11 a static .json file is used.
 you can update them it via:
 
 for "identities" map:
-wget 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:1800];node["identity"];out;(way["identity"];node(w));out;rel["identity"];out;>;out;' -O identity.json
+wget 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:1800];node["identity"];out;(way["identity"];node(w));out;rel["identity"];out;>;out;' -O identities.json
 
 for "needs-based" map:
 wget "http://overpass-api.de/api/interpreter?data=[out:json][timeout:1800];node[topic];out;(way[topic];node(w));out;rel[topic];out;node[provides];out;(way[provides];node(w));out;rel[provides];out;" -O all.json
