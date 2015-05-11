@@ -296,7 +296,7 @@ function loadPoi() {
             break; // for ( groupname in taxonomy ) 
         } 
 
-        r.append($('<tr>').append($('<th>').append(keytext)).append($('<td>').text(valuetext)));
+        r.append($('<tr>').addClass('tag').append($('<th>').append(keytext)).append($('<td>').text(valuetext)));
       }
 
     } // end for (key in tags)
