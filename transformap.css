@@ -211,7 +211,7 @@ html {
   background:gray;
 }
 #mapswitcher a {
-  display:block;
+  display:none;
   padding: 5px 40px 5px 5px;
   height:100%;
   width:100%;
