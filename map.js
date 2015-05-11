@@ -358,7 +358,7 @@ function loadPoi() {
       iconSize: new L.Point(iconsize, iconsize),
       iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
       popupAnchor: new L.Point(0, - iconsize / 2),
-      className: data.tags[icon_class] + " " + icon_class,
+      className: "v-" + data.tags[icon_class] + " k-" + icon_class,
     });
 
     var lmarker = L.marker([data.lat, data.lon], {
