@@ -21,8 +21,22 @@ for "needs-based" map:
 wget "http://overpass-api.de/api/interpreter?data=[out:json][timeout:1800];node[topic];out;(way[topic];node(w));out;rel[topic];out;node[provides];out;(way[provides];node(w));out;rel[provides];out;" -O all.json
 
 for the "needs, you have to delete non-transformap entries (some others are using the "topic" key too) manually!
-    a "tourism": "museum", node 1079379628
-    some "information": "board", node 2801318634, 3444526068
-    a "amenity": "theatre", node 1934396798
+* a "tourism": "museum", node 1079379628
+* some "information": "board", node 2801318634, 3444526068
+* a "amenity": "theatre", node 1934396798
 
+# deploying
 
+"master" is the current stable branch deployed on demo.transformap.co
+
+for developing create a new branch, e.g. "feature_xy"
+
+to deploy on demo.transformap.co:
+
+* git checkout feature_xy
+* *editeditedit*, test & commit
+* git checkout master
+* git merge feature_xy
+* get an account at the ecobytes infrastructure, contact @almereyda
+* git remote add update dokku@apps.ecobytes.net:transformap_demo (only needs to be done once)
+* git push update master
