@@ -18,7 +18,7 @@ for "identities" map:
 wget 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:1800];node["identity"];out;(way["identity"];node(w));out;rel["identity"];out;>;out;' -O identities.json
 
 for "needs-based" map:
-wget "http://overpass-api.de/api/interpreter?data=[out:json][timeout:1800];node[topic];out;(way[topic];node(w));out;rel[topic];out;node[provides];out;(way[provides];node(w));out;rel[provides];out;" -O all.json
+wget "http://overpass-api.de/api/interpreter?data=[out:json][timeout:1800];node[topic];out;(way[topic];node(w));out;rel[topic];out;>;out;node[provides];out;(way[provides];node(w));out;rel[provides];out;>;out;" -O all.json
 
 for the "needs, you have to delete non-transformap entries (some others are using the "topic" key too) manually!
 * a "tourism": "museum", node 1079379628
