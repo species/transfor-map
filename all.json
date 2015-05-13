@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API",
   "osm3s": {
-    "timestamp_osm_base": "2015-05-11T08:59:01Z",
+    "timestamp_osm_base": "2015-05-11T12:26:02Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -1160,6 +1160,66 @@
     "source": "survey",
     "topic": "spaces",
     "type": "site"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403111,
+  "lat": 47.0664224,
+  "lon": 15.4481270,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "interesse@amnestygraz.at",
+    "name": "Amnesty International",
+    "provides": "learning_opportunities;participation",
+    "source": "survey",
+    "topic": "safety;learning_opportunities;participation",
+    "website": "http://graz.amnesty.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403112,
+  "lat": 47.0664163,
+  "lon": 15.4481338,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "gruppe.graz@greenpeace.or.at",
+    "identity": "Greenpeace",
+    "name": "Greenpeace Freiwilligenteam Graz",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "health;clothes;learning_opportunities;community;land;environment",
+    "website": "http://greenpeace.or.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403113,
+  "lat": 47.0664150,
+  "lon": 15.4481251,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "name": "Rettet die Mur",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "environment",
+    "website": "http://rettetdiemur.at"
   }
 },
 {
@@ -3457,7 +3517,7 @@
   "lat": 52.3950656,
   "lon": 13.0340206,
   "tags": {
-    "diet": "vegan",
+    "diet:vegan": "only",
     "name": "CvO",
     "provides": "food+drink;community"
   }
@@ -6631,7 +6691,7 @@
     "amenity": "network of neighbours",
     "building": "yes",
     "name": "Stadtteilnetzwerk Potsdam-West",
-    "provides": "community, culture, safety",
+    "provides": "community;culture;safety",
     "source": "bingMap"
   }
 },
@@ -7556,6 +7616,205 @@
     "topic": "spaces",
     "type": "site"
   }
+},
+{
+  "type": "node",
+  "id": 1838845835,
+  "lat": 52.4739765,
+  "lon": 13.4162698
+},
+{
+  "type": "node",
+  "id": 1838845836,
+  "lat": 52.4741223,
+  "lon": 13.4176162
+},
+{
+  "type": "node",
+  "id": 1838845837,
+  "lat": 52.4747890,
+  "lon": 13.4161320
+},
+{
+  "type": "node",
+  "id": 1838845838,
+  "lat": 52.4749127,
+  "lon": 13.4173931
+},
+{
+  "type": "node",
+  "id": 2012981723,
+  "lat": 47.0753756,
+  "lon": 15.4332162,
+  "tags": {
+    "entrance": "yes",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2496235208,
+  "lat": 52.4744780,
+  "lon": 13.4175152
+},
+{
+  "type": "node",
+  "id": 2510218855,
+  "lat": 47.0753934,
+  "lon": 15.4331594,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "45",
+    "addr:postcode": "8020",
+    "addr:street": "Lendkai",
+    "contact:email": "info@spektral.at",
+    "contact:phone": "+43 699 1313 8714",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "only",
+    "drink:club-mate": "yes",
+    "identity": "commons",
+    "internet_access": "terminal;wlan",
+    "internet_access:fee": "no",
+    "mode_of_organisation:ownership_structure": "Verein",
+    "mode_of_organisation:purpose": "non_profit",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "spektral",
+    "opening_hours": "We 17:00-20:00",
+    "operator": "Verein Free Future Forces",
+    "payment:bitcoin": "yes",
+    "provides": "spaces;clothes;community;participation",
+    "smoking": "no",
+    "source": "survey",
+    "website": "http://www.spektral.at",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2510959552,
+  "lat": 47.0753483,
+  "lon": 15.4331565,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "45",
+    "addr:postcode": "8020",
+    "addr:street": "Lendkai",
+    "description": "Offene Werkstatt; Kellereingang, Leiter nach unten",
+    "entrance": "side",
+    "identity": "commons",
+    "interaction": "diy_and_dit",
+    "internet_access": "wlan",
+    "mode_of_organisation:ownership_structure": "Verein",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "Traumwerk",
+    "operator": "Traumwerk",
+    "provides": "learning_opportunities;participation",
+    "source": "survey",
+    "website": "http://www.traumwerk.in/doku.php",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3354681841,
+  "lat": 47.0753824,
+  "lon": 15.4331742,
+  "tags": {
+    "description": "Umsonstladen",
+    "identity": "commons",
+    "interaction": "gifting",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "Umverteiler",
+    "opening_hours": "We 17:00-20:00",
+    "provides": "objects_of_utility;clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 3393621811,
+  "lat": 52.4749127,
+  "lon": 13.4173931
+},
+{
+  "type": "node",
+  "id": 3493403111,
+  "lat": 47.0664224,
+  "lon": 15.4481270,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "interesse@amnestygraz.at",
+    "name": "Amnesty International",
+    "provides": "learning_opportunities;participation",
+    "source": "survey",
+    "topic": "safety;learning_opportunities;participation",
+    "website": "http://graz.amnesty.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403112,
+  "lat": 47.0664163,
+  "lon": 15.4481338,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "contact:email": "gruppe.graz@greenpeace.or.at",
+    "identity": "Greenpeace",
+    "name": "Greenpeace Freiwilligenteam Graz",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "health;clothes;learning_opportunities;community;land;environment",
+    "website": "http://greenpeace.or.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3493403113,
+  "lat": 47.0664150,
+  "lon": 15.4481251,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:housenumber": "9",
+    "addr:postcode": "8010",
+    "addr:street": "Dietrichsteinplatz",
+    "club": "yes",
+    "commons": "office",
+    "name": "Rettet die Mur",
+    "provides": "participation",
+    "source": "survey",
+    "topic": "environment",
+    "website": "http://rettetdiemur.at"
+  }
+},
+{
+  "type": "way",
+  "id": 173060106,
+  "nodes": [
+    1838845838,
+    2496235208,
+    1838845836,
+    1838845835
+  ]
+},
+{
+  "type": "way",
+  "id": 332251381,
+  "nodes": [
+    1838845835,
+    1838845837,
+    3393621811
+  ]
 }
 
   ]
