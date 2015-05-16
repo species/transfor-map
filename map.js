@@ -61,6 +61,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       }
     layerswitcher.style.display = "none";
   }
+  //$('body').append('<div id="date_field">1.1.1970</div>');
 
   // switching to other maps
   $('body').append('<ul id="mapswitcher"></ul>');
@@ -370,7 +371,9 @@ function loadPoi() {
   }
 
   function nodeFunction(data) {
-    if (! data.tags || ! data.tags.name || data.tags.entrance ) // no retval if node is just member of a way
+    if (! data.tags || ! data.tags.name) // no retval if node is just member of a way
+      return null;
+    if (! data.tags.name && data.tags.entrance)
       return null;
     return bindPopupOnData(data);
   }
