@@ -371,7 +371,9 @@ function loadPoi() {
   }
 
   function nodeFunction(data) {
-    if (! data.tags || ! data.tags.name || data.tags.entrance ) // no retval if node is just member of a way
+    if (! data.tags || ! data.tags.name) // no retval if node is just member of a way
+      return null;
+    if (! data.tags.name && data.tags.entrance)
       return null;
     return bindPopupOnData(data);
   }
