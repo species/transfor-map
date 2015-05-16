@@ -61,6 +61,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       }
     layerswitcher.style.display = "none";
   }
+  //$('body').append('<div id="date_field">1.1.1970</div>');
 
   // switching to other maps
   $('body').append('<ul id="mapswitcher"></ul>');
@@ -358,7 +359,7 @@ function loadPoi() {
       iconSize: new L.Point(iconsize, iconsize),
       iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
       popupAnchor: new L.Point(0, - iconsize / 2),
-      className: data.tags[icon_class] + " " + icon_class,
+      className: "v-" + data.tags[icon_class] + " k-" + icon_class,
     });
 
     var lmarker = L.marker([data.lat, data.lon], {
