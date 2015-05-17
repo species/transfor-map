@@ -42,7 +42,9 @@
      *
      * human readable length of query is not important, query speed is!
      */
-    var overpass_start = 'http://overpass-api.de/api/interpreter?data=[out:json][timeout:180][bbox:BBOX];';
+    var overpass_timeout = "180"; //seconds
+    var overpass_servers = [ "http://overpass-api.de/api/", "http://overpass.osm.rambler.ru/cgi/", "http://api.openstreetmap.fr/oapi/" ];
+    var overpass_start = 'interpreter?data=[out:json][timeout:' + overpass_timeout + '][bbox:BBOX];';
 
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
@@ -75,10 +77,13 @@
       overpass_query_string_rels += "rel" + anded_querystring + ";out;>;out;";
     }
 
-    var overpass_query = overpass_start + overpass_query_string;
-    var overpass_query_nodes = overpass_start + overpass_query_string_nodes;
-    var overpass_query_ways = overpass_start + overpass_query_string_ways;
-    var overpass_query_rels = overpass_start + overpass_query_string_rels;
+    var overpass_query = overpass_servers[0] + overpass_start + overpass_query_string;
+    var overpass_query_nodes = overpass_servers[0] + overpass_start + overpass_query_string_nodes;
+    var overpass_query_ways = overpass_servers[1] + overpass_start + overpass_query_string_ways;
+    var overpass_query_rels = overpass_servers[2] + overpass_start + overpass_query_string_rels;
+    console.log(overpass_query_nodes);
+    console.log(overpass_query_ways);
+    console.log(overpass_query_rels);
 
 
 
