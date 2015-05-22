@@ -48,7 +48,7 @@
 
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
-    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"="yes"' ] ];
+    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ] ];
 
     var icon_foldername = "pois";
     var icon_tags = [ "shop","amenity","leisure" ];
