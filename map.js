@@ -18,10 +18,17 @@ function toggleLayer(key,value) {
 }
 
 function initMap(defaultlayer,base_maps,overlay_maps) {
+  var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
   map = new L.Map('map', {
     center: new L.LatLng(47.07, 15.43),
-      zoom: 13,
-      layers: defaultlayer,
+    zoom: 13,
+    layers: defaultlayer,
+    editInOSMControlOptions: {
+        position: 'topright',
+        zoomThreshold: 16,
+        widget: 'multiButton',
+        editors: [overriddenId] 
+        },
   });
 
   var ctrl = new L.Control.Layers(base_maps,overlay_maps)
