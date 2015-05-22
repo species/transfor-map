@@ -40,3 +40,10 @@ to deploy on demo.transformap.co:
 * get an account at the ecobytes infrastructure, contact @almereyda
 * git remote add update dokku@apps.ecobytes.net:transformap_demo (only needs to be done once)
 * git push update master
+
+## how-to for merging changes from one map.html to others
+
+e.g.
+
+* gd ff7b7033db6e2b8ff2ec2ba3127e1f38c7fe6ccd regional.html > EditInOSM.patch
+* patch filetopath.html EditInOSM.patch
