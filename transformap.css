@@ -14,15 +14,28 @@ nav a {
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }
 */
+.leaflet-popup-content a {color: #0645AD; text-decoration:none;}
+.leaflet-popup-content a:hover { text-decoration:underline;}
 div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; padding:0 5px; margin-bottom:2px; }
 
-.leaflet-popup-content div table { margin: 0; }
-.leaflet-popup-content div table th + td { padding-left: 5px; min-width:130px; } /* for tel-nrs and link to osm (node123456789)*/
-.leaflet-popup-content div table tr:first-child td { vertical-align:top; padding-bottom:10px; } /* addr+contact data on top*/
-.leaflet-popup-content div table tr:first-child td + td { text-align:right; }
+.leaflet-popup-content div table,
+.leaflet-popup-content div table td { margin: 0; border-width:0px; padding:0; border-spacing:0;}
+.leaflet-popup-content div table th + td { padding-left: 5px; min-width:130px; } /* for tel-nrs */
+.leaflet-popup-content div table th {  min-width:130px; } /* for link to osm (node123456789)*/
+
+.leaflet-popup-content div table tr:first-child td, 
+.leaflet-popup-content div table tr:first-child + tr td:first-child,
+.leaflet-popup-content div table tr:first-child + tr td:first-child+td { vertical-align:top; padding:5px 0; border-width:0 0 2px 0; border-bottom:2px solid #FFB698;} /* osm and addr+contact data on top*/
+
+.leaflet-popup-content div table tr:first-child td + td, 
+.leaflet-popup-content div table tr:first-child+tr td + td { text-align:right; }
+
 .leaflet-popup-content div { max-height: 600px; overflow:auto; }
 .leaflet-popup-content div table tr.tag td { }
+
+.leaflet-popup-content div table tr:first-child img { height:16px; width:16px; margin:0 5px -4px 0;}
+.leaflet-popup-content div table a[target="_blank"]:after {content:url(assets/external-link-ltr-icon.png); text-decoration:none; margin-left:4px; }
 
     #map {
       height: 100%;

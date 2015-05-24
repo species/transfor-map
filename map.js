@@ -226,12 +226,21 @@ function loadPoi() {
 
   }
 
-  function fillPopup(tags,type,id) {
+  function fillPopup(tags,type,id,lat,lon) {
 
-    var r = $('<table>');
     var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer","room","indoor" ];
 
-    r.append($('<tr>').append($('<td>').append(
+    var r = $('<table>');
+
+    r.append($('<tr>')
+            .append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '" title="Link to ' + type + ' ' + id + ' on OpenStreetMap" target=_blank><img src="assets/20px-Mf_' + type + '.svg.png" />' + type.substring(0,1) + id + '</a>'))
+            .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + lon + '/' + lat + '" title="Edit this object with iD for TransforMap" target=_blank>Edit</a>'))
+/*            .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + centre.lng + '/' + centre.lat + '" title="Edit this object with iD for TransforMap">Edit</a>')) */
+            );
+
+    if(tags["addr:street"] || tags["addr:housenumber"] || tags["addr:postcode"] || tags["addr:city"] || tags["addr:suburb"] || tags["addr:country"]
+            || tags["website"] || tags["url"] || tags["contact:website"] || tags["contact:url"] || tags["email"] || tags["contact:email"] || tags["phone"] || tags["contact:phone"] ) {
+        r.append($('<tr>').append($('<td>').append(
               (tags["addr:street"] ? (tags["addr:street"] + "&nbsp;") : "" ) +
               (tags["addr:housenumber"] ? tags["addr:housenumber"] : "" ) + 
               ( (tags["addr:housenumber"] || tags["addr:street"]) ? ",<br>" : "" ) +
@@ -252,6 +261,7 @@ function loadPoi() {
             (tags["phone"] ? (url_ify(tags["phone"],"Tel: " + tags["phone"]) + "<br>") : "" ) +
             (tags["contact:phone"] ? (url_ify(tags["contact:phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" )
           )));
+    }
 
     for (key in tags) {
       if ( tags_to_ignore.indexOf(key) >= 0) {
@@ -308,9 +318,6 @@ function loadPoi() {
       }
 
     } // end for (key in tags)
-    r.append($('<tr>').append($('<th>').append("&nbsp;")).append($('<td>').append("&nbsp;"))); // spacer
-
-    r.append($('<tr>').append($('<th>').text("link to OSM:")).append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '">' + type + " " + id + '</a>')));
 
     var s = $('<div>');
     s.append(r);
@@ -373,7 +380,7 @@ function loadPoi() {
       icon: needs_icon,
       title: data.tags.name
     });
-    lmarker.bindPopup(fillPopup(data.tags,data.type,data.id));
+    lmarker.bindPopup(fillPopup(data.tags,data.type,data.id,data.lat,data.lon));
     return lmarker;
   }
 
