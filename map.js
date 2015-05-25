@@ -688,7 +688,16 @@ L.Control.MousePosition = L.Control.extend({
   _onMouseMove: function (e) {
     var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
     var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
-    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng;
+    var lng_length = lng.toString().split(".")[1].length;
+    var lat_length = lat.toString().split(".")[1].length;
+    for(var i = 0; i < this.options.numDigits - lng_length; i++) {
+        lng += "0";
+    }
+    for(var i = 0; i < this.options.numDigits - lat_length; i++) {
+        lat += "0";
+    }
+
+    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng; //FIXME add trailing zeroes and Link to Download data
     var prefixAndValue = this.options.prefix + ' ' + value;
     this._container.innerHTML = prefixAndValue;
   }
