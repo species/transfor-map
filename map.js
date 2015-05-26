@@ -1,8 +1,8 @@
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
 // taken from Wikipedia:JSON
+var taxonomy, turbolink;
 var url = "taxonomy.json";
-var taxonomy;
 var http_request = new XMLHttpRequest();
 http_request.open("GET", url, true);
 http_request.onreadystatechange = function () {
@@ -654,6 +654,13 @@ function updateLinks() {
     href = splitstr[0] + "#" + map.getZoom() + "/" + centre.lat + "/" + centre.lng;
     a_child.setAttribute("href",href);
   }
+
+  var query = encodeURIComponent(overpass_ql_text);
+  turbolink = "<a href=\'http://overpass-turbo.eu/?Q=" 
+      + query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()) 
+      + '&R&C=' + centre.lat + ';' + centre.lng + ';' + map.getZoom() 
+      + '\' title="Export OSM data with Overpass Turbo">Export data <img src="assets/turbo.png" height=12px style="margin-bottom:-2px"/></a>';
+    console.log(turbolink);
 }
 
 
@@ -697,13 +704,9 @@ L.Control.MousePosition = L.Control.extend({
         lat += "0";
     }
 
-    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng; //FIXME add trailing zeroes and Link to Download data
+    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng;
     var prefixAndValue = this.options.prefix + ' ' + value;
-    var query = overpass_query;
-    var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
-    var turbolink = allUrl;  //update overpass Turbo data download
-    console.log(allUrl);
-    this._container.innerHTML = prefixAndValue + ' | <a href=\'' + turbolink + '\'>Download data</a>';
+    this._container.innerHTML = prefixAndValue + ' | ' + turbolink;
   }
 
 });

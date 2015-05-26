@@ -291,4 +291,12 @@ License: MIT, see MIT-LICENCE-Leaflet.MousePosition.txt */
   color: #333;
   font: 10px/1.5 monospace;
 }
+.leaflet-control-mouseposition a {
+    text-decoration: none;
+    font-size:11px;
+    font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+}
+.leaflet-control-mouseposition a:hover {
+    text-decoration: underline;
+}
 
