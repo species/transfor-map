@@ -159,7 +159,7 @@
         var zoom = _map.getZoom();
         if (zoom < _zoomThreshold) {
             L.DomUtil.addClass(_controlContainer, _hideClass);
-            _controlContainer.title = "Zoom in to Edit";
+            _controlContainer.title = "Please zoom in to Edit!";
         } else {
             L.DomUtil.removeClass(_controlContainer, _hideClass);
             _controlContainer.title = "Edit this map with iD for TransforMap";

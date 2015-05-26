@@ -25,7 +25,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     layers: defaultlayer,
     editInOSMControlOptions: {
         position: 'topright',
-        zoomThreshold: 16,
+        zoomThreshold: 18,
         widget: 'multiButton',
         editors: [overriddenId] 
         },
