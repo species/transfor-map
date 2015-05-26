@@ -699,7 +699,11 @@ L.Control.MousePosition = L.Control.extend({
 
     var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng; //FIXME add trailing zeroes and Link to Download data
     var prefixAndValue = this.options.prefix + ' ' + value;
-    this._container.innerHTML = prefixAndValue;
+    var query = overpass_query;
+    var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
+    var turbolink = allUrl;  //update overpass Turbo data download
+    console.log(allUrl);
+    this._container.innerHTML = prefixAndValue + ' | <a href=\'' + turbolink + '\'>Download data</a>';
   }
 
 });
