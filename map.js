@@ -154,14 +154,9 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   $('#sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
   $('#sidebox-mapkey').append('<h2 onClick="toggleSideBox(\'sidebox-mapkey\');">Map Key</h2>');
   $('#sidebox-mapkey').append('<ul id="mapkey" class="boxcontent"></ul>');
+  // content gets added when taxonomy.json is loaded
 
         
-
-
-
- /* if(window.mapkey_text)
-      $("#mapkey").append(window.mapkey_text);*/
-    
   // About
   $('#sidebar').append('<div id="sidebox-about" class="box hidden"></div>');
   $('#sidebox-about').append('<h2 onClick="toggleSideBox(\'sidebox-about\');">About this Map</h2>');
