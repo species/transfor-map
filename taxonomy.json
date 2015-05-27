@@ -373,5 +373,187 @@
       }
 
     ]
+  },
+  "identity"  : {
+      "label" : {
+          "en" : "",
+          "de" : ""
+      },
+      "description" : {
+          "en" : "",
+          "de" : ""
+      },
+      "items" : [ 
+        {
+            "transformap:key" : "collaborative_economy",
+            "osm:key" : "identity",
+            "osm:values" : [ "collaborative_economy" ],
+            "label" : {
+                "en" : "collaborative economy",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "The <a href=\"http://ouishare.net/en/about/collaborative_economy\">collaborative economy</a> consists of initiatives based on horizontal networks and participation of a community.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "commons",
+            "osm:key" : "identity",
+            "osm:values" : [ "commons" ],
+            "label" : {
+                "en" : "Commons",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "<a href=\"http://p2pfoundation.net/Commons\">\"Commons\"</a>-based communities collectively and democratically produce, steward, develop or manage shared places, projects, resources, assets or knowledge. See also <a href=\"http://www.onthecommons.org/magazine/elinor-ostroms-8-principles-managing-commmons\">Eight Design Principles for Managing a Commons</a> set forth by Nobel Prize Laureate Elinor Ostrom.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "community_based_currencies",
+            "osm:key" : "identity",
+            "osm:values" : [ "community_based_currencies" ],
+            "label" : {
+                "en" : "community based currencies",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "Initiatives that design and manage <a href=\"http://en.wikipedia.org/wiki/Local_currency\">community based and -supported, local and social currencies</a>, which are not controlled by a national government, and are intended to be traded only in a particular area.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "degrowth",
+            "osm:key" : "identity",
+            "osm:values" : [ "degrowth" ],
+            "label" : {
+                "en" : "degrowth",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "Organisations and projects that identify themselves as being part of degrowth and its synonyms in different languages as for instance décroissance. ",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "demonetized_economy",
+            "osm:key" : "identity",
+            "osm:values" : [ "demonetized_economy" ],
+            "label" : {
+                "en" : "demonetized economy",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "Places where people live or attempt to live without money. Projects and initiatives that avoid commodity exchange and conventional money.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "economy_for_the_common_good",
+            "osm:key" : "identity",
+            "osm:values" : [ "economy_for_the_common_good" ],
+            "label" : {
+                "en" : "Economy for the Common Good",
+                "de" : "Gemeinwohlökonomie"
+            },
+            "description" : {
+                "en" : "Local chapters of the economy for the common good and corporate bodies that have created a <a href=\"https://www.ecogood.org/en/ecg-balance-sheet/what-common-good-balance-sheet\">certified balance</a> of the economy for the common good. The Economy for the Common Good is based on these <a href=\"https://www.ecogood.org/en/general-information/ecg-idea/our-ten-guiding-principles\">principles.</a>",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "global_ecovillage_network",
+            "osm:key" : "identity",
+            "osm:values" : [ "global_ecovillage_network" ],
+            "label" : {
+                "en" : "Global Ecovillage Network",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "Initiatives that are part of the <a href='http://gen.ecovillage.org/'>Global Ecovillage Network</a>.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "permaculture",
+            "osm:key" : "identity",
+            "osm:values" : [ "permaculture" ],
+            "label" : {
+                "en" : "Permaculture",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "Initiatives, and projects based on the <a href='https://justlists.wordpress.com/2010/01/14/principles-of-permaculture/'>design principles of permaculture</a>.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "solidarity_economy",
+            "osm:key" : "identity",
+            "osm:values" : [ "solidarity_economy" ],
+            "label" : {
+                "en" : "solidarity economy",
+                "de" : "Solidarische Ökonomie"
+            },
+            "description" : {
+                "en" : "Organisations, projects and enterprises meeting the <a href='http://www.miramero.com/blog/charter-of-principles-of-solidarity-economy/'>principles of Solidarity Economy</a> (<a href='http://www.fbes.org.br/index.php?option=com_content&task=view&id=63&Itemid=60'>Brasilian Original</a>) based on the core ideas of shared ownership and people before profit.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "transition_initiative",
+            "osm:key" : "identity",
+            "osm:values" : [ "transition_initiative" ],
+            "label" : {
+                "en" : "Transition Town Initative",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "A transition town is a grassroot community project that seeks to build resilience in response to peak oil, climate destruction, and economic instability by creating a local group that uphold the <a href='https://www.transitionnetwork.org/cms/haddenham/pages/our-completed-checklist-becoming-official-transition-initiative'>values of the transition network</a>.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "subsistence_economy",
+            "osm:key" : "identity",
+            "osm:values" : [ "subsistence_economy" ],
+            "label" : {
+                "en" : "subsistence economy",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "Acitivities for ones own livelyhood and well-being not producing commodities to be sold at the market.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "p2p_economy",
+            "osm:key" : "identity",
+            "osm:values" : [ "p2p_economy" ],
+            "label" : {
+                "en" : "P2P economy",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "If you pool work, ideas and resources to produce something in selfadministrated and decentral associations if you substitute the entrepreneur-to-client relationship by a P2P relationships you are part of the Peer-to-Peer (P2P) economy.",
+                "de" : ""
+            }
+        },
+        {
+            "transformap:key" : "ecovillage",
+            "osm:key" : "identity",
+            "osm:values" : [ "ecovillage" ],
+            "label" : {
+                "en" : "Ecovillage",
+                "de" : ""
+            },
+            "description" : {
+                "en" : "Other Ecovillages not part of GEN",
+                "de" : ""
+            }
+        }
+     ]
+
   }
 }
