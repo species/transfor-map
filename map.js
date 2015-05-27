@@ -22,9 +22,13 @@ http_request.onreadystatechange = function () {
                       var item = entry_array[i];
                       for ( var osmvalue_counter = 0; osmvalue_counter < item['osm:values'].length; osmvalue_counter++ ) {
                           var li = $("<li>");
+                          var new_id = item['osm:key'] + item['osm:values'][osmvalue_counter];
+                          li.attr("onClick", "toggleInfoBox('" + new_id + "');");
                           li.append('<img src="assets/transformap/pngs/identities/24/' + item['osm:key'] + '=' + item['osm:values'][osmvalue_counter] + '.png" /> '
                                   + item['label']['en']
-                                  + '<div class=InfoBox>' + item['description']['en'] + '</div>');
+                                  + '<div class=InfoBox ' 
+                                      + 'id="' + new_id + '">'
+                                      + item['description']['en'] + '</div>');
                           $('#mapkey').append(li);
                       }
                   }
@@ -50,10 +54,10 @@ function toggleSideBox(id) {
     var childs = sidebar.childNodes;
     for ( var i=0; i < childs.length; i++) {
         var item_child = childs[i];
-        if ( ! item_child.hasAttribute("class") )
-            continue;
-        if( item_child.getAttribute("class").indexOf("box") >= 0 ) {
-            item_child.setAttribute("class", "box hidden");
+        if ( item_child.hasAttribute("class") ) {
+            if( item_child.getAttribute("class").indexOf("box") >= 0 ) {
+                item_child.setAttribute("class", "box hidden");
+            }
         }
     }
 
@@ -61,6 +65,10 @@ function toggleSideBox(id) {
         clicked_element.setAttribute("class", "box shown");
 }
 
+function toggleInfoBox(id) {
+    var element = document.getElementById(id);
+    element.style.display = ( element.style.display == "block" ) ? "none" : "block";
+}
 
 function initMap(defaultlayer,base_maps,overlay_maps) {
   var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
