@@ -9,12 +9,65 @@ http_request.onreadystatechange = function () {
       var done = 4, ok = 200;
       if (http_request.readyState === done && http_request.status === ok) {
           taxonomy = JSON.parse(http_request.responseText);
+
+          // as soon as taxonomy is here, add map key derived from it
+          if(taxonomy) {
+              for(var osmkey_counter = 0; osmkey_counter < icon_tags.length; osmkey_counter++) {
+                  var osmkey = icon_tags[osmkey_counter];
+
+                  var taxonomy_block = taxonomy[osmkey];
+
+                  var entry_array = taxonomy_block['items'];
+                  for (var i = 0; i < entry_array.length; i++ ) {
+                      var item = entry_array[i];
+                      for ( var osmvalue_counter = 0; osmvalue_counter < item['osm:values'].length; osmvalue_counter++ ) {
+                          var li = $("<li>");
+                          var new_id = item['osm:key'] + item['osm:values'][osmvalue_counter];
+                          li.attr("onClick", "toggleInfoBox('" + new_id + "');");
+                          li.append('<img src="assets/transformap/pngs/identities/24/' + item['osm:key'] + '=' + item['osm:values'][osmvalue_counter] + '.png" /> '
+                                  + item['label']['en']
+                                  + '<div class=InfoBox ' 
+                                      + 'id="' + new_id + '">'
+                                      + item['description']['en'] + '</div>');
+                          $('#mapkey').append(li);
+                      }
+                  }
+              }
+          }
+          else
+              console.log("taxonomy not here");
+
       }
   };
 http_request.send(null);
 
 function toggleLayer(key,value) {
   alert(key + "=" + value);
+}
+
+function toggleSideBox(id) {
+    var clicked_element = document.getElementById(id);
+    var clicked_on_open_item = ( clicked_element.getAttribute("class").indexOf("shown") >= 0 ) ? 1 : 0; 
+
+    //close all
+    var sidebar = document.getElementById("sidebar");
+    var childs = sidebar.childNodes;
+    for ( var i=0; i < childs.length; i++) {
+        var item_child = childs[i];
+        if ( item_child.hasAttribute("class") ) {
+            if( item_child.getAttribute("class").indexOf("box") >= 0 ) {
+                item_child.setAttribute("class", "box hidden");
+            }
+        }
+    }
+
+    if( ! clicked_on_open_item)
+        clicked_element.setAttribute("class", "box shown");
+}
+
+function toggleInfoBox(id) {
+    var element = document.getElementById(id);
+    element.style.display = ( element.style.display == "block" ) ? "none" : "block";
 }
 
 function initMap(defaultlayer,base_maps,overlay_maps) {
@@ -70,14 +123,18 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   }
   //$('body').append('<div id="date_field">1.1.1970</div>');
 
+  $('body').append('<div id="sidebar"><h1>' + document.title + '</h1></div>');
+
   // switching to other maps
-  $('body').append('<ul id="mapswitcher"></ul>');
+  $('#sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');
+  $('#sidebox-maps').append('<h2 onClick="toggleSideBox(\'sidebox-maps\');">Explore other Maps</h2>');
+  $('#sidebox-maps').append('<ul id="mapswitcher" class="boxcontent"></ul>');
   var mapswitcher = document.getElementById("mapswitcher");
   var different_maps = [ 
     { url : "identities.html" ,
       name : "TransforMap of Identities" } ,
-    { url : "transformap.html" ,
-      name : "Needs-based TransforMap" } ,
+ /*   { url : "transformap.html" ,
+      name : "Needs-based TransforMap" } , */
     { url : "organic.html" ,
       name : "Organic TransforMap" } ,
     { url : "regional.html" ,
@@ -96,12 +153,26 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     if(current_item["name"] == document.title) {
       li.setAttribute('class',"current");
     }
-
     li.appendChild(alink);
 
     mapswitcher.appendChild( li );
-    }
-  mapswitcher.style.display = "block";
+  }
+
+  // Map Key
+  $('#sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
+  $('#sidebox-mapkey').append('<h2 onClick="toggleSideBox(\'sidebox-mapkey\');">Map Key</h2>');
+  $('#sidebox-mapkey').append('<ul id="mapkey" class="boxcontent"></ul>');
+  // content gets added when taxonomy.json is loaded
+
+        
+  // About
+  $('#sidebar').append('<div id="sidebox-about" class="box hidden"></div>');
+  $('#sidebox-about').append('<h2 onClick="toggleSideBox(\'sidebox-about\');">About this Map</h2>');
+  $('#sidebox-about').append('<div id="about" class="boxcontent"></div>');
+  if(window.about_text)
+      $('#about').append(window.about_text);
+    
+
 
   map.on('moveend', updateLinks);
 

@@ -9,6 +9,13 @@
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <link rel="stylesheet" href="assets/PTSansWeb/stylesheet.css" type="text/css" charset="utf-8">
+  <script>
+      if( ! window.L ) {
+          console.log("Leaflet could not be loaded from CDN, serve local version");
+          document.write('<link rel="stylesheet" href="leaflet.css" />');
+          document.write("<script src='leaflet.js'></" + "script>");
+      }
+  </script>
 
   <link rel="stylesheet" href="leaflet-search.min.css" />
   <link rel="stylesheet" href="Leaflet.EditInOSM.css" />
@@ -109,7 +116,7 @@
     };
     markers = new L.markerClusterGroup({maxClusterRadius: 40}); //do not use removeOutsideVisibleBounds, it's broken!
     var overlay_maps = {
-      "Needs" : markers
+      "POIs" : markers
     };
 
     $(function () {
