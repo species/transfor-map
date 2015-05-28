@@ -64,6 +64,18 @@
     var class_selector_key = { key: "organic" };
     var switch_layertags = [ { organic : "only" }, { organic : "yes" }, { organic: "limited" } ];
 
+    var about_text = '<p>This map displays places where you can get stuff organically produced.</p>'
+        + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database.'
+        + 'For an item to be displayed, it must have the “<a href="https://wiki.openstreetmap.org/wiki/Key:organic">organic</a>” tag set.</p>'
+        + '<p>Items are loaded via <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>, it may take some minutes for newly added items to appear.</p>'
+        + '<p>You can improve this map with the “Edit” Button in the top right corner!</p>'
+        + '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>';
+
+    var mapkey =
+          '<li title="organic=only"><img src="assets/transformap/pngs/pois/' + iconsize + '/unknown.png" class="k-organic v-only" /> Organic only</li>'
+        + '<li title="organic=yes"><img src="assets/transformap/pngs/pois/' + iconsize + '/unknown.png" class="k-organic v-yes" /> Good organic selection</li>'
+        + '<li title="organic=limited"><img src="assets/transformap/pngs/pois/' + iconsize + '/unknown.png" class="k-organic v-limited" /> Limited organic selection</li>';
+
     var overpass_query_string = "";
     var overpass_query_string_nodes = "";
     var overpass_query_string_ways = "";

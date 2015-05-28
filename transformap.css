@@ -149,15 +149,15 @@ padding:0px;
   text-align: center;
 }
 
-.leaflet-marker-icon.k-organic.v-only {
+.leaflet-marker-icon.k-organic.v-only, #mapkey .k-organic.v-only {
   background:#00B100;
   border-radius:5px;
 }
-.leaflet-marker-icon.k-organic.v-yes {
+.leaflet-marker-icon.k-organic.v-yes, #mapkey .k-organic.v-yes {
   background:yellow;
   border-radius:5px;
 }
-.leaflet-marker-icon.k-organic.v-limited {
+.leaflet-marker-icon.k-organic.v-limited, #mapkey .k-organic.v-limited {
   background:#ff8000;
   border-radius:5px;
 }
