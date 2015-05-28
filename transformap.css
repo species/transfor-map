@@ -220,7 +220,7 @@ padding:0px;
     max-height:200px;
 }
 #sidebar .box.shown #about {
-    max-height:450px;
+    max-height:500px;
     padding:0 2px;
 }
 
@@ -305,14 +305,20 @@ padding:0px;
 }
 #mapswitcher li {
   list-style: none;
-  margin:0;
-  border-top:1px grey solid;
+  margin:0 5px;
+  border-top:2px dotted #FBFCFA;
 }
 #mapswitcher li:first-child {
   border-top:none;
 }
 #mapswitcher li:hover {
-  background:gray;
+  background:#DDDDDD;
+}
+#mapswitcher li img {
+    margin:0 5px -7px 0;
+}
+#mapswitcher li.current {
+    display:none;
 }
 #mapswitcher li.current a {
   text-decoration:none;
@@ -321,7 +327,7 @@ padding:0px;
 }
 #mapswitcher a {
   display:block;
-  padding: 5px 40px 5px 5px;
+  padding:5px 0;
   height:100%;
   width:100%;
 }
@@ -335,8 +341,19 @@ ul#mapkey {
 }
 #mapkey li {
     list-style: none;
-    margin:10px 5px;
+    margin:0 5px;
+    padding:5px 0;
     cursor:help;
+    border-top:2px dotted #FBFCFA;
+}
+#mapkey li[title] { /* if there is a title, then there is no infobox */
+    cursor:default;
+}
+#mapkey li:hover {
+    background:#DDDDDD;
+}
+#mapkey li:first-child {
+    border-top:none;
 }
 #mapkey li div.InfoBox {
     position:relative;
