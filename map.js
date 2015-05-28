@@ -16,6 +16,10 @@ http_request.onreadystatechange = function () {
                   var osmkey = icon_tags[osmkey_counter];
 
                   var taxonomy_block = taxonomy[osmkey];
+                  if (!taxonomy_block) {
+                      console.log("no entry in taxonomy for " + osmkey);
+                      return;
+                  }
 
                   var entry_array = taxonomy_block['items'];
                   for (var i = 0; i < entry_array.length; i++ ) {
@@ -132,15 +136,23 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   var mapswitcher = document.getElementById("mapswitcher");
   var different_maps = [ 
     { url : "identities.html" ,
-      name : "TransforMap of Identities" } ,
+      name : "TransforMap of Identities",
+      image: "assets/transformap/pngs/" + iconsize + "/political_identity.png"
+    } ,
  /*   { url : "transformap.html" ,
       name : "Needs-based TransforMap" } , */
     { url : "organic.html" ,
-      name : "Organic TransforMap" } ,
+      name : "Organic TransforMap",
+      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=supermarket.png"
+    } ,
     { url : "regional.html" ,
-      name : "Regional TransforMap" } ,
+      name : "Regional TransforMap",
+      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=convenience.png"
+    } ,
     { url : "greenmap.html" ,
-      name : "Green TransforMap" } ,
+      name : "Green TransforMap",
+      image : "assets/greenmap/png/" + iconsize  + "/Park-_Recreation_Area.png"
+    } ,
     ];
   for (var i = 0; i < different_maps.length; i++) {
     var current_item = different_maps[i]; 
@@ -148,6 +160,10 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     
     var alink = document.createElement("a");
     var linktext = document.createTextNode(current_item["name"]);
+    var linkimage = document.createElement("img");
+    linkimage.setAttribute('src',current_item["image"]);
+
+    alink.appendChild(linkimage);
     alink.appendChild(linktext);
     alink.setAttribute('href',current_item["url"]);
     if(current_item["name"] == document.title) {
@@ -162,7 +178,12 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   $('#sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
   $('#sidebox-mapkey').append('<h2 onClick="toggleSideBox(\'sidebox-mapkey\');">Map Key</h2>');
   $('#sidebox-mapkey').append('<ul id="mapkey" class="boxcontent"></ul>');
-  // content gets added when taxonomy.json is loaded
+
+  // extra mapkey for maps not deriving from taxonomy.json
+  if(window.mapkey) {
+      $('#mapkey').append(window.mapkey);
+  }
+  // map key derived from taxonomy gets added when taxonomy.json is loaded
 
         
   // About
