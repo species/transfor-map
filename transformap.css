@@ -220,7 +220,8 @@ padding:0px;
     max-height:200px;
 }
 #sidebar .box.shown #about {
-    max-height:250px;
+    max-height:450px;
+    padding:0 2px;
 }
 
 #sidebar .box.shown .boxcontent {
@@ -232,7 +233,7 @@ padding:0px;
 #sidebar .box.hidden .boxcontent {
     max-height:0;
     border:0;
-    transition: max-height 0.5s ease, margin 0.5s ease, border 0.5s step-end;
+    transition: max-height 0.5s ease, margin 0.5s ease;
 }
 
 #sidebar .box.hidden h2 {
@@ -243,11 +244,11 @@ padding:0px;
     color:#FBFCFA;
 
     background: #6374A6;
-    background: -webkit-linear-gradient(top, #7286BF, #6374A6, #7286BF);
-    background: -moz-linear-gradient(top, #7286BF, #6374A6, #7286BF);
-    background: -ms-linear-gradient(top, #7286BF, #6374A6, #7286BF);
-    background: -o-linear-gradient(top, #7286BF, #6374A6, #7286BF);
-    transition: background 0.2s;
+    background: -webkit-linear-gradient(top, #7286BF, #6374A6, #6374A6, #7286BF);
+    background: -moz-linear-gradient(top, #7286BF, #6374A6, #6374A6, #7286BF);
+    background: -ms-linear-gradient(top, #7286BF, #6374A6, #6374A6, #7286BF);
+    background: -o-linear-gradient(top, #7286BF, #6374A6, #6374A6, #7286BF);
+    transition: background 0.2s, color 0.2s;
 }
 #sidebar .box h2 {
     margin: 0;
@@ -255,14 +256,13 @@ padding:0px;
     padding: 2px 2px 2px 22px;
     position: relative;
     cursor:pointer;
-    color: gray;
 
     background: #D6D2D0; 
     background: -webkit-linear-gradient(top, #DDDDDD, #BFBFBF, #DDDDDD);
     background: -moz-linear-gradient(top, #DDDDDD, #BFBFBF, #DDDDDD);
     background: -ms-linear-gradient(top, #DDDDDD, #BFBFBF, #DDDDDD);
     background: -o-linear-gradient(top, #DDDDDD, #BFBFBF, #DDDDDD);
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
 }
 #sidebar .box h2:hover {
     background: #BFBFBF;
@@ -270,18 +270,18 @@ padding:0px;
     background: -moz-linear-gradient(top, #BFBFBF, #A1A1A1, #BFBFBF);
     background: -ms-linear-gradient(top, #BFBFBF, #A1A1A1, #BFBFBF);
     background: -o-linear-gradient(top, #BFBFBF, #A1A1A1, #BFBFBF);
-    transition: background 0.2s;
+    transition: background 0.5s, color 0.2s;
 }
 #sidebar .box.shown h2:hover {
-    color:#FBFCFA;
+    color:white;
 
     background: #6374A6;
-    background: -webkit-linear-gradient(top, #8198D9, #7286BF, #8198D9);
-    background: -moz-linear-gradient(top, #8198D9, #7286BF, #8198D9);
-    background: -ms-linear-gradient(top, #8198D9, #7286BF, #8198D9); 
-    background: -o-linear-gradient(top, #8198D9, #7286BF, #8198D9);
+    background: -webkit-linear-gradient(top, #8198D9, #7286BF, #7286BF, #8198D9);
+    background: -moz-linear-gradient(top, #8198D9, #7286BF, #7286BF, #8198D9);
+    background: -ms-linear-gradient(top, #8198D9, #7286BF, #7286BF, #8198D9); 
+    background: -o-linear-gradient(top, #8198D9, #7286BF, #7286BF, #8198D9);
 
-    transition: background 0.5s;
+    transition: background 0.5s, color 0.2s;
 }
 
 #sidebar .box h2:before {
