@@ -367,6 +367,7 @@ function loadPoi() {
         var valuetext = tags[key];
 
         /* display label:* instead of key */ 
+        /*
         var found = 0; // use for break outer loops
 
         for ( groupname in taxonomy ) { // e.g. "fulfils_needs" : {}=group 
@@ -384,6 +385,7 @@ function loadPoi() {
           if(found == 1)
             break; // for ( groupname in taxonomy ) 
         } 
+        */
 
         r.append($('<tr>').addClass('tag').append($('<th>').append(keytext)).append($('<td>').text(valuetext)));
       }
