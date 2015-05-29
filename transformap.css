@@ -15,6 +15,11 @@ nav a {
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }
 */
+.leaflet-marker-icon:hover { box-shadow: 0 0 5px 5px #6374A6; }
+.leaflet-marker-icon.marker-cluster:hover { box-shadow: none; }
+.leaflet-marker-icon:hover div { box-shadow: 0 0 5px 5px yellow, inset 0 0 2px 2px yellow; }
+
+
 .leaflet-popup-content a {color: #0645AD; text-decoration:none;}
 .leaflet-popup-content a:hover { text-decoration:underline;}
 div.leaflet-popup-content { width: auto !important; }
