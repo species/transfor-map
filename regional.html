@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Regional TransforMap</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="assets/PTSansWeb/stylesheet.css" type="text/css" charset="utf-8">
+  <script>
+      if( ! window.L ) {
+          console.log("Leaflet could not be loaded from CDN, serve local version");
+          document.write('<link rel="stylesheet" href="leaflet.css" />');
+          document.write("<script src='leaflet.js'></" + "script>");
+      }
+  </script>
+
+  <link rel="stylesheet" href="leaflet-search.min.css" />
+  <link rel="stylesheet" href="Leaflet.EditInOSM.css" />
+  <link rel="stylesheet" href="transformap.css" />
+
+  <link href='L.Control.Locate.mine.css' rel='stylesheet' />
+  <!--[if lt IE 9]>
+    <link href='L.Control.Locate.ie.min.css' rel='stylesheet' />
+  <![endif]-->
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="http://code.jquerygeo.com/jquery.geo-1.0.0-b1.5.min.js"></script>
+
+  <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+  <script src="http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script src="leaflet-hash.js"></script>
+  <script src="leaflet-search.min.js"></script>
+  <script src="Leaflet.EditInOSM.js"></script>
+
+  <script src='L.Control.Locate.mine.js'></script>
+
+  <script src="map.js"></script>
+  <script>
+    /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
+    /* what to we show on TransforMap.co?
+     * needs:* +
+     * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
+     *
+     * overpass syntax:
+     * [out:json][timeout:180][bbox:BBOX];
+     * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
+     * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
+     *
+     * human readable length of query is not important, query speed is!
+     */
+    var overpass_timeout = "180"; //seconds
+    var overpass_servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ];
+    var overpass_urlstart = 'interpreter?data=';
+    var overpass_start = '[out:json][timeout:' + overpass_timeout + '][bbox:BBOX];';
+
+    // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
+    var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
+    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ] ];
+
+    var icon_foldername = "pois";
+    var icon_tags = [ "shop","amenity","leisure" ];
+
+    var about_text = '<p>This map displays places where you can get stuff regionally produced.</p>'
+        + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database.'
+        + 'For an item to be displayed, it must have the “regional” tag set or be a '
+        + '“shop=<a href="https://wiki.openstreetmap.org/wiki/Tag:shop%3Dfarm">farm</a>”.</p>'
+        + '<p>Items are loaded via <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>, it may take some minutes for newly added items to appear.</p>'
+        + '<p>You can improve this map with the “Edit” Button in the top right corner!</p>'
+        + '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>';
+
+    var mapkey = '<li title="too much types to display a legend">When clicking on a POI, look for one of these tags: amenity, shop, leisure. They should tell you what type it is.</li>';
+
+    var overpass_query_string = "";
+    var overpass_query_string_nodes = "";
+    var overpass_query_string_ways = "";
+    var overpass_query_string_rels = "";
+
+    var nr_of_or_clauses = query_array.length;
+    for (var i = 0; i < nr_of_or_clauses; i++) {
+      var anded_tags = query_array[i];
+      var anded_querystring = "";
+      var nr_of_and_clauses = anded_tags.length;
+      for (var j=0; j < nr_of_and_clauses; j++) {
+        anded_querystring += "[" + anded_tags[j] + "]";
+      }
+
+      overpass_query_string += "node" + anded_querystring + ";out;";
+      overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
+      overpass_query_string += "rel" + anded_querystring + ";out;>;out;";
+
+      overpass_query_string_nodes += "node" + anded_querystring + ";out;";
+      overpass_query_string_ways += "(way" + anded_querystring + ";node(w));out;";
+      overpass_query_string_rels += "rel" + anded_querystring + ";out;>;out;";
+    }
+
+    var overpass_ql_text = overpass_start + overpass_query_string;
+    var overpass_query = overpass_servers[0] + overpass_urlstart + overpass_ql_text;
+    var overpass_query_nodes = overpass_servers[0] + overpass_urlstart + overpass_start + overpass_query_string_nodes;
+    var overpass_query_ways = overpass_servers[1] + overpass_urlstart + overpass_start + overpass_query_string_ways;
+    var overpass_query_rels = overpass_servers[2] + overpass_urlstart + overpass_start + overpass_query_string_rels;
+    console.log(overpass_query_nodes);
+    console.log(overpass_query_ways);
+    console.log(overpass_query_rels);
+
+
+
+
+    var map, ids, markers, lc = {};
+    var attr = {
+      osm : 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
+      osm_tiles : 'Tiles &copy; OSM - <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>',
+      search : 'Search by OSM - <a href="http://wiki.openstreetmap.org/wiki/Nominatim">Nominatim</a>',
+      mapbox : 'Tiles &copy; <a href="http://mapbox.com/about/maps/">MapBox</a>',
+      greenmap : 'Icons &copy; <a href="http://www.greenmap.org">greenmap.org</a>',
+      overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
+    }
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        noWrap: true
+    });
+    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+        subdomains: '1234',
+        attribution: [attr.osm, attr.mapbox, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        maxNativeZoom: 18 ,
+        noWrap: true
+    });
+
+    var base_maps = {
+      'MapQuestOpen': MapQuestOpen_OSM,
+      'OpenSteetMap - Mapnik': osm,
+    };
+    markers = new L.markerClusterGroup({maxClusterRadius: 40}); //do not use removeOutsideVisibleBounds, it's broken!
+    var overlay_maps = {
+      "POIs" : markers
+    };
+
+    $(function () {
+
+      map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps);
+      map.zoomIn();
+
+      var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
+      map.addLayer(markers);
+
+      loadPoi();
+      map.on('moveend', loadPoi);
+
+      addSearch();
+      addLocate();
+      L.control.scale({imperial: false}).addTo(map);
+      L.control.mousePosition().addTo(map);
+
+    });
+
+  </script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
+</head>
+<body class="marker-backgroundless">
+<nav class="mmmnavbar">
+<ul>
+  <li id="mmmnavtitle" class="mmmactive">
+  <a href="http://transformap.co"><img src=logo_white.png height=30px></a>
+  </li>
+  <li>
+  <a href="http://transformap.co">Overview</a>
+  </li>
+  <li>
+  <a href="http://discourse.transformap.co">Forum</a>
+  </li>
+  <li>
+  <a href="http://blog.14mmm.org">Activities</a>
+  </li>
+  <li class=last>
+  <a href="http://transformap.co/about">About</a>
+  </li>
+</ul>
+</nav>
+
+<noscript>
+  <br><hr><br>
+  <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+</noscript>
+
+<div id="content">
+  <div id="map"></div>
+</div>
+
+<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />
+<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />
+<img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />
+<div id="notificationbar">Please zoom in to update POIs!</div>
+
+<a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
+
+</body>
+</html>

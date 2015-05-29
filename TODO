@@ -1,31 +1,130 @@
-catch relations too
-different icons
-popup language translation
-popup links to tags
-permalinks ~OK done with hash in browser url.
+Done:
+• icons © greenmap -OK
+• permalinks ~OK done with hash in browser url.
+• "fork me at github"-badge -OK
+• Search box (for e.g. jump to location)
+  http://mapbbcode.org/leaflet.html very primitive, but works - takes first Nominatim hit, no possibility to choose :-/
+  https://github.com/smeijer/L.GeoSearch Demo not working, have to try
+  Overpass Turbo implementation: - dunno from where he has ist, seems to be copied.
+  http://labs.easyblog.it/maps/leaflet-search/examples/nominatim.html - good looking and functionality, but: hangs on map load, BG map displayed and pannable only after some time :-/
+    -OK fixed with resorting to add search code at last
+• 'Locate me' button instead of automatic geolocation on load
+  https://github.com/domoritz/leaflet-locatecontrol doesn't work with latest jquery and leaflet
+    try to rewrite to version with minimal function. -OK
+• adding POIs from overpass to marker layer with bulk methods -OK
+• Display coordinates -OK
+• "loading" - indicator for node/way/relations -OK
+• fix loading of Graz POIs at start -OK
+• "Download this data" - Link (Overpass-Export)
+• edit in JOSM / iD -Link
+• LEGEND for Icons!
+• The Current Map has to be named in the Header! -> OK sidebar
 
-layers with different needs
 
-maxzoom auf 19
+github issues
+• opening_hours support  (is it open now?)
+• in Popup „Route here“ with link to OSRM
+• popup language translation
+• popup links to tags (to osm-wiki - what does this tag mean?)
+• statistics: how many POIs loaded (like overpass-turbo)
+• display image (from wikipedia or "image="-Tag
+• addresses: show street if member of associatedStreet Relation
+• icons: rewrite to have all in one file (less http requests)
+• markers: implement retina using property iconRetinaUrl (iconsize * 2) 
+
+Todo:
+• layers with different needs
+    1st step: layer checkbox(es) in layer-menu -OK
+    2nd step: more layers (different overpass-queries)
+      question: 
+        ? one query, and sort into different layers → goal should be to reduce queries
+        ? more queries, and feed each into its own layer?
+      ? what if an object belongs to more than one layer?
+      ? how to do clustering?
+        must be done over ALL layers → only one layer possible!
+        → we cannot use Leaflet layer switcher 
+        → must use MarkerCluster function!
+          removeLayers is too slow when bulk removing
+          → clearLayers then addLayers
+
+    3rd step: generate overpass-queries from taxonomy.json
+
+
+• different icon-sets for the distinct maps -OK
+  base-folder for each map
+    pois
+    needs
+    identities
+    interaction
+    freemap -> pois?
+    greenmap -> pois?
+    organic -OK
+      pois, but with colors:
+        only: green
+        yes: yellow
+        limited: orange
+      or background or bg-image?
+        
+    
+• fixed worldwide clusters for z=0-12! (download daily via script to server)
+  ~OK done for identities + needs
+
+Performance:
+• reduce queries to Overpass-Server
+  · when zooming in below 12, do not query -OK
+  · keep (how?) a "List" of visited places, and do not query if we were already there
+  · At first, download nodes, then ways, then rels (should speed up display significantly) -OK
+  -> different types to different servers -OK
+    Todo: check ways in rels, nodes working -OK
+
+
+• maxzoom up to 19
 
 clustering
-  https://github.com/Leaflet/Leaflet.markercluster
-    latest version requires leaflet 0.7 - we are using 0.4.4 -switch OK
-
-  Leaflet.markercluster dl ok, eingebunden
-
-    var markers = L.markerClusterGroup(); //call on each update? -OK
-    for i
-      var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title }); //exactly the same as original Leaflet -OK
-      marker.bindPopup(title); //seems also to be the same -OK
-
-      markers.addLayer(marker); 
-
-    map.addLayer(markers); //try to add only on Map-init -OK
-
-  was designed for static data, could be a problem on update? -OK seems to be no prob
+  Leaflet.markercluster -OK
   TODO: 
-    • generic icons
-    • reduce cluster distance -OK auf 40
+    • generic icons for clusters
+    -> better clusters
     
+translations via transifex
+  how to fetch translations? should be fetched realtime (at loading of website)
 
+implement API (at first via sourced JSON file)
+
+
+todo: on transformap.co not ONE map, but many .... tiled 'previews' n' with link to distinct maps
+	* Organic map -OK
+	* Regional map -OK
+	* Gratis-map
+	* Needs-karte
+	* Political Map -OK
+	* fairtrade-Map
+	* garden-map
+	* ...
+
+Sidebar toggle button:
+    display “Menu” or something when hidden
+
+FIXME
+  POIs doesn't work with IE8 on WinXP
+  Mobile: some icons scale in FF (layers, +/-, locate)
+    others not (edit, search)
+
+Every IMPORTANT Feature has to have text&icon!
+    Other Maps (how to call it? "Other Maps" "Maps" "Explore Maps" "Different Maps" "More Maps"
+    Edit 
+
+Think of Mobile! They CANNOT hover for more information!
+
+Filters:
+    must be deactivated on default: Button "Enable Filters"
+        because: at 20 Needs, 20 checked boxes confuse users
+    must be taken into account in URL (for sharing)
+        display amount of items right of filter! (e.g. you see that you can filter out all 427 trees)
+    on EVERY Map provide filters for our 3 categories!
+        so you can filter on the organic map to deactivate buying_selling! - then you should see all "alternative" POIs
+
+feedback user-test:
+    dass die "6" die Anzahl der Punkte ist, ist nicht intuitiv
+    Hover-Effekt muss sowohl bei POIs als auch bei Clustern gehn
+    zoom bei cluster auflösen zu schnell, man sieht nicht dass die Karte reinzoomt  
