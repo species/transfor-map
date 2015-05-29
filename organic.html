@@ -52,7 +52,7 @@
      * human readable length of query is not important, query speed is!
      */
     var overpass_timeout = "180"; //seconds
-    var overpass_servers = [ "http://overpass-api.de/api/", "http://overpass.osm.rambler.ru/cgi/", "http://api.openstreetmap.fr/oapi/" ];
+    var overpass_servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ];
     var overpass_urlstart = 'interpreter?data=';
     var overpass_start = '[out:json][timeout:' + overpass_timeout + '][bbox:BBOX];';
 
@@ -120,8 +120,18 @@
       greenmap : 'Icons &copy; <a href="http://www.greenmap.org">greenmap.org</a>',
       overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
     }
-    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', ')});
-    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', { attribution: [attr.osm, attr.mapbox, attr.overpass, attr.greenmap].join(', '), subdomains: '1234' });
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        noWrap: true
+    });
+    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+        subdomains: '1234',
+        attribution: [attr.osm, attr.mapbox, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        maxNativeZoom: 18 ,
+        noWrap: true
+    });
 
     var base_maps = {
       'MapQuestOpen': MapQuestOpen_OSM,

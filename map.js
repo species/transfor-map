@@ -81,23 +81,29 @@ function toggleSideBar() {
         sidebar_toggle.removeAttribute("class");
         sidebar.removeAttribute("class");
         content.removeAttribute("class");
+        /* disabled meanwhile because n steps overpass queries get fired
         for (var t=100; t <= 800; t = t+100) {
             setTimeout(reDrawMap, t);
-        }
-  //      L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
+        }*/
+        setTimeout(reDrawMap, 810);
     } else {
         sidebar_toggle.setAttribute("class", "hidden");
         sidebar.setAttribute("class", "hidden");
         content.setAttribute("class", "full");
+        /*
         for (var t=100; t <= 800; t = t+100) {
             setTimeout(reDrawMap, t);
-        }
-  //      L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
+        }*/
+        setTimeout(reDrawMap, 810);
     }
 
 }
 function reDrawMap() {
         map.invalidateSize(true);
+}
+
+/* simulates css :hover on elements not capable of, e.g. z-index 1 */
+function hoverTitle(id) {
 }
 
 
@@ -221,6 +227,11 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   if(window.about_text)
       $('#about').append(window.about_text);
     
+  $('#sidebar').append('<div id="timestamp"></div>');
+  $('#timestamp').append('<div id="tall" title="Local copy"></div>'); // alert() is only for dev, works only in FF if you SELECT TEXT.
+  $('#timestamp').append('<div id="tnode" onmouseover="alert(\'' + overpass_servers[0].replace(/^http:\/\//,"") + '\');"></div>');
+  $('#timestamp').append('<div id="tway"  onmouseover="alert(\'' + overpass_servers[1].replace(/^http:\/\//,"") + '\');"></div>');
+  $('#timestamp').append('<div id="trel"  onmouseover="alert(\'' + overpass_servers[2].replace(/^http:\/\//,"") + '\');"></div>');
 
 
   map.on('moveend', updateLinks);
@@ -273,8 +284,14 @@ function loadPoi() {
   var notificationbar =  document.getElementById("notificationbar");
   if (map.getZoom() < 12 ) {
     notificationbar.style.display = "block";
-    if(on_start_loaded)
+    if(on_start_loaded) {
+      var json_date = new Date(pois_lz.osm3s.timestamp_osm_base);
+      $('#tall').html("Lowzoom data: " + json_date.toLocaleString());
+      $('#tnode').css("display", "hidden");
+      $('#tway').css("display", "hidden");
+      $('#trel').css("display", "hidden");
       return;
+    }
 
     console.log(pois_lz);
     if(pois_lz) { 
@@ -300,6 +317,12 @@ function loadPoi() {
         loading_indicator_rel.style.display = "block";
         loading_indicator_rel.title = mutex_rel;
       handleRelations(pois_lz); 
+
+      var json_date = new Date(pois_lz.osm3s.timestamp_osm_base);
+      $('#tall').html("Lowzoom data: " + json_date.toLocaleString());
+      $('#tnode').css("display", "hidden");
+      $('#tway').css("display", "hidden");
+      $('#trel').css("display", "hidden");
 
       on_start_loaded = 1;
     }
@@ -613,6 +636,9 @@ function loadPoi() {
       loading_indicator.title = mutex_node;
     }
 
+    var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
+    $('#tnode').css("display", "block");
+    $('#tnode').html("<img src='assets/20px-Mf_node.svg.png' />: " + json_date.toLocaleString());
   }
 
   function handleWays(overpassJSON) {
@@ -652,6 +678,10 @@ function loadPoi() {
     } else {
       loading_indicator.title = mutex_way;
     }
+
+    var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
+    $('#tway').css("display", "block");
+    $('#tway').html("<img src='assets/20px-Mf_way.svg.png' />: " + json_date.toLocaleString());
   }
 
   function handleRelations(overpassJSON) {
@@ -723,6 +753,10 @@ function loadPoi() {
     } else {
       loading_indicator.title = mutex_rel;
     }
+
+    var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
+    $('#trel').css("display", "block");
+    $('#trel').html("<img src='assets/20px-Mf_relation.svg.png' />: " + json_date.toLocaleString());
   }
 
   var query = overpass_query;

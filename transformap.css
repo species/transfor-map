@@ -7,6 +7,10 @@ body, html {
   font-family: "PT Sans", sans-serif;
   overflow:hidden;
 }
+body {
+  background-color:#FBFCFA;
+}
+
 nav a {
   text-decoration: none;
 }
@@ -15,6 +19,13 @@ nav a {
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }
 */
+.leaflet-marker-icon:hover { box-shadow: 0 0 5px 5px #6374A6; }
+.leaflet-marker-icon.marker-cluster:hover { box-shadow: none; }
+.leaflet-marker-icon:hover div { box-shadow: 0 0 5px 5px yellow, inset 0 0 2px 2px yellow; }
+
+body.marker-backgroundless .leaflet-marker-icon:hover { background:#6374A6; border-radius:5px; }
+body.marker-backgroundless .leaflet-marker-icon.marker-cluster:hover { background-color:transparent; }
+
 .leaflet-popup-content a {color: #0645AD; text-decoration:none;}
 .leaflet-popup-content a:hover { text-decoration:underline;}
 div.leaflet-popup-content { width: auto !important; }
@@ -315,7 +326,7 @@ padding:0px;
   margin:0 5px;
   border-top:2px dotted #FBFCFA;
 }
-#mapswitcher li:first-child {
+#mapswitcher li:first-child, #mapswitcher li.current:first-child + li {
   border-top:none;
 }
 #mapswitcher li:hover {
@@ -337,6 +348,10 @@ padding:0px;
   padding:5px 0;
   height:100%;
   width:100%;
+  text-decoration:none;
+}
+#mapswitcher a:hover {
+    text-decoration:underline
 }
 
 ul#mapkey {
@@ -404,7 +419,6 @@ ul#mapkey {
     right:0;
     width:250px;
     bottom:0;
-    background-color:#FBFCFA;
     border-left:2px solid #6374A6; 
     box-shadow: -3px 0px 5px 1px #6374A6;
     color:#6374A6;
@@ -450,6 +464,21 @@ ul#mapkey {
 }
 #sidebar_toggle.hidden:hover {
     cursor:w-resize;
+}
+
+#sidebar #timestamp {
+    display:block;
+    font-size:13px;
+    padding:3px;
+    position:absolute;
+    bottom:0;
+    right:0;
+    background:#DDDDDD;
+    z-index:-1;
+    text-align:right;
+}
+#sidebar #timestamp img {
+    height:14px;
 }
 
 
