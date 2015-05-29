@@ -81,18 +81,20 @@ function toggleSideBar() {
         sidebar_toggle.removeAttribute("class");
         sidebar.removeAttribute("class");
         content.removeAttribute("class");
+        /* disabled meanwhile because n steps overpass queries get fired
         for (var t=100; t <= 800; t = t+100) {
             setTimeout(reDrawMap, t);
-        }
-  //      L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
+        }*/
+        setTimeout(reDrawMap, 810);
     } else {
         sidebar_toggle.setAttribute("class", "hidden");
         sidebar.setAttribute("class", "hidden");
         content.setAttribute("class", "full");
+        /*
         for (var t=100; t <= 800; t = t+100) {
             setTimeout(reDrawMap, t);
-        }
-  //      L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
+        }*/
+        setTimeout(reDrawMap, 810);
     }
 
 }
