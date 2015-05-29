@@ -7,6 +7,10 @@ body, html {
   font-family: "PT Sans", sans-serif;
   overflow:hidden;
 }
+body {
+  background-color:#FBFCFA;
+}
+
 nav a {
   text-decoration: none;
 }
@@ -344,6 +348,10 @@ padding:0px;
   padding:5px 0;
   height:100%;
   width:100%;
+  text-decoration:none;
+}
+#mapswitcher a:hover {
+    text-decoration:underline
 }
 
 ul#mapkey {
@@ -411,7 +419,6 @@ ul#mapkey {
     right:0;
     width:250px;
     bottom:0;
-    background-color:#FBFCFA;
     border-left:2px solid #6374A6; 
     box-shadow: -3px 0px 5px 1px #6374A6;
     color:#6374A6;
@@ -457,6 +464,21 @@ ul#mapkey {
 }
 #sidebar_toggle.hidden:hover {
     cursor:w-resize;
+}
+
+#sidebar #timestamp {
+    display:block;
+    font-size:13px;
+    padding:3px;
+    position:absolute;
+    bottom:0;
+    right:0;
+    background:#DDDDDD;
+    z-index:-1;
+    text-align:right;
+}
+#sidebar #timestamp img {
+    height:14px;
 }
 
 
