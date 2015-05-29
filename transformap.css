@@ -322,7 +322,7 @@ padding:0px;
   margin:0 5px;
   border-top:2px dotted #FBFCFA;
 }
-#mapswitcher li:first-child {
+#mapswitcher li:first-child, #mapswitcher li.current:first-child + li {
   border-top:none;
 }
 #mapswitcher li:hover {
