@@ -15,14 +15,14 @@ Done:
 • Display coordinates -OK
 • "loading" - indicator for node/way/relations -OK
 • fix loading of Graz POIs at start -OK
-• menu for switching to other TransforMaps -OK
-
-Todo:
-• opening_hours support  (is it open now?)
-  <script src="http://openingh.openstreetmap.de/evaluation_tool/node_modules/suncalc/suncalc.js"></script>
-  <script src="http://openingh.openstreetmap.de/evaluation_tool/opening_hours.js"></script>
 • "Download this data" - Link (Overpass-Export)
 • edit in JOSM / iD -Link
+• LEGEND for Icons!
+• The Current Map has to be named in the Header! -> OK sidebar
+
+
+github issues
+• opening_hours support  (is it open now?)
 • in Popup „Route here“ with link to OSRM
 • popup language translation
 • popup links to tags (to osm-wiki - what does this tag mean?)
@@ -30,8 +30,9 @@ Todo:
 • display image (from wikipedia or "image="-Tag
 • addresses: show street if member of associatedStreet Relation
 • icons: rewrite to have all in one file (less http requests)
-• markers: implement retine using property iconRetinaUrl (iconsize * 2) 
-• implement 60s timeout on queries, and make that also recognised by loading indicators
+• markers: implement retina using property iconRetinaUrl (iconsize * 2) 
+
+Todo:
 • layers with different needs
     1st step: layer checkbox(es) in layer-menu -OK
     2nd step: more layers (different overpass-queries)
@@ -48,7 +49,6 @@ Todo:
 
     3rd step: generate overpass-queries from taxonomy.json
 
-• LEGEND for Icons!
 
 • different icon-sets for the distinct maps -OK
   base-folder for each map
@@ -74,6 +74,7 @@ Performance:
   · when zooming in below 12, do not query -OK
   · keep (how?) a "List" of visited places, and do not query if we were already there
   · At first, download nodes, then ways, then rels (should speed up display significantly) -OK
+  -> different types to different servers -OK
     Todo: check ways in rels, nodes working -OK
 
 
@@ -82,7 +83,8 @@ Performance:
 clustering
   Leaflet.markercluster -OK
   TODO: 
-    • generic icons for clusters 
+    • generic icons for clusters
+    -> better clusters
     
 translations via transifex
   how to fetch translations? should be fetched realtime (at loading of website)
@@ -100,5 +102,29 @@ todo: on transformap.co not ONE map, but many .... tiled 'previews' n' with link
 	* garden-map
 	* ...
 
+Sidebar toggle button:
+    display “Menu” or something when hidden
+
 FIXME
   POIs doesn't work with IE8 on WinXP
+  Mobile: some icons scale in FF (layers, +/-, locate)
+    others not (edit, search)
+
+Every IMPORTANT Feature has to have text&icon!
+    Other Maps (how to call it? "Other Maps" "Maps" "Explore Maps" "Different Maps" "More Maps"
+    Edit 
+
+Think of Mobile! They CANNOT hover for more information!
+
+Filters:
+    must be deactivated on default: Button "Enable Filters"
+        because: at 20 Needs, 20 checked boxes confuse users
+    must be taken into account in URL (for sharing)
+        display amount of items right of filter! (e.g. you see that you can filter out all 427 trees)
+    on EVERY Map provide filters for our 3 categories!
+        so you can filter on the organic map to deactivate buying_selling! - then you should see all "alternative" POIs
+
+feedback user-test:
+    dass die "6" die Anzahl der Punkte ist, ist nicht intuitiv
+    Hover-Effekt muss sowohl bei POIs als auch bei Clustern gehn
+    zoom bei cluster auflösen zu schnell, man sieht nicht dass die Karte reinzoomt  
