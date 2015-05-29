@@ -506,11 +506,11 @@
             "osm:key" : "identity",
             "osm:values" : [ "transition_initiative" ],
             "label" : {
-                "en" : "Transition Town Initative",
+                "en" : "Transition Initative",
                 "de" : ""
             },
             "description" : {
-                "en" : "A transition town is a grassroot community project that seeks to build resilience in response to peak oil, climate destruction, and economic instability by creating a local group that uphold the <a href='https://www.transitionnetwork.org/cms/haddenham/pages/our-completed-checklist-becoming-official-transition-initiative'>values of the transition network</a>.",
+                "en" : "A transition initiative is a grassroot community project that seeks to build resilience in response to peak oil, climate destruction, and economic instability by creating a local group that uphold the <a href='https://www.transitionnetwork.org/cms/haddenham/pages/our-completed-checklist-becoming-official-transition-initiative'>values of the transition network</a>.",
                 "de" : ""
             }
         },
