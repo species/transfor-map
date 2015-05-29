@@ -5,6 +5,7 @@ body, html {
   margin: 0;
   height: 100%;
   font-family: "PT Sans", sans-serif;
+  overflow:hidden;
 }
 nav a {
   text-decoration: none;
@@ -122,6 +123,12 @@ padding:0px;
   overflow:hidden;
   left:0px;
   right:250px;
+  transition: right 0.8s;
+}
+#content.full {
+
+    right:0;
+    transition: right 0.8s;
 }
 
 /*html {
@@ -399,9 +406,14 @@ ul#mapkey {
     bottom:0;
     background-color:#FBFCFA;
     border-left:2px solid #6374A6; 
-    box-shadow: -3px 1px 5px 1px #6374A6;
+    box-shadow: -3px 0px 5px 1px #6374A6;
     color:#6374A6;
     overflow:auto;
+    transition: margin-right 0.8s;
+}
+#sidebar.hidden {
+    margin-right:-250px;
+    transition: margin-right 0.8s;
 }
 #sidebar h1 {
     padding:5px 10px;
@@ -409,6 +421,35 @@ ul#mapkey {
     border-bottom:2px solid #6374A6;
     font-size:32px;
     text-shadow: 1px 1px 1px #D6D2D0;
+}
+#sidebar_toggle {
+    position:absolute;
+    right:248px;
+    bottom:100px;
+    height:50px;
+    width:30px;
+    border:2px solid #6374A6; 
+    box-shadow: -3px 0px 5px 1px #6374A6;
+    border-radius: 10px 0 0 10px;
+    color:#6374A6;
+    background-color:#FBFCFA;
+    font-size:30px;
+    text-align:center;
+    line-height:40px;
+    transition: background 0.2s, right 0.8s;
+}
+#sidebar_toggle.hidden {
+    right:0px;
+    transform: rotate(180deg);
+    border-radius: 0 10px 10px 0;
+    box-shadow: 3px 0px 5px 1px #6374A6;
+}
+#sidebar_toggle:hover {
+    cursor:e-resize;
+    background-color:#DDDDDD;
+}
+#sidebar_toggle.hidden:hover {
+    cursor:w-resize;
 }
 
 

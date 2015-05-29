@@ -73,6 +73,33 @@ function toggleInfoBox(id) {
     var element = document.getElementById(id);
     element.style.display = ( element.style.display == "block" ) ? "none" : "block";
 }
+function toggleSideBar() {
+    var sidebar = document.getElementById("sidebar");
+    var sidebar_toggle = document.getElementById("sidebar_toggle");
+    var content = document.getElementById("content");
+    if( sidebar_toggle.hasAttribute("class") ) { // is hidden
+        sidebar_toggle.removeAttribute("class");
+        sidebar.removeAttribute("class");
+        content.removeAttribute("class");
+        for (var t=100; t <= 800; t = t+100) {
+            setTimeout(reDrawMap, t);
+        }
+  //      L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
+    } else {
+        sidebar_toggle.setAttribute("class", "hidden");
+        sidebar.setAttribute("class", "hidden");
+        content.setAttribute("class", "full");
+        for (var t=100; t <= 800; t = t+100) {
+            setTimeout(reDrawMap, t);
+        }
+  //      L.Util.requestAnimFrame(map.invalidateSize, map, false, map._container);
+    }
+
+}
+function reDrawMap() {
+        map.invalidateSize(true);
+}
+
 
 function initMap(defaultlayer,base_maps,overlay_maps) {
   var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
@@ -128,6 +155,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   //$('body').append('<div id="date_field">1.1.1970</div>');
 
   $('body').append('<div id="sidebar"><h1>' + document.title + '</h1></div>');
+  $('body').append('<div id="sidebar_toggle" onClick="toggleSideBar()">»</div>');
 
   // switching to other maps
   $('#sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');
