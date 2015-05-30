@@ -187,6 +187,10 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       name : "Fairtrade TransforMap",
       image : "assets/transformap/pngs/pois/" + iconsize + "/shop=fairtrade.png"
     } ,
+    { url : "secondhand.html" ,
+      name : "Second Hand TransforMap",
+      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=second_hand.png"
+    } ,
     { url : "greenmap.html" ,
       name : "Green TransforMap",
       image : "assets/greenmap/png/" + iconsize  + "/Park-_Recreation_Area.png"
