@@ -840,7 +840,6 @@ function updateLinks() {
       + query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()) 
       + '&R&C=' + centre.lat + ';' + centre.lng + ';' + map.getZoom() 
       + '\' title="Export OSM data with Overpass Turbo">Export data <img src="assets/turbo.png" height=12px style="margin-bottom:-2px"/></a>';
-    console.log(turbolink);
 }
 
 
