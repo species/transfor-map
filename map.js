@@ -518,7 +518,7 @@ function loadPoi() {
     var icon_tag = ""; //OSM key for choosing icon
     for (var i = 0; i < icon_tags.length; i++) {
       var key = icon_tags[i];
-      if(data.tags[key]) {
+      if(data.tags[key] && ! ( key == "amenity" && data.tags[key] == "shop" ) ) {
         icon_tag = key;
         break;
       }
