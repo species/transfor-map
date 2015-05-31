@@ -66,9 +66,9 @@
 
     var about_text = '<p>This is a demo map displaying green places around you, where you can relax and enjoy nature.</p>'
     + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. For an item to be displayed, it must have one of the <a href="https://wiki.openstreetmap.org/wiki/Key:leisure">leisure</a> = <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Dpark">park</a> | <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Dgarden">garden</a> | <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Dplayground">playground</a> | <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Ddog_park">dog_park</a> set and be accessible to the public.</p>'
-    + '<p>Items are loaded via <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>, it may take some minutes for newly added items to appear.</p>'
-    + '<p>You can improve this map with the “Edit” Button in the top right corner!</p>'
-    + '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>';
+    + about.overpass
+    + about.osm_edit
+    + about.export_opendata ;
 
     var mapkey =
           '<li title="leisure=park"><img src="assets/transformap/pngs/pois/' + iconsize + '/leisure=park.png" /> Park</li>'

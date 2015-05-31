@@ -66,7 +66,11 @@
     var icon_tags = [ "identity" ];
     var class_selector_key = { key: "identity" };
 
-    var about_text = '<p>The map of identities displays the different identities of the TransforMap movement.<br> The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. For an OSM Object to appear on this map, it has to have the tag “<a href="https://wiki.openstreetmap.org/wiki/Proposed_features/TransforMap#Self-description_of_a_community">identity</a>” set.</p><p>Items are loaded via <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>, it may take some minutes for newly added items to appear.</p><p>You can improve this map with the “Edit” Button in the top right corner!</p><p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>';
+    var about_text = '<p>The map of identities displays the different identities of the TransforMap movement.</p>'
+    + 'The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. For an OSM Object to appear on this map, it has to have the tag “<a href="https://wiki.openstreetmap.org/wiki/Proposed_features/TransforMap#Self-description_of_a_community">identity</a>” set.</p>'
+    + about.overpass
+    + about.osm_edit
+    + about.export_opendata ;
 
     var overpass_query_string = "";
     var overpass_query_string_nodes = "";

@@ -1,3 +1,19 @@
+// global texts
+var attr = {
+  osm : 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
+  osm_tiles : 'Tiles &copy; OSM - <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>',
+  search : 'Search by OSM - <a href="http://wiki.openstreetmap.org/wiki/Nominatim">Nominatim</a>',
+  mapbox : 'Tiles &copy; <a href="http://mapbox.com/about/maps/">MapBox</a>',
+  greenmap : 'Green Map Icons used by permission &copy; <a href="http://www.greenmap.org">Green Map System 2015</a>',
+  overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
+}
+var about = {
+    overpass : '<p>Items are loaded via <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>, it may take some minutes for newly added items to appear.</p>',
+    osm_edit : '<p>You can improve this map with the “Edit” Button in the top right corner!</p>',
+    export_opendata : '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>'
+}
+
+
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
 // taken from Wikipedia:JSON
