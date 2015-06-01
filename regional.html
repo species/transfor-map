@@ -58,7 +58,7 @@
 
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
-    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ] ];
+    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ], [ '"farm_boxes"~"pickup$"' ] ];
 
     var icon_foldername = "pois";
     var icon_tags = [ "shop","amenity","leisure" ];
@@ -66,7 +66,7 @@
     var about_text = '<p>This map displays places where you can get stuff regionally produced.</p>'
         + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database.'
         + 'For an item to be displayed, it must have the “regional” tag set or be a '
-        + '“shop=<a href="https://wiki.openstreetmap.org/wiki/Tag:shop%3Dfarm">farm</a>”.</p>'
+        + '“shop=<a href="https://wiki.openstreetmap.org/wiki/Tag:shop%3Dfarm">farm</a>” or a CSA pickup point “<a href="https://wiki.openstreetmap.org/wiki/Proposed_features/Farm_boxes#Proposal">farm_boxes=*pickup</a>“.</p>'
         + about.overpass
         + about.osm_edit
         + about.export_opendata ;
