@@ -19,6 +19,7 @@ Done:
 • edit in JOSM / iD -Link
 • LEGEND for Icons!
 • The Current Map has to be named in the Header! -> OK sidebar
+• maxzoom up to 19 -OK
 
 
 github issues
@@ -78,7 +79,6 @@ Performance:
     Todo: check ways in rels, nodes working -OK
 
 
-• maxzoom up to 19
 
 clustering
   Leaflet.markercluster -OK
@@ -87,9 +87,8 @@ clustering
     -> better clusters
     
 translations via transifex
-  how to fetch translations? should be fetched realtime (at loading of website)
-
-implement API (at first via sourced JSON file)
+    how to fetch translations? should be fetched realtime (at loading of website)
+    implement API (at first via sourced JSON file)
 
 
 todo: on transformap.co not ONE map, but many .... tiled 'previews' n' with link to distinct maps
@@ -98,7 +97,7 @@ todo: on transformap.co not ONE map, but many .... tiled 'previews' n' with link
 	* Gratis-map
 	* Needs-karte
 	* Political Map -OK
-	* fairtrade-Map
+	* fairtrade-Map -OK
 	* garden-map
 	* ...
 
@@ -126,5 +125,5 @@ Filters:
 
 feedback user-test:
     dass die "6" die Anzahl der Punkte ist, ist nicht intuitiv
-    Hover-Effekt muss sowohl bei POIs als auch bei Clustern gehn
+    Hover-Effekt muss sowohl bei POIs als auch bei Clustern gehn -OK
     zoom bei cluster auflösen zu schnell, man sieht nicht dass die Karte reinzoomt  
