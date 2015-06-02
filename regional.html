@@ -39,11 +39,7 @@
 
   <script src="map.js"></script>
   <script>
-    /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
-    /* what to we show on TransforMap.co?
-     * needs:* +
-     * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
-     *
+    /*
      * overpass syntax:
      * [out:json][timeout:180][bbox:BBOX];
      * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
@@ -58,15 +54,15 @@
 
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var query_array = [ [ '~"full?fill?s_needs:.*"~".*"' ] ];
-    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ] ];
+    var query_array = [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ], [ '"farm_boxes"~"pickup$"' ], [ '"garden:type"="community"' ] ];
 
     var icon_foldername = "pois";
-    var icon_tags = [ "shop","amenity","leisure" ];
+    var icon_tags = [ "garden:type", "shop","amenity","leisure" ];
 
     var about_text = '<p>This map displays places where you can get stuff regionally produced.</p>'
         + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database.'
         + 'For an item to be displayed, it must have the “regional” tag set or be a '
-        + '“shop=<a href="https://wiki.openstreetmap.org/wiki/Tag:shop%3Dfarm">farm</a>”.</p>'
+        + '“shop=<a href="https://wiki.openstreetmap.org/wiki/Tag:shop%3Dfarm">farm</a>”, a community garden “leisure=garden + <a href="https://wiki.openstreetmap.org/wiki/Key:garden:type">garden:type=community</a>” or a CSA pickup point “<a href="https://wiki.openstreetmap.org/wiki/Proposed_features/Farm_boxes#Proposal">farm_boxes=*pickup</a>“.</p>'
         + about.overpass
         + about.osm_edit
         + about.export_opendata ;
@@ -183,13 +179,6 @@
 <div id="content">
   <div id="map"></div>
 </div>
-
-<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />
-<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />
-<img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />
-<div id="notificationbar">Please zoom in to update POIs!</div>
-
-<a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
 
 </body>
 </html>

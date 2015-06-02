@@ -39,11 +39,7 @@
 
   <script src="map.js"></script>
   <script>
-    /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
-    /* what to we show on TransforMap.co?
-     * needs:* +
-     * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
-     *
+    /*
      * overpass syntax:
      * [out:json][timeout:180][bbox:BBOX];
      * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
@@ -62,7 +58,7 @@
     var query_array = [ [ '"leisure"~"^park|garden|playground|dog_park"', '"access"!~"no|private|customers"' ] ];
 
     var icon_foldername = "pois";
-    var icon_tags = [ "leisure" ];
+    var icon_tags = [ "garden:type", "leisure" ];
 
     var about_text = '<p>This is a demo map displaying green places around you, where you can relax and enjoy nature.</p>'
     + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. For an item to be displayed, it must have one of the <a href="https://wiki.openstreetmap.org/wiki/Key:leisure">leisure</a> = <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Dpark">park</a> | <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Dgarden">garden</a> | <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Dplayground">playground</a> | <a href="https://wiki.openstreetmap.org/wiki/Tag:leisure%3Ddog_park">dog_park</a> set and be accessible to the public.</p>'
@@ -72,6 +68,7 @@
 
     var mapkey =
           '<li title="leisure=park"><img src="assets/transformap/pngs/pois/' + iconsize + '/leisure=park.png" /> Park</li>'
+        + '<li title="leisure=garden"><img src="assets/transformap/pngs/pois/' + iconsize + '/garden:type=community.png" />Community Garden</li>'
         + '<li title="leisure=garden"><img src="assets/transformap/pngs/pois/' + iconsize + '/leisure=garden.png" /> Garden</li>'
         + '<li title="leisure=playground"><img src="assets/transformap/pngs/pois/' + iconsize + '/leisure=playground.png" /> Playground</li>'
         + '<li title="leisure=dog_park"><img src="assets/transformap/pngs/pois/' + iconsize + '/leisure=dog_park.png" /> Dog Park</li>';
@@ -186,13 +183,6 @@
 <div id="content">
   <div id="map"></div>
 </div>
-
-<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />
-<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />
-<img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />
-<div id="notificationbar">Please zoom in to update POIs!</div>
-
-<a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
 
 </body>
 </html>

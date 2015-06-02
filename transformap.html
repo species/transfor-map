@@ -42,11 +42,7 @@
   </script>
   <script src="map.js"></script>
   <script>
-    /* has to be generated automatically from taxonomy.json, where the mapping of all needs to osm-tags is done. */
-    /* what to we show on TransforMap.co?
-     * needs:* +
-     * everything that implies a certain need, IF it it has ANY other transformap Tags (political_identity:*, mode_of_interaction:[bartering/lending/gifting/rebuying_reselling/cousing_sharing/dit_and_diy/co_producing]=yes OR production_input:*=!no OR mode_of_organization:*=!no ) explicitely set (or some tags like fee=no or payment:none=yes or organic or fair_trade or...)
-     *
+    /*
      * overpass syntax:
      * [out:json][timeout:180][bbox:BBOX];
      * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
@@ -179,13 +175,6 @@
 <div id="content">
   <div id="map"></div>
 </div>
-
-<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />
-<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />
-<img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />
-<div id="notificationbar">Please zoom in to update POIs!</div>
-
-<a href="https://github.com/TransforMap/transfor-map"><img style="position: absolute; bottom: 0; left: 0; border: 0;" src="assets/forkme-on-github.png" alt="Fork me on GitHub" ></a>
 
 </body>
 </html>
