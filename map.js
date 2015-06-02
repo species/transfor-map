@@ -122,6 +122,57 @@ function reDrawMap() {
 function hoverTitle(id) {
 }
 
+var overpass_servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ],
+    overpass_ql_text,
+    overpass_query,
+    overpass_query_nodes,
+    overpass_query_ways,
+    overpass_query_rels;
+
+/*
+ * expects global var query_array to be set 
+ * sets global the vars above
+ */
+function buildOverpassQuery(overpass_timeout, overpass_servers_param) {
+    if( ! overpass_timeout )
+        overpass_timeout = 180;
+    if( overpass_servers_param ) 
+        overpass_servers = overpass_servers_param;
+    
+    var overpass_urlstart = 'interpreter?data=';
+    var overpass_start = '[out:json][timeout:' + overpass_timeout + '][bbox:BBOX];';
+
+    var overpass_query_string = "";
+    var overpass_query_string_nodes = "";
+    var overpass_query_string_ways = "";
+    var overpass_query_string_rels = "";
+
+    for (var i = 0; i < query_array.length; i++) {
+      var anded_tags = query_array[i];
+      var anded_querystring = "";
+      var nr_of_and_clauses = anded_tags.length;
+      for (var j=0; j < nr_of_and_clauses; j++) {
+        anded_querystring += "[" + anded_tags[j] + "]";
+      }
+
+      overpass_query_string += "node" + anded_querystring + ";out;";
+      overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
+      overpass_query_string += "rel" + anded_querystring + ";out;>;out;";
+
+      overpass_query_string_nodes += "node" + anded_querystring + ";out;";
+      overpass_query_string_ways += "(way" + anded_querystring + ";node(w));out;";
+      overpass_query_string_rels += "rel" + anded_querystring + ";out;>;out;";
+    }
+
+    overpass_ql_text = overpass_start + overpass_query_string;
+    overpass_query = overpass_servers[0] + overpass_urlstart + overpass_ql_text;
+    overpass_query_nodes = overpass_servers[0] + overpass_urlstart + overpass_start + overpass_query_string_nodes;
+    overpass_query_ways = overpass_servers[1] + overpass_urlstart + overpass_start + overpass_query_string_ways;
+    overpass_query_rels = overpass_servers[2] + overpass_urlstart + overpass_start + overpass_query_string_rels;
+    console.log(overpass_query_nodes);
+    console.log(overpass_query_ways);
+    console.log(overpass_query_rels);
+}
 
 function initMap(defaultlayer,base_maps,overlay_maps) {
   var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),

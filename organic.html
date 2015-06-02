@@ -48,12 +48,11 @@
      * human readable length of query is not important, query speed is!
      */
     var overpass_timeout = "180"; //seconds
-    var overpass_servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ];
-    var overpass_urlstart = 'interpreter?data=';
-    var overpass_start = '[out:json][timeout:' + overpass_timeout + '][bbox:BBOX];';
 
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var query_array = [ [ '"organic"~"yes|only|limited"' ] ];
+
+    buildOverpassQuery(overpass_timeout);
 
     var icon_foldername = "pois";
     var icon_tags = [ "shop","amenity","leisure" ];
@@ -71,41 +70,6 @@
           '<li title="organic=only"><img src="assets/transformap/pngs/pois/' + iconsize + '/unknown.png" class="k-organic v-only" /> Organic only</li>'
         + '<li title="organic=yes"><img src="assets/transformap/pngs/pois/' + iconsize + '/unknown.png" class="k-organic v-yes" /> Good organic selection</li>'
         + '<li title="organic=limited"><img src="assets/transformap/pngs/pois/' + iconsize + '/unknown.png" class="k-organic v-limited" /> Limited organic selection</li>';
-
-    var overpass_query_string = "";
-    var overpass_query_string_nodes = "";
-    var overpass_query_string_ways = "";
-    var overpass_query_string_rels = "";
-
-    var nr_of_or_clauses = query_array.length;
-    for (var i = 0; i < nr_of_or_clauses; i++) {
-      var anded_tags = query_array[i];
-      var anded_querystring = "";
-      var nr_of_and_clauses = anded_tags.length;
-      for (var j=0; j < nr_of_and_clauses; j++) {
-        anded_querystring += "[" + anded_tags[j] + "]";
-      }
-
-      overpass_query_string += "node" + anded_querystring + ";out;";
-      overpass_query_string += "(way" + anded_querystring + ";node(w));out;";
-      overpass_query_string += "rel" + anded_querystring + ";out;>;out;";
-
-      overpass_query_string_nodes += "node" + anded_querystring + ";out;";
-      overpass_query_string_ways += "(way" + anded_querystring + ";node(w));out;";
-      overpass_query_string_rels += "rel" + anded_querystring + ";out;>;out;";
-    }
-
-    var overpass_ql_text = overpass_start + overpass_query_string;
-    var overpass_query = overpass_servers[0] + overpass_urlstart + overpass_ql_text;
-    var overpass_query_nodes = overpass_servers[0] + overpass_urlstart + overpass_start + overpass_query_string_nodes;
-    var overpass_query_ways = overpass_servers[1] + overpass_urlstart + overpass_start + overpass_query_string_ways;
-    var overpass_query_rels = overpass_servers[2] + overpass_urlstart + overpass_start + overpass_query_string_rels;
-    console.log(overpass_query_nodes);
-    console.log(overpass_query_ways);
-    console.log(overpass_query_rels);
-
-
-
 
     var map, ids, markers, lc = {};
     var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
