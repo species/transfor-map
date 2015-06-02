@@ -256,12 +256,13 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   $('#timestamp').append('<div id="tway"  onmouseover="alert(\'' + overpass_servers[1].replace(/^http:\/\//,"") + '\');"></div>');
   $('#timestamp').append('<div id="trel"  onmouseover="alert(\'' + overpass_servers[2].replace(/^http:\/\//,"") + '\');"></div>');
 
-  // fork me on github
-  
-  //$('body').append('<div id="date_field">1.1.1970</div>');
- // $('body').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" style="position: absolute; bottom: 0; left: 0; border: 0; margin-top:-149px; z-index:0;"/>');
   $('body').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
   $('#forkme').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" />');
+
+  $('body').append('<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />');
+  $('body').append('<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />');
+  $('body').append('<img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />');
+  $('body').append('<div id="notificationbar">Please zoom in to update POIs!</div>');
 
   map.on('moveend', updateLinks);
 
