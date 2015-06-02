@@ -15,6 +15,26 @@ nav a {
   text-decoration: none;
 }
 
+#forkme {
+ position:absolute;
+    bottom:14px;
+    left:-70px;
+    display:block;
+    width:300px; 
+    height:33px;
+    transform: rotate(45deg);
+    overflow:hidden;
+}
+#forkme:hover {
+    opacity:0.8;
+}
+#forkme img {
+    margin-top:-85px;
+    margin-left:40px;
+    transform: rotate(-45deg);
+}
+
+
 /* FIXME readd after clusters working
     .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
     .leaflet-marker-icon:hover { background: yellow; }

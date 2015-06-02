@@ -174,7 +174,6 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       }
     layerswitcher.style.display = "none";
   }
-  //$('body').append('<div id="date_field">1.1.1970</div>');
 
   $('body').append('<div id="sidebar"><h1>' + document.title + '</h1></div>');
   $('body').append('<div id="sidebar_toggle" onClick="toggleSideBar()">»</div>');
@@ -257,6 +256,12 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   $('#timestamp').append('<div id="tway"  onmouseover="alert(\'' + overpass_servers[1].replace(/^http:\/\//,"") + '\');"></div>');
   $('#timestamp').append('<div id="trel"  onmouseover="alert(\'' + overpass_servers[2].replace(/^http:\/\//,"") + '\');"></div>');
 
+  // fork me on github
+  
+  //$('body').append('<div id="date_field">1.1.1970</div>');
+ // $('body').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" style="position: absolute; bottom: 0; left: 0; border: 0; margin-top:-149px; z-index:0;"/>');
+  $('body').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
+  $('#forkme').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" />');
 
   map.on('moveend', updateLinks);
 
@@ -554,8 +559,19 @@ function loadPoi() {
   }
 
   function nodeFunction(data) {
-    if (! data.tags || ( ! data.tags.name && ! data.tags.amenity && ! data.tags.shop) ) // no retval if node is just member of a way
+    if (! data.tags)
       return null;
+
+    var is_one_of_queried=0; // for filtering out tagged nodes which are part of ways
+    for ( var i = 0; i < query_array.length; i++) {
+        var res=query_array[i][0].replace(/["]?/,"").replace(/["].*$/,"");
+        if(data.tags[res]) {
+            is_one_of_queried=1;
+            break;
+        }
+    }
+    if (! data.tags.name && ! is_one_of_queried)
+        return;
     if (! data.tags.name && data.tags.entrance)
       return null;
     return bindPopupOnData(data);
@@ -798,21 +814,21 @@ function loadPoi() {
 
   //  node: getJSON [x] | 
 
-  console.log("loadPOI: before JSON call node");
+  console.log("loadPOI: before JSON call node: " + node_url);
     mutex_node++;
     var loading_indicator_node = document.getElementById("loading_node");
     loading_indicator_node.style.display = "block";
     loading_indicator_node.title = mutex_node;
   $.getJSON(node_url, handleNodes);
 
-  console.log("loadPOI: before JSON call way");
+  console.log("loadPOI: before JSON call way: " + way_url);
     mutex_way++;
     var loading_indicator_way = document.getElementById("loading_way");
     loading_indicator_way.style.display = "block";
     loading_indicator_way.title = mutex_way;
   $.getJSON(way_url, handleWays);
 
-  console.log("loadPOI: before JSON call rel");
+  console.log("loadPOI: before JSON call rel: " + rel_url);
     mutex_rel++;
     var loading_indicator_rel = document.getElementById("loading_rel");
     loading_indicator_rel.style.display = "block";
