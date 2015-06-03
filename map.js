@@ -13,6 +13,34 @@ var about = {
     export_opendata : '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>'
 }
 
+var different_maps = [ 
+    { url : "identities.html" ,
+      name : "TransforMap of Identities",
+      image: "assets/transformap/pngs/" + iconsize + "/political_identity.png"
+    } ,
+    /*   { url : "transformap.html" ,
+      name : "Needs-based TransforMap" } , */
+    { url : "organic.html" ,
+      name : "Organic TransforMap",
+      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=supermarket.png"
+    } ,
+    { url : "regional.html" ,
+      name : "Regional TransforMap",
+      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=convenience.png"
+    } ,
+    { url : "fairtrade.html" ,
+      name : "Fairtrade TransforMap",
+      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=fairtrade.png"
+    } ,
+    { url : "secondhand.html" ,
+      name : "Second Hand TransforMap",
+      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=second_hand.png"
+    } ,
+    { url : "greenmap.html" ,
+      name : "Green TransforMap",
+      image : "assets/greenmap/png/" + iconsize  + "/Park-_Recreation_Area.png"
+    } ,
+];
 
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
@@ -233,35 +261,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   $('#sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');
   $('#sidebox-maps').append('<h2 onClick="toggleSideBox(\'sidebox-maps\');">Explore other Maps</h2>');
   $('#sidebox-maps').append('<ul id="mapswitcher" class="boxcontent"></ul>');
-  var mapswitcher = document.getElementById("mapswitcher");
-  var different_maps = [ 
-    { url : "identities.html" ,
-      name : "TransforMap of Identities",
-      image: "assets/transformap/pngs/" + iconsize + "/political_identity.png"
-    } ,
- /*   { url : "transformap.html" ,
-      name : "Needs-based TransforMap" } , */
-    { url : "organic.html" ,
-      name : "Organic TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=supermarket.png"
-    } ,
-    { url : "regional.html" ,
-      name : "Regional TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=convenience.png"
-    } ,
-    { url : "fairtrade.html" ,
-      name : "Fairtrade TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=fairtrade.png"
-    } ,
-    { url : "secondhand.html" ,
-      name : "Second Hand TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=second_hand.png"
-    } ,
-    { url : "greenmap.html" ,
-      name : "Green TransforMap",
-      image : "assets/greenmap/png/" + iconsize  + "/Park-_Recreation_Area.png"
-    } ,
-    ];
+
   for (var i = 0; i < different_maps.length; i++) {
     var current_item = different_maps[i]; 
     $('#mapswitcher').append(
