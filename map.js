@@ -219,10 +219,10 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       var li = document.createElement("li");
       var textnode = document.createTextNode(current_key + " = " + current_value );
       li.appendChild( textnode);
-      var functiontext = "toggleLayer('" + current_key + "','" + current_value + "');"
+      var functiontext = "toggleLayer('" + current_key + "','" + current_value + "');";
       li.setAttribute('onClick',functiontext);
       layerswitcher.appendChild( li );
-      }
+    }
     layerswitcher.style.display = "none";
   }
 
@@ -452,15 +452,14 @@ function loadPoi() {
 
   function fillPopup(tags,type,id,lat,lon) {
 
-    var tags_to_ignore = [ "name" , "ref", "needs", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer","room","indoor" ];
+    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer","room","indoor" ];
 
     var r = $('<table>');
 
     r.append($('<tr>')
             .append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '" title="Link to ' + type + ' ' + id + ' on OpenStreetMap" target=_blank><img src="assets/20px-Mf_' + type + '.svg.png" />' + type.substring(0,1) + id + '</a>'))
             .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + lon + '/' + lat + '" title="Edit this object with iD for TransforMap" target=_blank>Edit</a>'))
-/*            .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + centre.lng + '/' + centre.lat + '" title="Edit this object with iD for TransforMap">Edit</a>')) */
-            );
+        );
 
     if(tags["addr:street"] || tags["addr:housenumber"] || tags["addr:postcode"] || tags["addr:city"] || tags["addr:suburb"] || tags["addr:country"]
             || tags["website"] || tags["url"] || tags["contact:website"] || tags["contact:url"] || tags["email"] || tags["contact:email"] || tags["phone"] || tags["contact:phone"] ) {
@@ -516,8 +515,11 @@ function loadPoi() {
         r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
 
       } else {
-        var keytext = key;
-        var valuetext = tags[key];
+        var key_escaped = $("<div>").text(key).html();
+        var value_escaped = $("<div>").text(tags[key]).html();
+
+        var keytext = key_escaped.replace(/:/g,":<wbr />");
+        var valuetext = "<span>=&nbsp;</span>" + value_escaped.replace(/;/g,"; ");
 
         /* display label:* instead of key */ 
         /*
@@ -540,7 +542,10 @@ function loadPoi() {
         } 
         */
 
-        r.append($('<tr>').addClass('tag').append($('<th>').append(keytext)).append($('<td>').text(valuetext)));
+        r.append($('<tr>').addClass('tag')
+            .append($('<th>').append(keytext))
+            .append($('<td>').append(valuetext))
+            );
       }
 
     } // end for (key in tags)
