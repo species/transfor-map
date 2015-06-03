@@ -436,11 +436,11 @@ function loadPoi() {
 
   function url_ify(link,linktext) {
     var teststr_email=/@/;
-    var teststr_phone=/^[0-9-+]*$/;
+    var teststr_phone=/^[0-9-+\s]*$/;
     if (teststr_email.test(link)) {
       return '<a href="mailto:' + link + '">' + linktext + '</a>';
     } else if (teststr_phone.test(link)) {
-      return '<a href="tel:' + link + '">' + linktext + '</a>';
+      return '<a href="tel:' + link + '">' + linktext.replace(/\s/g,"&nbsp;") + '</a>'; //FIXME how to prefix fax nrs?
     } else {
       var teststr=/^http/; //http[s] is implicit here
       if ( ! teststr.test(link) )
@@ -452,7 +452,7 @@ function loadPoi() {
 
   function fillPopup(tags,type,id,lat,lon) {
 
-    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","created_by","area","layer","room","indoor" ];
+    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","fax","contact:fax","created_by","area","layer","room","indoor" ];
 
     var r = $('<table>');
 
@@ -481,16 +481,20 @@ function loadPoi() {
             (tags["email"] ? (url_ify(tags["email"],"email") + "<br>") : "" )+
             (tags["contact:email"] ? (url_ify(tags["contact:email"],"email") + "<br>") : "" ) +
 
-            (tags["phone"] ? (url_ify(tags["phone"],"Tel: " + tags["phone"]) + "<br>") : "" ) +
-            (tags["contact:phone"] ? (url_ify(tags["contact:phone"],"Tel: " + tags["contact:phone"]) + "<br>") : "" )
+            (tags["phone"] ? (url_ify(tags["phone"], "Tel:&nbsp;" + tags["phone"]) + "<br>") : "" ) +
+            (tags["contact:phone"] ? (url_ify(tags["contact:phone"], "Tel:&nbsp;" + tags["contact:phone"]) + "<br>") : "" ) + 
+
+            (tags["fax"] ? (url_ify(tags["fax"], "Fax:&nbsp;" + tags["fax"]) + "<br>") : "" ) +
+            (tags["contact:fax"] ? (url_ify(tags["contact:fax"], "Fax:&nbsp;" + tags["contact:fax"]) + "<br>") : "" )
           )));
     }
 
     for (key in tags) {
-      if ( tags_to_ignore.indexOf(key) >= 0) {
+      var value = tags[key];
+      if ( tags_to_ignore.indexOf(key) >= 0) 
         continue;
-      } else if ( key == 'website' || key == 'url' || key == 'contact:website' ||  key == 'contact:url') { //TODO: , facebook, …
-        var value = tags[key];
+
+      if ( key == 'website' || key == 'url' || key == 'contact:website' ||  key == 'contact:url') { //TODO: , facebook, …
         var teststr=/^http/; //http[s] is implicit here
         if ( ! teststr.test(value) )
           value = "http://" + value;
@@ -498,7 +502,6 @@ function loadPoi() {
         var htlink = '<a href="' + value + '">' + value + '</a>';
         r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else if (key == 'wikipedia') { // wikipedia - TODO key="wikipedia:de"
-        var value = tags[key];
         var begin = "";
         var teststr=/^http/; //http[s] is implicit here
         if ( ! teststr.test(value) )
@@ -507,7 +510,6 @@ function loadPoi() {
         var htlink = '<a href="' + begin + value + '">' + value + '</a>';
         r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else if (key == 'contact:email' || key == 'email') {
-        var value = tags[key];
         var teststr=/^mailto:/;
         if ( ! teststr.test(value) )
           value = "mailto:" + value;
@@ -516,7 +518,7 @@ function loadPoi() {
 
       } else {
         var key_escaped = $("<div>").text(key).html();
-        var value_escaped = $("<div>").text(tags[key]).html();
+        var value_escaped = $("<div>").text(value).html();
 
         var keytext = key_escaped.replace(/:/g,":<wbr />");
         var valuetext = "<span>=&nbsp;</span>" + value_escaped.replace(/;/g,"; ");
