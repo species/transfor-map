@@ -264,22 +264,14 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     ];
   for (var i = 0; i < different_maps.length; i++) {
     var current_item = different_maps[i]; 
-    var li = document.createElement("li");
-    
-    var alink = document.createElement("a");
-    var linktext = document.createTextNode(current_item["name"]);
-    var linkimage = document.createElement("img");
-    linkimage.setAttribute('src',current_item["image"]);
-
-    alink.appendChild(linkimage);
-    alink.appendChild(linktext);
-    alink.setAttribute('href',current_item["url"]);
-    if(current_item["name"] == document.title) {
-      li.setAttribute('class',"current");
-    }
-    li.appendChild(alink);
-
-    mapswitcher.appendChild( li );
+    $('#mapswitcher').append(
+        $('<li>')
+            .attr('class', current_item["name"] == document.title ?  "current" : "")
+            .append( $('<a>')
+                .attr('href', current_item["url"])
+                .append('<img src="' + current_item["image"] + '" />' + current_item["name"])
+            )
+    );
   }
 
   // Map Key
