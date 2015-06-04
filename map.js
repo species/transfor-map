@@ -44,6 +44,15 @@ var different_maps = [
     } ,
 ];
 
+/*
+var filters = {
+  //    provides: {} generate from taxonomy.json
+  //    identity: {} generate from taxonomy.json
+  //    interaction: {} generate from taxonomy.json
+    organic : { function_name : function filter_organic(osm_object){} },
+    opening_hours : { function_name : function filter_opening(osm_object){} },
+}*/
+
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
 // taken from Wikipedia:JSON
