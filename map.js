@@ -610,12 +610,19 @@ function loadPoi() {
       className: "v-" + data.tags[icon_class] + " k-" + icon_class,
     });
 
-    var lmarker = L.marker([data.lat, data.lon], {
+    /*var lmarker = L.marker([data.lat, data.lon], {
       icon: needs_icon,
       title: data.tags.name
-    });
-    lmarker.bindPopup(fillPopup(data.tags,data.type,data.id,data.lat,data.lon));
-    return lmarker;
+    });*/
+    var pdata = {
+      icon: needs_icon,
+      title: data.tags.name,
+      popup: fillPopup(data.tags,data.type,data.id,data.lat,data.lon)
+    }
+    var pmarker = new PruneCluster.Marker(data.lat, data.lon, pdata);
+
+    //marker.bindPopup(fillPopup(data.tags,data.type,data.id,data.lat,data.lon));
+    return pmarker;
   }
 
   function nodeFunction(data) {
@@ -725,7 +732,9 @@ function loadPoi() {
         new_markers.push(retval);
     }
     var number = new_markers.length;
-    markers.addLayers(new_markers);
+    //markers.addLayers(new_markers);
+    markers.RegisterMarkers(new_markers);
+    markers.ProcessView();
     new_markers = [];
     console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
     mutex_node--;
@@ -768,7 +777,9 @@ function loadPoi() {
     }
 
     var number = new_markers.length;
-    markers.addLayers(new_markers);
+    //markers.addLayers(new_markers);
+    markers.RegisterMarkers(new_markers);
+    markers.ProcessView();
     new_markers = [];
     console.log("handleWays (pid " + pid + ") done, " + number + " added.");
     mutex_way--;
@@ -843,7 +854,9 @@ function loadPoi() {
     }
     
     var number = new_markers.length;
-    markers.addLayers(new_markers);
+    //markers.addLayers(new_markers);
+    markers.RegisterMarkers(new_markers);
+    markers.ProcessView();
     new_markers = [];
     console.log("handleRelations (pid " + pid + ") done, " + number + " added.");
     mutex_rel--;
