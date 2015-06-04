@@ -13,6 +13,8 @@ var about = {
     export_opendata : '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>'
 }
 
+var iconsize = 24;
+
 var different_maps = [ 
     { url : "identities.html" ,
       name : "TransforMap of Identities",
@@ -350,8 +352,6 @@ var mutex_way = 0;
 var mutex_rel = 0;
 
 var on_start_loaded = 0;
-
-var iconsize = 24;
 
 function loadPoi() {
   var notificationbar =  document.getElementById("notificationbar");
