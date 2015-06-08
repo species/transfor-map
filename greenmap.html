@@ -114,6 +114,7 @@
 
       loadPoi();
       map.on('moveend', loadPoi);
+      map.on('viewreset', loadPoi);
 
       addSearch();
       addLocate();
