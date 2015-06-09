@@ -5,10 +5,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
-  <!--
-  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.markercluster/dist/MarkerCluster.Default.css" />
-  -->
   <link rel="stylesheet" href="PruneCluster.css" />
 
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -35,9 +31,6 @@
 
   <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 
-  <!--
-  <script src="http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-  -->
   <script src="PruneCluster.js"></script>
 
   <script src="leaflet-hash.js"></script>
@@ -97,7 +90,6 @@
       'MapQuestOpen': MapQuestOpen_OSM,
       'OpenSteetMap - Mapnik': osm,
     };
-    // markers = new L.markerClusterGroup({maxClusterRadius: 40}); //do not use removeOutsideVisibleBounds, it's broken!
     markers = new PruneClusterForLeaflet(60,20);
     var overlay_maps = {
       "POIs" : markers
