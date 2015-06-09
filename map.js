@@ -418,9 +418,11 @@ function loadPoi() {
     if (splitstr[1]) {
       var coords_href = splitstr[1].split('/');
       if ( coords_href[1] == 47.07 && coords_href[2] == 15.43 )
-        console.log("look, we are in Graz");
-      else
+        console.log("look, we are really in Graz");
+      else {
+        console.log("1st call, return");
         return;
+      }
     }
   }
 
@@ -645,10 +647,6 @@ function loadPoi() {
       className: "v-" + data.tags[icon_class] + " k-" + icon_class,
     });
 
-    /*var lmarker = L.marker([data.lat, data.lon], {
-      icon: needs_icon,
-      title: data.tags.name
-    });*/
     var pdata = {
       icon: needs_icon,
       title: data.tags.name,
@@ -656,7 +654,6 @@ function loadPoi() {
     }
     var pmarker = new PruneCluster.Marker(data.lat, data.lon, pdata);
 
-    //marker.bindPopup(fillPopup(data.tags,data.type,data.id,data.lat,data.lon));
     return pmarker;
   }
 
