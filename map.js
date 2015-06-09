@@ -363,18 +363,13 @@ var on_start_loaded = 0;
 function changeLoadingIndicator(type, change) {
 
     var loading_indicator = document.getElementById(type);
+    mutex_loading[type] = mutex_loading[type] + change;
     if(change == -1) {
-        mutex_loading[type]--;
-        if(mutex_loading[type] == 0) {
+        if(mutex_loading[type] == 0) 
           loading_indicator.style.display = "none";
-        } else {
-          loading_indicator.title = mutex_loading[type];
-        }
-    } else { // +1
-        mutex_loading[type]++;
+    } else  // +1
         loading_indicator.style.display = "block";
-        loading_indicator.title = mutex_loading[type];
-    }
+    loading_indicator.title = mutex_loading[type];
 }
 
 function loadPoi() {
@@ -394,15 +389,12 @@ function loadPoi() {
     if(pois_lz) { 
       console.log("adding lz POIs");
 
-      console.log("loadPOI: before JSON call node");
       changeLoadingIndicator("loading_node",+1);
       handleNodes(pois_lz); 
 
-      console.log("loadPOI: before JSON call way");
       changeLoadingIndicator("loading_way",+1);
       handleWays(pois_lz); 
 
-      console.log("loadPOI LZ: before JSON call rel");
       changeLoadingIndicator("loading_rel",+1);
       handleRelations(pois_lz); 
 
@@ -869,8 +861,6 @@ function loadPoi() {
   var node_url = node_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
   var way_url = way_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
   var rel_url = rel_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
-
-  //  node: getJSON [x] | 
 
   console.log("loadPOI: before JSON call node: " + node_url);
   changeLoadingIndicator("loading_node", +1);
