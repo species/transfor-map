@@ -157,10 +157,6 @@ function reDrawMap() {
         map.invalidateSize(true);
 }
 
-/* simulates css :hover on elements not capable of, e.g. z-index 1 */
-function hoverTitle(id) {
-}
-
 var overpass_servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ],
     overpass_ql_text,
     overpass_query,
@@ -356,11 +352,30 @@ var pid_counter_node = 0;
 var pid_counter_way = 0;
 var pid_counter_rel = 0;
 
-var mutex_node = 0;
-var mutex_way = 0;
-var mutex_rel = 0;
+var mutex_loading = { "loading_node" : 0, "loading_way" : 0, "loading_rel" : 0 };
 
 var on_start_loaded = 0;
+
+/*
+ *  type: "loading_node" / "loading_way" / "loading_rel"
+ *  change: (+)1 or -1
+ */
+function changeLoadingIndicator(type, change) {
+
+    var loading_indicator = document.getElementById(type);
+    if(change == -1) {
+        mutex_loading[type]--;
+        if(mutex_loading[type] == 0) {
+          loading_indicator.style.display = "none";
+        } else {
+          loading_indicator.title = mutex_loading[type];
+        }
+    } else { // +1
+        mutex_loading[type]++;
+        loading_indicator.style.display = "block";
+        loading_indicator.title = mutex_loading[type];
+    }
+}
 
 function loadPoi() {
   var notificationbar =  document.getElementById("notificationbar");
@@ -380,24 +395,15 @@ function loadPoi() {
       console.log("adding lz POIs");
 
       console.log("loadPOI: before JSON call node");
-        mutex_node++;
-        var loading_indicator_node = document.getElementById("loading_node");
-        loading_indicator_node.style.display = "block";
-        loading_indicator_node.title = mutex_node;
+      changeLoadingIndicator("loading_node",+1);
       handleNodes(pois_lz); 
 
       console.log("loadPOI: before JSON call way");
-        mutex_way++;
-        var loading_indicator_way = document.getElementById("loading_way");
-        loading_indicator_way.style.display = "block";
-        loading_indicator_way.title = mutex_way;
+      changeLoadingIndicator("loading_way",+1);
       handleWays(pois_lz); 
 
       console.log("loadPOI LZ: before JSON call rel");
-        mutex_rel++;
-        var loading_indicator_rel = document.getElementById("loading_rel");
-        loading_indicator_rel.style.display = "block";
-        loading_indicator_rel.title = mutex_rel;
+      changeLoadingIndicator("loading_rel",+1);
       handleRelations(pois_lz); 
 
       var json_date = new Date(pois_lz.osm3s.timestamp_osm_base);
@@ -732,18 +738,11 @@ function loadPoi() {
         new_markers.push(retval);
     }
     var number = new_markers.length;
-    //markers.addLayers(new_markers);
     markers.RegisterMarkers(new_markers);
     markers.ProcessView();
     new_markers = [];
     console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
-    mutex_node--;
-    var loading_indicator = document.getElementById("loading_node");
-    if(mutex_node == 0) {
-      loading_indicator.style.display = "none";
-    } else {
-      loading_indicator.title = mutex_node;
-    }
+    changeLoadingIndicator("loading_node", -1);
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tnode').css("display", "block");
@@ -777,18 +776,11 @@ function loadPoi() {
     }
 
     var number = new_markers.length;
-    //markers.addLayers(new_markers);
     markers.RegisterMarkers(new_markers);
     markers.ProcessView();
     new_markers = [];
     console.log("handleWays (pid " + pid + ") done, " + number + " added.");
-    mutex_way--;
-    var loading_indicator = document.getElementById("loading_way");
-    if(mutex_way == 0) {
-      loading_indicator.style.display = "none";
-    } else {
-      loading_indicator.title = mutex_way;
-    }
+    changeLoadingIndicator("loading_way", -1);
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tway').css("display", "block");
@@ -854,18 +846,11 @@ function loadPoi() {
     }
     
     var number = new_markers.length;
-    //markers.addLayers(new_markers);
     markers.RegisterMarkers(new_markers);
     markers.ProcessView();
     new_markers = [];
     console.log("handleRelations (pid " + pid + ") done, " + number + " added.");
-    mutex_rel--;
-    var loading_indicator = document.getElementById("loading_rel");
-    if(mutex_rel == 0) {
-      loading_indicator.style.display = "none";
-    } else {
-      loading_indicator.title = mutex_rel;
-    }
+    changeLoadingIndicator("loading_rel", -1);
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#trel').css("display", "block");
@@ -888,24 +873,15 @@ function loadPoi() {
   //  node: getJSON [x] | 
 
   console.log("loadPOI: before JSON call node: " + node_url);
-    mutex_node++;
-    var loading_indicator_node = document.getElementById("loading_node");
-    loading_indicator_node.style.display = "block";
-    loading_indicator_node.title = mutex_node;
+  changeLoadingIndicator("loading_node", +1);
   $.getJSON(node_url, handleNodes);
 
   console.log("loadPOI: before JSON call way: " + way_url);
-    mutex_way++;
-    var loading_indicator_way = document.getElementById("loading_way");
-    loading_indicator_way.style.display = "block";
-    loading_indicator_way.title = mutex_way;
+  changeLoadingIndicator("loading_way", +1);
   $.getJSON(way_url, handleWays);
 
   console.log("loadPOI: before JSON call rel: " + rel_url);
-    mutex_rel++;
-    var loading_indicator_rel = document.getElementById("loading_rel");
-    loading_indicator_rel.style.display = "block";
-    loading_indicator_rel.title = mutex_rel;
+  changeLoadingIndicator("loading_rel", +1);
   $.getJSON(rel_url, handleRelations);
 
 
