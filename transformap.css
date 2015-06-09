@@ -61,12 +61,16 @@ div.leaflet-popup-content { width: auto !important; }
 
 .leaflet-popup-content div table tr.tag:hover {background-color:#DDDDDD}
 
+/* osm and edit */
 .leaflet-popup-content div table tr:first-child td, 
 .leaflet-popup-content div table tr:first-child + tr td:first-child,
-.leaflet-popup-content div table tr:first-child + tr td:first-child+td { vertical-align:top; padding:5px 0; border-width:0 0 2px 0; border-bottom:2px solid #FFB698;} /* osm and addr+contact data on top*/
+.leaflet-popup-content div table tr:first-child + tr td:first-child+td { vertical-align:top; padding:5px 0; border-width:0 0 2px 0; border-bottom:2px solid #FFB698;} 
 
+/* edit and contact fields */
 .leaflet-popup-content div table tr:first-child td + td, 
 .leaflet-popup-content div table tr:first-child+tr td + td { text-align:right; }
+.leaflet-popup-content div table tr:first-child+tr td + td img { height:16px;width:16px; margin-right:4px;}
+.leaflet-popup-content div table tr:first-child+tr td + td a img:hover { opacity:0.8; }
 
 .leaflet-popup-content div { max-height: 600px; overflow:auto; margin-right:-18px;padding-right:18px; }
 

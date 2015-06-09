@@ -451,7 +451,7 @@ function loadPoi() {
 
   function fillPopup(tags,type,id,lat,lon) {
 
-    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","fax","contact:fax","created_by","area","layer","room","indoor" ];
+    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","fax","contact:fax","created_by","area","layer","room","indoor","twitter","contact:twitter","link:twitter", "contact:google_plus", "google_plus", "link:google_plus", "contact:facebook","facebook","link:facebook","facebook:page","website:facebook","url:facebook","contact:youtube","youtube","link:youtube" ];
 
     var r = $('<table>');
 
@@ -459,6 +459,40 @@ function loadPoi() {
             .append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '" title="Link to ' + type + ' ' + id + ' on OpenStreetMap" target=_blank><img src="assets/20px-Mf_' + type + '.svg.png" />' + type.substring(0,1) + id + '</a>'))
             .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + lon + '/' + lat + '" title="Edit this object with iD for TransforMap" target=_blank>Edit</a>'))
         );
+
+    function addSocialMediaLinks(tags) {
+        var string = "";
+
+        for (key in tags) {
+            var value = tags[key];
+            var valuestring = value;
+            var img = "<img src='assets/";
+
+            if(/twitter/.test(key)) {
+                if(! /twitter.com\//.test(value)) valuestring = "twitter.com/" + valuestring;
+                img += "twitter.16.png' title='on Twitter' />";
+            } else
+            if(/facebook/.test(key)) {
+                if(! /facebook.com\/|fb.com\//.test(value)) valuestring = "facebook.com/" + valuestring;
+                img += "facebook.16.png' title='Facebook-page' />";
+            } else
+            if(/google_plus/.test(key)) {
+                if(! /plus.google.com\//.test(value)) valuestring = "plus.google.com/" + valuestring;
+                img += "g+.16.png' title='Google+ page' />";
+            } else
+            if(/youtube/.test(key)) {
+                if(! /youtube.com\//.test(value)) valuestring = "youtube.com/" + valuestring;
+                img += "YouTube.16.png' title='YouTube channel' />";
+            } else
+                continue;
+
+            if(! /^http[s]?:\/\//.test(valuestring)) valuestring = "https://" + valuestring;
+
+            string += "<a href='" + valuestring + "'>" + img + "</a> ";
+        }
+
+        return string;
+    }
 
     if(tags["addr:street"] || tags["addr:housenumber"] || tags["addr:postcode"] || tags["addr:city"] || tags["addr:suburb"] || tags["addr:country"]
             || tags["website"] || tags["url"] || tags["contact:website"] || tags["contact:url"] || tags["email"] || tags["contact:email"] || tags["phone"] || tags["contact:phone"] ) {
@@ -484,7 +518,10 @@ function loadPoi() {
             (tags["contact:phone"] ? (url_ify(tags["contact:phone"], "Tel:&nbsp;" + tags["contact:phone"]) + "<br>") : "" ) + 
 
             (tags["fax"] ? (url_ify(tags["fax"], "Fax:&nbsp;" + tags["fax"]) + "<br>") : "" ) +
-            (tags["contact:fax"] ? (url_ify(tags["contact:fax"], "Fax:&nbsp;" + tags["contact:fax"]) + "<br>") : "" )
+            (tags["contact:fax"] ? (url_ify(tags["contact:fax"], "Fax:&nbsp;" + tags["contact:fax"]) + "<br>") : "" ) +
+
+            addSocialMediaLinks(tags)
+
           )));
     }
 
