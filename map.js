@@ -385,8 +385,8 @@ function loadPoi() {
       return;
     }
 
-    console.log(pois_lz);
     if(pois_lz) { 
+      console.log(pois_lz);
       console.log("adding lz POIs");
 
       changeLoadingIndicator("loading_node",+1);
@@ -1002,6 +1002,7 @@ if (window.url_pois_lz) {
         var done = 4, ok = 200;
         if (http_request_lz.readyState === done && http_request_lz.status === ok) {
             pois_lz = JSON.parse(http_request_lz.responseText);
+            loadPoi();
         }
     };
   http_request_lz.send(null);
