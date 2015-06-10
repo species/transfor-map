@@ -72,7 +72,7 @@ div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content div table tr:first-child+tr td + td img { height:16px;width:16px; margin-right:4px;}
 .leaflet-popup-content div table tr:first-child+tr td + td a img:hover { opacity:0.7; }
 
-.leaflet-popup-content div { max-height: 600px; overflow:auto; margin-right:-18px;padding-right:18px; }
+.leaflet-popup-content div { max-height: 400px; overflow:auto; margin-right:-18px;padding-right:18px; }
 
 .leaflet-popup-content div table tr:first-child img { height:16px; width:16px; margin:0 5px -4px 0;}
 .leaflet-popup-content div table a[target="_blank"]:after {content:url(assets/external-link-ltr-icon.png); text-decoration:none; margin-left:4px; }
