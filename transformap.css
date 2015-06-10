@@ -259,6 +259,7 @@ padding:0px;
 
 #sidebar .box .boxcontent {
     margin:0;
+    padding:0;
     overflow:hidden;
 }
 
@@ -345,28 +346,28 @@ padding:0px;
     transform: rotate(90deg);
 }
 
-#mapswitcher {
-  padding:0;
-  margin:5px;
-}
-#mapswitcher li {
+/* lists in sidebar */
+#sidebar .box ul.boxcontent li {
   list-style: none;
   margin:0 5px;
   border-top:2px dotted #FBFCFA;
+  text-indent: -29px;
+  padding-left:29px;
 }
-#mapswitcher li:first-child, #mapswitcher li.current:first-child + li {
-  border-top:none;
+#sidebar .box ul.boxcontent li:first-child, #mapswitcher li.current:first-child + li {
+    border-top:none;
 }
-#mapswitcher li:hover {
+#sidebar .box ul.boxcontent li:hover {
   background:#DDDDDD;
 }
-#mapswitcher li img {
+#sidebar .box ul.boxcontent li img {
     margin:0 5px -7px 0;
 }
+
 #mapswitcher li.current {
     display:none;
 }
-#mapswitcher li.current a {
+#mapswitcher li.current a { /* old style if displayed */
   text-decoration:none;
   color:black;
   background:gray;
@@ -382,28 +383,12 @@ padding:0px;
     text-decoration:underline
 }
 
-ul#mapkey {
-    padding:0;
-    margin:5px;
-}
-#mapkey li img {
-    margin-bottom:-7px;
-}
 #mapkey li {
-    list-style: none;
-    margin:0 5px;
     padding:5px 0;
     cursor:help;
-    border-top:2px dotted #FBFCFA;
 }
 #mapkey li[title] { /* if there is a title, then there is no infobox */
     cursor:default;
-}
-#mapkey li:hover {
-    background:#DDDDDD;
-}
-#mapkey li:first-child {
-    border-top:none;
 }
 #mapkey li div.InfoBox {
     position:relative;
@@ -414,32 +399,48 @@ ul#mapkey {
     z-index:5;
     box-shadow: 0px 8px 10px 0px rgba(0,0,0,0.5);
     background: #D6D2D0;
+    text-indent:0;
+    margin-left:-29px;
+}
+#sidebar .box #filters h3 {
+    padding:0;
+    margin:0;
+}
+#sidebar .box #filters h3:hover {
+    background:#DDDDDD;
+    cursor:pointer;
+}
+#sidebar .box #filters li { 
+    text-indent:0;
+    padding:0;
+}
+#sidebar .box #filters li:hover { 
+    background:inherit;
+}
+#sidebar .box #filters li.hidden h3:before {
+    content: ">";
+    margin-right:5px;
+}
+#sidebar .box ul#filters ul.subfilter li.disabled:before {
+    content: "\2610";
+    margin-right:5px;
+}
+#sidebar .box #filters li.shown h3:before {
+    content: "v";
+    margin-right:5px;
+}
+#sidebar .box ul#filters ul.subfilter li.enabled:before {
+    content: "\2611";
+    margin-right:5px;
+}
+#sidebar .box ul.boxcontent ul.subfilter li {
+    border-top:1px dotted #FBFCFA;
+}
+ul.subfilter {
+    padding:0 0 0 18px;
 }
 
-#layerswitcher {
-  position:absolute;
-  z-index:100;
-  background:green;
-  border-radius:3px;
-  border:1px solid black;
-  right: 20px;
-  box-shadow: 0 0 5px #bbb;
-  padding: 0px;
-  top: 150px;
-}
-#layerswitcher li {
-  list-style: none;
-  border-top:1px grey solid;
-  margin:0;
-  padding: 5px;
-  cursor:pointer;
-}
-#layerswitcher li:hover {
-  background:#00B100;
-}
-#layerswitcher li:first-child {
-  border-top:none;
-}
+
 
 #sidebar {
     position:absolute;

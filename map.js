@@ -44,14 +44,94 @@ var different_maps = [
     } ,
 ];
 
-/*
+
+/* filter functions:
+ *  take an osm-object's data:
+ *      data: {} with data.tags,data.type,data.id,data.lat,data.lon
+ *  return true (=displayed) or false (object will be hidden)
+ */
+
 var filters = {
   //    provides: {} generate from taxonomy.json
   //    identity: {} generate from taxonomy.json
   //    interaction: {} generate from taxonomy.json
-    organic : { function_name : function filter_organic(osm_object){} },
-    opening_hours : { function_name : function filter_opening(osm_object){} },
-}*/
+    organic : {  label : "Organic",
+                 displayed : false,
+                 function_name : function filter_organic(osm_object){ return true; },
+                 sub_criteria : {
+                     organic_only : {
+                         key : "organic",
+                         value : "only",
+                         label : "Only",
+                         default : "enabled",
+                         state : true,
+                     },
+                     organic_yes : {
+                         key : "organic",
+                         value : "yes",
+                         label : "Good selection",
+                         default : "enabled",
+                         state : true,
+                     },
+                     organic_limited : {
+                         key : "organic",
+                         value : "limited",
+                         label : "Limited selection",
+                         default : "enabled",
+                         state : true,
+                     },
+                     organic_no : {
+                         key : "organic",
+                         value : "no",
+                         label : "None",
+                         default : "disabled",
+                         state : false,
+                     },
+                 },
+    },
+    opening_hours : { label : "Open Now",
+                    displayed : true,
+                    function_name : function filter_opening(osm_object){
+                        if(!osm_object['tags']) {
+                            console.log("error in filters.opening_hours: no tags attached!");
+                            return false;
+                        }
+
+                        // simplified for testing
+                        return (osm_object.tags['opening_hours'] == "24/7" ) ? true : false; 
+                    },
+                    default: true,
+                    state: true,
+    },
+    wheelchair : {  label : "Wheelchair accessible",
+                    displayed : false,
+                    function_name : function filter_wheelchair(osm_object){ return true; },
+                    filter_state: { yes : true, limitied: true, no: true },
+                    sub_criteria : {
+                        wheelchair_yes : {
+                             key : "wheelchair",
+                             value : "yes",
+                             label : "100% accessible",
+                             default : "enabled",
+                             state : true,
+                        },
+                        wheelchair_limited : {
+                         key : "wheelchair",
+                         value : "limited",
+                         label : "Limited",
+                         default : "enabled",
+                         state : true,
+                        },
+                        wheelchair_no : {
+                         key : "wheelchair",
+                         value : "no",
+                         label : "No",
+                         default : "enabled",
+                         state : true,
+                        }
+                    }
+    }
+}
 
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
@@ -240,27 +320,6 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     }
   }
 
-  // handmade dynamic LayerSwitcher
-  if (window.switch_layertags ) {
-    $('body').append('<ul id="layerswitcher"></ul>');
-    var layerswitcher =  document.getElementById("layerswitcher");
-    for (var i = 0; i < switch_layertags.length; i++) {
-      var current_item = switch_layertags[i]; // { key : value }
-      var current_value,current_key;
-      for (key in current_item) { // misusing 1-for-"loop" for extract key/value
-        current_key = key;
-        current_value = current_item[key];
-      }
-      var li = document.createElement("li");
-      var textnode = document.createTextNode(current_key + " = " + current_value );
-      li.appendChild( textnode);
-      var functiontext = "toggleLayer('" + current_key + "','" + current_value + "');";
-      li.setAttribute('onClick',functiontext);
-      layerswitcher.appendChild( li );
-    }
-    layerswitcher.style.display = "none";
-  }
-
   $('body').append('<div id="sidebar"><h1>' + document.title + '</h1></div>');
   $('body').append('<div id="sidebar_toggle" onClick="toggleSideBar()">»</div>');
 
@@ -279,6 +338,32 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
                 .append('<img src="' + current_item["image"] + '" />' + current_item["name"])
             )
     );
+  }
+  // Filters
+  $('#sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
+  $('#sidebox-filters').append('<h2 onClick="toggleSideBox(\'sidebox-filters\');">Filters</h2>');
+  $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
+  for (filtername in filters) {
+      var filter = filters[filtername];
+
+      var sub_filters = null;
+      if(filter["sub_criteria"]) {
+          sub_filters = $('<ul>').attr('class', "subfilter");
+
+          for(itemname in filter.sub_criteria) {
+              var item = filter.sub_criteria[itemname];
+              sub_filters.append('<li class='+item.default+'>' + item.label + '</li>' );
+          }
+      }
+
+      $('#filters').append(
+          $('<li>')
+            .attr('class', filter.displayed ? 'shown' : 'hidden')
+            //.attr('onClick', ...)
+            .append( '<h3>' + filter.label + '</h3>' )
+            .append( sub_filters )
+      );
+      
   }
 
   // Map Key
@@ -385,8 +470,8 @@ function loadPoi() {
       return;
     }
 
-    console.log(pois_lz);
     if(pois_lz) { 
+      console.log(pois_lz);
       console.log("adding lz POIs");
 
       changeLoadingIndicator("loading_node",+1);
@@ -1002,6 +1087,7 @@ if (window.url_pois_lz) {
         var done = 4, ok = 200;
         if (http_request_lz.readyState === done && http_request_lz.status === ok) {
             pois_lz = JSON.parse(http_request_lz.responseText);
+            loadPoi();
         }
     };
   http_request_lz.send(null);
