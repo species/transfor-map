@@ -992,8 +992,10 @@ function loadPoi() {
       p.geometry = {type: 'Point', coordinates: p.coordinates};
 
       var retval = nodeFunction(p);
-      if (retval)
+      if (retval) {
+        retval.filtered = ! getFilterStatusOnPoi(retval);
         new_markers.push(retval);
+      }
     }
     var number = new_markers.length;
     markers.RegisterMarkers(new_markers);
@@ -1028,8 +1030,10 @@ function loadPoi() {
           p.geometry = {type: 'LineString', coordinates: p.coordinates};
 
           var retval = wayFunction(p);
-          if (retval)
+          if (retval) {
+            retval.filtered = ! getFilterStatusOnPoi(retval);
             new_markers.push(retval);
+          }
       }
     }
 
@@ -1098,9 +1102,10 @@ function loadPoi() {
       });
       // p has type=relaton, id, tags={k:v}, members=[{role, obj}]
       var retval = relationFunction(p);
-      if (retval)
+      if (retval) {
+        retval.filtered = ! getFilterStatusOnPoi(retval);
         new_markers.push(retval);
-     
+      }
     }
     
     var number = new_markers.length;
