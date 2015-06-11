@@ -62,11 +62,11 @@ var filters = {
                  displayed : false,
                  function_name : function filter_organic(osm_object){ //ONLY FUNCTION WORKING RIGHT NOW, USE FOR TESTING!
                      if(!osm_object['tags']) {
-                         console.log("error in filters.opening_hours: no tags attached!");
+                         console.log("error in filters.organic: no tags attached!");
                          return false;
                      }
 
-                     var crits = filters.organic.sub_criteria
+                     var crits = filters.organic.sub_criteria;
                      for(key in crits) {
                          var current_crit = crits[key];
                          if(! current_crit.state)
@@ -107,15 +107,15 @@ var filters = {
                          key : "organic",
                          value : "no",
                          label : "None",
-                         default : "disabled",
-                         state : false,
+                         default : "enabled",
+                         state : true,
                      },
                      unknown : {
                          key : "organic",
                          value : null,
                          label : "Unknown",
-                         default : "disabled",
-                         state : false,
+                         default : "enabled",
+                         state : true,
                      },
                  },
     },
@@ -123,7 +123,7 @@ var filters = {
                     displayed : true,
                     function_name : function filter_opening(osm_object){
                         if(!osm_object['tags']) {
-                            console.log("error in filters.opening_hours: no tags attached!");
+                            console.log("error in filters.fee: no tags attached!");
                             return false;
                         }
 
@@ -164,7 +164,7 @@ var filters = {
                         }
 
                         // simplified for testing
-                        var crits = filters.opening_hours.sub_criteria
+                        var crits = filters.opening_hours.sub_criteria;
                         for(key in crits) {
                             if(! crits[key].state)
                                 continue;
@@ -212,11 +212,11 @@ var filters = {
                     displayed : false,
                     function_name : function filter_wheelchair(osm_object){ 
                          if(!osm_object['tags']) {
-                             console.log("error in filters.opening_hours: no tags attached!");
+                             console.log("error in filters.wheelchair: no tags attached!");
                              return false;
                          }
 
-                         var crits = filters.wheelchair.sub_criteria
+                         var crits = filters.wheelchair.sub_criteria;
                          for(key in crits) {
                              var current_crit = crits[key];
                              if(! current_crit.state)
@@ -263,6 +263,30 @@ var filters = {
                     }
     }
 }
+
+function filterFunctionIdentity(osm_object) {
+     if(!osm_object['tags']) {
+         console.log("error in filters.identity: no tags attached!");
+         return false;
+     }
+
+     var crits = filters.identity.sub_criteria;
+     for(key in crits) {
+         var current_crit = crits[key];
+         if(! current_crit.state)
+             continue;
+
+         if(! osm_object.tags.hasOwnProperty(current_crit.key)) {
+             if(current_crit.value === null)  // 'unknown'
+                 return true;
+         } else
+             if(osm_object.tags[current_crit.key].match( new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) )
+                 return true;
+     }
+
+     return false;
+    }
+
 
 function runFiltersOnAll() {
 
@@ -334,7 +358,7 @@ http_request.onreadystatechange = function () {
                   var taxonomy_block = taxonomy[osmkey];
                   if (!taxonomy_block) {
                       console.log("no entry in taxonomy for " + osmkey);
-                      return;
+                      break;
                   }
 
                   var entry_array = taxonomy_block['items'];
@@ -357,8 +381,7 @@ http_request.onreadystatechange = function () {
               // create filters out of taxonomy
               //var filter_names = [ "provides","interaction","identity" ];
               var filter_names = [ "identity" ];
-              var new_filters = {};
-              for(var i=0; i<filter_names.length; i++) {
+              for(var i=0; i < filter_names.length; i++) {
                   var filter_name = filter_names[i];
                   var taxonomy_block = taxonomy[filter_name];
                   if (!taxonomy_block) {
@@ -369,7 +392,7 @@ http_request.onreadystatechange = function () {
                   filters[filter_name] = {
                       label: taxonomy_block.label["en"],
                       displayed: true,
-                      function_name: undefined, //TODO
+                      function_name: filterFunctionIdentity,
                       sub_criteria: {}
                   };
                   var filter = filters[filter_name];
@@ -385,6 +408,14 @@ http_request.onreadystatechange = function () {
                           state : true,
                       }
                   }
+                  filter.sub_criteria[ "unknown" ] = {
+                      key : item["osm:key"],
+                      value : null,
+                      label : "Unknown",
+                      default : "enabled",
+                      state : true,
+                  },
+
 
                   $('#filters').prepend(createFilterHTML(filter_name));
               }
