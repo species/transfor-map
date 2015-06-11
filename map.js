@@ -283,12 +283,36 @@ function runFiltersOnAll() {
 function getFilterStatusOnPoi(marker) {
 
     for(filtername in filters) {
+        if( ! (typeof(filters[filtername].function_name) === 'function') )
+            return true;
         if(! filters[filtername].function_name(marker.data))
             return false;
     }
     return true;
 }
 
+/* precondition: in global var filters, an object $filtername must exist.
+ *  returns a piece of HTML which can be added to filters sidebar 
+ */
+function createFilterHTML(filtername) {
+  var filter = filters[filtername];
+  var sub_filters = null;
+  if(filter["sub_criteria"]) {
+      sub_filters = $('<ul>').attr('class', "subfilter");
+
+      for(itemname in filter.sub_criteria) {
+          var item = filter.sub_criteria[itemname];
+          var statevarname = 'filters.'+filtername+'.sub_criteria.'+itemname+'.state';
+          sub_filters.append('<li class='+item.default+' onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\'; ">' + item.label + '</li>' );
+      }
+  }
+
+  return $('<li>')
+        .attr('class', filter.displayed ? 'shown' : 'hidden')
+//           .attr('onClick', "runFiltersOnAll();") 
+        .append( '<h3 onClick="this.parentNode.className = (this.parentNode.className == \'shown\') ? \'hidden\' : \'shown\' ;">' + filter.label + '</h3>' )
+        .append( sub_filters );
+}
 
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
@@ -302,8 +326,8 @@ http_request.onreadystatechange = function () {
       if (http_request.readyState === done && http_request.status === ok) {
           taxonomy = JSON.parse(http_request.responseText);
 
-          // as soon as taxonomy is here, add map key derived from it
           if(taxonomy) {
+              // add map key derived from it
               for(var osmkey_counter = 0; osmkey_counter < icon_tags.length; osmkey_counter++) {
                   var osmkey = icon_tags[osmkey_counter];
 
@@ -329,6 +353,42 @@ http_request.onreadystatechange = function () {
                       }
                   }
               }
+
+              // create filters out of taxonomy
+              //var filter_names = [ "provides","interaction","identity" ];
+              var filter_names = [ "identity" ];
+              var new_filters = {};
+              for(var i=0; i<filter_names.length; i++) {
+                  var filter_name = filter_names[i];
+                  var taxonomy_block = taxonomy[filter_name];
+                  if (!taxonomy_block) {
+                      console.log("filters: no entry in taxonomy for " + osmkey);
+                      return;
+                  }
+                  
+                  filters[filter_name] = {
+                      label: taxonomy_block.label["en"],
+                      displayed: true,
+                      function_name: undefined, //TODO
+                      sub_criteria: {}
+                  };
+                  var filter = filters[filter_name];
+
+                  for(itemkey in taxonomy_block.items) {
+                      var item = taxonomy_block.items[itemkey];
+
+                      filter.sub_criteria[ item["transformap:key"] ] = {
+                          key : item["osm:key"],
+                          value : item["osm:values"][0],
+                          label : item.label["en"],
+                          default : "enabled",
+                          state : true,
+                      }
+                  }
+
+                  $('#filters').prepend(createFilterHTML(filter_name));
+              }
+
           }
           else
               console.log("taxonomy not here");
@@ -446,6 +506,7 @@ function buildOverpassQuery(overpass_timeout, overpass_servers_param) {
     console.log(overpass_query_rels);
 }
 
+
 function initMap(defaultlayer,base_maps,overlay_maps) {
   var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
   map = new L.Map('map', {
@@ -501,28 +562,9 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   $('#sidebox-filters').append('<h2 onClick="toggleSideBox(\'sidebox-filters\');">Filters</h2>');
   $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
   for (filtername in filters) {
-      var filter = filters[filtername];
-
-      var sub_filters = null;
-      if(filter["sub_criteria"]) {
-          sub_filters = $('<ul>').attr('class', "subfilter");
-
-          for(itemname in filter.sub_criteria) {
-              var item = filter.sub_criteria[itemname];
-              var statevarname = 'filters.'+filtername+'.sub_criteria.'+itemname+'.state';
-              sub_filters.append('<li class='+item.default+' onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\'; ">' + item.label + '</li>' );
-          }
-      }
-
-      $('#filters').append(
-          $('<li>')
-            .attr('class', filter.displayed ? 'shown' : 'hidden')
- //           .attr('onClick', "runFiltersOnAll();") 
-            .append( '<h3 onClick="this.parentNode.className = (this.parentNode.className == \'shown\') ? \'hidden\' : \'shown\' ;">' + filter.label + '</h3>' )
-            .append( sub_filters )
-      );
-      
+      $('#filters').append(createFilterHTML(filtername));
   }
+  // filters derived from taxonomy get added when taxonomy.json is loaded
 
   // Map Key
   $('#sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
