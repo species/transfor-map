@@ -414,7 +414,7 @@ padding:0px;
     text-indent:0;
     padding:0;
 }
-#sidebar .box #filters li:hover { 
+#sidebar .box #filters > li:hover { 
     background:inherit;
 }
 #sidebar .box #filters li.hidden h3:before {
@@ -436,9 +436,17 @@ padding:0px;
 #sidebar .box ul.boxcontent ul.subfilter li {
     border-top:1px dotted #FBFCFA;
 }
-ul.subfilter {
+#sidebar .box ul.boxcontent ul.subfilter li:hover {
+    background:#DDDDDD;
+    cursor:pointer;
+}
+#sidebar .box ul.boxcontent ul.subfilter {
     padding:0 0 0 18px;
 }
+#sidebar .box ul.boxcontent li.hidden ul.subfilter {
+    display:none;
+}
+
 
 
 

@@ -208,9 +208,29 @@ var filters = {
                          },
                      }
     },*/
- /*   wheelchair : {  label : "Wheelchair accessible",
+    wheelchair : {  label : "Wheelchair accessible",
                     displayed : false,
-                    function_name : function filter_wheelchair(osm_object){ return true; },
+                    function_name : function filter_wheelchair(osm_object){ 
+                         if(!osm_object['tags']) {
+                             console.log("error in filters.opening_hours: no tags attached!");
+                             return false;
+                         }
+
+                         var crits = filters.wheelchair.sub_criteria
+                         for(key in crits) {
+                             var current_crit = crits[key];
+                             if(! current_crit.state)
+                                 continue;
+
+                             if(osm_object.tags[current_crit.key] == current_crit.value)
+                                 return true;
+                             // 'unknown'
+                             if(current_crit.value === null && ! osm_object.tags.hasOwnProperty(current_crit.key))
+                                 return true;
+                         }
+
+                         return false; 
+                    },
                     sub_criteria : {
                         yes : {
                              key : "wheelchair",
@@ -241,7 +261,7 @@ var filters = {
                              state : true,
                         }
                     }
-    }*/
+    }
 }
 
 function runFiltersOnAll() {
@@ -497,9 +517,8 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       $('#filters').append(
           $('<li>')
             .attr('class', filter.displayed ? 'shown' : 'hidden')
-            //.attr('onClick', ...) //ausklappen
  //           .attr('onClick', "runFiltersOnAll();") 
-            .append( '<h3>' + filter.label + '</h3>' )
+            .append( '<h3 onClick="this.parentNode.className = (this.parentNode.className == \'shown\') ? \'hidden\' : \'shown\' ;">' + filter.label + '</h3>' )
             .append( sub_filters )
       );
       
