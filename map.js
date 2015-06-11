@@ -49,6 +49,9 @@ var different_maps = [
  *  take an osm-object's data:
  *      data: {} with data.tags,data.type,data.id,data.lat,data.lon
  *  return true (=displayed) or false (object will be hidden)
+ *
+ * general function of filters: if ANY filter says "yes" it is to be displayed
+ * e.g. one has to uncheck organic=no if he doesn't want to see explicit non-organic tagged items
  */
 
 var filters = {
@@ -57,39 +60,66 @@ var filters = {
   //    interaction: {} generate from taxonomy.json
     organic : {  label : "Organic",
                  displayed : false,
-                 function_name : function filter_organic(osm_object){ return true; },
+                 function_name : function filter_organic(osm_object){ //ONLY FUNCTION WORKING RIGHT NOW, USE FOR TESTING!
+                     if(!osm_object['tags']) {
+                         console.log("error in filters.opening_hours: no tags attached!");
+                         return false;
+                     }
+
+                     var crits = filters.organic.sub_criteria
+                     for(key in crits) {
+                         var current_crit = crits[key];
+                         if(! current_crit.state)
+                             continue;
+
+                         if(osm_object.tags[current_crit.key] == current_crit.value)
+                             return true;
+                         // 'unknown'
+                         if(current_crit.value === null && ! osm_object.tags.hasOwnProperty(current_crit.key))
+                             return true;
+                     }
+
+                     return false; 
+                 },
                  sub_criteria : {
-                     organic_only : {
+                     only : {
                          key : "organic",
                          value : "only",
                          label : "Only",
                          default : "enabled",
                          state : true,
                      },
-                     organic_yes : {
+                     yes : {
                          key : "organic",
                          value : "yes",
                          label : "Good selection",
                          default : "enabled",
                          state : true,
                      },
-                     organic_limited : {
+                     limited : {
                          key : "organic",
                          value : "limited",
                          label : "Limited selection",
                          default : "enabled",
                          state : true,
                      },
-                     organic_no : {
+                     no : {
                          key : "organic",
                          value : "no",
                          label : "None",
                          default : "disabled",
                          state : false,
                      },
+                     unknown : {
+                         key : "organic",
+                         value : null,
+                         label : "Unknown",
+                         default : "disabled",
+                         state : false,
+                     },
                  },
     },
-    opening_hours : { label : "Open Now",
+/*    fee : { label : "Gratis",
                     displayed : true,
                     function_name : function filter_opening(osm_object){
                         if(!osm_object['tags']) {
@@ -98,40 +128,147 @@ var filters = {
                         }
 
                         // simplified for testing
-                        return (osm_object.tags['opening_hours'] == "24/7" ) ? true : false; 
+                        // FIXME whatif property not set?
+                        return (osm_object.tags['fee'] == "no" ) ? true : false; 
                     },
-                    default: true,
-                    state: true,
-    },
-    wheelchair : {  label : "Wheelchair accessible",
+                     sub_criteria : {
+                         no : {
+                             key : "fee",
+                             value : "no",
+                             label : "Yes",
+                             default : "enabled",
+                             state : true,
+                         },
+                         yes : {
+                             key : "fee",
+                             value : "no",
+                             label : "No",
+                             default : "enabled",
+                             state : true,
+                         },
+                         unknown : {
+                             key : "fee",
+                             value : null,
+                             label : "Unknown",
+                             default : "enabled",
+                             state : false,
+                         },
+                     }
+    },*/
+  /*  opening_hours : { label : "Open Now",
+                    displayed : true,
+                    function_name : function filter_opening(osm_object){
+                        if(!osm_object['tags']) {
+                            console.log("error in filters.opening_hours: no tags attached!");
+                            return false;
+                        }
+
+                        // simplified for testing
+                        var crits = filters.opening_hours.sub_criteria
+                        for(key in crits) {
+                            if(! crits[key].state)
+                                continue;
+                            if(key == "open") {
+                                // TODO add opening_hours.js here
+                                if(osm_object.tags['opening_hours'] == "24/7" )
+                                    return true;
+                                // else continue !
+                            } else if (key == "closed") {
+                                // TODO add opening_hours.js here
+                                if(osm_object.tags['opening_hours'] == "off")
+                                    return true;
+                                // if POI is closed, continue
+                            } else { //unknown
+                                return true;
+                            }
+                        }
+                        return false;
+                    },
+                     sub_criteria : {
+                         open : {
+                             key : "opening_hours",
+                             value : null,
+                             label : "Open",
+                             default : "enabled",
+                             state : true,
+                         },
+                         closed : {
+                             key : "opening_hours",
+                             value : null,
+                             label : "Closed",
+                             default : "enabled",
+                             state : true,
+                         },
+                         unknown : {
+                             key : "opening_hours",
+                             value : null,
+                             label : "Unknown",
+                             default : "enabled",
+                             state : true,
+                         },
+                     }
+    },*/
+ /*   wheelchair : {  label : "Wheelchair accessible",
                     displayed : false,
                     function_name : function filter_wheelchair(osm_object){ return true; },
-                    filter_state: { yes : true, limitied: true, no: true },
                     sub_criteria : {
-                        wheelchair_yes : {
+                        yes : {
                              key : "wheelchair",
                              value : "yes",
                              label : "100% accessible",
                              default : "enabled",
                              state : true,
                         },
-                        wheelchair_limited : {
-                         key : "wheelchair",
-                         value : "limited",
-                         label : "Limited",
-                         default : "enabled",
-                         state : true,
+                        limited : {
+                             key : "wheelchair",
+                             value : "limited",
+                             label : "Limited",
+                             default : "enabled",
+                             state : true,
                         },
-                        wheelchair_no : {
-                         key : "wheelchair",
-                         value : "no",
-                         label : "No",
-                         default : "enabled",
-                         state : true,
+                        no : {
+                             key : "wheelchair",
+                             value : "no",
+                             label : "No",
+                             default : "enabled",
+                             state : true,
+                        },
+                        unknown : {
+                             key : "wheelchair",
+                             value : null,
+                             label : "Unknown",
+                             default : "enabled",
+                             state : true,
                         }
                     }
-    }
+    }*/
 }
+
+function runFiltersOnAll() {
+
+    var marker_array = markers.GetMarkers();
+    for(var i = 0; i < marker_array.length; i++) {
+        var marker = marker_array[i];
+        marker.filtered = ! getFilterStatusOnPoi(marker);
+    }
+
+    markers.ProcessView();
+}
+
+
+/* 
+ * for an POI to be displayed (return-value true),
+ * every filtergroup must return true for the POI!
+ */
+function getFilterStatusOnPoi(marker) {
+
+    for(filtername in filters) {
+        if(! filters[filtername].function_name(marker.data))
+            return false;
+    }
+    return true;
+}
+
 
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
@@ -184,7 +321,7 @@ function toggleLayer(key,value) {
   alert(key + "=" + value);
 }
 
-function toggleSideBox(id) {
+function toggleSideBox(id) {//TODO rewrite with jQuery toggleClass
     var clicked_element = document.getElementById(id);
     var clicked_on_open_item = ( clicked_element.getAttribute("class").indexOf("shown") >= 0 ) ? 1 : 0; 
 
@@ -208,7 +345,7 @@ function toggleInfoBox(id) {
     var element = document.getElementById(id);
     element.style.display = ( element.style.display == "block" ) ? "none" : "block";
 }
-function toggleSideBar() {
+function toggleSideBar() { //TODO rewrite with jQuery toggleClass
     var sidebar = document.getElementById("sidebar");
     var sidebar_toggle = document.getElementById("sidebar_toggle");
     var content = document.getElementById("content");
@@ -352,14 +489,16 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
 
           for(itemname in filter.sub_criteria) {
               var item = filter.sub_criteria[itemname];
-              sub_filters.append('<li class='+item.default+'>' + item.label + '</li>' );
+              var statevarname = 'filters.'+filtername+'.sub_criteria.'+itemname+'.state';
+              sub_filters.append('<li class='+item.default+' onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\'; ">' + item.label + '</li>' );
           }
       }
 
       $('#filters').append(
           $('<li>')
             .attr('class', filter.displayed ? 'shown' : 'hidden')
-            //.attr('onClick', ...)
+            //.attr('onClick', ...) //ausklappen
+ //           .attr('onClick', "runFiltersOnAll();") 
             .append( '<h3>' + filter.label + '</h3>' )
             .append( sub_filters )
       );
@@ -742,7 +881,8 @@ function loadPoi() {
     var pdata = {
       icon: needs_icon,
       title: data.tags.name,
-      popup: fillPopup(data.tags,data.type,data.id,data.lat,data.lon)
+      popup: fillPopup(data.tags,data.type,data.id,data.lat,data.lon),
+      tags: data.tags
     }
     var pmarker = new PruneCluster.Marker(data.lat, data.lon, pdata);
 
