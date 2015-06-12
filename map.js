@@ -86,35 +86,35 @@ var filters = {
                          key : "organic",
                          value : "only",
                          label : "Only",
-                         default : "enabled",
+                         default_state : "enabled",
                          state : true,
                      },
                      yes : {
                          key : "organic",
                          value : "yes",
                          label : "Good selection",
-                         default : "enabled",
+                         default_state : "enabled",
                          state : true,
                      },
                      limited : {
                          key : "organic",
                          value : "limited",
                          label : "Limited selection",
-                         default : "enabled",
+                         default_state : "enabled",
                          state : true,
                      },
                      no : {
                          key : "organic",
                          value : "no",
                          label : "None",
-                         default : "enabled",
+                         default_state : "enabled",
                          state : true,
                      },
                      unknown : {
                          key : "organic",
                          value : null,
                          label : "Unknown",
-                         default : "enabled",
+                         default_state : "enabled",
                          state : true,
                      },
                  },
@@ -136,21 +136,21 @@ var filters = {
                              key : "fee",
                              value : "no",
                              label : "Yes",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                          },
                          yes : {
                              key : "fee",
                              value : "no",
                              label : "No",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                          },
                          unknown : {
                              key : "fee",
                              value : null,
                              label : "Unknown",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : false,
                          },
                      }
@@ -189,21 +189,21 @@ var filters = {
                              key : "opening_hours",
                              value : null,
                              label : "Open",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                          },
                          closed : {
                              key : "opening_hours",
                              value : null,
                              label : "Closed",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                          },
                          unknown : {
                              key : "opening_hours",
                              value : null,
                              label : "Unknown",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                          },
                      }
@@ -236,28 +236,28 @@ var filters = {
                              key : "wheelchair",
                              value : "yes",
                              label : "100% accessible",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                         },
                         limited : {
                              key : "wheelchair",
                              value : "limited",
                              label : "Limited",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                         },
                         no : {
                              key : "wheelchair",
                              value : "no",
                              label : "No",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                         },
                         unknown : {
                              key : "wheelchair",
                              value : null,
                              label : "Unknown",
-                             default : "enabled",
+                             default_state : "enabled",
                              state : true,
                         }
                     }
@@ -327,7 +327,7 @@ function createFilterHTML(filtername) {
       for(itemname in filter.sub_criteria) {
           var item = filter.sub_criteria[itemname];
           var statevarname = 'filters.'+filtername+'.sub_criteria.'+itemname+'.state';
-          sub_filters.append('<li class='+item.default+' onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\'; ">' + item.label + '</li>' );
+          sub_filters.append('<li class='+item.default_state+' onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\'; ">' + item.label + '<span id="filter_'+filtername+'_'+itemname+'_counter"></span></li>' );
       }
   }
 
@@ -404,7 +404,7 @@ http_request.onreadystatechange = function () {
                           key : item["osm:key"],
                           value : item["osm:values"][0],
                           label : item.label["en"],
-                          default : "enabled",
+                          default_state : "enabled",
                           state : true,
                       }
                   }
@@ -412,7 +412,7 @@ http_request.onreadystatechange = function () {
                       key : item["osm:key"],
                       value : null,
                       label : "Unknown",
-                      default : "enabled",
+                      default_state : "enabled",
                       state : true,
                   },
 
