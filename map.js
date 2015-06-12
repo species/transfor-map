@@ -797,7 +797,7 @@ function loadPoi() {
                 if(! /twitter.com\//.test(value)) valuestring = "twitter.com/" + valuestring;
                 img += "twitter.16.png' title='on Twitter' />";
             } else
-            if(/facebook/.test(key)) {
+            if(/facebook/.test(key) || (/facebook.com\/|fb.com\//.test(value) && /website/.test(key)) ) {
                 if(! /facebook.com\/|fb.com\//.test(value)) valuestring = "facebook.com/" + valuestring;
                 img += "facebook.16.png' title='Facebook-page' />";
             } else
