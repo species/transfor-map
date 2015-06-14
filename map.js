@@ -285,7 +285,57 @@ function filterFunctionIdentity(osm_object) {
      }
 
      return false;
-    }
+}
+function filterFunctionInteraction(osm_object) {
+     if(!osm_object['tags']) {
+         console.log("error in filters.Interaction: no tags attached!");
+         return false;
+     }
+
+     var crits = filters.interaction.sub_criteria;
+     for(key in crits) {
+         var current_crit = crits[key];
+         if(! current_crit.state)
+             continue;
+
+         //if is one of taxonomy.interaction.items[i]["osm:objects"][j], then display 
+         //                == current_crit.tags_whitelist[j]
+         if(! osm_object.tags.hasOwnProperty(current_crit.key)) {
+             if(current_crit.value === null)  // current subcriteria 'unknown' ::: unknown means all others not matched by filter...
+                 return true;
+         } else
+             if(osm_object.tags[current_crit.key].match( new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) )
+                 return true;
+
+         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) { 
+             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
+             //if ALL tags in osm_tags_needed are there in 
+             var all_wl_keys_ok = false;
+             for(wl_key in tags_whitelist) {
+                 var wl_value = tags_whitelist[wl_key];
+                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+                 if(wl_value == "*") {
+                     all_wl_keys_ok = true;
+                     continue;
+                 }
+                 if(osm_object.tags[wl_key].match( new RegExp("(?:^|\s|;)" + wl_value + "(?:;|\s|$)") )) {
+                     all_wl_keys_ok = true;
+                     continue;
+                 } else {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+             }
+             if(all_wl_keys_ok)
+                 return true;
+         }
+     }
+
+     return false;
+}
 
 
 function runFiltersOnAll() {
@@ -380,7 +430,8 @@ http_request.onreadystatechange = function () {
 
               // create filters out of taxonomy
               //var filter_names = [ "provides","interaction","identity" ];
-              var filter_names = [ "identity" ];
+              var filter_names = [ "identity","interaction" ]; //must be in reverse order to be shown correct!
+              var filter_functions = { "identity" : filterFunctionIdentity, "interaction" : filterFunctionInteraction };
               for(var i=0; i < filter_names.length; i++) {
                   var filter_name = filter_names[i];
                   var taxonomy_block = taxonomy[filter_name];
@@ -391,8 +442,8 @@ http_request.onreadystatechange = function () {
                   
                   filters[filter_name] = {
                       label: taxonomy_block.label["en"],
-                      displayed: true,
-                      function_name: filterFunctionIdentity,
+                      displayed: false,
+                      function_name: filter_functions[filter_name],
                       sub_criteria: {}
                   };
                   var filter = filters[filter_name];
@@ -401,17 +452,19 @@ http_request.onreadystatechange = function () {
                       var item = taxonomy_block.items[itemkey];
 
                       filter.sub_criteria[ item["transformap:key"] ] = {
+                          label : item.label["en"],
                           key : item["osm:key"],
                           value : item["osm:values"][0],
-                          label : item.label["en"],
+                          tags_whitelist : item["osm:objects"],
                           default_state : "enabled",
                           state : true,
                       }
                   }
                   filter.sub_criteria[ "unknown" ] = {
+                      label : "Unknown",
                       key : item["osm:key"],
                       value : null,
-                      label : "Unknown",
+                      tags_whitelist : [],
                       default_state : "enabled",
                       state : true,
                   },
@@ -862,21 +915,18 @@ function loadPoi() {
           
         var htlink = '<a href="' + value + '">' + value + '</a>';
         r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
-      } else if (key == 'wikipedia') { // wikipedia - TODO key="wikipedia:de"
-        var begin = "";
-        var teststr=/^http/; //http[s] is implicit here
-        if ( ! teststr.test(value) )
-          begin = "https://wikipedia.org/wiki/";
+      } else if ( /^wikipedia/.test(key)) { 
+        var lang = key.match(/^(?:wikipedia:)([a-z-]{2,7})$/) || ""; // if value starts with e.g. "de:ARTICLE", this works in WP anyway
+        var begin = (! /^http/.test(value)) ? "https://" + ((lang) ? (lang[1] + ".") : "") + "wikipedia.org/wiki/" : ""; //http[s] is implicit here
 
-        var htlink = '<a href="' + begin + value + '">' + value + '</a>';
-        r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
+        var htlink = $('<a>').attr('href', begin + value).text(decodeURIComponent(value));
+        r.append($('<tr>').addClass('tag').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else if (key == 'contact:email' || key == 'email') {
-        var teststr=/^mailto:/;
-        if ( ! teststr.test(value) )
+        if ( ! /^mailto:/.test(value) )
           value = "mailto:" + value;
-        var htlink = '<a href="' + value + '">' + tags[key] + '</a>';
-        r.append($('<tr>').append($('<th>').text(key)).append($('<td>').append(htlink)));
 
+        var htlink = $('<a>').attr('href', value).text(value);
+        r.append($('<tr>').addClass('tag').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else {
         var key_escaped = $("<div>").text(key).html();
         var value_escaped = $("<div>").text(value).html();
