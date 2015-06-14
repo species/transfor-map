@@ -374,6 +374,184 @@
 
     ]
   },
+  "interaction"  : {
+      "label" : {
+          "en" : "Mode of Interaction",
+          "de" : ""
+      },
+      "description" : {
+          "en" : "",
+          "de" : ""
+      },
+      "items" : [
+          {
+            "transformap:key" : "bartering",
+            "osm:key" : "interaction",
+            "osm:values" : [ "bartering" ],
+            "label" : {
+              "en" : "by way of bartering",
+              "de" : "Tauschen"
+            },
+            "description" : {
+              "en" : "Here you can exchange something: give & take",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "public_bookcase" }
+            ]
+          },
+          {
+            "transformap:key" : "sharing",
+            "osm:key" : "interaction",
+            "osm:values" : [ "sharing" ],
+            "label" : {
+              "en" : "by way of sharing",
+              "de" : "Teilen"
+            },
+            "description" : {
+              "en" : "Here you can share material (tools, books, etc.) and immaterial (time, knowledge, ideas) matters.",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "car_sharing" }
+            ]
+          },
+          {
+            "transformap:key" : "lending",
+            "osm:key" : "interaction",
+            "osm:values" : [ "lending" ],
+            "label" : {
+              "en" : "by way of lending",
+              "de" : "Leihen"
+            },
+            "description" : {
+              "en" : "Here you can borrow something (contributions towards costs).",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "library" },
+                { "amenity" : "public_bookcase" }
+            ]
+          },
+          {
+            "transformap:key" : "renting",
+            "osm:key" : "interaction",
+            "osm:values" : [ "renting" ],
+            "label" : {
+              "en" : "by way of renting",
+              "de" : "Mieten"
+            },
+            "description" : {
+              "en" : "Here you can rent something.",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "car_rental" },
+                { "amenity" : "bicycle_rental" },
+                { "tourism" : "chalet" }
+            ]
+          },
+          {
+            "transformap:key" : "gifting",
+            "osm:key" : "interaction",
+            "osm:values" : [ "gifting" ],
+            "label" : {
+              "en" : "by way of gifting",
+              "de" : "Schenken"
+            },
+            "description" : {
+              "en" : "Here you can give and receive.",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "public_bookcase" }
+            ]
+          },
+          {
+            "transformap:key" : "rebuying_reselling",
+            "osm:key" : "interaction",
+            "osm:values" : [ "rebuying_reselling" ],
+            "label" : {
+              "en" : "rebuy & resell",
+              "de" : "Weiterverkaufen (2nd Hand)"
+            },
+            "description" : {
+              "en" : "Here you can get and leave things that are not needed anymore. Second-hand.",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "shop" : "second_hand" },
+                { "second_hand" : "only" },
+                { "second_hand" : "yes" },
+                { "second_hand" : "limited" },
+                { "service:bicycle:second_hand" : "yes" }
+            ]
+          },
+          {
+            "transformap:key" : "cousing",
+            "osm:key" : "interaction",
+            "osm:values" : [ "cousing" ],
+            "label" : {
+              "en" : "co-use",
+              "de" : ""
+            },
+            "description" : {
+              "en" : "Here you can use (some)things with others.",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "fablab" },
+                { "leisure" : "garden", "garden:type" : "community" }
+            ]
+          },
+          {
+            "transformap:key" : "diy_and_dit",
+            "osm:key" : "interaction",
+            "osm:values" : [ "diy_and_dit" ],
+            "label" : {
+              "en" : "Do It Yourself & Together ",
+              "de" : ""
+            },
+            "description" : {
+              "en" : "Here you can produce or repair, upcycle or downcycle something by yourself or together with others. ",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "bicycle_repair_station" },
+                { "service:bicycle:tools" : "yes" },
+                { "amenity" : "fablab" },
+                { "leisure" : "hackerspace" }
+            ]
+          },
+          {
+            "transformap:key" : "buying_and_selling",
+            "osm:key" : "interaction",
+            "osm:values" : [ "buying_and_selling" ],
+            "label" : {
+              "en" : "buy & sell",
+              "de" : ""
+            },
+            "description" : {
+              "en" : "Here your can buy and sell things.",
+              "de" : ""
+            },
+            "osm:objects" : [
+                { "amenity" : "restaurant" },
+                { "amenity" : "cafe" },
+                { "amenity" : "bar" },
+                { "amenity" : "fast_food" },
+                { "amenity" : "biergarten" },
+                { "amenity" : "pub" },
+                { "amenity" : "food_court" },
+                { "amenity" : "marketplace" },
+                { "amenity" : "pharmacy" },
+                { "amenity" : "vending_machine" },
+                { "club" : "foodcoop" },
+                { "shop" : "*" }
+            ]
+          }
+      ]
+  },
   "identity"  : {
       "label" : {
           "en" : "Identity",
