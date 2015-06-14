@@ -748,6 +748,10 @@ function changeLoadingIndicator(type, change) {
     loading_indicator.title = mutex_loading[type];
 }
 
+function secHTML(input) {
+    return $("<div>").text( input ).html();
+}
+
 function loadPoi() {
   var notificationbar =  document.getElementById("notificationbar");
   if (map.getZoom() < 12 ) {
@@ -812,17 +816,14 @@ function loadPoi() {
   old_zoom = current_zoom;
 
   function url_ify(link,linktext) {
-    var teststr_email=/@/;
-    var teststr_phone=/^[0-9-+\s]*$/;
-    if (teststr_email.test(link)) {
-      return '<a href="mailto:' + link + '">' + linktext + '</a>';
-    } else if (teststr_phone.test(link)) {
+    if (/@/.test(link)) {
+      return '<a href="mailto:' + link + '">' + secHTML(linktext) + '</a>';
+    } else if (/^[0-9-+\s]*$/.test(link)) {
       return '<a href="tel:' + link + '">' + linktext.replace(/\s/g,"&nbsp;") + '</a>'; //FIXME how to prefix fax nrs?
     } else {
-      var teststr=/^http/; //http[s] is implicit here
-      if ( ! teststr.test(link) )
+      if ( ! /^http/.test(link) ) //http[s] is implicit here
         link = "http://" + link;
-      return  '<a href="' + link + '">' + linktext + '</a>';
+      return $("<div>").append( $('<a>').attr('href', link).text(linktext) ).html();
     }
 
   }
@@ -875,13 +876,19 @@ function loadPoi() {
     if(tags["addr:street"] || tags["addr:housenumber"] || tags["addr:postcode"] || tags["addr:city"] || tags["addr:suburb"] || tags["addr:country"]
             || tags["website"] || tags["url"] || tags["contact:website"] || tags["contact:url"] || tags["email"] || tags["contact:email"] || tags["phone"] || tags["contact:phone"] ) {
         r.append($('<tr>').append($('<td>').append(
-              (tags["addr:street"] ? (tags["addr:street"] + "&nbsp;") : "" ) +
-              (tags["addr:housenumber"] ? tags["addr:housenumber"] : "" ) + 
+              (tags["addr:street"] ? tags["addr:street"] : "" ) +
+              (tags["addr:housenumber"] ? ("&nbsp;" + tags["addr:housenumber"]) : "" ) + 
               ( (tags["addr:housenumber"] || tags["addr:street"]) ? ",<br>" : "" ) +
               (tags["addr:postcode"] ? (tags["addr:postcode"] + " ") : "" ) +
               (tags["addr:city"] ? tags["addr:city"] : "" ) + 
               (tags["addr:suburb"] ? "-" + tags["addr:suburb"] : "") +
-              (tags["addr:country"] ? "<br>" + tags["addr:country"] : "")
+              (tags["addr:country"] ? "<br>" + tags["addr:country"] : "") +
+              (tags["wheelchair"] ? ("<br><img class='wheelchair " + tags["wheelchair"] + "' src='assets/disability-18.png' title='wheelchair: " + 
+                                     ( (tags["wheelchair"] == "yes") ? "100% accessible" :
+                                       ( (tags["wheelchair"] == "limited" ) ? "limited (assist needed)" :
+                                         ( (tags["wheelchair"] == "no") ? "no" : tags["wheelchair"] ) ) ) +
+                                     ( tags["wheelchair:description"] ? ("\n" + secHTML(tags["wheelchair:description"])) : "" )
+                                     + "'/>") : "")
               ))
         .append($('<td>').append(
             (tags["website"] ? (url_ify(tags["website"],"website") + "<br>") : "" ) +
@@ -908,7 +915,7 @@ function loadPoi() {
       if ( tags_to_ignore.indexOf(key) >= 0) 
         continue;
 
-      if ( key == 'website' || key == 'url' || key == 'contact:website' ||  key == 'contact:url') { //TODO: , facebook, …
+      if ( key == 'website' || key == 'url' || key == 'contact:website' ||  key == 'contact:url') { 
         var teststr=/^http/; //http[s] is implicit here
         if ( ! teststr.test(value) )
           value = "http://" + value;
@@ -928,8 +935,8 @@ function loadPoi() {
         var htlink = $('<a>').attr('href', value).text(value);
         r.append($('<tr>').addClass('tag').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else {
-        var key_escaped = $("<div>").text(key).html();
-        var value_escaped = $("<div>").text(value).html();
+        var key_escaped = secHTML(key);
+        var value_escaped = secHTML(value);
 
         var keytext = key_escaped.replace(/:/g,":<wbr />");
         var valuetext = "<span>=&nbsp;</span>" + value_escaped.replace(/;/g,"; ");

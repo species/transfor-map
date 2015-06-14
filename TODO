@@ -50,6 +50,22 @@ Todo:
 
     3rd step: generate overpass-queries from taxonomy.json
 
+• iconify information in popup
+    • wheelchair -OK
+    • social media contact: display icons (twitter, facebook, g+) -OK
+        correct link generation:
+            check if it starts with facebook.com/ (e.g.) (if not add)
+            check if it starts with http[s]+:// (if not add)
+"(contact:)website"-links pointing to facebook -> transfer to facebook-icon.
+    • organic
+    • diet (vegan, veggie, ?
+    • fairtrade
+    • secondhand
+    • opening hours -> below address
+    • route here -> below address
+
+    
+
 
 • different icon-sets for the distinct maps -OK
   base-folder for each map
