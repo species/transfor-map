@@ -301,33 +301,8 @@ function filterFunctionInteraction(osm_object) {
          if(osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value) )
              return true;
 
-         //if is one of taxonomy.interaction.items[i]["osm:objects"][j], then display 
-         //                == current_crit.tags_whitelist[j]
-         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) { 
-             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
-             //if ALL tags in osm_tags_needed are there in 
-             var all_wl_keys_ok = false;
-             for(wl_key in tags_whitelist) {
-                 var wl_value = tags_whitelist[wl_key];
-                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-                 if(wl_value == "*") {
-                     all_wl_keys_ok = true;
-                     continue;
-                 }
-                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value)) {
-                     all_wl_keys_ok = true;
-                     continue;
-                 } else {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-             }
-             if(all_wl_keys_ok)
-                 return true;
-         }
+         if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
+             return true;
 
      }
 
@@ -343,31 +318,8 @@ function filterFunctionInteraction(osm_object) {
          if(osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value))
              return false;
 
-         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) {
-             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
-
-             var all_wl_keys_ok = false;
-             for(wl_key in tags_whitelist) {
-                 var wl_value = tags_whitelist[wl_key];
-                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-                 if(wl_value == "*") {
-                     all_wl_keys_ok = true;
-                     continue;
-                 }
-                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value)) {
-                     all_wl_keys_ok = true;
-                     continue;
-                 } else {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-             }
-             if(all_wl_keys_ok)
-                 return false;
-         }
+         if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
+             return false;
      }
 
      // has no or unknown "interaction" key set, and no whitelist of any subcrit matched
@@ -376,7 +328,7 @@ function filterFunctionInteraction(osm_object) {
 /* TODO currently only the 'provides' section in taxonomy.json is used, an 'topic' section gets ignored */
 function filterFunctionNeeds(osm_object) {
      if(!osm_object['tags']) {
-         console.log("error in filters.Interaction: no tags attached!");
+         console.log("error in filters.Needs: no tags attached!");
          return false;
      }
 
@@ -390,33 +342,8 @@ function filterFunctionNeeds(osm_object) {
                  || ( osm_object.tags.hasOwnProperty('topic') && checkIfInMultiValue(osm_object.tags['topic'],current_crit.value) ) )
              return true;
 
-         //if is one of taxonomy.interaction.items[i]["osm:objects"][j], then display 
-         //                == current_crit.tags_whitelist[j]
-         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) { 
-             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
-             //if ALL tags in osm_tags_needed are there in 
-             var all_wl_keys_ok = false;
-             for(wl_key in tags_whitelist) {
-                 var wl_value = tags_whitelist[wl_key];
-                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-                 if(wl_value == "*") {
-                     all_wl_keys_ok = true;
-                     continue;
-                 }
-                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value )) {
-                     all_wl_keys_ok = true;
-                     continue;
-                 } else {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-             }
-             if(all_wl_keys_ok)
-                 return true;
-         }
+        if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
+            return true;
      }
 
      //handle "unknown" last
@@ -432,36 +359,43 @@ function filterFunctionNeeds(osm_object) {
                  || ( osm_object.tags.hasOwnProperty('topic') && checkIfInMultiValue(osm_object.tags['topic'],current_crit.value) ) )
              return false;
 
-         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) {
-             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
-
-             var all_wl_keys_ok = false;
-             for(wl_key in tags_whitelist) {
-                 var wl_value = tags_whitelist[wl_key];
-                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-                 if(wl_value == "*") {
-                     all_wl_keys_ok = true;
-                     continue;
-                 }
-                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value) ) {
-                     all_wl_keys_ok = true;
-                     continue;
-                 } else {
-                     all_wl_keys_ok = false;
-                     break;
-                 }
-             }
-             if(all_wl_keys_ok)
-                 return false;
-         }
+        if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
+            return false;
      }
 
      // has no or unknown "provides"/"topic" key set, and no whitelist of any subcrit matched
      return true;
 }
+
+function isPOIinWhiteList(whitelist,osm_tags) {
+    for(var whitelist_nr = 0; whitelist_nr < whitelist.length; whitelist_nr++) {
+        var tags_whitelist = whitelist[whitelist_nr];
+
+        var all_wl_keys_ok = false;
+        for(wl_key in tags_whitelist) {
+            var wl_value = tags_whitelist[wl_key];
+            if(! osm_tags.hasOwnProperty(wl_key) ) {
+                all_wl_keys_ok = false;
+                break;
+            }
+            if(wl_value == "*") {
+                all_wl_keys_ok = true;
+                continue;
+            }
+            if(checkIfInMultiValue(osm_tags[wl_key], wl_value) ) {
+                all_wl_keys_ok = true;
+                continue;
+            } else {
+                all_wl_keys_ok = false;
+                break;
+            }
+        }
+        if(all_wl_keys_ok)
+            return true;
+    }
+    return false;
+}
+
 function checkIfInMultiValue(multi_value,value) {
     var multivalue_array = multi_value.split(/;\s*/);
     for(var i=0; i < multivalue_array.length; i++) {
@@ -470,7 +404,6 @@ function checkIfInMultiValue(multi_value,value) {
     }
     return false;
 }
-
 
 function runFiltersOnAll() {
 
@@ -890,11 +823,28 @@ function changeLoadingIndicator(type, change) {
     loading_indicator.title = mutex_loading[type];
 }
 
+function updateFilterCount() {
+    return;
+    var bounds = map.getBounds();
+    console.log(bounds);
+    var marker_array = markers.GetMarkers();
+    for(var i = 0; i < marker_array.length; i++) {
+        var marker = marker_array[i];
+        var latlng = L.latLng(marker.data.lat, marker.data.lon);
+        if( ! bounds.contains(latlng) )
+            continue;
+        console.log(marker.data.title);
+
+        
+    }
+}
+
 function secHTML(input) {
     return $("<div>").text( input ).html();
 }
 
 function loadPoi() {
+  updateFilterCount()
   var notificationbar =  document.getElementById("notificationbar");
   if (map.getZoom() < 12 ) {
     notificationbar.style.display = "block";
@@ -1170,6 +1120,8 @@ function loadPoi() {
     });
 
     var pdata = {
+      lat: data.lat,
+      lon: data.lon,
       icon: needs_icon,
       title: data.tags.name,
       popup: fillPopup(data.tags,data.type,data.id,data.lat,data.lon),
