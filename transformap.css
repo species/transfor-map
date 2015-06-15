@@ -470,7 +470,7 @@ padding:0px;
     background:white;
 }
 #sidebar .box ul.boxcontent ul.subfilter li div:first-child  {
-    width:180px;
+    width:189px;
     float:left;
 }
 #sidebar .box ul#filters ul.subfilter li div:first-child + div:hover {
@@ -509,8 +509,11 @@ padding:0px;
 #sidebar .box ul#filters ul.subfilter li div:first-child + div:hover div.InfoBox {
     color:#6374A6;
 }
-/* #sidebar .box ul#filters ul.subfilter li span:before { content: "("; display:none; }  TODO insert Nr. of items with JS 
-#sidebar .box ul#filters ul.subfilter li span:after { content: ")";  display:none;} */
+
+#sidebar .box ul#filters ul.subfilter li span { font-size:0.8em; } 
+#sidebar .box ul#filters ul.subfilter li span:before { content: " (";  } 
+#sidebar .box ul#filters ul.subfilter li span:after { content: ")";  } 
+
 #sidebar .box ul.boxcontent ul.subfilter li {
     border-top:1px dotted #FBFCFA;
 }
@@ -524,9 +527,6 @@ padding:0px;
 #sidebar .box ul.boxcontent li.hidden ul.subfilter {
     display:none;
 }
-
-
-
 
 #sidebar {
     position:absolute;

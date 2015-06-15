@@ -463,9 +463,23 @@ function updateFilterCount() {
                 var current_count = document.getElementById(id).innerHTML;
                 if(current_count == "-")
                     current_count = 0;
+                
+                if(itemname != "unknown") {
+                    if (filtername == "provides") {
+                        if (needsFilterMatches(marker.data.tags, filters[filtername].sub_criteria[itemname]))
+                          current_count++;
+                    } else {
+                        if (filterMatches(marker.data.tags, filters[filtername].sub_criteria[itemname]))
+                          current_count++;
+                    }
+                    var el = document.getElementById(id);
+                    el.innerHTML = current_count;
+                    if(current_count == "0")
+                        el.style.color="gray";
+                    else
+                        el.style.color="inherit";
 
-                current_count++;
-                document.getElementById(id).innerHTML = current_count;
+                }
             }
         }
 
