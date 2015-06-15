@@ -264,6 +264,23 @@ var filters = {
     }
 }
 
+function filterMatches(object_tags, filter) {
+    if(object_tags.hasOwnProperty(filter.key) && checkIfInMultiValue(object_tags[filter.key],filter.value))
+        return true;
+    if(filter["tags_whitelist"] && isPOIinWhiteList(filter["tags_whitelist"],object_tags))
+        return true;
+    else
+        return false;
+}
+function needsFilterMatches(object_tags, filter) {
+    if((object_tags.hasOwnProperty(filter.key) && checkIfInMultiValue(object_tags[filter.key],filter.value))
+            || ( object_tags.hasOwnProperty('topic') && checkIfInMultiValue(object_tags['topic'],filter.value) )
+            || isPOIinWhiteList(filter.tags_whitelist, object_tags) )
+        return true;
+    else
+        return false;
+}
+
 function filterFunctionIdentity(osm_object) {
      if(!osm_object['tags']) {
          console.log("error in filters.identity: no tags attached!");
@@ -272,20 +289,23 @@ function filterFunctionIdentity(osm_object) {
 
      var crits = filters.identity.sub_criteria;
      for(key in crits) {
-         var current_crit = crits[key];
-         if(! current_crit.state)
-             continue;
+         if(key == "unknown") continue;
+         if(! crits[key].state ) continue;
 
-         // FIXME unknown should also display values for identity not in taxonomy.json
-         if(! osm_object.tags.hasOwnProperty(current_crit.key)) {
-             if(current_crit.value === null)  // 'unknown'
-                 return true;
-         } else
-             if(checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value))
-                 return true;
+         if(filterMatches(osm_object.tags,crits[key]))
+             return true;
      }
+     //handle "unknown" last
+     if(! crits.unknown.state)
+         return false;
 
-     return false;
+     for(key in crits) { //do not display POI if in SOME subcrit's whitelist (or it's primary filter key is disabled)...
+         if(key == "unknown") continue;
+
+         if(filterMatches(osm_object.tags,crits[key]))
+             return false;
+     }
+     return true; // has no or unknown "interaction" key set, and no whitelist of any subcrit matched
 }
 function filterFunctionInteraction(osm_object) {
      if(!osm_object['tags']) {
@@ -295,12 +315,10 @@ function filterFunctionInteraction(osm_object) {
 
      var crits = filters.interaction.sub_criteria;
      for(key in crits) {
-         var current_crit = crits[key];
-         if(! current_crit.state || current_crit.value === null) //deactivated or "unknown"
-             continue;
+         if(key == "unknown") continue;
+         if(! crits[key].state ) continue;
 
-         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value) )
-                 || isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
+         if(filterMatches(osm_object.tags,crits[key]))
              return true;
      }
 
@@ -308,18 +326,13 @@ function filterFunctionInteraction(osm_object) {
      if(! crits.unknown.state)
          return false;
 
-     //do not display POI if in SOME subcrit's whitelist (or it's primary filter key is disabled)...
-     for(key in crits) {
+     for(key in crits) { //do not display POI if in SOME subcrit's whitelist (or it's primary filter key is disabled)...
          if(key == "unknown") continue;
-         var current_crit = crits[key];
 
-         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value))
-                 || isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags))
+         if(filterMatches(osm_object.tags,crits[key]))
              return false;
      }
-
-     // has no or unknown "interaction" key set, and no whitelist of any subcrit matched
-     return true;
+     return true; // has no or unknown "interaction" key set, and no whitelist of any subcrit matched
 }
 /* TODO currently only the 'provides' section in taxonomy.json is used, an 'topic' section gets ignored */
 function filterFunctionNeeds(osm_object) {
@@ -330,16 +343,11 @@ function filterFunctionNeeds(osm_object) {
 
      var crits = filters.provides.sub_criteria;
      for(key in crits) {
-         var current_crit = crits[key];
-         if(! current_crit.state || current_crit.value === null) //deactivated or "unknown"
-             continue;
+         if(key == "unknown") continue;
+         if(! crits[key].state ) continue;
 
-         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key],current_crit.value) )
-                 || ( osm_object.tags.hasOwnProperty('topic') && checkIfInMultiValue(osm_object.tags['topic'],current_crit.value) ) )
+         if(needsFilterMatches(osm_object.tags,crits[key]))
              return true;
-
-        if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
-            return true;
      }
 
      //handle "unknown" last
@@ -349,14 +357,9 @@ function filterFunctionNeeds(osm_object) {
      //do not display POI if in SOME subcrit's whitelist (or it's primary filter key is disabled)...
      for(key in crits) {
          if(key == "unknown") continue;
-         var current_crit = crits[key];
 
-         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key],current_crit.value) )
-                 || ( osm_object.tags.hasOwnProperty('topic') && checkIfInMultiValue(osm_object.tags['topic'],current_crit.value) ) )
+         if(needsFilterMatches(osm_object.tags,crits[key]))
              return false;
-
-        if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
-            return false;
      }
 
      // has no or unknown "provides"/"topic" key set, and no whitelist of any subcrit matched
@@ -364,6 +367,10 @@ function filterFunctionNeeds(osm_object) {
 }
 
 function isPOIinWhiteList(whitelist,osm_tags) {
+    if(! $.isArray(whitelist)) {
+        console.log("isPOIinWhiteList: no array given as whitelist");
+        return false;
+    }
     for(var whitelist_nr = 0; whitelist_nr < whitelist.length; whitelist_nr++) {
         var tags_whitelist = whitelist[whitelist_nr];
 
@@ -401,6 +408,7 @@ function checkIfInMultiValue(multi_value,value) {
     return false;
 }
 
+/* TODO it is relatively inefficient to run all filters every time a single entry is changed - later only the filters affected on change should be run */
 function runFiltersOnAll() {
 
     var marker_array = markers.GetMarkers();
@@ -426,6 +434,43 @@ function getFilterStatusOnPoi(marker) {
             return false;
     }
     return true;
+}
+
+function updateFilterCount() {
+
+    //at first, reset all counts
+    for(filtername in filters) {
+        for(itemname in filters[filtername].sub_criteria) {
+            var id = 'filter_'+filtername+'_'+itemname+'_counter';
+            document.getElementById(id).innerHTML = "-";
+        }
+    }
+
+  //  return;
+
+    var bounds = map.getBounds();
+  //  console.log(bounds);
+    var marker_array = markers.GetMarkers();
+    for(var i = 0; i < marker_array.length; i++) {
+        var marker = marker_array[i];
+        var latlng = L.latLng(marker.data.lat, marker.data.lon);
+        if( ! bounds.contains(latlng) )
+            continue;
+        console.log(marker.data.title);
+        for(filtername in filters) {
+            for(itemname in filters[filtername].sub_criteria) {
+                var id = 'filter_'+filtername+'_'+itemname+'_counter';
+                var current_count = document.getElementById(id).innerHTML;
+                if(current_count == "-")
+                    current_count = 0;
+
+                current_count++;
+                document.getElementById(id).innerHTML = current_count;
+            }
+        }
+
+        
+    }
 }
 
 /* precondition: in global var filters, an object $filtername must exist.
@@ -819,28 +864,12 @@ function changeLoadingIndicator(type, change) {
     loading_indicator.title = mutex_loading[type];
 }
 
-function updateFilterCount() {
-    return;
-    var bounds = map.getBounds();
-    console.log(bounds);
-    var marker_array = markers.GetMarkers();
-    for(var i = 0; i < marker_array.length; i++) {
-        var marker = marker_array[i];
-        var latlng = L.latLng(marker.data.lat, marker.data.lon);
-        if( ! bounds.contains(latlng) )
-            continue;
-        console.log(marker.data.title);
-
-        
-    }
-}
-
 function secHTML(input) {
     return $("<div>").text( input ).html();
 }
 
 function loadPoi() {
-  updateFilterCount()
+  updateFilterCount(); // here because it is called on every map move
   var notificationbar =  document.getElementById("notificationbar");
   if (map.getZoom() < 12 ) {
     notificationbar.style.display = "block";
@@ -1246,6 +1275,7 @@ function loadPoi() {
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tnode').css("display", "block");
     $('#tnode').html("<img src='assets/20px-Mf_node.svg.png' />: " + json_date.toLocaleString());
+    updateFilterCount();
   }
 
   function handleWays(overpassJSON) {
@@ -1286,6 +1316,7 @@ function loadPoi() {
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tway').css("display", "block");
     $('#tway').html("<img src='assets/20px-Mf_way.svg.png' />: " + json_date.toLocaleString());
+    updateFilterCount();
   }
 
   function handleRelations(overpassJSON) {
@@ -1357,6 +1388,7 @@ function loadPoi() {
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#trel').css("display", "block");
     $('#trel').html("<img src='assets/20px-Mf_relation.svg.png' />: " + json_date.toLocaleString());
+    updateFilterCount();
   }
 
   var query = overpass_query;
