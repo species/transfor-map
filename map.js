@@ -280,7 +280,7 @@ function filterFunctionIdentity(osm_object) {
              if(current_crit.value === null)  // 'unknown'
                  return true;
          } else
-             if(osm_object.tags[current_crit.key].match( new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) )
+             if(checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value))
                  return true;
      }
 
@@ -295,18 +295,14 @@ function filterFunctionInteraction(osm_object) {
      var crits = filters.interaction.sub_criteria;
      for(key in crits) {
          var current_crit = crits[key];
-         if(! current_crit.state)
+         if(! current_crit.state || current_crit.value === null) //deactivated or "unknown"
              continue;
+
+         if(osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value) )
+             return true;
 
          //if is one of taxonomy.interaction.items[i]["osm:objects"][j], then display 
          //                == current_crit.tags_whitelist[j]
-         if(! osm_object.tags.hasOwnProperty(current_crit.key)) {
-             if(current_crit.value === null)  // current subcriteria 'unknown' ::: unknown means all others not matched by filter...
-                 return true;
-         } else
-             if(osm_object.tags[current_crit.key].match( new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) )
-                 return true;
-
          for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) { 
              var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
              //if ALL tags in osm_tags_needed are there in 
@@ -321,7 +317,7 @@ function filterFunctionInteraction(osm_object) {
                      all_wl_keys_ok = true;
                      continue;
                  }
-                 if(osm_object.tags[wl_key].match( new RegExp("(?:^|\s|;)" + wl_value + "(?:;|\s|$)") )) {
+                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value)) {
                      all_wl_keys_ok = true;
                      continue;
                  } else {
@@ -332,10 +328,52 @@ function filterFunctionInteraction(osm_object) {
              if(all_wl_keys_ok)
                  return true;
          }
+
      }
 
-     return false;
+     //handle "unknown" last
+     if(! crits.unknown.state)
+         return false;
+
+     //do not display POI if in SOME subcrit's whitelist (or it's primary filter key is disabled)...
+     for(key in crits) {
+         if(key == "unknown") continue;
+         var current_crit = crits[key];
+
+         if(osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value))
+             return false;
+
+         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) {
+             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
+
+             var all_wl_keys_ok = false;
+             for(wl_key in tags_whitelist) {
+                 var wl_value = tags_whitelist[wl_key];
+                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+                 if(wl_value == "*") {
+                     all_wl_keys_ok = true;
+                     continue;
+                 }
+                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value)) {
+                     all_wl_keys_ok = true;
+                     continue;
+                 } else {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+             }
+             if(all_wl_keys_ok)
+                 return false;
+         }
+     }
+
+     // has no or unknown "interaction" key set, and no whitelist of any subcrit matched
+     return true;
 }
+/* TODO currently only the 'provides' section in taxonomy.json is used, an 'topic' section gets ignored */
 function filterFunctionNeeds(osm_object) {
      if(!osm_object['tags']) {
          console.log("error in filters.Interaction: no tags attached!");
@@ -345,21 +383,15 @@ function filterFunctionNeeds(osm_object) {
      var crits = filters.provides.sub_criteria;
      for(key in crits) {
          var current_crit = crits[key];
-         if(! current_crit.state)
+         if(! current_crit.state || current_crit.value === null) //deactivated or "unknown"
              continue;
+
+         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key],current_crit.value) )
+                 || ( osm_object.tags.hasOwnProperty('topic') && checkIfInMultiValue(osm_object.tags['topic'],current_crit.value) ) )
+             return true;
 
          //if is one of taxonomy.interaction.items[i]["osm:objects"][j], then display 
          //                == current_crit.tags_whitelist[j]
-         /* FIXME : TODO topic */
-         if(! osm_object.tags.hasOwnProperty(current_crit.key) && ! osm_object.tags.hasOwnProperty('topic')) {
-             if(current_crit.value === null)  // current subcriteria 'unknown' ::: unknown means all others not matched by filter...
-                 return true;
-         } else {
-             if(osm_object.tags[current_crit.key].match( new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) 
-                     || (osm_object.tags.hasOwnProperty('topic') && osm_object.tags.topic.match(new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) ) )
-                 return true;
-         }
-
          for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) { 
              var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
              //if ALL tags in osm_tags_needed are there in 
@@ -374,7 +406,7 @@ function filterFunctionNeeds(osm_object) {
                      all_wl_keys_ok = true;
                      continue;
                  }
-                 if(osm_object.tags[wl_key].match( new RegExp("(?:^|\s|;)" + wl_value + "(?:;|\s|$)") )) {
+                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value )) {
                      all_wl_keys_ok = true;
                      continue;
                  } else {
@@ -387,7 +419,56 @@ function filterFunctionNeeds(osm_object) {
          }
      }
 
-     return false;
+     //handle "unknown" last
+     if(! crits.unknown.state)
+         return false;
+
+     //do not display POI if in SOME subcrit's whitelist (or it's primary filter key is disabled)...
+     for(key in crits) {
+         if(key == "unknown") continue;
+         var current_crit = crits[key];
+
+         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key],current_crit.value) )
+                 || ( osm_object.tags.hasOwnProperty('topic') && checkIfInMultiValue(osm_object.tags['topic'],current_crit.value) ) )
+             return false;
+
+         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) {
+             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
+
+             var all_wl_keys_ok = false;
+             for(wl_key in tags_whitelist) {
+                 var wl_value = tags_whitelist[wl_key];
+                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+                 if(wl_value == "*") {
+                     all_wl_keys_ok = true;
+                     continue;
+                 }
+                 if(checkIfInMultiValue(osm_object.tags[wl_key], wl_value) ) {
+                     all_wl_keys_ok = true;
+                     continue;
+                 } else {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+             }
+             if(all_wl_keys_ok)
+                 return false;
+         }
+     }
+
+     // has no or unknown "provides"/"topic" key set, and no whitelist of any subcrit matched
+     return true;
+}
+function checkIfInMultiValue(multi_value,value) {
+    var multivalue_array = multi_value.split(/;\s*/);
+    for(var i=0; i < multivalue_array.length; i++) {
+        if(multivalue_array[i] == value)
+            return true;
+    }
+    return false;
 }
 
 
