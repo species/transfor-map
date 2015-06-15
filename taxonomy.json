@@ -64,24 +64,6 @@
         ]
       },
       {
-        "transformap:key" : "participation", 
-        "osm:key" : "provides",
-        "osm:values" : [ "participation" ],
-        "label" : {
-          "en" : "provides: participation ",
-          "de" : "Bietet: beitragen &amp; mitmachen"
-        },
-        "description" : {
-          "en" : "Here is an opportunity to initiate activities, participate or deliberate on public issues.",
-          "de" : "Beitragen erwünscht! Hier kannst Du Dich und Deine Fähigkeiten einbringen, zu einem Projekt beitragen, ein solches initiieren, oder Dich an Debatten beteiligen,  die uns alle angehen."
-        },
-        "osm:objects" : [ 
-          { "amenity" : "hackerspace" },
-          { "leisure" : "hackerspace" },
-          { "club" : "*" } 
-        ]
-      },
-      {
         "transformap:key" : "land", 
         "osm:key" : "provides",
         "osm:values" : [ "land" ],
@@ -96,6 +78,26 @@
         "osm:objects" : [ 
           { "landuse" : "greenfield" },
           { "landuse" : "brownfield" } 
+        ]
+      },
+      {
+        "transformap:key" : "mobility", 
+        "osm:key" : "provides",
+        "osm:values" : [ "mobility" ],
+        "label" : {
+          "en" : "provides: mobility ",
+          "de" : "Bietet: Mobilität"
+        },
+        "description" : {
+          "en" : "Here you find possibilities to go from A to B. ",
+          "de" : ""
+        },
+        "osm:objects" : [ 
+          { "amenity" : "car_sharing" },
+          { "amenity" : "bicycle_rental" },
+          { "shop" : "bicycle" },
+          { "shop" : "car" },
+          { "shop" : "car_repair" }
         ]
       },
       {
@@ -146,7 +148,7 @@
         ]
       },
       {
-        "transformap:key" : "sense_of_security", 
+        "transformap:key" : "safety", 
         "osm:key" : "provides",
         "osm:values" : [ "safety" ],
         "label" : {
@@ -188,9 +190,9 @@
         ]
       },
       {
-        "transformap:key" : "open_space", 
+        "transformap:key" : "spaces", 
         "osm:key" : "provides",
-        "osm:values" : [ "open_space" ],
+        "osm:values" : [ "spaces" ],
         "label" : {
           "en" : "provides: free space",
           "de" : "Bietet: Freiraum"
@@ -290,6 +292,24 @@
         },
         "osm:objects" : [ 
           { "amenity" : "community_centre" } 
+        ]
+      },
+      {
+        "transformap:key" : "participation", 
+        "osm:key" : "provides",
+        "osm:values" : [ "participation" ],
+        "label" : {
+          "en" : "provides: participation ",
+          "de" : "Bietet: beitragen &amp; mitmachen"
+        },
+        "description" : {
+          "en" : "Here is an opportunity to initiate activities, participate or deliberate on public issues.",
+          "de" : "Beitragen erwünscht! Hier kannst Du Dich und Deine Fähigkeiten einbringen, zu einem Projekt beitragen, ein solches initiieren, oder Dich an Debatten beteiligen,  die uns alle angehen."
+        },
+        "osm:objects" : [ 
+          { "amenity" : "hackerspace" },
+          { "leisure" : "hackerspace" },
+          { "club" : "*" } 
         ]
       },
       {
