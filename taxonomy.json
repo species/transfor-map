@@ -531,6 +531,7 @@
                 { "amenity" : "marketplace" },
                 { "amenity" : "pharmacy" },
                 { "amenity" : "vending_machine" },
+                { "amenity" : "ice_cream" },
                 { "club" : "foodcoop" },
                 { "shop" : "*" }
             ]
