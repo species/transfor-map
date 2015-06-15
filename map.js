@@ -276,6 +276,7 @@ function filterFunctionIdentity(osm_object) {
          if(! current_crit.state)
              continue;
 
+         // FIXME unknown should also display values for identity not in taxonomy.json
          if(! osm_object.tags.hasOwnProperty(current_crit.key)) {
              if(current_crit.value === null)  // 'unknown'
                  return true;
@@ -298,12 +299,9 @@ function filterFunctionInteraction(osm_object) {
          if(! current_crit.state || current_crit.value === null) //deactivated or "unknown"
              continue;
 
-         if(osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value) )
+         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value) )
+                 || isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
              return true;
-
-         if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
-             return true;
-
      }
 
      //handle "unknown" last
@@ -315,10 +313,8 @@ function filterFunctionInteraction(osm_object) {
          if(key == "unknown") continue;
          var current_crit = crits[key];
 
-         if(osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value))
-             return false;
-
-         if( isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags) )
+         if( (osm_object.tags.hasOwnProperty(current_crit.key) && checkIfInMultiValue(osm_object.tags[current_crit.key], current_crit.value))
+                 || isPOIinWhiteList(current_crit.tags_whitelist, osm_object.tags))
              return false;
      }
 
