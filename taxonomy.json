@@ -85,11 +85,11 @@
         "osm:key" : "provides",
         "osm:values" : [ "mobility" ],
         "label" : {
-          "en" : "provides: mobility ",
+          "en" : "provides: mobility",
           "de" : "Bietet: Mobilität"
         },
         "description" : {
-          "en" : "Here you find possibilities to go from A to B. ",
+          "en" : "Here you find possibilities to go from A to B.",
           "de" : ""
         },
         "osm:objects" : [ 
