@@ -492,7 +492,7 @@ function getFilterStatusOnPoi(marker) {
 
     for(filtername in filters) {
         if( ! (typeof(filters[filtername].function_name) === 'function') )
-            return true;
+            continue;
         if(! filters[filtername].function_name(marker.data))
             return false;
     }
