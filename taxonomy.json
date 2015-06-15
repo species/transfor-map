@@ -1,24 +1,24 @@
 {
-  "fulfils_needs" : {
+  "provides" : {
     "label" : { 
       "en" : "Needs fulfilled by a community",
       "de" : "Erfüllte Bedürfnisse"
     },
     "description" : {
-      "en" : "We all have needs. We need food and shelter, we need mobility and we need to communicate with others. Here is a list of various needs. You will find both: things that directly satisfy your needs as well as people who care for providing these things and for running needs-oriented projects",
+      "en" : "An economy is supposed to fulfil our needs and those of everybody else. But which kind of need exactly?",
       "de" : "Wir alle haben Bedürfnisse. Wir müssen essen und trinken, wir suchen Schutz, brauchen Wissen und Mobilität. Hier findet sich eine Liste dieser Bedürfnisse."
     },
     "items" : [ 
       {
-        "transformap:key" : "food",
-        "osm:key" : "fulfils_needs:food",
-        "osm:values" : [ "yes" ],
+        "transformap:key" : "food+drink",
+        "osm:key" : "provides",
+        "osm:values" : [ "food+drink" ],
         "label" : {
-          "en" : "provides: food",
-          "de" : "Bietet: Essen"
+          "en" : "provides: food &amp; drink",
+          "de" : "Bietet: Essen &amp; Trinken"
         },
         "description" : {
-          "en" : "",
+          "en" : "Here you can find drinks and something to eat, recently harvested or ready to enjoy.",
           "de" : ""
         },
         "osm:objects" : [ 
@@ -37,7 +37,7 @@
           { "shop" : "deli" },
           { "shop" : "farm" },
           { "shop" : "supermarket" },
-          { "leisure" : "garden", "description" : "Gemeinschaftsgarten" },
+          { "leisure" : "garden", "garden:type" : "community" },
           { "landuse" : "farm" },
           { "landuse" : "farmland" },
           { "landuse" : "farmyard" },
@@ -47,32 +47,32 @@
       },
       {
         "transformap:key" : "water", 
-        "osm:key" : "fulfils_needs:water",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "water" ],
         "label" : {
           "en" : "provides: water",
           "de" : "Bietet: Wasser"
         },
         "description" : {
-          "en" : "",
+          "en" : "Here you can find drinking water.",
           "de" : ""
         },
         "osm:objects" : [ 
-          { "amenity" : "drinking_water" } ,
-          { "shop" : "butcher" },
-          { "leisure" : "garden", "description" : "Gemeinschaftsgarten" }
+          { "amenity" : "drinking_water" },
+          { "drinking_water" : "yes" },
+          { "natural" : "spring" } 
         ]
       },
       {
         "transformap:key" : "participation", 
-        "osm:key" : "fulfils_needs:participation",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "participation" ],
         "label" : {
-          "en" : "provides: contribute & participate ",
-          "de" : "Bietet: beitragen & mitmachen"
+          "en" : "provides: participation ",
+          "de" : "Bietet: beitragen &amp; mitmachen"
         },
         "description" : {
-          "en" : "Here is a place, where your contribution is needed. You can share your skills, contribute to a project, initiate activities, or deliberate on public issues.",
+          "en" : "Here is an opportunity to initiate activities, participate or deliberate on public issues.",
           "de" : "Beitragen erwünscht! Hier kannst Du Dich und Deine Fähigkeiten einbringen, zu einem Projekt beitragen, ein solches initiieren, oder Dich an Debatten beteiligen,  die uns alle angehen."
         },
         "osm:objects" : [ 
@@ -83,14 +83,14 @@
       },
       {
         "transformap:key" : "land", 
-        "osm:key" : "fulfils_needs:land",
-        "osm:values" : [ "rural", "urban", "rurban" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "land" ],
         "label" : {
           "en" : "provides: land",
           "de" : "Bietet: Land"
         },
         "description" : {
-          "en" : "This is about land - the land we all need to find shelter and/or to work on.",
+          "en" : "Here you find land - the land we all need to find shelter and/or to work on.",
           "de" : "Wir brauchen und nutzen Land. Zum bewohnen und zum bearbeiten."
         },
         "osm:objects" : [ 
@@ -100,8 +100,8 @@
       },
       {
         "transformap:key" : "health", 
-        "osm:key" : "fulfils_needs:health",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "health" ],
         "label" : {
           "en" : "provides: health",
           "de" : "Bietet: Gesundheit"
@@ -126,14 +126,14 @@
       },
       {
         "transformap:key" : "culture", 
-        "osm:key" : "fulfils_needs:culture",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "culture" ],
         "label" : {
           "en" : "provides: culture",
           "de" : "Bietet: Kultur"
         },
         "description" : {
-          "en" : "Here you find cultural events or free spaces to organize an event or to perform.",
+          "en" : "Here you find cultural events or free spaces to (self-)organize an event or to perform.",
           "de" : "Hier findest du kulturelle Veranstaltungen oder offene Räume um selbst Veranstaltungen zu organisieren. Du kannst dich auch selbst künstlerisch betätigen."
         },
         "osm:objects" : [ 
@@ -147,8 +147,8 @@
       },
       {
         "transformap:key" : "sense_of_security", 
-        "osm:key" : "fulfils_needs:sense_of_security",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "safety" ],
         "label" : {
           "en" : "provides: safety",
           "de" : "Bietet: Schutz"
@@ -163,17 +163,25 @@
       },
       {
         "transformap:key" : "housing", 
-        "osm:key" : "fulfils_needs:housing",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "housing" ],
         "label" : {
           "en" : "provides: housing",
           "de" : "Bietet: Unterkunft"
         },
         "description" : {
-          "en" : "Here you find shelter and/or places you can feel at home - for a short time or permanently.",
+          "en" : "Here you find shelter - for a short time or permanently.",
           "de" : "Hier findest Du ein Dach überm Kopf, zeitweise oder dauerhaft."
         },
         "osm:objects" : [ 
+          { "tourism" : "hotel" },
+          { "tourism" : "motel" },
+          { "tourism" : "hostel" },
+          { "tourism" : "alpine_hut" },
+          { "tourism" : "apartment" },
+          { "tourism" : "guest_house" },
+          { "tourism" : "wilderness_hut" },
+          { "tourism" : "chalet" },
           { "amenity" : "dormitory" },
           { "amenity" : "social_facility", "social_facility" : "group_home" },
           { "amenity" : "social_facility", "social_facility" : "assisted_living" }
@@ -181,61 +189,63 @@
       },
       {
         "transformap:key" : "open_space", 
-        "osm:key" : "fulfils_needs:open_space",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "open_space" ],
         "label" : {
-          "en" : "provides: open space",
+          "en" : "provides: free space",
           "de" : "Bietet: Freiraum"
         },
         "description" : {
-          "en" : "Here you find free spaces to meet, hang out, do whatever you want or express yourself.",
+          "en" : "Here you find free spaces to meet, hang out, do whatever you want.",
           "de" : "Hier ist ein offener Raum, um sich zu treffen, etwas zu organisieren oder wonach immer der Sinn steht."
         },
         "osm:objects" : [ 
-          { "amenity" : "null" },
-          { "a" : "*" } 
         ]
       },
       {
         "transformap:key" : "objects_of_utility", 
-        "osm:key" : "fulfils_needs:objects_of_utility",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "objects_of_utility" ],
         "label" : {
           "en" : "provides: objects of utility",
           "de" : "Bietet: Gebrauchsgegenstände"
         },
         "description" : {
-          "en" : "Here you can get or borrow tools and other things.",
+          "en" : "Here you can get or borrow different tools and other things, that others don't need any longer or only ocassionally use.",
           "de" : "Hier gibt es unterschiedliche Gebrauchsgegenstände."
         },
         "osm:objects" : [ 
           { "service:bicycle:tools" : "yes" },
-          { "leisure" : "hackerspace" } 
+          { "leisure" : "hackerspace" }, 
+          { "amenity" : "bicycle_repair_station" },
+          { "amenity" : "fablab" },
+          { "shop" : "hardware" },
+          { "shop" : "doityourself" }
         ]
       },
       {
         "transformap:key" : "clothes", 
-        "osm:key" : "fulfils_needs:clothes",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "clothes" ],
         "label" : {
           "en" : "provides: clothes",
           "de" : "Bietet: Kleidung"
         },
         "description" : {
-          "en" : "Here you can find clothes of all kinds.",
+          "en" : "Here you can find clothes.",
           "de" : "Hier bekommst Du Kleidung."
         },
         "osm:objects" : [ 
           { "shop" : "clothes" },
-          { "shop" : "secondhand" } 
+          { "shop" : "second_hand" } 
         ]
       },
       {
         "transformap:key" : "learning_opportunities", 
-        "osm:key" : "fulfils_needs:learning_opportunities",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "learning_opportunities" ],
         "label" : {
-          "en" : "provides: knowledge&skills",
+          "en" : "provides: knowledge &amp; skills",
           "de" : "Bietet: Wissen"
         },
         "description" : {
@@ -244,73 +254,59 @@
         },
         "osm:objects" : [ 
           { "amenity" : "library" },
+          { "amenity" : "public_bookcase" },
           { "amenity" : "university" },
           { "amenity" : "school" }
         ]
       },
       {
         "transformap:key" : "energy", 
-        "osm:key" : "fulfils_needs:energy",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "energy" ],
         "label" : {
           "en" : "provides: energy",
           "de" : "Bietet: Energie"
         },
         "description" : {
-          "en" : "Electricity, heating, transportation - all of them require energy. Here you find projects, ideas and places, where this energy is generated.",
+          "en" : "Electricity, heating, transportation - all of them require energy. On this places energy is provided.",
           "de" : "Strom, Wärme und Fortbewegung. Für alles braucht mensch Energie. Hier gibt es Projekte, Ideen und Standorte, die diese Energie erzeugen."
         },
         "osm:objects" : [ 
-          { "power" : "generator" }
+          { "power" : "generator" },
+          { "amenity" : "charging_station" }
         ]
       },
       {
-        "transformap:key" : "supportive_relationships", 
-        "osm:key" : "fulfils_needs:supportive_relationships",
-        "osm:values" : [ "yes" ],
+        "transformap:key" : "community", 
+        "osm:key" : "provides",
+        "osm:values" : [ "community" ],
         "label" : {
-          "en" : "provides: supportive relationships",
-          "de" : "Bietet: stärkende Sozialkontakte"
+          "en" : "provides: community",
+          "de" : ""
         },
         "description" : {
-          "en" : "Here you will find a person, a group of people or a network that offers support and empowerment.",
-          "de" : "Hier kann man zusammensein, Aktivitäten und Erfahrungen erleben, die allein nicht möglich sind oder weniger Freude machen."
+          "en" : "A diverse group of people that offers support and empowerment by coming together.",
+          "de" : ""
         },
         "osm:objects" : [ 
-          { "amenity" : "social_facility", "social_facility" : "outreach" }
-        ]
-      },
-      {
-        "transformap:key" : "participation", 
-        "osm:key" : "fulfils_needs:",
-        "osm:values" : [ "yes" ],
-        "label" : {
-          "en" : "provides: contribute & participate",
-          "de" : "Bietet: beitragen & mitmachen"
-        },
-        "description" : {
-          "en" : "Here is a place, where your contribution is needed. You can share your skills, contribute to a project, initiate activities, or deliberate on public issues.",
-          "de" : "Beitragen erwünscht! Hier kannst Du Dich und Deine Fähigkeiten einbringen, zu einem Projekt beitragen, ein solches initiieren, oder Dich an Debatten beteiligen, die uns alle angehen."
-        },
-        "osm:objects" : [ 
-          { "leisure" : "hackerspace" },
-          { "club" : "*" } 
+          { "amenity" : "community_centre" } 
         ]
       },
       {
         "transformap:key" : "spirituality", 
-        "osm:key" : "fulfils_needs:spirituality",
-        "osm:values" : [ "yes" ],
+        "osm:key" : "provides",
+        "osm:values" : [ "spirituality" ],
         "label" : {
           "en" : "provides: spirituality",
           "de" : "Bietet: Spiritualität"
         },
         "description" : {
-          "en" : "places of spirituality",
+          "en" : "Here you find spaces, places and groups that pursue a contemplative/spiritual connection.",
           "de" : "Orte der Spiritualität"
         },
         "osm:objects" : [ 
           { "amenity" : "place_of_worship" },
+          { "religion" : "*" },
           { "amenity" : "monastery" },
           { "historic" : "wayside_shrine" },
           { "historic" : "wayside_cross" },
@@ -318,12 +314,12 @@
         ]
       },
       {
-        "transformap:key" : "communication", 
-        "osm:key" : "fulfils_needs:communication",
-        "osm:values" : [ "yes" ],
+        "transformap:key" : "telecommunication", 
+        "osm:key" : "provides",
+        "osm:values" : [ "telecommunication" ],
         "label" : {
-          "en" : "provides: means of communication",
-          "de" : "Bietet: Kommunikationsmöglichkeit"
+          "en" : "provides: telecommunication",
+          "de" : "Bietet: Telekommunikationsmöglichkeit"
         },
         "description" : {
           "en" : "Here you can find communication infrastructure",
@@ -340,38 +336,7 @@
           { "man_made" : "communications_tower" },
           { "emergency" : "phone" } 
         ]
-      },
-      {
-        "transformap:key" : "meta:air", 
-        "osm:key" : "fulfils_needs:meta:air",
-        "osm:values" : [ "yes" ],
-        "label" : {
-          "en" : "concerns: air",
-          "de" : "Kümmert sich um: Luft"
-        },
-        "description" : {
-          "en" : "",
-          "de" : ""
-        },
-        "osm:objects" : [ 
-        ]
-      },
-      {
-        "transformap:key" : "advise", 
-        "osm:key" : "fulfils_needs:advise",
-        "osm:values" : [ "yes" ],
-        "label" : {
-          "en" : "provides: advise",
-          "de" : "Bietet: Beratung"
-        },
-        "description" : {
-          "en" : "",
-          "de" : ""
-        },
-        "osm:objects" : [ 
-        ]
       }
-
     ]
   },
   "interaction"  : {
@@ -393,7 +358,7 @@
               "de" : "Tauschen"
             },
             "description" : {
-              "en" : "Here you can exchange something: give & take",
+              "en" : "Here you can exchange something: give &amp; take",
               "de" : ""
             },
             "osm:objects" : [
@@ -472,7 +437,7 @@
             "osm:key" : "interaction",
             "osm:values" : [ "rebuying_reselling" ],
             "label" : {
-              "en" : "rebuy & resell",
+              "en" : "rebuy &amp; resell",
               "de" : "Weiterverkaufen (2nd Hand)"
             },
             "description" : {
@@ -509,7 +474,7 @@
             "osm:key" : "interaction",
             "osm:values" : [ "diy_and_dit" ],
             "label" : {
-              "en" : "Do It Yourself & Together ",
+              "en" : "Do It Yourself &amp; Together ",
               "de" : ""
             },
             "description" : {
@@ -528,7 +493,7 @@
             "osm:key" : "interaction",
             "osm:values" : [ "buying_and_selling" ],
             "label" : {
-              "en" : "buy & sell",
+              "en" : "buy &amp; sell",
               "de" : ""
             },
             "description" : {
