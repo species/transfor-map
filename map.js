@@ -336,6 +336,59 @@ function filterFunctionInteraction(osm_object) {
 
      return false;
 }
+function filterFunctionNeeds(osm_object) {
+     if(!osm_object['tags']) {
+         console.log("error in filters.Interaction: no tags attached!");
+         return false;
+     }
+
+     var crits = filters.provides.sub_criteria;
+     for(key in crits) {
+         var current_crit = crits[key];
+         if(! current_crit.state)
+             continue;
+
+         //if is one of taxonomy.interaction.items[i]["osm:objects"][j], then display 
+         //                == current_crit.tags_whitelist[j]
+         /* FIXME : TODO topic */
+         if(! osm_object.tags.hasOwnProperty(current_crit.key) && ! osm_object.tags.hasOwnProperty('topic')) {
+             if(current_crit.value === null)  // current subcriteria 'unknown' ::: unknown means all others not matched by filter...
+                 return true;
+         } else {
+             if(osm_object.tags[current_crit.key].match( new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) 
+                     || (osm_object.tags.hasOwnProperty('topic') && osm_object.tags.topic.match(new RegExp("(?:^|\s|;)" + current_crit.value + "(?:;|\s|$)") ) ) )
+                 return true;
+         }
+
+         for(var whitelist_nr = 0; whitelist_nr < current_crit.tags_whitelist.length; whitelist_nr++) { 
+             var tags_whitelist = current_crit.tags_whitelist[whitelist_nr];
+             //if ALL tags in osm_tags_needed are there in 
+             var all_wl_keys_ok = false;
+             for(wl_key in tags_whitelist) {
+                 var wl_value = tags_whitelist[wl_key];
+                 if(! osm_object.tags.hasOwnProperty(wl_key) ) {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+                 if(wl_value == "*") {
+                     all_wl_keys_ok = true;
+                     continue;
+                 }
+                 if(osm_object.tags[wl_key].match( new RegExp("(?:^|\s|;)" + wl_value + "(?:;|\s|$)") )) {
+                     all_wl_keys_ok = true;
+                     continue;
+                 } else {
+                     all_wl_keys_ok = false;
+                     break;
+                 }
+             }
+             if(all_wl_keys_ok)
+                 return true;
+         }
+     }
+
+     return false;
+}
 
 
 function runFiltersOnAll() {
@@ -376,11 +429,18 @@ function createFilterHTML(filtername) {
 
       for(itemname in filter.sub_criteria) {
           var item = filter.sub_criteria[itemname];
-          var statevarname = 'filters.'+filtername+'.sub_criteria.'+itemname+'.state';
-          sub_filters.append('<li class='+item.default_state+' onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\'; ">' + item.label + '<span id="filter_'+filtername+'_'+itemname+'_counter"></span></li>' );
+          var statevarname = 'filters.'+filtername+'.sub_criteria[\''+itemname+'\'].state'; //filters.provides.sub_criteria['food+drink'].state
+          var title = "“" + item.key + "” = “" + item.value + "”";
+          sub_filters.append('<li><div class='+item.default_state+' '
+           + 'onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\';"'
+           + ' title="' + title + '">'
+           + item.label 
+           + '<span id="filter_'+filtername+'_'+itemname+'_counter"></span>'
+           + '</div>'
+           + ((item.description) ? ("<div onClick='toggleInfoBox(\"filter_info_"+filtername+'_'+itemname+"\");'>?<div class=InfoBox id='filter_info_"+filtername+'_'+itemname+"'>"+item.description+"</div></div>"): "")
+           +'</li>' );
       }
   }
-
   return $('<li>')
         .attr('class', filter.displayed ? 'shown' : 'hidden')
 //           .attr('onClick', "runFiltersOnAll();") 
@@ -430,8 +490,8 @@ http_request.onreadystatechange = function () {
 
               // create filters out of taxonomy
               //var filter_names = [ "provides","interaction","identity" ];
-              var filter_names = [ "identity","interaction" ]; //must be in reverse order to be shown correct!
-              var filter_functions = { "identity" : filterFunctionIdentity, "interaction" : filterFunctionInteraction };
+              var filter_names = [ "identity","interaction","provides" ]; //must be in reverse order to be shown correct!
+              var filter_functions = { "provides" : filterFunctionNeeds, "identity" : filterFunctionIdentity, "interaction" : filterFunctionInteraction };
               for(var i=0; i < filter_names.length; i++) {
                   var filter_name = filter_names[i];
                   var taxonomy_block = taxonomy[filter_name];
@@ -455,6 +515,7 @@ http_request.onreadystatechange = function () {
                           label : item.label["en"],
                           key : item["osm:key"],
                           value : item["osm:values"][0],
+                          description : item.description["en"],
                           tags_whitelist : item["osm:objects"],
                           default_state : "enabled",
                           state : true,

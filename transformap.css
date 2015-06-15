@@ -402,7 +402,8 @@ padding:0px;
 #mapkey li[title] { /* if there is a title, then there is no infobox */
     cursor:default;
 }
-#mapkey li div.InfoBox {
+#mapkey li div.InfoBox,
+#filters ul.subfilter div.InfoBox {
     position:relative;
     border:1px solid black;
     border-radius:3px;
@@ -413,6 +414,22 @@ padding:0px;
     background: #D6D2D0;
     text-indent:0;
     margin-left:-29px;
+    text-align:left;
+    cursor:pointer;
+}
+#mapkey li div.InfoBox:before,
+#filters ul.subfilter div.InfoBox:before {
+    content:"×";
+    font-size:1.3em;
+    position:absolute;
+    right:2px;
+    top:-4px;
+    z-index:6;
+    color:gray;
+}
+#mapkey li div.InfoBox:before:hover, /* FIXME :before:hover doesn't work */
+#filters ul.subfilter div.InfoBox:before:hover {
+    opacity:0.5;
 }
 #sidebar .box #filters h3 {
     padding:0;
@@ -433,17 +450,64 @@ padding:0px;
     content: ">";
     margin-right:5px;
 }
-#sidebar .box ul#filters ul.subfilter li.disabled:before {
-    content: "\2610";
-    margin-right:5px;
-}
 #sidebar .box #filters li.shown h3:before {
     content: "v";
     margin-right:5px;
 }
-#sidebar .box ul#filters ul.subfilter li.enabled:before {
-    content: "\2611";
-    margin-right:5px;
+#sidebar .box ul#filters ul.subfilter li div.disabled:before,
+#sidebar .box ul#filters ul.subfilter li div.enabled:before {
+    margin:5px 5px 0 0;
+    line-height:12px;
+    display:block;
+    width:12px;
+    height:12px;
+    float:left;
+}
+#sidebar .box ul#filters ul.subfilter li div.disabled:before { content: "\2610"; }
+#sidebar .box ul#filters ul.subfilter li div.enabled:before {  content: "\2611"; }
+#sidebar .box ul#filters ul.subfilter li div.enabled:hover:before,
+#sidebar .box ul#filters ul.subfilter li div.disabled:hover:before {
+    background:white;
+}
+#sidebar .box ul.boxcontent ul.subfilter li div:first-child  {
+    width:180px;
+    float:left;
+}
+#sidebar .box ul#filters ul.subfilter li div:first-child + div:hover {
+    background:#8198D9;
+    border:1px solid #8198D9;
+}
+#sidebar .box ul#filters ul.subfilter li div:first-child + div { /* (?) */
+    text-align:center;
+    border:1px solid #6374A6;
+    box-shadow: 0px 0px 1px 1px rgba(99,116,166,1);
+    background:#6374A6;
+    color:white;
+    width:14px;
+    height:14px;
+    border-radius:7px;
+    margin-top:4px;
+    line-height:1.0em;
+    font-size:13px;
+    font-weight:900;
+    float:right;
+}
+#sidebar .box ul#filters ul.subfilter li:after { /*small hack to clear float cleanly https://css-tricks.com/all-about-floats/ */
+    content: ".";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+}
+#sidebar .box ul#filters ul.subfilter li div:first-child + div div.InfoBox {
+    margin-left:-195px;
+    line-height:1.3em;
+    font-size:16px;
+    font-weight:normal;
+    color:#6374A6;
+}
+#sidebar .box ul#filters ul.subfilter li div:first-child + div:hover div.InfoBox {
+    color:#6374A6;
 }
 /* #sidebar .box ul#filters ul.subfilter li span:before { content: "("; display:none; }  TODO insert Nr. of items with JS 
 #sidebar .box ul#filters ul.subfilter li span:after { content: ")";  display:none;} */
