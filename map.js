@@ -443,6 +443,7 @@ function updateFilterCount() {
         for(itemname in filters[filtername].sub_criteria) {
             var id = 'filter_'+filtername+'_'+itemname+'_counter';
             document.getElementById(id).innerHTML = "-";
+            document.getElementById(id).style.color="#ADADAD";
         }
     }
 
@@ -521,7 +522,7 @@ function createFilterHTML(filtername) {
            + 'onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\';"'
            + ' title="' + title + '">'
            + item.label 
-           + '<span id="filter_'+filtername+'_'+itemname+'_counter"></span>'
+           + '<span id="filter_'+filtername+'_'+itemname+'_counter">-</span>'
            + '</div>'
            + ((item.description) ? ("<div onClick='toggleInfoBox(\"filter_info_"+filtername+'_'+itemname+"\");'>?<div class=InfoBox id='filter_info_"+filtername+'_'+itemname+"'>"+item.description+"</div></div>"): "")
            +'</li>' );

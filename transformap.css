@@ -514,7 +514,7 @@ padding:0px;
     color:#6374A6;
 }
 
-#sidebar .box ul#filters ul.subfilter li span { font-size:0.8em; } 
+#sidebar .box ul#filters ul.subfilter li span { font-size:0.8em; color:#ADADAD;} 
 #sidebar .box ul#filters ul.subfilter li span:before { content: " (";  } 
 #sidebar .box ul#filters ul.subfilter li span:after { content: ")";  } 
 
