@@ -1034,8 +1034,11 @@ function loadPoi() {
         return string;
     }
 
+    var social_media_links = addSocialMediaLinks(tags);
+
     if(tags["addr:street"] || tags["addr:housenumber"] || tags["addr:postcode"] || tags["addr:city"] || tags["addr:suburb"] || tags["addr:country"]
-            || tags["website"] || tags["url"] || tags["contact:website"] || tags["contact:url"] || tags["email"] || tags["contact:email"] || tags["phone"] || tags["contact:phone"] ) {
+            || tags["website"] || tags["url"] || tags["contact:website"] || tags["contact:url"] || tags["email"] || tags["contact:email"]
+            || tags["phone"] || tags["contact:phone"] || tags["fax"] || tags["contact:fax"] || tags["wheelchair"] || social_media_links) {
         r.append($('<tr>').append($('<td>').append(
               (tags["addr:street"] ? tags["addr:street"] : "" ) +
               (tags["addr:housenumber"] ? ("&nbsp;" + tags["addr:housenumber"]) : "" ) + 
@@ -1066,7 +1069,7 @@ function loadPoi() {
             (tags["fax"] ? (url_ify(tags["fax"], "Fax:&nbsp;" + tags["fax"]) + "<br>") : "" ) +
             (tags["contact:fax"] ? (url_ify(tags["contact:fax"], "Fax:&nbsp;" + tags["contact:fax"]) + "<br>") : "" ) +
 
-            addSocialMediaLinks(tags)
+            social_media_links
 
           )));
     }
