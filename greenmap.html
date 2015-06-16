@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="assets/PTSansWeb/stylesheet.css" type="text/css" charset="utf-8">
   <script>
       if( ! window.L ) {
-          console.log("Leaflet could not be loaded from CDN, serve local version");
+          if(window.console)
+              console.log("Leaflet could not be loaded from CDN, serve local version");
           document.write('<link rel="stylesheet" href="leaflet.css" />');
           document.write("<script src='leaflet.js'></" + "script>");
       }
@@ -88,7 +89,7 @@
 
     var base_maps = {
       'MapQuestOpen': MapQuestOpen_OSM,
-      'OpenSteetMap - Mapnik': osm,
+      'OpenSteetMap - Mapnik': osm
     };
     markers = new PruneClusterForLeaflet(60,20);
     var overlay_maps = {
