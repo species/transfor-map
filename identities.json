@@ -2,11 +2,31 @@
   "version": 0.6,
   "generator": "Overpass API",
   "osm3s": {
-    "timestamp_osm_base": "2015-05-11T09:22:02Z",
+    "timestamp_osm_base": "2015-06-16T13:47:02Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
 
+{
+  "type": "node",
+  "id": 393758097,
+  "lat": 52.1092099,
+  "lon": 5.0890742,
+  "tags": {
+    "addr:city": "Utrecht",
+    "addr:housenumber": "56",
+    "addr:postcode": "3553HG",
+    "addr:street": "Sweder van Zuylenweg",
+    "amenity": "restaurant",
+    "cuisine": "regional",
+    "fair_trade": "yes",
+    "identity": "economy_for_the_common_good",
+    "interaction": "buying_and_selling",
+    "name": "De Kleine Baron",
+    "provides": "food+drink",
+    "smoking": "no"
+  }
+},
 {
   "type": "node",
   "id": 665072785,
@@ -181,6 +201,7 @@
     "addr:postcode": "8010",
     "addr:street": "Schönaugasse",
     "amenity": "studio",
+    "club": "yes",
     "commons": "broadcast",
     "contact:email": "office@helsinki.at",
     "contact:fax": "+43 316 830 880 84",
@@ -189,16 +210,18 @@
     "description": "Verein Freies Radio Steiermark",
     "frequency": "92.6 MHz",
     "identity": "commons",
+    "independent": "yes",
     "indoor": "yes",
     "level": "0",
     "name": "Radio Helsinki",
-    "opening_hours": "Mo,Fr 09:00-12:00; Tu-Th 08:00-15:00",
+    "opening_hours": "Mo,Fr 09:00-12:00;Tu-Th 08:00-15:00",
+    "owner": "Radio Helsinki - Verein Freies Radio Steiermark",
     "provides": "culture",
     "source": "survey",
     "type": "audio",
     "website": "http://helsinki.at/",
     "wheelchair": "yes",
-    "wikipedia:de": "Radio_Helsinki_%E2%80%93_Verein_freies_Radio_Steiermark"
+    "wikipedia": "de:Radio Helsinki – Verein freies Radio Steiermark"
   }
 },
 {
@@ -214,7 +237,6 @@
     "alcohol": "no",
     "amenity": "cafe",
     "contact:facebook": "https://facebook.com/madiapotsdam",
-    "contact:website": "http://madia-potsdam.de/",
     "cuisine": "regional",
     "diet:vegan": "only",
     "food": "yes",
@@ -245,7 +267,6 @@
     "addr:postcode": "8010",
     "addr:street": "Münzgrabenstraße",
     "amenity": "cafe",
-    "commons": "food+drink & Open space",
     "cuisine": "vegetarian",
     "description": "Das Kollektiv-Café",
     "diet:vegan": "yes",
@@ -267,8 +288,8 @@
 {
   "type": "node",
   "id": 2338519517,
-  "lat": 51.3435440,
-  "lon": 9.8574346,
+  "lat": 51.3435572,
+  "lon": 9.8574267,
   "tags": {
     "addr:city": "Witzenhausen",
     "addr:country": "DE",
@@ -277,9 +298,9 @@
     "addr:postcode": "37213",
     "addr:street": "Brückenstraße",
     "identity": "transition_initiative",
-    "interaction": "diy_and_dit",
+    "interaction": "diy_and_dit;cousing;sharing;gifting;lending",
     "name": "Transition Town",
-    "shop": "doityourself",
+    "provides": "food+drink;water;mobility;culture",
     "topic": "participation",
     "website": "http://ttwitzenhausen.de"
   }
@@ -364,6 +385,41 @@
 },
 {
   "type": "node",
+  "id": 2510441920,
+  "lat": 47.0828378,
+  "lon": 15.4325190,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:postcode": "8010",
+    "addr:street": "Theodor-Körner-Straße",
+    "commons": "food+drink",
+    "description": "community supported agriculture",
+    "farm_boxes": "pickup",
+    "identity": "commons",
+    "name": "GeLaWi Kleine Farm (Abholpunkt)",
+    "organic": "only",
+    "provides": "food+drink",
+    "regional": "only",
+    "website": "http://www.kleinefarm.org/"
+  }
+},
+{
+  "type": "node",
+  "id": 2510921900,
+  "lat": 47.0693010,
+  "lon": 15.4552039,
+  "tags": {
+    "commons": "food+drink",
+    "description": "CSA",
+    "farm_boxes": "pickup",
+    "identity": "commons",
+    "name": "GeLaWi Kleine Farm (Abholpunkt)",
+    "provides": "food+drink",
+    "website": "http://www.kleinefarm.org/"
+  }
+},
+{
+  "type": "node",
   "id": 2510955486,
   "lat": 47.0655561,
   "lon": 15.4505737,
@@ -426,8 +482,8 @@
 {
   "type": "node",
   "id": 2510966430,
-  "lat": 47.0789529,
-  "lon": 15.4489798,
+  "lat": 47.0790266,
+  "lon": 15.4489017,
   "tags": {
     "amenity": "public_bookcase",
     "commons": "lets",
@@ -642,7 +698,6 @@
     "mode_of_organisation:self_managed": "yes",
     "name": "Alles Garten",
     "operator": "Verein Alles Garten",
-    "owner": "Lendwirbelhaus",
     "payment:donations": "yes",
     "production_input:knowledge:public_domain": "yes",
     "production_input:money:crowdfunding": "yes",
@@ -683,7 +738,6 @@
     "mode_of_organisation:self_managed": "yes",
     "name": "Forum Urbanes Gärtnern",
     "operator": "Verein Forum Urbanes Gärtnern",
-    "owner": "Lendwirbelhaus",
     "payment:donations": "yes",
     "production_input:knowledge:public_domain": "yes",
     "production_input:money:crowdfunding": "yes",
@@ -716,7 +770,6 @@
     "contact:facebook": "www.facebook.com/transitiongraz",
     "contact:name": "Verein Transition Graz",
     "description": "Netzwerken von Transition Initiativen in Graz",
-    "fee": "no",
     "identity": "transition_initiative;commons",
     "indoor": "yes",
     "interaction": "cousing;diy_and_dit",
@@ -732,7 +785,6 @@
     "name": "Transition Graz Büro",
     "office": "yes",
     "operator": "Verein Transition Graz",
-    "owner": "Lendwirbelhaus",
     "payment:donations": "yes",
     "payment:none": "yes",
     "provides": "spaces;learning_opportunities;community;participation",
@@ -906,12 +958,13 @@
     "production_input:natural_resources:sustainable": "yes",
     "production_input:supply_chain:fair": "yes",
     "provides": "food+drink",
+    "regional": "yes",
     "shop": "convenience",
     "source": "survey",
     "start_date": "Oct 2014",
     "website": "http://www.naturgenuss.org",
     "wheelchair": "limited",
-    "wheelchair:description": "ein Stufe, 6cm"
+    "wheelchair:description": "eine Stufe, 6cm"
   }
 },
 {
@@ -930,7 +983,7 @@
     "contact:name": "Scott und Ulrike Klein",
     "diet:vegan": "yes",
     "diet:vegetarian": "yes",
-    "identity": "transition_initiative;commons",
+    "identity": "commons",
     "mode_of_organisation:decision_making": "by_consensus",
     "mode_of_organisation:members": "users",
     "mode_of_organisation:purpose": "non_profit",
@@ -1139,12 +1192,17 @@
 {
   "type": "node",
   "id": 3487789149,
-  "lat": 51.3435708,
-  "lon": 9.8575118,
+  "lat": 51.3435371,
+  "lon": 9.8574254,
   "tags": {
+    "addr:city": "Witzenhausen",
+    "addr:housenumber": "20",
+    "addr:postcode": "37213",
+    "addr:street": "Brückenstraße",
     "identity": "commons",
-    "name": "Containerbar",
-    "provides": "food+drink"
+    "name": "Essens-Verschenk-Regal",
+    "provides": "food+drink",
+    "topic": "food+drink;community"
   }
 },
 {
@@ -1183,10 +1241,69 @@
     "contact:email": "gruppe.graz@greenpeace.or.at",
     "identity": "Greenpeace",
     "name": "Greenpeace Freiwilligenteam Graz",
+    "office": "ngo",
     "provides": "participation",
     "source": "survey",
     "topic": "health;clothes;learning_opportunities;community;land;environment",
     "website": "http://greenpeace.or.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3498473237,
+  "lat": 47.0521752,
+  "lon": 15.4275172,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "66",
+    "addr:postcode": "8020",
+    "addr:street": "Triester Straße",
+    "fixme": "genaue Lage",
+    "garden:type": "community",
+    "identity": "commons",
+    "interaction": "cousing",
+    "leisure": "garden",
+    "name": "Stadtteilzentrum Triesterstraße",
+    "provides": "food+drink;participation"
+  }
+},
+{
+  "type": "node",
+  "id": 3498515298,
+  "lat": 47.0449388,
+  "lon": 15.4458691,
+  "tags": {
+    "garden:type": "community",
+    "identity": "commons",
+    "leisure": "garden",
+    "name": "Garten für ALLE - Grünanger",
+    "operator": "Sozialmedizinisches Zentrum (SMZ) Liebenau",
+    "start_date": "2010"
+  }
+},
+{
+  "type": "node",
+  "id": 3498515300,
+  "lat": 47.0991619,
+  "lon": 15.4504645,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "89",
+    "addr:postcode": "8043",
+    "addr:street": "Mariagrüner Straße",
+    "contact:phone": "+43 316 382139",
+    "fixme": "genaue Lage",
+    "garden:type": "community",
+    "identity": "commons",
+    "interaction": "cousing",
+    "leisure": "garden",
+    "name": "Generationen- Mitmach- Garten",
+    "operator": "Lieselotte Stauber",
+    "owner": "Lieselotte Stauber",
+    "provides": "food+drink;community;participation",
+    "start_date": "Spring 2011"
   }
 },
 {
@@ -1229,11 +1346,310 @@
     "identity": "demonetized_economy",
     "interaction": "lending",
     "name": "AllerLEIHLaden",
+    "opening_hours": "Tu,We 14:00-18:00; Th 10:00-14:00",
     "provides": "objects_of_utility",
     "shop": "convenience",
     "source": "facebook",
     "start_date": "2.5.2015",
     "website": "http://www.allerleihladen.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3511936286,
+  "lat": 60.1866452,
+  "lon": 24.9517121,
+  "tags": {
+    "addr:city": "Helsinki",
+    "addr:housenumber": "15",
+    "addr:postcode": "00530",
+    "addr:street": "Kaarlenkatu",
+    "contact:website": "http://www.omamaa.fi/",
+    "description": "Food cooperative & open space",
+    "identity": "yes;solidarity_economy;commons",
+    "interaction": "diy_and_dit;buying_and_selling;cousing",
+    "name": "Oma maa",
+    "provides": "food+drink;culture",
+    "topic": "food+drink;culture"
+  }
+},
+{
+  "type": "node",
+  "id": 3514743812,
+  "lat": 47.0713329,
+  "lon": 15.4253441,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "40",
+    "addr:postcode": "8020",
+    "addr:street": "Annenstraße",
+    "amenity": "public_bookcase",
+    "brand": "Bookcrossing",
+    "contact:email": "hiden@wiki.at",
+    "fixme": "exact position, type, opening hours",
+    "identity": "commons",
+    "interaction": "bartering;lending;gifting",
+    "operator": "wiki.at",
+    "provides": "learning_opportunities"
+  }
+},
+{
+  "type": "node",
+  "id": 3514743813,
+  "lat": 47.0716276,
+  "lon": 15.4363388,
+  "tags": {
+    "amenity": "public_bookcase",
+    "brand": "Bookcrossing",
+    "contact:email": "hiden@wiki.at",
+    "covered": "yes",
+    "fixme": "exact position",
+    "identity": "commons",
+    "interaction": "bartering;lending;gifting",
+    "location": "outdoor",
+    "opening_hours": "24/7",
+    "operator": "wiki.at",
+    "provides": "learning_opportunities",
+    "public_bookcase:type": "shelf",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3514743814,
+  "lat": 47.0728198,
+  "lon": 15.4010293,
+  "tags": {
+    "amenity": "public_bookcase",
+    "brand": "Bookcrossing",
+    "contact:email": "hiden@wiki.at",
+    "fixme": "exact position, type, opening hours",
+    "identity": "commons",
+    "interaction": "bartering;lending;gifting",
+    "operator": "wiki.at",
+    "provides": "learning_opportunities"
+  }
+},
+{
+  "type": "node",
+  "id": 3519395356,
+  "lat": 48.1918950,
+  "lon": 16.3581735,
+  "tags": {
+    "addr:city": "Wien",
+    "addr:country": "AT",
+    "addr:housenumber": "6/19",
+    "addr:postcode": "1050",
+    "addr:street": "Margaretenplatz",
+    "club": "yes",
+    "contact:email": "info@mutmacherei.net",
+    "contact:website": "http://mutmacherei.net/",
+    "description": "Verein zur Förderung von Informationen über den gesellschaftlichen, wirtschaftlichen und ökologischen Wandel",
+    "identity": "commons",
+    "name": "Mutmacherei",
+    "topic": "participation"
+  }
+},
+{
+  "type": "node",
+  "id": 3519628402,
+  "lat": 47.0754032,
+  "lon": 15.4331578,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "45",
+    "addr:postcode": "8020",
+    "addr:street": "Lendkai",
+    "club": "yes",
+    "contact:email": "info@barcamp-graz.at",
+    "contact:facebook": "barcampgraz",
+    "contact:twitter": "bcgraz",
+    "contact:website": "http://barcamp-graz.at",
+    "identity": "commons",
+    "name": "BarCamp Graz",
+    "provides": "participation",
+    "start_date": "2014",
+    "topic": "learning_opportunities;community;participation;telecommunication"
+  }
+},
+{
+  "type": "node",
+  "id": 3522003037,
+  "lat": 47.0251754,
+  "lon": 15.0851955,
+  "tags": {
+    "addr:housenumber": "543",
+    "addr:postcode": "8583",
+    "addr:street": "In der Auen",
+    "contact:email": "yes",
+    "contact:phone": "+43 3144 3545",
+    "contact:website": "https://solakoedleroswald.wordpress.com/",
+    "description": "Gemeinschaft von Menschen, die einen biologisch dynamischen Hof unterstützen, Veranstaltungen organisieren und eine nachhaltige Lebensmittelversorgung in die Praxis umsetzen.",
+    "identity": "solidarity_economy",
+    "interaction": "gifting;cousing;rebuying_reselling",
+    "name": "Solidarische Landwirtschafts Kooperative Edlerhof",
+    "organic": "only",
+    "provides": "food+drink;community;participation;land;health;culture",
+    "regional": "only"
+  }
+},
+{
+  "type": "node",
+  "id": 3523163011,
+  "lat": 47.0828136,
+  "lon": 15.4325610,
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "49",
+    "addr:postcode": "8010",
+    "addr:street": "Theodor-Körner-Straße",
+    "club": "foodcoop",
+    "commons": "food+drink",
+    "contact:email": "foodkoop.graz@gmail.com",
+    "description": "Einkaufgemeinschaft",
+    "fee": "yes",
+    "identity": "commons",
+    "indoor": "yes",
+    "interaction": "buying_and_selling",
+    "name": "Foodcoop Krautkoopf",
+    "organic": "yes",
+    "provides": "food+drink",
+    "regional": "yes",
+    "website": "http://www.krautkoopf.at"
+  }
+},
+{
+  "type": "node",
+  "id": 3563369711,
+  "lat": 52.4077208,
+  "lon": 13.0655397,
+  "tags": {
+    "fixme": "exact position",
+    "garden:type": "community",
+    "identity": "permaculture",
+    "leisure": "garden",
+    "operator": "Treffpunkt Freizeit"
+  }
+},
+{
+  "type": "node",
+  "id": 3571408785,
+  "lat": 51.3089142,
+  "lon": 9.4693738,
+  "tags": {
+    "addr:city": "Kassel",
+    "addr:postcode": "34121",
+    "addr:street": "Schönfelder Straße",
+    "contact:email": "info@essbare-stadt.de",
+    "contact:website": "www.ttkassel.de / www.essbare-stadt.de",
+    "identity": "transition_initiative;permaculture;commons;community_based_currencies;degrowth",
+    "interaction": "diy_and_dit",
+    "name": "Transition Town Kassel / Essbare Stadt e.V."
+  }
+},
+{
+  "type": "node",
+  "id": 3571432493,
+  "lat": 51.3488272,
+  "lon": 9.8566714,
+  "tags": {
+    "identity": "solidarity_economy;permaculture;demonetized_economy;commons;subsistence_economy",
+    "interaction": "diy_and_dit;sharing",
+    "name": "Transition Town Schaugarten",
+    "organic": "only",
+    "provides": "food+drink;participation;community"
+  }
+},
+{
+  "type": "node",
+  "id": 3571437393,
+  "lat": 51.2960498,
+  "lon": 9.5358644,
+  "tags": {
+    "addr:city": "Kassel",
+    "addr:housenumber": "23",
+    "addr:postcode": "34123",
+    "addr:street": "Steinigkstraße",
+    "contact:email": "yes",
+    "contact:website": "yes",
+    "description": "urban garden, community garden, 7000qm, Permaculture Forest Garden",
+    "identity": "commons",
+    "interaction": "sharing",
+    "name": "ForstFeldGarten",
+    "organic": "yes",
+    "topic": "land",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3571632411,
+  "lat": 51.3069020,
+  "lon": 9.4867205,
+  "tags": {
+    "addr:city": "Kassel",
+    "addr:housenumber": "60",
+    "addr:postcode": "34121",
+    "addr:street": "Frankfurter Straße",
+    "club": "yes",
+    "contact:email": "fbi@ku-ki.org",
+    "contact:website": "fbi.ku-ki.org",
+    "description": "\"im FBI kansst du frei von Erwartungen spielerisch experimentieren und findest Hilfestellung bei der Umsetzung deiner Vorhaben\" Die Ermittlungsabteilungen des FBI sind der Umsonstladen, die MittwochsKüche, die AbholBar, das Repair-Café und das Kino.",
+    "identity": "demonetized_economy",
+    "interaction": "diy_and_dit",
+    "name": "FBI - FachBeschfät für Interaktion",
+    "topic": "spaces"
+  }
+},
+{
+  "type": "node",
+  "id": 3571683293,
+  "lat": 51.3152432,
+  "lon": 9.4607809,
+  "tags": {
+    "identity": "commons",
+    "name": "Huttenplatz, offener Nachbarschaftsgarten"
+  }
+},
+{
+  "type": "node",
+  "id": 3571711994,
+  "lat": 51.3186475,
+  "lon": 9.4962132,
+  "tags": {
+    "addr:city": "Kassel",
+    "addr:housenumber": "2",
+    "addr:postcode": "34117",
+    "addr:street": "Lutherstraße",
+    "contact:website": "yes",
+    "identity": "permaculture",
+    "interaction": "sharing",
+    "name": "plan t - there is plenty for all of us > living sculptue since 2005",
+    "topic": "land"
+  }
+},
+{
+  "type": "node",
+  "id": 3596001046,
+  "lat": 52.0887068,
+  "lon": 5.1374014,
+  "tags": {
+    "addr:city": "Utrecht",
+    "addr:housenumber": "25",
+    "addr:postcode": "3581KK",
+    "addr:street": "Burgemeester Reigerstraat",
+    "amenity": "cafe",
+    "cuisine": "regional",
+    "identity": "economy_for_the_common_good",
+    "interaction": "buying_and_selling",
+    "internet_access": "wlan",
+    "name": "HOOI",
+    "provides": "food+drink",
+    "regional": "yes",
+    "smoking": "no"
   }
 },
 {
@@ -1507,6 +1923,60 @@
 },
 {
   "type": "node",
+  "id": 1240682002,
+  "lat": 47.0692653,
+  "lon": 15.4302126
+},
+{
+  "type": "node",
+  "id": 1240682004,
+  "lat": 47.0692548,
+  "lon": 15.4304256
+},
+{
+  "type": "node",
+  "id": 1240682006,
+  "lat": 47.0689380,
+  "lon": 15.4304722
+},
+{
+  "type": "node",
+  "id": 1240682008,
+  "lat": 47.0693164,
+  "lon": 15.4305201
+},
+{
+  "type": "node",
+  "id": 1240682011,
+  "lat": 47.0693215,
+  "lon": 15.4304326
+},
+{
+  "type": "node",
+  "id": 1240682018,
+  "lat": 47.0692787,
+  "lon": 15.4300404
+},
+{
+  "type": "node",
+  "id": 1240682019,
+  "lat": 47.0691015,
+  "lon": 15.4304936
+},
+{
+  "type": "node",
+  "id": 1240682022,
+  "lat": 47.0692851,
+  "lon": 15.4299398
+},
+{
+  "type": "node",
+  "id": 1240682035,
+  "lat": 47.0688056,
+  "lon": 15.4298767
+},
+{
+  "type": "node",
   "id": 1240706485,
   "lat": 47.0694523,
   "lon": 15.4291499
@@ -1522,6 +1992,30 @@
   "id": 1240706494,
   "lat": 47.0696286,
   "lon": 15.4292344
+},
+{
+  "type": "node",
+  "id": 1240713742,
+  "lat": 47.0688960,
+  "lon": 15.4305285
+},
+{
+  "type": "node",
+  "id": 1240713751,
+  "lat": 47.0688969,
+  "lon": 15.4305124
+},
+{
+  "type": "node",
+  "id": 1240713783,
+  "lat": 47.0689336,
+  "lon": 15.4305335
+},
+{
+  "type": "node",
+  "id": 1240713790,
+  "lat": 47.0687734,
+  "lon": 15.4304904
 },
 {
   "type": "node",
@@ -1826,9 +2320,7 @@
   "lat": 47.0708233,
   "lon": 15.4263093,
   "tags": {
-    "entrance": "yes",
-    "name": "Elevate Büro",
-    "office": "yes"
+    "entrance": "yes"
   }
 },
 {
@@ -1986,6 +2478,42 @@
   "id": 3149015003,
   "lat": 47.1011459,
   "lon": 15.4526756
+},
+{
+  "type": "node",
+  "id": 3149090413,
+  "lat": 47.0324225,
+  "lon": 15.3976572
+},
+{
+  "type": "node",
+  "id": 3149090414,
+  "lat": 47.0324330,
+  "lon": 15.3982071
+},
+{
+  "type": "node",
+  "id": 3149090415,
+  "lat": 47.0323153,
+  "lon": 15.3979847
+},
+{
+  "type": "node",
+  "id": 3149090416,
+  "lat": 47.0323144,
+  "lon": 15.3982257
+},
+{
+  "type": "node",
+  "id": 3149090417,
+  "lat": 47.0323103,
+  "lon": 15.3976643
+},
+{
+  "type": "node",
+  "id": 3149090418,
+  "lat": 47.0323137,
+  "lon": 15.3979233
 },
 {
   "type": "node",
@@ -2389,6 +2917,7 @@
     "name": "Forum Stadtpark",
     "provides": "culture;spaces",
     "website": "http://forum.mur.at",
+    "wheelchair": "yes",
     "wikipedia": "de:Forum Stadtpark"
   }
 },
@@ -2451,12 +2980,10 @@
     "addr:country": "AT",
     "addr:postcode": "8054",
     "addr:street": "Krottendorferstraße",
-    "commons": "communitygarden",
-    "contact:email": "ulrike.dietschy@aon.at",
-    "contact:name": "Ulrike Dietschy",
     "diet:vegan": "yes",
     "diet:vegetarian": "yes",
     "fee": "no",
+    "garden:type": "community",
     "identity": "commons",
     "interaction": "renting;gifting;diy_and_dit",
     "internet_access": "no",
@@ -2540,10 +3067,9 @@
     "addr:housenumber": "3",
     "addr:postcode": "8010",
     "addr:street": "Zinzendorfgasse",
-    "commons": "communitygarden",
-    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "fee": "yes",
+    "garden:type": "community",
     "identity": "commons",
     "interaction": "gifting",
     "leisure": "garden",
@@ -2589,9 +3115,8 @@
     2432859830
   ],
   "tags": {
-    "commons": "communitygarden",
-    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
+    "garden:type": "community",
     "identity": "commons",
     "interaction": "diy_and_dit",
     "leisure": "garden",
@@ -2638,11 +3163,10 @@
     "addr:housenumber": "25",
     "addr:postcode": "8010",
     "addr:street": "Attemsgasse",
-    "commons": "communitygarden",
     "contact:name": "Verein Gemeinschaftsprojekt Attemsgarten",
-    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
-    "identity": "commons",
+    "garden:type": "community",
+    "identity": "transition_initiative;commons",
     "interaction": "gifting",
     "internet_access": "yes",
     "internet_access:fee": "Eduroam",
@@ -2676,6 +3200,48 @@
 },
 {
   "type": "way",
+  "id": 243661170,
+  "nodes": [
+    1240682022,
+    1240682035,
+    1240713790,
+    1240713751,
+    1240713742,
+    1240713783,
+    1240682006,
+    1240682019,
+    1240682008,
+    1240682011,
+    1240682004,
+    1240682002,
+    1240682018,
+    1240682022
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:housenumber": "9",
+    "addr:postcode": "8020",
+    "addr:street": "Grenadiergasse",
+    "diet:vegetarian": "yes",
+    "fee": "no",
+    "garden:type": "community",
+    "identity": "commons",
+    "leisure": "garden",
+    "name": "Garden Lab Graz",
+    "production_input:money:crowdfunding": "yes",
+    "production_input:money:gift": "yes",
+    "production_input:natural_recources:democratic": "yes",
+    "production_input:natural_recources:fair": "yes",
+    "production_input:natural_recources:regional": "yes",
+    "production_input:natural_resources:sustainable": "yes",
+    "provides": "food+drink;spaces;community;participation",
+    "start_date": "2013",
+    "url": "http://gardenlab-graz.over-blog.com/"
+  }
+},
+{
+  "type": "way",
   "id": 243663277,
   "nodes": [
     3149306919,
@@ -2702,10 +3268,9 @@
     "addr:housenumber": "94",
     "addr:postcode": "8010",
     "addr:street": "Hochsteingasse",
-    "commons": "communitygarden",
-    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
-    "identity": "transition_initiative;commons",
+    "garden:type": "community",
+    "identity": "commons",
     "interaction": "gifting;diy_and_dit",
     "leisure": "garden",
     "name": "Hochsteingarten",
@@ -2740,12 +3305,11 @@
     "addr:housenumber": "238",
     "addr:postcode": "8047",
     "addr:street": "Riesstraße",
-    "commons": "communitygarden",
     "contact:email": "riesparadies@lists.lnxnt.org",
     "contact:fax": "+43 316 30 19 60",
     "contact:phone": "+43 316 30 19 60",
     "garden:type": "community",
-    "identity": "permaculture",
+    "identity": "commons",
     "interaction": "cousing",
     "leisure": "garden",
     "name": "Ries Paradies",
@@ -2769,8 +3333,8 @@
     "addr:country": "AT",
     "addr:postcode": "8010",
     "addr:street": "Rechbauerstraße",
-    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
+    "garden:type": "community",
     "identity": "commons",
     "interaction": "gifting;diy_and_dit",
     "leisure": "garden",
@@ -2814,9 +3378,8 @@
     "addr:housenumber": "102",
     "addr:postcode": "8043",
     "addr:street": "Mariagrüner Straße",
-    "commons": "communitygarden",
-    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
+    "garden:type": "community",
     "identity": "commons",
     "interaction": "diy_and_dit",
     "leisure": "garden",
@@ -2835,6 +3398,50 @@
 },
 {
   "type": "way",
+  "id": 309570122,
+  "nodes": [
+    3149090417,
+    3149090413,
+    3149090414,
+    3149090416,
+    3149090415,
+    3149090418,
+    3149090417
+  ],
+  "tags": {
+    "addr:city": "Graz",
+    "addr:country": "AT",
+    "addr:postcode": "8054",
+    "addr:street": "Salfeldstraße",
+    "contact:email": "scherz.anneliese@gmx.at",
+    "contact:name": "Anneliese Scherz",
+    "diet:vegetarian": "yes",
+    "fee": "yes",
+    "garden:type": "community",
+    "identity": "commons",
+    "interaction": "bartering;gifting",
+    "leisure": "garden",
+    "mode_of_organisation:members": "users",
+    "mode_of_organisation:ownership_structure": "privat",
+    "mode_of_organisation:purpose": "non_profit",
+    "mode_of_organisation:scale_of_activity": "local",
+    "mode_of_organisation:self_managed": "yes",
+    "name": "Garten Mutter Erde",
+    "payment:donations": "yes",
+    "production_input:knowledge:public_domain": "yes",
+    "production_input:money:crowdfunding": "yes",
+    "production_input:money:gift": "yes",
+    "production_input:natural_recources:democratic": "yes",
+    "production_input:natural_recources:fair": "yes",
+    "production_input:natural_recources:regional": "yes",
+    "production_input:natural_resources:sustainable": "yes",
+    "provides": "food+drink;culture;spaces;learning_opportunities;community;participation",
+    "start_date": "2009",
+    "website": "http://www.gartenpolylog.org/gardens/muttererde"
+  }
+},
+{
+  "type": "way",
   "id": 309613728,
   "nodes": [
     1240706491,
@@ -2848,8 +3455,8 @@
     "addr:country": "AT",
     "addr:postcode": "8020",
     "addr:street": "Kernstockgasse",
-    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
+    "garden:type": "community",
     "identity": "commons",
     "interaction": "diy_and_dit",
     "leisure": "garden",
@@ -2936,7 +3543,8 @@
     "addr:street": "Warnblickweg",
     "contact:email": "wieserhoisl@riseup.net",
     "contact:phone": "+43 3462 26870",
-    "csa": "source",
+    "farm_boxes": "source",
+    "farm_boxes:type": "csa",
     "identity": "economy_for_the_common_good",
     "landuse": "farmyard",
     "name": "Hofkollektiv Wieserhoisl",
