@@ -805,6 +805,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   // extra mapkey for maps not deriving from taxonomy.json
   if(window.mapkey) {
       $('#mapkey').append(window.mapkey);
+      $('#mapkey li').attr('class','manual');
   }
   // map key derived from taxonomy gets added when taxonomy.json is loaded
 

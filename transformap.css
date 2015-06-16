@@ -392,9 +392,13 @@ padding:0px;
   text-decoration:none;
 }
 #mapswitcher a:hover {
-    text-decoration:underline
+    text-decoration:underline;
 }
 
+#sidebar #mapkey li.manual {
+  text-indent:0;
+  padding-left:0;
+}
 #mapkey li {
     padding:5px 0;
     cursor:help;
