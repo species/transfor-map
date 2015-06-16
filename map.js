@@ -446,45 +446,62 @@ function updateFilterCount() {
         }
     }
 
-  //  return;
-
     var bounds = map.getBounds();
-  //  console.log(bounds);
     var marker_array = markers.GetMarkers();
+
+    //list of visible markers needed because we need to know their amount
+    var visible_markers = [], nr_pois = { node: 0, way: 0, relation:0 };
     for(var i = 0; i < marker_array.length; i++) {
         var marker = marker_array[i];
         var latlng = L.latLng(marker.data.lat, marker.data.lon);
-        if( ! bounds.contains(latlng) )
-            continue;
-        console.log(marker.data.title);
+        if( bounds.contains(latlng) )
+            visible_markers.push(marker);
+    }
+
+    for(var i = 0; i < visible_markers.length; i++) {
+        var marker = visible_markers[i];
+        var marker_id = marker.data.type + marker.data.id;
+        nr_pois[marker.data.type]++;
         for(filtername in filters) {
+
+            var is_marker_unknown = true;
+
             for(itemname in filters[filtername].sub_criteria) {
-                var id = 'filter_'+filtername+'_'+itemname+'_counter';
-                var current_count = document.getElementById(id).innerHTML;
+                var el = document.getElementById('filter_'+filtername+'_'+itemname+'_counter');
+                var current_count = el.innerHTML;
                 if(current_count == "-")
                     current_count = 0;
                 
                 if(itemname != "unknown") {
                     if (filtername == "provides") {
-                        if (needsFilterMatches(marker.data.tags, filters[filtername].sub_criteria[itemname]))
+                        if (needsFilterMatches(marker.data.tags, filters[filtername].sub_criteria[itemname])) {
                           current_count++;
+                          is_marker_unknown = false;
+                        } 
                     } else {
-                        if (filterMatches(marker.data.tags, filters[filtername].sub_criteria[itemname]))
+                        if (filterMatches(marker.data.tags, filters[filtername].sub_criteria[itemname])) {
                           current_count++;
+                          is_marker_unknown = false;
+                        } 
                     }
-                    var el = document.getElementById(id);
-                    el.innerHTML = current_count;
-                    if(current_count == "0")
-                        el.style.color="gray";
-                    else
-                        el.style.color="inherit";
-
+                } else { // unknown is always last
+                    if(is_marker_unknown) current_count++ ;
                 }
+                el.innerHTML = current_count;
+                if(current_count == "0")
+                    el.style.color="#ADADAD";
+                else
+                    el.style.color="inherit";
+
+
             }
         }
 
         
     }
+    $('#tnode').attr('element-nrs',nr_pois.node);
+    $('#tway').attr('element-nrs',nr_pois.way);
+    $('#trel').attr('element-nrs',nr_pois.relation);
 }
 
 /* precondition: in global var filters, an object $filtername must exist.
@@ -1161,6 +1178,8 @@ function loadPoi() {
     var pdata = {
       lat: data.lat,
       lon: data.lon,
+      id: data.id,
+      type: data.type,
       icon: needs_icon,
       title: data.tags.name,
       popup: fillPopup(data.tags,data.type,data.id,data.lat,data.lon),
@@ -1288,7 +1307,7 @@ function loadPoi() {
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tnode').css("display", "block");
-    $('#tnode').html("<img src='assets/20px-Mf_node.svg.png' />: " + json_date.toLocaleString());
+    $('#tnode').html(json_date.toLocaleString());
     updateFilterCount();
   }
 
@@ -1329,7 +1348,7 @@ function loadPoi() {
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tway').css("display", "block");
-    $('#tway').html("<img src='assets/20px-Mf_way.svg.png' />: " + json_date.toLocaleString());
+    $('#tway').html(json_date.toLocaleString());
     updateFilterCount();
   }
 
@@ -1401,7 +1420,7 @@ function loadPoi() {
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#trel').css("display", "block");
-    $('#trel').html("<img src='assets/20px-Mf_relation.svg.png' />: " + json_date.toLocaleString());
+    $('#trel').html(json_date.toLocaleString());
     updateFilterCount();
   }
 

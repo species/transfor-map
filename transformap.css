@@ -592,8 +592,24 @@ padding:0px;
     z-index:-1;
     text-align:right;
 }
-#sidebar #timestamp img {
-    height:14px;
+#sidebar #timestamp div:before {
+  background-repeat: no-repeat;
+  background-position: center right 4px ;
+  background-size:14px;
+}
+#sidebar #timestamp div {
+}
+#sidebar #timestamp #tnode:before {
+  content:attr(element-nrs) "\00A0\00A0\00A0\00A0\00A0\00A0:";
+  background-image: url(assets/20px-Mf_node.svg.png);
+}
+#sidebar #timestamp #tway:before {
+  content:attr(element-nrs) "\00A0\00A0\00A0\00A0\00A0\00A0:";
+  background-image: url(assets/20px-Mf_way.svg.png);
+}
+#sidebar #timestamp #trel:before {
+  content:attr(element-nrs) '\00A0\00A0\00A0\00A0\00A0\00A0:';
+  background-image: url(assets/20px-Mf_relation.svg.png);
 }
 
 
