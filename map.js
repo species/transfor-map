@@ -1301,16 +1301,18 @@ function loadPoi() {
       }
     }
     var number = new_markers.length;
-    markers.RegisterMarkers(new_markers);
-    markers.ProcessView();
-    new_markers = [];
-    console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
-    changeLoadingIndicator("loading_node", -1);
+    if(number) {
+        markers.RegisterMarkers(new_markers);
+        markers.ProcessView();
+        updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        new_markers = [];
+    }
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tnode').css("display", "block");
     $('#tnode').html(json_date.toLocaleString());
-    updateFilterCount();
+    changeLoadingIndicator("loading_node", -1);
+    console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
   }
 
   function handleWays(overpassJSON) {
@@ -1342,16 +1344,18 @@ function loadPoi() {
     }
 
     var number = new_markers.length;
-    markers.RegisterMarkers(new_markers);
-    markers.ProcessView();
-    new_markers = [];
-    console.log("handleWays (pid " + pid + ") done, " + number + " added.");
-    changeLoadingIndicator("loading_way", -1);
+    if(number) {
+        markers.RegisterMarkers(new_markers);
+        markers.ProcessView();
+        updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        new_markers = [];
+    }
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#tway').css("display", "block");
     $('#tway').html(json_date.toLocaleString());
-    updateFilterCount();
+    changeLoadingIndicator("loading_way", -1);
+    console.log("handleWays (pid " + pid + ") done, " + number + " added.");
   }
 
   function handleRelations(overpassJSON) {
@@ -1414,16 +1418,18 @@ function loadPoi() {
     }
     
     var number = new_markers.length;
-    markers.RegisterMarkers(new_markers);
-    markers.ProcessView();
-    new_markers = [];
-    console.log("handleRelations (pid " + pid + ") done, " + number + " added.");
-    changeLoadingIndicator("loading_rel", -1);
+    if(number) {
+        markers.RegisterMarkers(new_markers);
+        markers.ProcessView();
+        updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        new_markers = [];
+    }
 
     var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
     $('#trel').css("display", "block");
     $('#trel').html(json_date.toLocaleString());
-    updateFilterCount();
+    changeLoadingIndicator("loading_rel", -1);
+    console.log("handleRelations (pid " + pid + ") done, " + number + " added.");
   }
 
   var query = overpass_query;
@@ -1450,8 +1456,6 @@ function loadPoi() {
   console.log("loadPOI: before JSON call rel: " + rel_url);
   changeLoadingIndicator("loading_rel", +1);
   $.getJSON(rel_url, handleRelations);
-
-
 }
 
 function updateLinks() {
