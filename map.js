@@ -1,4 +1,4 @@
-if(!window.console) 
+if(!window.console)  // for very old browser
     var console = { log : function(i){}}
 
 // global texts
@@ -560,8 +560,8 @@ http_request.onreadystatechange = function () {
 
           if(taxonomy) {
               // add map key derived from it
-              for(var osmkey_counter = 0; osmkey_counter < icon_tags.length; osmkey_counter++) {
-                  var osmkey = icon_tags[osmkey_counter];
+              for(var osmkey_counter = 0; osmkey_counter < overpass_config.icon_tags.length; osmkey_counter++) {
+                  var osmkey = overpass_config.icon_tags[osmkey_counter];
 
                   var taxonomy_block = taxonomy[osmkey];
                   if (!taxonomy_block) {
@@ -697,33 +697,38 @@ function reDrawMap() {
         map.invalidateSize(true);
 }
 
-var overpass_servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ],
-    overpass_ql_text,
+var overpass_ql_text,
     overpass_query,
     overpass_query_nodes,
     overpass_query_ways,
     overpass_query_rels;
 
 /*
- * expects global var query_array to be set 
  * sets global the vars above
+ * MUST be called before first loadPOI
  */
-function buildOverpassQuery(overpass_timeout, overpass_servers_param) {
-    if( ! overpass_timeout )
-        overpass_timeout = 180;
-    if( overpass_servers_param ) 
-        overpass_servers = overpass_servers_param;
-    
+function buildOverpassQuery() {
+    if(! window.overpass_config )
+        window.overpass_config = {};
+
+    if(! overpass_config.timeout)             overpass_config.timeout = 180;
+    if(! overpass_config.minzoom)             overpass_config.minzoom = 12;
+    if(! overpass_config.servers)             overpass_config.servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ];
+    if(! overpass_config.q_array)             overpass_config.q_array = [ [ '"identity"' ] ];
+    if(! overpass_config.icon_folder)         overpass_config.icon_folder = "identities";
+    if(! overpass_config.icon_tags)           overpass_config.icon_tags = [ "identity" ]
+    if(! overpass_config.class_selector_key)  overpass_config.class_selector_key = { key: "" };
+
     var overpass_urlstart = 'interpreter?data=';
-    var overpass_start = '[out:json][timeout:' + overpass_timeout + '][bbox:BBOX];';
+    var overpass_start = '[out:json][timeout:' + overpass_config.timeout + '][bbox:BBOX];';
 
     var overpass_query_string = "";
     var overpass_query_string_nodes = "";
     var overpass_query_string_ways = "";
     var overpass_query_string_rels = "";
 
-    for (var i = 0; i < query_array.length; i++) {
-      var anded_tags = query_array[i];
+    for (var i = 0; i < overpass_config.q_array.length; i++) {
+      var anded_tags = overpass_config.q_array[i];
       var anded_querystring = "";
       var nr_of_and_clauses = anded_tags.length;
       for (var j=0; j < nr_of_and_clauses; j++) {
@@ -740,10 +745,10 @@ function buildOverpassQuery(overpass_timeout, overpass_servers_param) {
     }
 
     overpass_ql_text = overpass_start + overpass_query_string;
-    overpass_query = overpass_servers[0] + overpass_urlstart + overpass_ql_text;
-    overpass_query_nodes = overpass_servers[0] + overpass_urlstart + overpass_start + overpass_query_string_nodes;
-    overpass_query_ways = overpass_servers[1] + overpass_urlstart + overpass_start + overpass_query_string_ways;
-    overpass_query_rels = overpass_servers[2] + overpass_urlstart + overpass_start + overpass_query_string_rels;
+    overpass_query = overpass_config.servers[0] + overpass_urlstart + overpass_ql_text;
+    overpass_query_nodes = overpass_config.servers[0] + overpass_urlstart + overpass_start + overpass_query_string_nodes;
+    overpass_query_ways = overpass_config.servers[1] + overpass_urlstart + overpass_start + overpass_query_string_ways;
+    overpass_query_rels = overpass_config.servers[2] + overpass_urlstart + overpass_start + overpass_query_string_rels;
     console.log(overpass_query_nodes);
     console.log(overpass_query_ways);
     console.log(overpass_query_rels);
@@ -831,9 +836,9 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     
   $('#sidebar').append('<div id="timestamp"></div>');
   $('#timestamp').append('<div id="tall" title="Local copy"></div>'); // alert() is only for dev, works only in FF if you SELECT TEXT.
-  $('#timestamp').append('<div id="tnode" onmouseover="alert(\'' + overpass_servers[0].replace(/^http:\/\//,"") + '\');"></div>');
-  $('#timestamp').append('<div id="tway"  onmouseover="alert(\'' + overpass_servers[1].replace(/^http:\/\//,"") + '\');"></div>');
-  $('#timestamp').append('<div id="trel"  onmouseover="alert(\'' + overpass_servers[2].replace(/^http:\/\//,"") + '\');"></div>');
+  $('#timestamp').append('<div id="tnode" onmouseover="alert(\'' + overpass_config.servers[0].replace(/^http:\/\//,"") + '\');"></div>');
+  $('#timestamp').append('<div id="tway"  onmouseover="alert(\'' + overpass_config.servers[1].replace(/^http:\/\//,"") + '\');"></div>');
+  $('#timestamp').append('<div id="trel"  onmouseover="alert(\'' + overpass_config.servers[2].replace(/^http:\/\//,"") + '\');"></div>');
 
   $('body').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
   $('#forkme').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" />');
@@ -915,7 +920,7 @@ function secHTML(input) {
 function loadPoi() {
   updateFilterCount(); // here because it is called on every map move
   var notificationbar =  document.getElementById("notificationbar");
-  if (map.getZoom() < 12 ) {
+  if (map.getZoom() < overpass_config.minzoom ) {
     notificationbar.style.display = "block";
     if(on_start_loaded) {
       var json_date = new Date(pois_lz.osm3s.timestamp_osm_base);
@@ -969,7 +974,7 @@ function loadPoi() {
 
   var current_zoom = map.getZoom();
   console.log("loadPOI called, z" + current_zoom);
-  if(current_zoom > old_zoom && current_zoom != 12) {
+  if(current_zoom > old_zoom && current_zoom != overpass_config.minzoom) {
     console.log("zooming in, POI already loaded, nothing to to");
     old_zoom = current_zoom;
     return;
@@ -1162,8 +1167,8 @@ function loadPoi() {
 
     // set icon dependent on tags
     var icon_tag = ""; //OSM key for choosing icon
-    for (var i = 0; i < icon_tags.length; i++) {
-      var key = icon_tags[i];
+    for (var i = 0; i < overpass_config.icon_tags.length; i++) {
+      var key = overpass_config.icon_tags[i];
       if(data.tags[key] && ! ( key == "amenity" && data.tags[key] == "shop" ) ) {
         icon_tag = key;
         break;
@@ -1172,16 +1177,16 @@ function loadPoi() {
 
     var icon_url = "";
     if(!icon_tag) {
-      icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/unknown.png";
+      icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/unknown.png";
     } else {
 
       if (data.tags[icon_tag].indexOf(";") >= 0) // more than one item, take generic icon
-        icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/generic.png";
+        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/generic.png";
       else
-        icon_url = "assets/transformap/pngs/" + icon_foldername + "/" + iconsize + "/" + icon_tag + "=" + data.tags[icon_tag] + ".png";
+        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/" + icon_tag + "=" + data.tags[icon_tag] + ".png";
     }
 
-    var icon_class = (window.class_selector_key && data.tags[window.class_selector_key["key"]]) ? window.class_selector_key["key"] : "color_undef";
+    var icon_class = (overpass_config.class_selector_key && data.tags[overpass_config.class_selector_key["key"]]) ? overpass_config.class_selector_key["key"] : "color_undef";
 
     var needs_icon = L.icon({
       iconUrl: icon_url,
@@ -1211,8 +1216,8 @@ function loadPoi() {
       return null;
 
     var is_one_of_queried=0; // for filtering out tagged nodes which are part of ways
-    for ( var i = 0; i < query_array.length; i++) {
-        var res=query_array[i][0].replace(/["]?/,"").replace(/["].*$/,"");
+    for ( var i = 0; i < overpass_config.q_array.length; i++) {
+        var res = overpass_config.q_array[i][0].replace(/["]?/,"").replace(/["].*$/,"");
         if(data.tags[res]) {
             is_one_of_queried=1;
             break;

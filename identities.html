@@ -53,16 +53,15 @@
      *
      * human readable length of query is not important, query speed is!
      */
-    var overpass_timeout = "180"; //seconds
-
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
-    var query_array = [ [ '"identity"' ] ];
+    var overpass_config = {
+        q_array: [ [ '"identity"' ] ],
+        icon_folder : "identities",
+        icon_tags : [ "identity" ],
+        class_selector_key : { key: "identity" }
+    }
 
-    buildOverpassQuery(overpass_timeout);
-
-    var icon_foldername = "identities";
-    var icon_tags = [ "identity" ];
-    var class_selector_key = { key: "identity" };
+    buildOverpassQuery();
 
     var about_text = '<p>The map of identities displays the different identities of the TransforMap movement.</p>'
     + 'The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. For an OSM Object to appear on this map, it has to have the tag “<a href="https://wiki.openstreetmap.org/wiki/Proposed_features/TransforMap#Self-description_of_a_community">identity</a>” set.</p>'

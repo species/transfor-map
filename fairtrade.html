@@ -50,15 +50,14 @@
      *
      * human readable length of query is not important, query speed is!
      */
-    var overpass_timeout = "180"; //seconds
-
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
-    var query_array = [ [ '"fair_trade"~"only|yes|limited"' ], [ '"shop"~"fair[_]?trade"' ] ];
+    var overpass_config = {
+        q_array: [ [ '"fair_trade"~"only|yes|limited"' ], [ '"shop"~"fair[_]?trade"' ] ],
+        icon_folder : "pois",
+        icon_tags : [ "shop","amenity","leisure" ]
+    }
 
-    buildOverpassQuery(overpass_timeout);
-
-    var icon_foldername = "pois";
-    var icon_tags = [ "shop","amenity","leisure" ];
+    buildOverpassQuery();
 
     var about_text = '<p>This map displays places where you can get stuff produced fair.</p>'
         + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. '

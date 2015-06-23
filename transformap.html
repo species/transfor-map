@@ -53,16 +53,15 @@
      *
      * human readable length of query is not important, query speed is!
      */
-    var overpass_timeout = "180"; //seconds
-
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
-    var query_array = [ [ 'topic' ], [ 'provides'] ];
+    var overpass_config = {
+        q_array: [ [ 'topic' ], [ 'provides'] ],
+        icon_folder : "needs",
+        icon_tags : [ "topic", "provides" ],
+        class_selector_key : { key: "topic" }
+    }
 
-    buildOverpassQuery(overpass_timeout);
-
-    var icon_foldername = "needs";
-    var icon_tags = [ "topic", "provides" ];
-    var class_selector_key = { key: "topic" };
+    buildOverpassQuery();
 
     var map, ids, markers, lc = {};
     var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
