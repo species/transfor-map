@@ -996,7 +996,7 @@ function loadPoi() {
 
   function fillPopup(tags,type,id,lat,lon) {
 
-    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","fax","contact:fax","created_by","area","layer","room","indoor","twitter","contact:twitter","link:twitter", "contact:google_plus", "google_plus", "link:google_plus", "contact:facebook","facebook","link:facebook","facebook:page","website:facebook","url:facebook","contact:youtube","youtube","link:youtube","wheelchair","wheelchair:description" ];
+    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","fax","contact:fax","created_by","area","layer","room","indoor","twitter","contact:twitter","link:twitter", "contact:google_plus", "google_plus", "link:google_plus", "contact:facebook","facebook","link:facebook","facebook:page","website:facebook","url:facebook","contact:youtube","youtube","link:youtube","wheelchair","wheelchair:description","wikipedia","wikidata" ];
 
     var r = $('<table>');
 
@@ -1009,8 +1009,8 @@ function loadPoi() {
         var string = "";
 
         for (key in tags) {
-            var value = tags[key];
-            var valuestring = value;
+            var value = tags[key].replace(/^http[s]?:\/\//,""); //we add https later, regardless of link
+            var valuestring = decodeURIComponent(value); 
             var img = "<img src='assets/";
 
             if(/twitter/.test(key)) {
@@ -1029,9 +1029,20 @@ function loadPoi() {
                 if(! /youtube.com\//.test(value)) valuestring = "youtube.com/" + valuestring;
                 img += "YouTube.16.png' title='YouTube channel' />";
             } else
+            if(/^wikipedia/.test(key)) {
+                var lang = key.match(/^(?:wikipedia:)([a-z-]{2,7})$/) || ""; // if value starts with e.g. "de:ARTICLE", this works in WP anyway
+                if(! /wikipedia\./.test(value)) valuestring = "wikipedia.org/wiki/" + valuestring;
+                if(lang) valuestring = lang[1] + "." + valuestring;
+
+                img += "wikipedia.16.png' title='Wikipedia Article' />";
+            } else
+            if(/wikidata/.test(key)) {
+                if(! /wikidata.org\//.test(value)) valuestring = "wikidata.org/wiki/" + valuestring;
+                img += "wikidata.16.png' title='Wikidata Entry' />";
+            } else
                 continue;
 
-            if(! /^http[s]?:\/\//.test(valuestring)) valuestring = "https://" + valuestring;
+            valuestring = "https://" + valuestring;
 
             string += "<a href='" + valuestring + "'>" + img + "</a> ";
         }
