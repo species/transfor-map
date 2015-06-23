@@ -1097,6 +1097,11 @@ function loadPoi() {
 
         var htlink = $('<a>').attr('href', begin + value).text(decodeURIComponent(value));
         r.append($('<tr>').addClass('tag').append($('<th>').text(key)).append($('<td>').append(htlink)));
+      } else if ( key == 'wikidata' ) { 
+        var begin = (! /^http/.test(value)) ? "https://www.wikidata.org/wiki/" : ""; //http[s] is implicit here
+
+        var htlink = $('<a>').attr('href', begin + value).text(decodeURIComponent(value));
+        r.append($('<tr>').addClass('tag').append($('<th>').text(key)).append($('<td>').append(htlink)));
       } else if (key == 'contact:email' || key == 'email') {
         if ( ! /^mailto:/.test(value) )
           value = "mailto:" + value;
