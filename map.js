@@ -849,10 +849,23 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   $('body').append('<div id="notificationbar">Please zoom in to update POIs!</div>');
 
   map.on('moveend', updateLinks);
+  map.on('popupopen', setImageInPopup);
 
   setTimeout(toggleSideBarOnLoad,200);
 
   return map;
+}
+
+function setImageInPopup(obj) {
+    if(!$('#wp-image') || $('#wp-image img').attr('src')) //no wp-image or already set
+        return;
+    var img = $('#wp-image img');
+    var source = wikipedia_images["wpimage_" + img.attr('title')];
+
+    if(!source || source == "UNDEF") //no answer for item yet or no image on wikipedia
+        $('#wp-image').css('display','none')
+    else
+        img.attr('src', source);
 }
 
 function toggleSideBarOnLoad() {
@@ -1001,9 +1014,11 @@ function loadPoi() {
     var r = $('<table>');
 
     r.append($('<tr>')
+            .attr('class','header')
             .append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '" title="Link to ' + type + ' ' + id + ' on OpenStreetMap" target=_blank><img src="assets/20px-Mf_' + type + '.svg.png" />' + type.substring(0,1) + id + '</a>'))
             .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + lon + '/' + lat + '" title="Edit this object with iD for TransforMap" target=_blank>Edit</a>'))
         );
+    var wikipedia_link = "";
 
     function addSocialMediaLinks(tags) {
         var string = "";
@@ -1035,6 +1050,7 @@ function loadPoi() {
                 if(lang) valuestring = lang[1] + "." + valuestring;
 
                 img += "wikipedia.16.png' title='Wikipedia Article' />";
+                wikipedia_link = "https://" + valuestring;
             } else
             if(/wikidata/.test(key)) {
                 if(! /wikidata.org\//.test(value)) valuestring = "wikidata.org/wiki/" + valuestring;
@@ -1055,7 +1071,9 @@ function loadPoi() {
     if(tags["addr:street"] || tags["addr:housenumber"] || tags["addr:postcode"] || tags["addr:city"] || tags["addr:suburb"] || tags["addr:country"]
             || tags["website"] || tags["url"] || tags["contact:website"] || tags["contact:url"] || tags["email"] || tags["contact:email"]
             || tags["phone"] || tags["contact:phone"] || tags["fax"] || tags["contact:fax"] || tags["wheelchair"] || social_media_links) {
-        r.append($('<tr>').append($('<td>').append(
+        r.append($('<tr>')
+                .attr('class','header')
+                .append($('<td>').append(
               (tags["addr:street"] ? tags["addr:street"] : "" ) +
               (tags["addr:housenumber"] ? ("&nbsp;" + tags["addr:housenumber"]) : "" ) + 
               ( (tags["addr:housenumber"] || tags["addr:street"]) ? ",<br>" : "" ) +
@@ -1089,6 +1107,47 @@ function loadPoi() {
 
           )));
     }
+    for (key in tags) {
+        var value = tags[key];
+        if(/^wikipedia/.test(key)) {
+            var wp_articlename = "";
+            var lang = key.match(/^(?:wikipedia:)([a-z-]{2,7})$/) || value.match(/^([a-z-]{2,7}):/) || ""; 
+            lang = (lang) ? lang[1] : "en";
+
+            if(! /wikipedia\./.test(value))
+                wp_articlename = value;
+            else {
+                wp_articlename = value.replace(/^http[s]?:\/\//,'')
+                                      .replace(/^www\./,'')
+                                      .replace(/^([a-z-]{2,7})\.wikipedia/,'')
+                                      .replace(/^wikipedia\./,'')
+                                      .replace(/^[a-z]{2,3}\/wiki\//,'');
+            }
+            wp_articlename = wp_articlename.replace(/^[a-z-]{2,7}:/,'');
+            var article_id = "wpimage_" + wp_articlename; // we must omit LANG here, as we don't have a way to get lang in callback function run on wikipedia's answer FIXME breaks on 2 wp links, when the first one is non-english...
+
+            var req_string = "https://" + lang + ".wikipedia.org/w/api.php?action=query&titles=" + wp_articlename + "&prop=pageimages&format=json&pithumbsize=260";
+
+            $.getJSON(req_string + "&callback=?", function(data) {
+                    for(obj_id in data.query.pages) {
+                        var item = data.query.pages[obj_id];
+                        if(item.thumbnail) {
+                            wikipedia_images["wpimage_" + item.title] = item.thumbnail.source;
+                        } else {
+                            wikipedia_images["wpimage_" + item.title] = "UNDEF";
+                            console.log("no WP image for " + item.title);
+                        }
+                    }
+            });
+
+            r.append($('<tr>')
+                    .attr('class','header')
+                    .append("<td colspan=2 id='wp-image'><img id='" +article_id + "' title='" + wp_articlename + "'/><a href='" + wikipedia_link +"'>© Wikipedia</a></td>" )//only one popup shall be open at a time for the id to be unique
+                    );
+
+        }
+    }
+
 
     for (key in tags) {
       var value = tags[key];
@@ -1592,6 +1651,8 @@ if (window.url_pois_lz) {
 } else {
   console.log("XMLHttpRequest for pois_lz NOT sent, no url");
 }
+
+var wikipedia_images = {};
 
 /**
  * jQuery.browser.mobile (http://detectmobilebrowser.com/)
