@@ -52,7 +52,7 @@
      */
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var overpass_config = {
-        q_array: [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ], [ '"farm_boxes"' ], [ '"garden:type"="community"' ], ['"amenity"="marketplace"'] ], //FIXME how to handle Flea markets? they are not distinguished from food markets in OSM - maybe they want to have second_hand=only set?
+        q_array: [ [ '"production_input:natural_recources:regional"="yes"' ], [ '"regional"~"only|yes|limited"' ], [ '"shop"="farm"' ], [ '"farm_boxes"' ], [ '"garden:type"="community"' ] ], 
         icon_folder : "pois",
         icon_tags : [ "farm_boxes", "garden:type", "shop","amenity","leisure" ] 
     }
