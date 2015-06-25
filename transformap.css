@@ -411,6 +411,12 @@ body.ie #notificationbar {
 #mapswitcher a:hover {
     text-decoration:underline;
 }
+#sidebar #POIlist li img {
+    margin:0 5px -2px 0;
+}
+#sidebar #POIlist li {
+    cursor:pointer;
+}
 
 #sidebar #mapkey li.manual {
   text-indent:0;

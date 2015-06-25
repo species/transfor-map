@@ -465,6 +465,7 @@ function updateFilterCount() {
         if( bounds.contains(latlng) )
             visible_markers.push(marker);
     }
+    $('#POIlist').html("");
 
     for(var i = 0; i < visible_markers.length; i++) {
         var marker = visible_markers[i];
@@ -504,12 +505,68 @@ function updateFilterCount() {
 
             }
         }
+        if( ! marker.hasOwnProperty("filtered") )
+            continue;
+        if( ! marker.filtered) {
+            var src = chooseIconSrc(marker.data.tags, 16);
+
+            $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ( (marker.data.tags.name) ? marker.data.tags.name : "unnamed" ) + "</li>"); //FIXME what to do with clustered markers? Zoom in, open Popup!
+        }
+
 
         
     }
     $('#tnode').attr('element-nrs',nr_pois.node);
     $('#tway').attr('element-nrs',nr_pois.way);
     $('#trel').attr('element-nrs',nr_pois.relation);
+}
+
+/*
+ * takes a two args: osm datatype and osm id
+ * returns the matching marker (must be visible currently)
+ */
+function MytogglePopup(osm_type,osm_id) {
+    var leaflet_marker = getVisibleMarker(osm_type,osm_id)
+    if(leaflet_marker) {
+        leaflet_marker.togglePopup();
+        return;
+    } //else
+
+    var target_marker;
+    var marker_array = markers.GetMarkers();
+    for(var i = 0; i < marker_array.length; i++) {
+        var prunecluster_marker = marker_array[i];
+        if(prunecluster_marker.data.type == osm_type && prunecluster_marker.data.id == osm_id) {
+            target_marker = prunecluster_marker;
+            break;
+        }
+    }
+    if(target_marker) {
+        if(map.getZoom() == map.getMaxZoom()) {
+            console.log("Error in MytogglePopup: already zoomed in max and marker not found");
+            return;
+        }
+        map.setZoomAround( new L.LatLng(target_marker.position.lat, target_marker.position.lng), map.getZoom() + 1); //TODO on coordinates
+
+        setTimeout(function () {
+            MytogglePopup(osm_type,osm_id);
+        }, 200);
+    } else
+        console.log("Error in MytogglePopup: marker not found in markers.GetMarkers()");
+
+}
+
+function getVisibleMarker(osm_type,osm_id) {
+    var my_layer = null;
+    map.eachLayer(function (layer) {
+        if(! layer._popup || ! layer.options.alt)
+            return;
+        if(layer.options.alt != (osm_type + " " + osm_id))
+            return;
+
+        my_layer = layer;
+    });
+    return my_layer;
 }
 
 /* precondition: in global var filters, an object $filtername must exist.
@@ -814,6 +871,11 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   }
   // filters derived from taxonomy get added when taxonomy.json is loaded
 
+  // List of POIs
+  $('#sidebar').append('<div id="sidebox-list" class="box hidden"></div>');
+  $('#sidebox-list').append('<h2 onClick="toggleSideBox(\'sidebox-list\');">List of POIs</h2>');
+  $('#sidebox-list').append('<ul id="POIlist" class="boxcontent"></ul>');
+
   // Map Key
   $('#sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
   $('#sidebox-mapkey').append('<h2 onClick="toggleSideBox(\'sidebox-mapkey\');">Map Key</h2>');
@@ -930,6 +992,29 @@ function secHTML(input) {
     return $("<div>").text( input ).html();
 }
 
+function chooseIconSrc(tags,iconsize) {
+    var icon_tag = ""; //OSM key for choosing icon
+    for (var i = 0; i < overpass_config.icon_tags.length; i++) {
+      var key = overpass_config.icon_tags[i];
+      if(tags[key] && ! ( key == "amenity" && tags[key] == "shop" ) ) {
+        icon_tag = key;
+        break;
+      }
+    }
+
+    var icon_url = "";
+    if(!icon_tag) {
+      icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/unknown.png";
+    } else {
+
+      if (tags[icon_tag].indexOf(";") >= 0) // more than one item, take generic icon
+        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/generic.png";
+      else
+        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/" + icon_tag + "=" + tags[icon_tag] + ".png";
+    }
+    return icon_url;
+}
+
 function loadPoi() {
   updateFilterCount(); // here because it is called on every map move
   var notificationbar =  document.getElementById("notificationbar");
@@ -1009,7 +1094,7 @@ function loadPoi() {
 
   function fillPopup(tags,type,id,lat,lon) {
 
-    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","fax","contact:fax","created_by","area","layer","room","indoor","twitter","contact:twitter","link:twitter", "contact:google_plus", "google_plus", "link:google_plus", "contact:facebook","facebook","link:facebook","facebook:page","website:facebook","url:facebook","contact:youtube","youtube","link:youtube","wheelchair","wheelchair:description","wikipedia","wikidata" ];
+    var tags_to_ignore = [ "name" , "ref", "addr:street", "addr:housenumber", "addr:postcode", "addr:city", "addr:suburb", "addr:country","website","url","contact:website","contact:url","email","contact:email","phone","contact:phone","fax","contact:fax","created_by","area","layer","room","indoor","twitter","contact:twitter","link:twitter", "contact:google_plus", "google_plus", "link:google_plus", "contact:facebook","facebook","link:facebook","facebook:page","website:facebook","url:facebook","contact:youtube","youtube","link:youtube","wheelchair","wheelchair:description","wikipedia","wikidata","image" ];
 
     var r = $('<table>');
 
@@ -1147,6 +1232,13 @@ function loadPoi() {
 
         }
     }
+    if(tags['image']) {
+        r.append($('<tr>')
+                .attr('class','header')
+                .append("<td colspan=2 id='image'><img src='" + tags['image'] + "' style='maxwidth:260px;'/></td>" )//only one popup shall be open at a time for the id to be unique
+                );
+    }
+
 
 
     for (key in tags) {
@@ -1239,27 +1331,7 @@ function loadPoi() {
       return;
     }
 
-
-    // set icon dependent on tags
-    var icon_tag = ""; //OSM key for choosing icon
-    for (var i = 0; i < overpass_config.icon_tags.length; i++) {
-      var key = overpass_config.icon_tags[i];
-      if(data.tags[key] && ! ( key == "amenity" && data.tags[key] == "shop" ) ) {
-        icon_tag = key;
-        break;
-      }
-    }
-
-    var icon_url = "";
-    if(!icon_tag) {
-      icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/unknown.png";
-    } else {
-
-      if (data.tags[icon_tag].indexOf(";") >= 0) // more than one item, take generic icon
-        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/generic.png";
-      else
-        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/" + icon_tag + "=" + data.tags[icon_tag] + ".png";
-    }
+    var icon_url = chooseIconSrc(data.tags,iconsize);
 
     var icon_class = (overpass_config.class_selector_key && data.tags[overpass_config.class_selector_key["key"]]) ? overpass_config.class_selector_key["key"] : "color_undef";
 
