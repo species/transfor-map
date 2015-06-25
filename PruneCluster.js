@@ -475,7 +475,8 @@ var PruneClusterForLeaflet = (L.Layer ? L.Layer : L.Class).extend({
         });
     },
     BuildLeafletMarker: function (marker, position) {
-        var m = (marker.data.title) ? new L.Marker(position, { title: marker.data.title}) : new L.Marker(position);
+        var alt_text = (marker.data.type) ? (marker.data.type + " " + marker.data.id) : "";
+        var m = new L.Marker(position, { title: marker.data.title, alt: alt_text});
         this.PrepareLeafletMarker(m, marker.data, marker.category);
         return m;
     },
