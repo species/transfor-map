@@ -524,9 +524,13 @@ function updateFilterCount() {
  * returns the matching marker (must be visible currently)
  */
 function MytogglePopup(osm_type,osm_id) {
+    disableLoadPOI = true;
     var leaflet_marker = getVisibleMarker(osm_type,osm_id)
     if(leaflet_marker) {
         leaflet_marker.togglePopup();
+        setTimeout(function () {
+            disableLoadPOI = false;
+        }, 200);
         return;
     } //else
 
@@ -543,15 +547,13 @@ function MytogglePopup(osm_type,osm_id) {
         if(map.getZoom() == map.getMaxZoom()) {
             var possible_clusters = [];
             map.eachLayer(function (layer) {
-                if(layer._population > 0) {
+                if(layer._population > 0)
                     possible_clusters.push(layer);
-                    return;
-                }
             });
             var distance = 123456789;
             var nearest_cluster = null;
             for(i = 0; i < possible_clusters.length; i++) {
-                var new_distance = calculateDistance(target_marker.position.lat, possible_clusters[i]._latlng.lat, target_marker.position.lng,  possible_clusters[i]._latlng.lng)
+                var new_distance = calculateDistance(target_marker.position.lat, possible_clusters[i]._latlng.lat, target_marker.position.lng,  possible_clusters[i]._latlng.lng);
                 if( new_distance < distance ) {
                     distance = new_distance;
                     nearest_cluster = possible_clusters[i];
@@ -559,18 +561,21 @@ function MytogglePopup(osm_type,osm_id) {
             }
             if(!nearest_cluster) {
                 console.log("Error in MytogglePopup: no nearest cluster found");
+                disableLoadPOI = false;
                 return;
             }
             nearest_cluster.fireEvent('click');
         }
         else
-          map.setZoomAround( new L.LatLng(target_marker.position.lat, target_marker.position.lng), map.getZoom() + 1); //TODO on coordinates
+          map.setZoomAround( new L.LatLng(target_marker.position.lat, target_marker.position.lng), map.getZoom() + 1);
 
         setTimeout(function () {
             MytogglePopup(osm_type,osm_id);
         }, 200);
-    } else
+    } else {
+        disableLoadPOI = false;
         console.log("Error in MytogglePopup: marker not found in markers.GetMarkers()");
+    }
 }
 
 
@@ -912,7 +917,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
 
   // List of POIs
   $('#sidebar').append('<div id="sidebox-list" class="box hidden"></div>');
-  $('#sidebox-list').append('<h2 onClick="toggleSideBox(\'sidebox-list\');">List of POIs</h2>');
+  $('#sidebox-list').append('<h2 onClick="toggleSideBox(\'sidebox-list\');">List of <span title="Point of Interest">POIs</span></h2>');
   $('#sidebox-list').append('<ul id="POIlist" class="boxcontent"></ul>');
 
   // Map Key
@@ -1054,6 +1059,7 @@ function chooseIconSrc(tags,iconsize) {
     return icon_url;
 }
 
+var disableLoadPOI = false;
 function loadPoi() {
   updateFilterCount(); // here because it is called on every map move
   var notificationbar =  document.getElementById("notificationbar");
@@ -1117,6 +1123,9 @@ function loadPoi() {
     return;
   }
   old_zoom = current_zoom;
+
+  if(disableLoadPOI)
+      return;
 
   function url_ify(link,linktext) {
     if (/@/.test(link)) {
