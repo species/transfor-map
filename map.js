@@ -16,34 +16,32 @@ var about = {
     export_opendata : '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>'
 }
 
-var iconsize = 24;
-
 var different_maps = [ 
     { url : "identities.html" ,
       name : "TransforMap of Identities",
-      image: "assets/transformap/pngs/" + iconsize + "/political_identity.png"
+      image: "assets/transformap/pngs/" + 24 + "/political_identity.png"
     } ,
     /*   { url : "transformap.html" ,
       name : "Needs-based TransforMap" } , */
     { url : "organic.html" ,
       name : "Organic TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=supermarket.png"
+      image : "assets/transformap/pngs/pois/" + 24 + "/shop=supermarket.png"
     } ,
     { url : "regional.html" ,
       name : "Regional TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=convenience.png"
+      image : "assets/transformap/pngs/pois/" + 24 + "/shop=convenience.png"
     } ,
     { url : "fairtrade.html" ,
       name : "Fairtrade TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=fairtrade.png"
+      image : "assets/transformap/pngs/pois/" + 24 + "/shop=fairtrade.png"
     } ,
     { url : "secondhand.html" ,
       name : "Second Hand TransforMap",
-      image : "assets/transformap/pngs/pois/" + iconsize + "/shop=second_hand.png"
+      image : "assets/transformap/pngs/pois/" + 24 + "/shop=second_hand.png"
     } ,
     { url : "greenmap.html" ,
       name : "Green TransforMap",
-      image : "assets/greenmap/png/" + iconsize  + "/Park-_Recreation_Area.png"
+      image : "assets/greenmap/png/" + 24  + "/Park-_Recreation_Area.png"
     } 
 ];
 
@@ -510,7 +508,7 @@ function updateFilterCount() {
         if( ! marker.filtered) {
             var src = chooseIconSrc(marker.data.tags, 16);
 
-            $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ( (marker.data.tags.name) ? marker.data.tags.name : "unnamed" ) + "</li>"); //FIXME what to do with clustered markers? Zoom in, open Popup!
+            $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ( (marker.data.tags.name) ? marker.data.tags.name : "unnamed" ) + "</li>");
         }
 
 
@@ -543,17 +541,57 @@ function MytogglePopup(osm_type,osm_id) {
     }
     if(target_marker) {
         if(map.getZoom() == map.getMaxZoom()) {
-            console.log("Error in MytogglePopup: already zoomed in max and marker not found");
-            return;
+            var possible_clusters = [];
+            map.eachLayer(function (layer) {
+                if(layer._population > 0) {
+                    possible_clusters.push(layer);
+                    return;
+                }
+            });
+            var distance = 123456789;
+            var nearest_cluster = null;
+            for(i = 0; i < possible_clusters.length; i++) {
+                var new_distance = calculateDistance(target_marker.position.lat, possible_clusters[i]._latlng.lat, target_marker.position.lng,  possible_clusters[i]._latlng.lng)
+                if( new_distance < distance ) {
+                    distance = new_distance;
+                    nearest_cluster = possible_clusters[i];
+                }
+            }
+            if(!nearest_cluster) {
+                console.log("Error in MytogglePopup: no nearest cluster found");
+                return;
+            }
+            nearest_cluster.fireEvent('click');
         }
-        map.setZoomAround( new L.LatLng(target_marker.position.lat, target_marker.position.lng), map.getZoom() + 1); //TODO on coordinates
+        else
+          map.setZoomAround( new L.LatLng(target_marker.position.lat, target_marker.position.lng), map.getZoom() + 1); //TODO on coordinates
 
         setTimeout(function () {
             MytogglePopup(osm_type,osm_id);
         }, 200);
     } else
         console.log("Error in MytogglePopup: marker not found in markers.GetMarkers()");
+}
 
+
+//source: http://jsfiddle.net/vg01q7xw/
+Number.prototype.toRad = function() {
+        return this * Math.PI / 180;
+}
+function calculateDistance(lat1, lat2, lon1, lon2) {
+    var R = 6371000; // meter
+    var Phi1 = lat1.toRad();
+    var Phi2 = lat2.toRad();
+    var DeltaPhi = (lat2 - lat1).toRad();
+    var DeltaLambda = (lon2 - lon1).toRad();
+
+    var a = Math.sin(DeltaPhi / 2) * Math.sin(DeltaPhi / 2)
+            + Math.cos(Phi1) * Math.cos(Phi2) * Math.sin(DeltaLambda / 2)
+            * Math.sin(DeltaLambda / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+
+    return d;
 }
 
 function getVisibleMarker(osm_type,osm_id) {
@@ -773,7 +811,8 @@ function buildOverpassQuery() {
     if(! overpass_config.servers)             overpass_config.servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ];
     if(! overpass_config.q_array)             overpass_config.q_array = [ [ '"identity"' ] ];
     if(! overpass_config.icon_folder)         overpass_config.icon_folder = "identities";
-    if(! overpass_config.icon_tags)           overpass_config.icon_tags = [ "identity" ]
+    if(! overpass_config.icon_tags)           overpass_config.icon_tags = [ "identity" ];
+    if(! overpass_config.icon_size)           overpass_config.icon_size = 24;
     if(! overpass_config.class_selector_key)  overpass_config.class_selector_key = { key: "" };
 
     var overpass_urlstart = 'interpreter?data=';
@@ -1331,15 +1370,15 @@ function loadPoi() {
       return;
     }
 
-    var icon_url = chooseIconSrc(data.tags,iconsize);
+    var icon_url = chooseIconSrc(data.tags,overpass_config.icon_size);
 
     var icon_class = (overpass_config.class_selector_key && data.tags[overpass_config.class_selector_key["key"]]) ? overpass_config.class_selector_key["key"] : "color_undef";
 
     var needs_icon = L.icon({
       iconUrl: icon_url,
-      iconSize: new L.Point(iconsize, iconsize),
-      iconAnchor: new L.Point(iconsize / 2, iconsize / 2),
-      popupAnchor: new L.Point(0, - iconsize / 2),
+      iconSize: new L.Point(overpass_config.icon_size, overpass_config.icon_size),
+      iconAnchor: new L.Point(overpass_config.icon_size / 2, overpass_config.icon_size / 2),
+      popupAnchor: new L.Point(0, - overpass_config.icon_size / 2),
       className: "v-" + data.tags[icon_class] + " k-" + icon_class
     });
 
