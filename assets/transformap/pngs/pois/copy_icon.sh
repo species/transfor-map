@@ -27,6 +27,7 @@ OPTIONS:
    -h -help --help     this help text
 
 EOH
+exit
 fi
 
 ###
