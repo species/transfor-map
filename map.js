@@ -1315,10 +1315,10 @@ function loadPoi() {
 
           )));
     }
+    var wp_articlename = "";
     for (key in tags) {
         if(/^wikipedia/.test(key)) {
             var value = tags[key];
-            var wp_articlename = "";
             var lang = key.match(/^(?:wikipedia:)([a-z-]{2,7})$/) || value.match(/^([a-z-]{2,7}):/) || ""; 
             lang = (lang) ? lang[1] : "en";
 
@@ -1357,10 +1357,10 @@ function loadPoi() {
 
         }
     }
-    if(tags['image']) {
+    if(tags['image'] && ! (wp_articlename && tags['image'].match(/wiki(pedia|media)/)) ) {
         r.append($('<tr>')
                 .attr('class','header')
-                .append("<td colspan=2 id='image'><img src='" + tags['image'] + "' style='maxwidth:260px;'/></td>" )//only one popup shall be open at a time for the id to be unique
+                .append("<td colspan=2 id='image'><img src='" + tags['image'] + "' style='width:260px;' /></td>" )//only one popup shall be open at a time for the id to be unique
                 );
     }
 
