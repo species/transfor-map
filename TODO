@@ -20,6 +20,7 @@ Done:
 • LEGEND for Icons!
 • The Current Map has to be named in the Header! -> OK sidebar
 • maxzoom up to 19 -OK
+• icon for shop=mobile_phone -OK
 
 
 github issues
@@ -143,3 +144,5 @@ feedback user-test:
     dass die "6" die Anzahl der Punkte ist, ist nicht intuitiv
     Hover-Effekt muss sowohl bei POIs als auch bei Clustern gehn -OK
     zoom bei cluster auflösen zu schnell, man sieht nicht dass die Karte reinzoomt  
+
+POIlist maxheight - calc dynamically, too small -> set to 10K
