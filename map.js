@@ -419,6 +419,7 @@ function runFiltersOnAll() {
     }
 
     markers.ProcessView();
+    updatePOIlist();
 }
 
 
@@ -441,7 +442,63 @@ function createValidDOMid (source) {
     return source.replace(/[^a-zA-Z0-9-_]/g,"_");
 }
 
-function updateFilterCount() {
+function updatePOIlist(force) {
+    if(!force && $('#sidebox-list').attr('class').match(/hidden/)) //run only when menu open
+        return;
+
+    $('#POIlist').html("");
+    var list_of_POIs = [], list_of_unnamed_POIs = [];
+    visible_markers = getVisibleMarkers();
+    for(var i = 0; i < visible_markers.length; i++) {
+        var marker = visible_markers[i];
+        if( ! marker.hasOwnProperty("filtered") )
+            continue;
+        if( ! marker.filtered) {
+            if(marker.data.tags.name)
+                list_of_POIs.push(marker);
+            else
+                list_of_unnamed_POIs.push(marker);
+        }
+    }
+    list_of_POIs.sort(function (a,b) {
+        var nameA = a.data.tags.name.toLowerCase(), nameB = b.data.tags.name.toLowerCase();
+        if (nameA < nameB) //sort string ascending
+            return -1
+        if (nameA > nameB)
+            return 1
+        return 0 //default return value (no sorting)
+        });
+    for(var i = 0; i < list_of_POIs.length; i++) {
+        marker = list_of_POIs[i];
+        var src = chooseIconSrc(marker.data.tags, 16);
+        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + marker.data.tags.name + "</li>");
+    }
+    for(var i = 0; i < list_of_unnamed_POIs.length; i++) {
+        marker = list_of_unnamed_POIs[i];
+        var src = chooseIconSrc(marker.data.tags, 16);
+        var main_tag = getMainTag(marker.data.tags);
+        var ersatz_name = (marker.data.tags[main_tag] || "unknown");
+        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ersatz_name + "</li>");
+    }
+}
+
+function getVisibleMarkers() {
+    var bounds = map.getBounds();
+    var marker_array = markers.GetMarkers();
+    var visible_markers = [];
+    for(var i = 0; i < marker_array.length; i++) {
+        var marker = marker_array[i];
+        var latlng = L.latLng(marker.data.lat, marker.data.lon);
+        if( bounds.contains(latlng) )
+            visible_markers.push(marker);
+    }
+    return visible_markers;
+}
+
+function updateFilterCount(force) {
+    updatePOIlist();
+    if(!force && $('#sidebox-filters').attr('class').match(/hidden/)) //run only when menu open
+        return;
 
     //at first, reset all counts
     for(filtername in filters) {
@@ -452,19 +509,9 @@ function updateFilterCount() {
         }
     }
 
-    var bounds = map.getBounds();
-    var marker_array = markers.GetMarkers();
-
     //list of visible markers needed because we need to know their amount
-    var visible_markers = [], nr_pois = { node: 0, way: 0, relation:0 };
-    for(var i = 0; i < marker_array.length; i++) {
-        var marker = marker_array[i];
-        var latlng = L.latLng(marker.data.lat, marker.data.lon);
-        if( bounds.contains(latlng) )
-            visible_markers.push(marker);
-    }
-    $('#POIlist').html("");
-    var list_of_POIs = [], list_of_unnamed_POIs = [];
+    var visible_markers = getVisibleMarkers();
+    var nr_pois = { node: 0, way: 0, relation:0 };
 
     for(var i = 0; i < visible_markers.length; i++) {
         var marker = visible_markers[i];
@@ -500,38 +547,8 @@ function updateFilterCount() {
                     el.style.color="#ADADAD";
                 else
                     el.style.color="inherit";
-
-
             }
         }
-        if( ! marker.hasOwnProperty("filtered") )
-            continue;
-        if( ! marker.filtered) {
-            if(marker.data.tags.name)
-                list_of_POIs.push(marker);
-            else
-                list_of_unnamed_POIs.push(marker);
-        }
-    }
-    list_of_POIs.sort(function (a,b) {
-        var nameA = a.data.tags.name.toLowerCase(), nameB = b.data.tags.name.toLowerCase();
-        if (nameA < nameB) //sort string ascending
-            return -1
-        if (nameA > nameB)
-            return 1
-        return 0 //default return value (no sorting)
-        });
-    for(var i = 0; i < list_of_POIs.length; i++) {
-        marker = list_of_POIs[i];
-        var src = chooseIconSrc(marker.data.tags, 16);
-        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + marker.data.tags.name + "</li>");
-    }
-    for(var i = 0; i < list_of_unnamed_POIs.length; i++) {
-        marker = list_of_unnamed_POIs[i];
-        var src = chooseIconSrc(marker.data.tags, 16);
-        var main_tag = getMainTag(marker.data.tags);
-        var ersatz_name = (marker.data.tags[main_tag] || "unknown");
-        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ersatz_name + "</li>");
     }
 
     $('#tnode').attr('element-nrs',nr_pois.node);
@@ -658,7 +675,6 @@ function createFilterHTML(filtername) {
   }
   return $('<li>')
         .attr('class', filter.displayed ? 'shown' : 'hidden')
-//           .attr('onClick', "runFiltersOnAll();") 
         .append( '<h3 onClick="this.parentNode.className = (this.parentNode.className == \'shown\') ? \'hidden\' : \'shown\' ;">' + filter.label + '</h3>' )
         .append( sub_filters );
 }
@@ -929,7 +945,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
   }
   // Filters
   $('#sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
-  $('#sidebox-filters').append('<h2 onClick="toggleSideBox(\'sidebox-filters\');">Filters</h2>');
+  $('#sidebox-filters').append('<h2 onClick="updateFilterCount(true);toggleSideBox(\'sidebox-filters\');">Filters</h2>');
   $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
   for (filtername in filters) {
       $('#filters').append(createFilterHTML(filtername));
@@ -938,7 +954,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
 
   // List of POIs
   $('#sidebar').append('<div id="sidebox-list" class="box hidden"></div>');
-  $('#sidebox-list').append('<h2 onClick="toggleSideBox(\'sidebox-list\');">List of <span title="Point of Interest">POIs</span></h2>');
+  $('#sidebox-list').append('<h2 onClick="updatePOIlist(true);toggleSideBox(\'sidebox-list\');">List of <span title="Point of Interest">POIs</span></h2>');
   $('#sidebox-list').append('<ul id="POIlist" class="boxcontent"></ul>');
 
   // Map Key
