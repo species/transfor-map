@@ -54,7 +54,7 @@
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var overpass_config = {
         minzoom: 16,
-        q_array: [ [ 'amenity' ], [ 'shop'], [ 'leisure' ], [ 'tourism' ] ],
+        q_array: [ [ 'amenity', '"access"!="private"' ], [ 'shop'], [ 'leisure', '"access"!="private"' ], [ 'tourism' ] ],
         icon_folder : "pois",
         icon_tags : [ "farm_boxes", "garden:type", "shop","amenity","leisure" ] 
     }
