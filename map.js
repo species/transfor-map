@@ -464,6 +464,7 @@ function updateFilterCount() {
             visible_markers.push(marker);
     }
     $('#POIlist').html("");
+    var list_of_POIs = [], list_of_unnamed_POIs = [];
 
     for(var i = 0; i < visible_markers.length; i++) {
         var marker = visible_markers[i];
@@ -506,14 +507,33 @@ function updateFilterCount() {
         if( ! marker.hasOwnProperty("filtered") )
             continue;
         if( ! marker.filtered) {
-            var src = chooseIconSrc(marker.data.tags, 16);
-
-            $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ( (marker.data.tags.name) ? marker.data.tags.name : "unnamed" ) + "</li>");
+            if(marker.data.tags.name)
+                list_of_POIs.push(marker);
+            else
+                list_of_unnamed_POIs.push(marker);
         }
-
-
-        
     }
+    list_of_POIs.sort(function (a,b) {
+        var nameA = a.data.tags.name.toLowerCase(), nameB = b.data.tags.name.toLowerCase();
+        if (nameA < nameB) //sort string ascending
+            return -1
+        if (nameA > nameB)
+            return 1
+        return 0 //default return value (no sorting)
+        });
+    for(var i = 0; i < list_of_POIs.length; i++) {
+        marker = list_of_POIs[i];
+        var src = chooseIconSrc(marker.data.tags, 16);
+        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + marker.data.tags.name + "</li>");
+    }
+    for(var i = 0; i < list_of_unnamed_POIs.length; i++) {
+        marker = list_of_unnamed_POIs[i];
+        var src = chooseIconSrc(marker.data.tags, 16);
+        var main_tag = getMainTag(marker.data.tags);
+        var ersatz_name = (marker.data.tags[main_tag] || "unknown");
+        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ersatz_name + "</li>");
+    }
+
     $('#tnode').attr('element-nrs',nr_pois.node);
     $('#tway').attr('element-nrs',nr_pois.way);
     $('#trel').attr('element-nrs',nr_pois.relation);
@@ -521,7 +541,8 @@ function updateFilterCount() {
 
 /*
  * takes a two args: osm datatype and osm id
- * returns the matching marker (must be visible currently)
+ * if marker in field of view, toggle popup.
+ * zooms in if marker is hidden in cluster to get leafletMarker
  */
 function MytogglePopup(osm_type,osm_id) {
     disableLoadPOI = true;
@@ -574,7 +595,7 @@ function MytogglePopup(osm_type,osm_id) {
         }, 200);
     } else {
         disableLoadPOI = false;
-        console.log("Error in MytogglePopup: marker not found in markers.GetMarkers()");
+        console.log("Error in MytogglePopup: marker " + osm_type + " " + osm_id + " not found in markers.GetMarkers()");
     }
 }
 
@@ -959,19 +980,59 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
 
   setTimeout(toggleSideBarOnLoad,200);
 
+  var popup_param = getUrlVars()["popup"];
+  if(popup_param) {
+      open_popup_on_load.type = popup_param.match(/^(node|way|relation)/)[1];
+      open_popup_on_load.id = popup_param.replace(/^(node|way|relation)/,'' );
+  }
+
   return map;
 }
 
+var open_popup_on_load = { type : "", id: "", already_shown: false };
+
+/*
+   var href = location.href;
+   var hasQuery = href.indexOf("?") + 1;
+   var hasHash = href.indexOf("#") + 1;
+   var appendix = (hasQuery ? "&" : "?") + "ts=true";
+   location.href = hasHash ? href.replace("#", appendix + "#") : href + appendix;
+   */
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value.replace(/#.*$/,'');
+    });
+    return vars;
+}
+
 function setImageInPopup(obj) {
-    if(!$('#wp-image') || $('#wp-image img').attr('src')) //no wp-image or already set
+//    console.log("setImageInPopup: called");
+    if(!document.getElementById('wp-image')) {
+//        console.log("setImageInPopup: no wp-image");
         return;
+    }
+    if ($('#wp-image img').attr('src')) {
+//        console.log("setImageInPopup: src already set");
+        return;
+    }
     var img = $('#wp-image img');
     var source = wikipedia_images["wpimage_" + img.attr('title')];
 
-    if(!source || source == "UNDEF") //no answer for item yet or no image on wikipedia
-        $('#wp-image').css('display','none')
-    else
-        img.attr('src', source);
+    if(!source) {
+        $('#wp-image').css('display','none');
+//        console.log("setImageInPopup: no answer for item yet");
+        return;
+    }
+    if ( source == "UNDEF") {
+        $('#wp-image').css('display','none');
+//        console.log("setImageInPopup: no image on wikipedia");
+        return;
+    }
+//    console.log("setImageInPopup: setting src " + source);
+    $('#wp-image').css('display','table-cell');
+    img.attr('src', source);
 }
 
 function toggleSideBarOnLoad() {
@@ -1036,15 +1097,18 @@ function secHTML(input) {
     return $("<div>").text( input ).html();
 }
 
-function chooseIconSrc(tags,iconsize) {
-    var icon_tag = ""; //OSM key for choosing icon
+function getMainTag(tags) {
     for (var i = 0; i < overpass_config.icon_tags.length; i++) {
       var key = overpass_config.icon_tags[i];
       if(tags[key] && ! ( key == "amenity" && tags[key] == "shop" ) ) {
-        icon_tag = key;
-        break;
+        return key;
       }
     }
+    return "";
+}
+
+function chooseIconSrc(tags,iconsize) {
+    var icon_tag = getMainTag(tags);
 
     var icon_url = "";
     if(!icon_tag) {
@@ -1241,8 +1305,8 @@ function loadPoi() {
           )));
     }
     for (key in tags) {
-        var value = tags[key];
         if(/^wikipedia/.test(key)) {
+            var value = tags[key];
             var wp_articlename = "";
             var lang = key.match(/^(?:wikipedia:)([a-z-]{2,7})$/) || value.match(/^([a-z-]{2,7}):/) || ""; 
             lang = (lang) ? lang[1] : "en";
@@ -1264,6 +1328,7 @@ function loadPoi() {
             $.getJSON(req_string + "&callback=?", function(data) {
                     for(obj_id in data.query.pages) {
                         var item = data.query.pages[obj_id];
+ //                       console.log("got answer from wikipedia for " + item.title + ".");
                         if(item.thumbnail) {
                             wikipedia_images["wpimage_" + item.title] = item.thumbnail.source;
                         } else {
@@ -1271,6 +1336,7 @@ function loadPoi() {
                             console.log("no WP image for " + item.title);
                         }
                     }
+                    setTimeout(setImageInPopup,100);
             });
 
             r.append($('<tr>')
@@ -1526,6 +1592,12 @@ function loadPoi() {
     $('#tnode').css("display", "block");
     $('#tnode').html(json_date.toLocaleString());
     changeLoadingIndicator("loading_node", -1);
+    if(! open_popup_on_load.already_shown && open_popup_on_load.type == "node") {
+        open_popup_on_load.already_shown = true;
+        setTimeout(function () {
+              MytogglePopup(open_popup_on_load.type, open_popup_on_load.id);
+        },200 );
+    }
     console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
   }
 
@@ -1569,6 +1641,12 @@ function loadPoi() {
     $('#tway').css("display", "block");
     $('#tway').html(json_date.toLocaleString());
     changeLoadingIndicator("loading_way", -1);
+    if(! open_popup_on_load.already_shown && open_popup_on_load.type == "way") {
+        open_popup_on_load.already_shown = true;
+        setTimeout(function () {
+              MytogglePopup(open_popup_on_load.type, open_popup_on_load.id);
+        },200 );
+    }
     console.log("handleWays (pid " + pid + ") done, " + number + " added.");
   }
 
@@ -1643,6 +1721,12 @@ function loadPoi() {
     $('#trel').css("display", "block");
     $('#trel').html(json_date.toLocaleString());
     changeLoadingIndicator("loading_rel", -1);
+    if(! open_popup_on_load.already_shown && open_popup_on_load.type == "relation") {
+        open_popup_on_load.already_shown = true;
+        setTimeout(function () {
+              MytogglePopup(open_popup_on_load.type, open_popup_on_load.id);
+        },200 );
+    }
     console.log("handleRelations (pid " + pid + ") done, " + number + " added.");
   }
 

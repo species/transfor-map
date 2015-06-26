@@ -299,6 +299,9 @@ body.ie #notificationbar {
     max-height:500px;
     padding:0 2px;
 }
+#sidebar .box.shown #POIlist {
+    max-height:10000px
+}
 
 #sidebar .box.shown .boxcontent {
     max-height:1000px;
