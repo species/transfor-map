@@ -1210,10 +1210,21 @@ function loadPoi() {
 
     var r = $('<table>');
 
+    var href = location.href.replace(/#.*$/,'').replace(/[&?]popup=(node|way|relation)[0-9]+/,'');
+    var hasQuery = href.indexOf("?") + 1;
+    var appendix = (hasQuery ? "&" : "?") + "popup=" + type + id;
+
+    var popup_href =  href + appendix + '#' + map.getZoom() + '/' + lat + '/' + lon;
+
+    r.append($('<tr>')
+            .attr('class','header')
+            .append($('<td>').append('<a href="' + popup_href + '" title="Link to this POI on this map">Permalink</a>'))
+            .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + lon + '/' + lat + '" title="Edit this object with iD for TransforMap" target=_blank>Edit</a>'))
+        );
     r.append($('<tr>')
             .attr('class','header')
             .append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '" title="Link to ' + type + ' ' + id + ' on OpenStreetMap" target=_blank><img src="assets/20px-Mf_' + type + '.svg.png" />' + type.substring(0,1) + id + '</a>'))
-            .append($('<td>').append('<a href="http://editor.transformap.co/#background=Bing&id=' + type.substring(0,1) + id + '&map=19/' + lon + '/' + lat + '" title="Edit this object with iD for TransforMap" target=_blank>Edit</a>'))
+            .append($('<td>').append('<a href="http://map.project-osrm.org/?dest=' + lat + ',' + lon + '&destname=' + tags['name'] + '" target=_blank title="Route here with OSRM">Route Here</a>'))
         );
     var wikipedia_link = "";
 
