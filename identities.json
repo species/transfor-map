@@ -2,7 +2,7 @@
   "version": 0.6,
   "generator": "Overpass API",
   "osm3s": {
-    "timestamp_osm_base": "2015-06-16T13:47:02Z",
+    "timestamp_osm_base": "2015-06-26T22:03:01Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
@@ -297,7 +297,7 @@
     "addr:housenumber": "20",
     "addr:postcode": "37213",
     "addr:street": "Brückenstraße",
-    "identity": "transition_initiative",
+    "identity": "transition_initiative;degrowth;solidarity_economy",
     "interaction": "diy_and_dit;cousing;sharing;gifting;lending",
     "name": "Transition Town",
     "provides": "food+drink;water;mobility;culture",
@@ -1552,6 +1552,22 @@
 },
 {
   "type": "node",
+  "id": 3571419093,
+  "lat": 51.3434760,
+  "lon": 9.8574549,
+  "tags": {
+    "addr:city": "Witzenhausen",
+    "addr:housenumber": "18",
+    "addr:postcode": "37213",
+    "addr:street": "Brückenstraße",
+    "identity": "transition_initiative;demonetized_economy",
+    "interaction": "gifting",
+    "name": "Umsonstladen",
+    "provides": "objects_of_utility;clothes"
+  }
+},
+{
+  "type": "node",
   "id": 3571432493,
   "lat": 51.3488272,
   "lon": 9.8566714,
@@ -1650,6 +1666,59 @@
     "provides": "food+drink",
     "regional": "yes",
     "smoking": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3600080039,
+  "lat": 52.0838279,
+  "lon": 5.1725382,
+  "tags": {
+    "addr:city": "Utrecht",
+    "addr:housenumber": "3",
+    "addr:postcode": "3584 CS",
+    "addr:street": "Het dak van Heidelberglaan",
+    "amenity": "cafe",
+    "cuisine": "regional;international",
+    "identity": "economy_for_the_common_good",
+    "interaction": "buying_and_selling",
+    "internet_access": "yes",
+    "name": "De Daktuin",
+    "opening_hours": "Zo - Wo: 11:00 - 19:00 Do - Za: 11:00 - 21:00",
+    "provides": "food+drink;culture;spaces;community",
+    "smoking": "outside"
+  }
+},
+{
+  "type": "node",
+  "id": 3601235683,
+  "lat": 50.4312026,
+  "lon": -3.6849046,
+  "tags": {
+    "addr:city": "Totnes",
+    "addr:housenumber": "43",
+    "addr:street": "Fore Street",
+    "description": "The office of Transition Network",
+    "identity": "transition_initiative",
+    "name": "Transition Network",
+    "provides": "community",
+    "topic": "culture;land;learning_opportunities;community"
+  }
+},
+{
+  "type": "node",
+  "id": 3605406087,
+  "lat": 51.3436844,
+  "lon": 9.8582916,
+  "tags": {
+    "addr:city": "Witzenhausen",
+    "addr:postcode": "37213",
+    "addr:street": "Stubenstraße",
+    "description": "Gemeinschafts- und Internationalegarten in Anbau",
+    "identity": "transition_initiative;permaculture;commons",
+    "interaction": "diy_and_dit;cousing",
+    "name": "Stubengarten",
+    "provides": "land;food+drink;culture"
   }
 },
 {
@@ -2812,6 +2881,30 @@
 },
 {
   "type": "node",
+  "id": 3487780936,
+  "lat": 51.3435855,
+  "lon": 9.8573865
+},
+{
+  "type": "node",
+  "id": 3487780937,
+  "lat": 51.3435001,
+  "lon": 9.8574144
+},
+{
+  "type": "node",
+  "id": 3487780938,
+  "lat": 51.3435280,
+  "lon": 9.8575870
+},
+{
+  "type": "node",
+  "id": 3487780939,
+  "lat": 51.3436095,
+  "lon": 9.8575644
+},
+{
+  "type": "node",
   "id": 3493366452,
   "lat": 47.1156265,
   "lon": 16.3477781
@@ -3557,6 +3650,28 @@
 },
 {
   "type": "way",
+  "id": 341649964,
+  "nodes": [
+    3487780936,
+    3487780937,
+    3487780938,
+    3487780939,
+    3487780936
+  ],
+  "tags": {
+    "addr:city": "Witzenhausen",
+    "addr:housenumber": "20",
+    "addr:postcode": "37213",
+    "addr:street": "Brückenstraße",
+    "building": "yes",
+    "identity": "transition_initiative",
+    "interaction": "sharing;lending;renting;diy_and_dit",
+    "name": "Transition Haus",
+    "provides": "food+drink;water;culture;spaces;community;participation;learning_opportunities;telecommunication"
+  }
+},
+{
+  "type": "way",
   "id": 342320594,
   "nodes": [
     3493366452,
@@ -3581,6 +3696,96 @@
     "shop": "garden_centre",
     "start_date": "2015"
   }
+},
+{
+  "type": "relation",
+  "id": 4664326,
+  "members": [
+    {
+      "type": "way",
+      "ref": 173060106,
+      "role": "outer"
+    },
+    {
+      "type": "way",
+      "ref": 332251381,
+      "role": "outer"
+    }
+  ],
+  "tags": {
+    "access": "public",
+    "addr:city": "Berlin",
+    "addr:housenumber": "74",
+    "addr:street": "Bülowstraße",
+    "contact:name": "c.o. Dr. Elisabeth Meyer-Renschhausen",
+    "contact:website": "www.allmende-kontor.de",
+    "garden:type": "community",
+    "identity": "commons",
+    "interaction": "cousing;diy_and_dit;sharing",
+    "leisure": "garden",
+    "name": "Gemeinschaftsgarten Allmende-Kontor",
+    "operator": "Gemeinschafsgarten Allmende-Kontor e.V.",
+    "provides": "community;land;culture;spaces;learning_opportunities;community;participation;spirituality",
+    "start_date": "04/2011",
+    "type": "multipolygon",
+    "website": "http://www.allmende-kontor.de/",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 1838845835,
+  "lat": 52.4739765,
+  "lon": 13.4162698
+},
+{
+  "type": "node",
+  "id": 1838845836,
+  "lat": 52.4741223,
+  "lon": 13.4176162
+},
+{
+  "type": "node",
+  "id": 1838845837,
+  "lat": 52.4747890,
+  "lon": 13.4161320
+},
+{
+  "type": "node",
+  "id": 1838845838,
+  "lat": 52.4749127,
+  "lon": 13.4173931
+},
+{
+  "type": "node",
+  "id": 2496235208,
+  "lat": 52.4744780,
+  "lon": 13.4175152
+},
+{
+  "type": "node",
+  "id": 3393621811,
+  "lat": 52.4749127,
+  "lon": 13.4173931
+},
+{
+  "type": "way",
+  "id": 173060106,
+  "nodes": [
+    1838845838,
+    2496235208,
+    1838845836,
+    1838845835
+  ]
+},
+{
+  "type": "way",
+  "id": 332251381,
+  "nodes": [
+    1838845835,
+    1838845837,
+    3393621811
+  ]
 }
 
   ]
