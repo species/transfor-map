@@ -1085,9 +1085,20 @@ lc = L.control.locate({
 var marker_table = {};
 var old_zoom = 20;
 
-var pid_counter_node = 0;
-var pid_counter_way = 0;
-var pid_counter_rel = 0;
+var pids = {
+    node : {
+        counter : 0,
+        active : {}
+    },
+    way : {
+        counter : 0,
+        active : {}
+    },
+    relation : {
+        counter : 0,
+        active : {}
+    }
+}
 
 var mutex_loading = { "loading_node" : 0, "loading_way" : 0, "loading_rel" : 0 };
 
@@ -1100,7 +1111,8 @@ var on_start_loaded = 0;
 function changeLoadingIndicator(type, change) {
 
     var loading_indicator = document.getElementById(type);
-    mutex_loading[type] = mutex_loading[type] + change;
+    if(mutex_loading[type] + change >= 0) //don't go into negative
+        mutex_loading[type] = mutex_loading[type] + change;
     if(change == -1) {
         if(mutex_loading[type] == 0) 
           loading_indicator.style.display = "none";
@@ -1590,7 +1602,16 @@ function loadPoi() {
   }
 
   function handleNodes(overpassJSON) {
-    var pid = pid_counter_node++;
+    var pid;
+    for(i_pid in pids.node.active) {
+        if(pids.node.active[i_pid].state == "timeouted")
+            continue;
+        if(JSON.stringify(pids.node.active[i_pid].bounds) === JSON.stringify(overpassJSON.bounds)) {
+            pid = i_pid;
+            delete pids.node.active[i_pid];
+            break;
+        }
+    }
     console.log("handleNodes called (pid " + pid + ")");
 
     var new_markers = [];
@@ -1629,7 +1650,31 @@ function loadPoi() {
   }
 
   function handleWays(overpassJSON) {
-    var pid = pid_counter_way++;
+    var pid;
+    for(i_pid in pids.way.active) {
+        if(pids.way.active[i_pid].state == "timeouted")
+            continue;
+        if(JSON.stringify(pids.way.active[i_pid].bounds) === JSON.stringify(overpassJSON.bounds)) {
+            pid = i_pid;
+            delete pids.way.active[i_pid];
+            break;
+        }
+    }
+    if(!pid) {
+        //console.log("handleWays: JSON bounds:");
+        //console.log(overpassJSON.bounds);
+        //console.log("handleWays: pid way objects:");
+        //console.log(pids.way.active);
+
+        //FIXME BUG: the french overpass server (used for ways) doesn't supply the bounds...
+        for(i_pid in pids.way.active) {
+            if(pids.way.active[i_pid].state == "timeouted")
+                continue;
+            pid = i_pid;
+            break;// get first one
+        }
+        delete pids.way.active[pid];
+    }
     console.log("handleWays called (pid " + pid + ")");
 
     var new_markers = [];
@@ -1678,7 +1723,16 @@ function loadPoi() {
   }
 
   function handleRelations(overpassJSON) {
-    var pid = pid_counter_rel++;
+    var pid;
+    for(i_pid in pids.relation.active) {
+        if(pids.relation.active[i_pid].state == "timeouted")
+            continue;
+        if(JSON.stringify(pids.relation.active[i_pid].bounds) === JSON.stringify(overpassJSON.bounds)) {
+            pid = i_pid;
+            delete pids.relation.active[i_pid];
+            break;
+        }
+    }
     console.log("handleRelations called (pid " + pid + ")");
     var nodes = {}, ways = {};
 
@@ -1762,25 +1816,67 @@ function loadPoi() {
   var node_query = overpass_query_nodes;
   var way_query = overpass_query_ways;
   var rel_query = overpass_query_rels;
+  var bounds = map.getBounds()
 
+  var allUrl = query.replace(/BBOX/g, bounds.toOverpassBBoxString());
 
-  var allUrl = query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
+  var node_url = node_query.replace(/BBOX/g, bounds.toOverpassBBoxString());
+  var way_url = way_query.replace(/BBOX/g, bounds.toOverpassBBoxString());
+  var rel_url = rel_query.replace(/BBOX/g, bounds.toOverpassBBoxString());
 
-  var node_url = node_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
-  var way_url = way_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
-  var rel_url = rel_query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString());
+  var bounds_rounded = { // the 'bounds' is the only way where we can identify to which pid a returned overpassJSON belongs
+      minlat : Math.round(bounds._southWest.lat,4),
+      minlon : Math.round(bounds._southWest.lng,4),
+      maxlat : Math.round(bounds._northEast.lat,4),
+      maxlon : Math.round(bounds._northEast.lng,4)
+  }
 
-  console.log("loadPOI: before JSON call node: " + node_url);
   changeLoadingIndicator("loading_node", +1);
+  var this_pid = pids.node.counter++;
+  pids.node.active[this_pid] = { state : "running", bounds : bounds_rounded } ;
+  console.log("loadPOI: before JSON call pid node"+this_pid+": " + node_url);
   $.getJSON(node_url, handleNodes);
+  setTimeout(function () {
+      timeOutOverpassCall("node", this_pid);
+  },1000*overpass_config.timeout);
 
-  console.log("loadPOI: before JSON call way: " + way_url);
   changeLoadingIndicator("loading_way", +1);
+  this_pid = pids.way.counter++;
+  pids.way.active[this_pid] = { state : "running", bounds : bounds_rounded } ;
+  console.log("loadPOI: before JSON call pid way"+this_pid+": " + way_url);
   $.getJSON(way_url, handleWays);
+  setTimeout(function () {
+      timeOutOverpassCall("way", this_pid);
+  },1000*overpass_config.timeout);
 
-  console.log("loadPOI: before JSON call rel: " + rel_url);
   changeLoadingIndicator("loading_rel", +1);
+  this_pid = pids.relation.counter++;
+  pids.relation.active[this_pid] = { state : "running", bounds : bounds_rounded } ;
+  console.log("loadPOI: before JSON call pid rel"+this_pid+": " + rel_url);
   $.getJSON(rel_url, handleRelations);
+  setTimeout(function () {
+      timeOutOverpassCall("relation", this_pid);
+  },1000*overpass_config.timeout);
+}
+
+function timeOutOverpassCall(osm_type,pid) {
+    if (pids[osm_type].active[pid] && pids[osm_type].active[pid].state == "running") {
+        changeLoadingIndicator("loading_" + osm_type, -1);
+        pids[osm_type].active[pid].state = "timeouted";
+        console.log("timeOutOverpassCall: pid " + osm_type + pid + " timeouted after " + overpass_config.timeout + " seconds.");
+    }
+}
+
+// taken from https://stackoverflow.com/questions/246193/how-do-i-round-a-number-in-javascript
+// 'improve' Math.round() to support a second argument
+var _round = Math.round;
+Math.round = function(number, decimals /* optional, default 0 */)
+{
+    if (arguments.length == 1)
+        return _round(number);
+
+    var multiplier = Math.pow(10, decimals);
+        return _round(number * multiplier) / multiplier;
 }
 
 function updateLinks() {
