@@ -242,7 +242,7 @@ http_request.onreadystatechange = function () {
                   }
               }
 
-              if(createFiltersOfTaxonomy)
+              if(document.filters)
                   createFiltersOfTaxonomy();
 
           }
@@ -416,13 +416,15 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     );
   }
   // Filters
-  $('#sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
-  $('#sidebox-filters').append('<h2 onClick="updateFilterCount(true);toggleSideBox(\'sidebox-filters\');">Filters</h2>');
-  $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
-  for (filtername in filters) {
-      $('#filters').append(createFilterHTML(filtername));
+  if(document.filters) {
+      $('#sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
+      $('#sidebox-filters').append('<h2 onClick="updatePOIlist();updateFilterCount(true);toggleSideBox(\'sidebox-filters\');">Filters</h2>');
+      $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
+      for (filtername in filters) {
+          $('#filters').append(createFilterHTML(filtername));
+      }
+      // filters derived from taxonomy get added when taxonomy.json is loaded
   }
-  // filters derived from taxonomy get added when taxonomy.json is loaded
 
   // List of POIs
   $('#sidebar').append('<div id="sidebox-list" class="box hidden"></div>');
@@ -625,7 +627,9 @@ function chooseIconSrc(tags,iconsize) {
 
 var disableLoadPOI = false;
 function loadPoi() {
-  updateFilterCount(); // here because it is called on every map move
+  if(document.filters)
+      updateFilterCount(); // here because it is called on every map move
+  updatePOIlist();
   var notificationbar =  document.getElementById("notificationbar");
   if (map.getZoom() < overpass_config.minzoom ) {
     notificationbar.style.display = "block";
@@ -1096,7 +1100,8 @@ function loadPoi() {
 
       var retval = nodeFunction(p);
       if (retval) {
-        retval.filtered = ! getFilterStatusOnPoi(retval);
+        if(document.filters)
+            retval.filtered = ! getFilterStatusOnPoi(retval);
         new_markers.push(retval);
       }
     }
@@ -1104,7 +1109,9 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        if(document.filters)
+            updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        updatePOIlist();
         new_markers = [];
     }
 
@@ -1167,7 +1174,8 @@ function loadPoi() {
 
           var retval = wayFunction(p);
           if (retval) {
-            retval.filtered = ! getFilterStatusOnPoi(retval);
+            if(document.filters)
+                retval.filtered = ! getFilterStatusOnPoi(retval);
             new_markers.push(retval);
           }
       }
@@ -1177,7 +1185,9 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        if(document.filters)
+            updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        updatePOIlist();
         new_markers = [];
     }
 
@@ -1266,7 +1276,9 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        if(document.filters)
+            updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        updatePOIlist();
         new_markers = [];
     }
 

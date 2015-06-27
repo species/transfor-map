@@ -40,6 +40,7 @@
 
   <script src='L.Control.Locate.mine.js'></script>
 
+  <script src="filters.js"></script>
   <script src="map.js"></script>
   <script>
     /*
@@ -61,7 +62,7 @@
     buildOverpassQuery();
 
     var about_text = '<p>This map displays places where you can get stuff organically produced.</p>'
-        + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database.'
+        + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. '
         + 'For an item to be displayed, it must have the “<a href="https://wiki.openstreetmap.org/wiki/Key:organic">organic</a>” tag set.</p>'
         + about.overpass
         + about.osm_edit
