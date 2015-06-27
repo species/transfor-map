@@ -242,7 +242,7 @@ http_request.onreadystatechange = function () {
                   }
               }
 
-              if(document.filters)
+              if(window.filters)
                   createFiltersOfTaxonomy();
 
           }
@@ -416,7 +416,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     );
   }
   // Filters
-  if(document.filters) {
+  if(window.filters) {
       $('#sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
       $('#sidebox-filters').append('<h2 onClick="updatePOIlist();updateFilterCount(true);toggleSideBox(\'sidebox-filters\');">Filters</h2>');
       $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
@@ -627,7 +627,7 @@ function chooseIconSrc(tags,iconsize) {
 
 var disableLoadPOI = false;
 function loadPoi() {
-  if(document.filters)
+  if(window.filters)
       updateFilterCount(); // here because it is called on every map move
   updatePOIlist();
   var notificationbar =  document.getElementById("notificationbar");
@@ -1100,7 +1100,7 @@ function loadPoi() {
 
       var retval = nodeFunction(p);
       if (retval) {
-        if(document.filters)
+        if(window.filters)
             retval.filtered = ! getFilterStatusOnPoi(retval);
         new_markers.push(retval);
       }
@@ -1109,7 +1109,7 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        if(document.filters)
+        if(window.filters)
             updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
         updatePOIlist();
         new_markers = [];
@@ -1174,7 +1174,7 @@ function loadPoi() {
 
           var retval = wayFunction(p);
           if (retval) {
-            if(document.filters)
+            if(window.filters)
                 retval.filtered = ! getFilterStatusOnPoi(retval);
             new_markers.push(retval);
           }
@@ -1185,7 +1185,7 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        if(document.filters)
+        if(window.filters)
             updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
         updatePOIlist();
         new_markers = [];
@@ -1276,7 +1276,7 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        if(document.filters)
+        if(window.filters)
             updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
         updatePOIlist();
         new_markers = [];
