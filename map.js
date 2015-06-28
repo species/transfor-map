@@ -10,95 +10,6 @@ var attr = {
   greenmap : 'Green Map Icons used by permission &copy; <a href="http://www.greenmap.org">Green Map System 2015</a>',
   overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
 }
-var about = {
-    overpass : '<p>Items are loaded via <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>, it may take some minutes for newly added items to appear.</p>',
-    osm_edit : '<p>You can improve this map with the “Edit” Button in the top right corner!</p>',
-    export_opendata : '<p>All data displayed is Open Data, you can get it with the “Export Data” link in the bottom right corner.</p>'
-}
-
-var different_maps = [ 
-    { url : "identities.html" ,
-      name : "TransforMap of Identities",
-      image: "assets/transformap/pngs/" + 24 + "/political_identity.png"
-    } ,
-    /*   { url : "transformap.html" ,
-      name : "Needs-based TransforMap" } , */
-    { url : "organic.html" ,
-      name : "Organic TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=supermarket.png"
-    } ,
-    { url : "regional.html" ,
-      name : "Regional TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=convenience.png"
-    } ,
-    { url : "fairtrade.html" ,
-      name : "Fairtrade TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=fairtrade.png"
-    } ,
-    { url : "secondhand.html" ,
-      name : "Second Hand TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=second_hand.png"
-    } ,
-    { url : "greenmap.html" ,
-      name : "Green TransforMap",
-      image : "assets/greenmap/png/" + 24  + "/Park-_Recreation_Area.png"
-    } 
-];
-
-
-function updatePOIlist(force) {
-    if(!force && $('#sidebox-list').attr('class').match(/hidden/)) //run only when menu open
-        return;
-
-    $('#POIlist').html("");
-    var list_of_POIs = [], list_of_unnamed_POIs = [];
-    visible_markers = getVisibleMarkers();
-    for(var i = 0; i < visible_markers.length; i++) {
-        var marker = visible_markers[i];
-        if( ! marker.hasOwnProperty("filtered") )
-            continue;
-        if( ! marker.filtered) {
-            if(marker.data.tags.name)
-                list_of_POIs.push(marker);
-            else
-                list_of_unnamed_POIs.push(marker);
-        }
-    }
-    list_of_POIs.sort(function (a,b) {
-        var nameA = a.data.tags.name.toLowerCase(), nameB = b.data.tags.name.toLowerCase();
-        if (nameA < nameB) //sort string ascending
-            return -1
-        if (nameA > nameB)
-            return 1
-        return 0 //default return value (no sorting)
-        });
-    for(var i = 0; i < list_of_POIs.length; i++) {
-        marker = list_of_POIs[i];
-        var src = chooseIconSrc(marker.data.tags, 16);
-        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + marker.data.tags.name + "</li>");
-    }
-    for(var i = 0; i < list_of_unnamed_POIs.length; i++) {
-        marker = list_of_unnamed_POIs[i];
-        var src = chooseIconSrc(marker.data.tags, 16);
-        var main_tag = getMainTag(marker.data.tags);
-        var ersatz_name = (marker.data.tags[main_tag] || "unknown");
-        $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ersatz_name + "</li>");
-    }
-}
-
-function getVisibleMarkers() {
-    var bounds = map.getBounds();
-    var marker_array = markers.GetMarkers();
-    var visible_markers = [];
-    for(var i = 0; i < marker_array.length; i++) {
-        var marker = marker_array[i];
-        var latlng = L.latLng(marker.data.lat, marker.data.lon);
-        if( bounds.contains(latlng) )
-            visible_markers.push(marker);
-    }
-    return visible_markers;
-}
-
 
 /*
  * takes a two args: osm datatype and osm id
@@ -194,10 +105,6 @@ function getVisibleMarker(osm_type,osm_id) {
     return my_layer;
 }
 
-/* precondition: in global var filters, an object $filtername must exist.
- *  returns a piece of HTML which can be added to filters sidebar 
- */
-
 /* this part must be in global namespace */
 // fetch taxonomy, containing all translations, and implicit affiliations
 // taken from Wikipedia:JSON
@@ -252,59 +159,6 @@ http_request.onreadystatechange = function () {
       }
   };
 http_request.send(null);
-
-function toggleSideBox(id) {//TODO rewrite with jQuery toggleClass
-    var clicked_element = document.getElementById(id);
-    var clicked_on_open_item = ( clicked_element.getAttribute("class").indexOf("shown") >= 0 ) ? 1 : 0; 
-
-    //close all
-    var sidebar = document.getElementById("sidebar");
-    var childs = sidebar.childNodes;
-    for ( var i=0; i < childs.length; i++) {
-        var item_child = childs[i];
-        if ( item_child.hasAttribute("class") ) {
-            if( item_child.getAttribute("class").indexOf("box") >= 0 ) {
-                item_child.setAttribute("class", "box hidden");
-            }
-        }
-    }
-
-    if( ! clicked_on_open_item)
-        clicked_element.setAttribute("class", "box shown");
-}
-
-function toggleInfoBox(id) {
-    var element = document.getElementById(id);
-    element.style.display = ( element.style.display == "block" ) ? "none" : "block";
-}
-function toggleSideBar() { //TODO rewrite with jQuery toggleClass
-    var sidebar = document.getElementById("sidebar");
-    var sidebar_toggle = document.getElementById("sidebar_toggle");
-    var content = document.getElementById("content");
-    if( sidebar_toggle.hasAttribute("class") ) { // is hidden
-        sidebar_toggle.removeAttribute("class");
-        sidebar.removeAttribute("class");
-        content.removeAttribute("class");
-        /* disabled meanwhile because n steps overpass queries get fired
-        for (var t=100; t <= 800; t = t+100) {
-            setTimeout(reDrawMap, t);
-        }*/
-        setTimeout(reDrawMap, 810);
-    } else {
-        sidebar_toggle.setAttribute("class", "hidden");
-        sidebar.setAttribute("class", "hidden");
-        content.setAttribute("class", "full");
-        /*
-        for (var t=100; t <= 800; t = t+100) {
-            setTimeout(reDrawMap, t);
-        }*/
-        setTimeout(reDrawMap, 810);
-    }
-
-}
-function reDrawMap() {
-        map.invalidateSize(true);
-}
 
 var overpass_ql_text,
     overpass_query,
@@ -396,66 +250,13 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
     }
   }
 
-  $('body').append('<div id="sidebar"><h1>' + document.title + '</h1></div>');
-  $('body').append('<div id="sidebar_toggle" onClick="toggleSideBar()">»</div>');
-
-  // switching to other maps
-  $('#sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');
-  $('#sidebox-maps').append('<h2 onClick="toggleSideBox(\'sidebox-maps\');">Explore other Maps</h2>');
-  $('#sidebox-maps').append('<ul id="mapswitcher" class="boxcontent"></ul>');
-
-  for (var i = 0; i < different_maps.length; i++) {
-    var current_item = different_maps[i]; 
-    $('#mapswitcher').append(
-        $('<li>')
-            .attr('class', current_item["name"] == document.title ?  "current" : "")
-            .append( $('<a>')
-                .attr('href', current_item["url"])
-                .append('<img src="' + current_item["image"] + '" />' + current_item["name"])
-            )
-    );
+  if(window.createSideBar) {
+      createSideBar();
+      setTimeout(toggleSideBarOnLoad,200);
+      map.on('moveend', updatePOIlist);
+      if(window.filters)
+          map.on('updateFilterCount'); // here because it is called on every map move
   }
-  // Filters
-  if(window.filters) {
-      $('#sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
-      $('#sidebox-filters').append('<h2 onClick="updatePOIlist();updateFilterCount(true);toggleSideBox(\'sidebox-filters\');">Filters</h2>');
-      $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
-      for (filtername in filters) {
-          $('#filters').append(createFilterHTML(filtername));
-      }
-      // filters derived from taxonomy get added when taxonomy.json is loaded
-  }
-
-  // List of POIs
-  $('#sidebar').append('<div id="sidebox-list" class="box hidden"></div>');
-  $('#sidebox-list').append('<h2 onClick="updatePOIlist(true);toggleSideBox(\'sidebox-list\');">List of <span title="Point of Interest">POIs</span></h2>');
-  $('#sidebox-list').append('<ul id="POIlist" class="boxcontent"></ul>');
-
-  // Map Key
-  $('#sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
-  $('#sidebox-mapkey').append('<h2 onClick="toggleSideBox(\'sidebox-mapkey\');">Map Key</h2>');
-  $('#sidebox-mapkey').append('<ul id="mapkey" class="boxcontent"></ul>');
-
-  // extra mapkey for maps not deriving from taxonomy.json
-  if(window.mapkey) {
-      $('#mapkey').append(window.mapkey);
-      $('#mapkey li').attr('class','manual');
-  }
-  // map key derived from taxonomy gets added when taxonomy.json is loaded
-
-        
-  // About
-  $('#sidebar').append('<div id="sidebox-about" class="box hidden"></div>');
-  $('#sidebox-about').append('<h2 onClick="toggleSideBox(\'sidebox-about\');">About this Map</h2>');
-  $('#sidebox-about').append('<div id="about" class="boxcontent"></div>');
-  if(window.about_text)
-      $('#about').append(window.about_text);
-    
-  $('#sidebar').append('<div id="timestamp"></div>');
-  $('#timestamp').append('<div id="tall" title="Local copy"></div>'); // alert() is only for dev, works only in FF if you SELECT TEXT.
-  $('#timestamp').append('<div id="tnode" onmouseover="alert(\'' + overpass_config.servers[0].replace(/^http:\/\//,"") + '\');"></div>');
-  $('#timestamp').append('<div id="tway"  onmouseover="alert(\'' + overpass_config.servers[1].replace(/^http:\/\//,"") + '\');"></div>');
-  $('#timestamp').append('<div id="trel"  onmouseover="alert(\'' + overpass_config.servers[2].replace(/^http:\/\//,"") + '\');"></div>');
 
   $('body').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
   $('#forkme').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" />');
@@ -467,8 +268,6 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
 
   map.on('moveend', updateLinks);
   map.on('popupopen', setImageInPopup);
-
-  setTimeout(toggleSideBarOnLoad,200);
 
   var popup_param = getUrlVars()["popup"];
   if(popup_param) {
@@ -523,11 +322,6 @@ function setImageInPopup(obj) {
 //    console.log("setImageInPopup: setting src " + source);
     $('#wp-image').css('display','table-cell');
     img.attr('src', source);
-}
-
-function toggleSideBarOnLoad() {
-  if(jQuery.browser.mobile)
-    toggleSideBar();
 }
 
 function addSearch() {
@@ -626,14 +420,93 @@ function chooseIconSrc(tags,iconsize) {
 }
 
 var disableLoadPOI = false;
+
+var bboxes_requested = [
+    /* e.g. { outer_bbox: L.LatLngBounds, inner_polyboxes: [ L.LatLngBounds, L.LatLngBounds, ... ]  }, { ... } */
+    ]; //VERY SIMPLE list of areas already requested, don't load if new one is inside
+
+/*
+ * returns true if it already was in BBOX,
+ * and false if it had to be added
+ */
+function checkIfInRequestedBboxesAndIfNotaddTo(bounds) {
+ //   console.log("checkIfInRequestedBboxesAndIfNotaddTo: called. bboxes_requested:" + JSON.stringify(bboxes_requested));
+    for(var i=0; i < bboxes_requested.length; i++) { //for-loop over outer bboxes
+        var current_bound = bboxes_requested[i];
+        if(! current_bound.outer_bbox.intersects(bounds)) //neither crossing nor inside
+            continue;
+         if(current_bound.outer_bbox.contains(bounds)) { // only if it doesn't cross outer bbox it is possible that it's already covered
+            for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
+                current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
+                if(current_inner_bbox.contains(bounds)) {
+ //                   console.log("checkIfInRequestedBboxesAndIfNotaddTo: bbox already here");
+                    return true;
+                }
+            }
+        }
+          else //intersects one border
+              current_bound.outer_bbox.extend(bounds);
+        // either intersects with outer bbox or is not in any inner bbox
+        // add one horizontal and one vertical box that it intersects for EACH box!
+        var new_bboxes = [];
+        var viewbox_height = bounds.getNorth() - bounds.getSouth(),
+            zoom_delta_to_max = map.getMaxZoom() - map.getZoom(),
+            min_height = viewbox_height / (Math.pow(2,zoom_delta_to_max));
+  //      console.log("checkIfInRequestedBboxesAndIfNotaddTo: viewbox_height = " + viewbox_height + "°, min_heigh = " + min_height);
+        var min_width = ( bounds.getEast() - bounds.getWest() ) / (Math.pow(2,zoom_delta_to_max));
+
+        for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
+            current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
+            if(current_inner_bbox.intersects(bounds)) {
+
+                //latLngBounds(SW,NE) (bottomleft, topright)
+                //latlng is y,x !
+
+                // new_x_stretching_box =  new L.latLngBounds ( SW[ y, x ], NE[y, x]
+                var new_x_stretching_box = new L.latLngBounds( [ Math.max(bounds.getSouth(), current_inner_bbox.getSouth() ), Math.min(bounds.getWest(), current_inner_bbox.getWest() ) ],   //SW
+                                                               [ Math.min(bounds.getNorth(), current_inner_bbox.getNorth() ), Math.max(bounds.getEast(), current_inner_bbox.getEast() ) ] ); //NE
+                var new_y_stretching_box = new L.latLngBounds( [ Math.min(bounds.getSouth(), current_inner_bbox.getSouth() ), Math.max(bounds.getWest(), current_inner_bbox.getWest() ) ],   //SW
+                                                               [ Math.max(bounds.getNorth(), current_inner_bbox.getNorth() ), Math.min(bounds.getEast(), current_inner_bbox.getEast() ) ] ); //NE
+
+                if( (new_x_stretching_box.getNorth() - new_x_stretching_box.getSouth() ) > min_height &&
+                        (new_x_stretching_box.getEast() - new_x_stretching_box.getWest() ) > min_width)
+                    new_bboxes.push(new_x_stretching_box);
+/*                else
+                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: xbox too small: h=" + (new_x_stretching_box.getNorth() - new_x_stretching_box.getSouth()) + "°, w="
+                            +(new_x_stretching_box.getEast() - new_x_stretching_box.getWest()) + "°" );*/
+
+                if( (new_y_stretching_box.getNorth() - new_y_stretching_box.getSouth() ) > min_height &&
+                        (new_y_stretching_box.getEast() - new_y_stretching_box.getWest() ) > min_width)
+                    new_bboxes.push(new_y_stretching_box);
+   /*             else
+                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: ybox too small: h=" + (new_y_stretching_box.getNorth() - new_y_stretching_box.getSouth()) + "°, w="
+                            +(new_y_stretching_box.getEast() - new_y_stretching_box.getWest()) + "°" );*/
+            }
+        }
+ /*       if(new_bboxes) {
+            console.log("checkIfInRequestedBboxesAndIfNotaddTo: new stretching bboxes to add:");
+            console.log(new_bboxes);
+        } else
+            console.log("checkIfInRequestedBboxesAndIfNotaddTo: no net stretching bboxes to add.");*/
+
+        current_bound.inner_polyboxes.push(bounds);
+        for(var new_i=0; new_i < new_bboxes.length; new_i++)
+            current_bound.inner_polyboxes.push(new_bboxes[new_i]);
+   
+        return false;
+    }
+    //it is completely outside from every outer bbox, create a new one
+    bboxes_requested.push( { outer_bbox: bounds, inner_polyboxes: [ bounds ] } );
+ //   console.log("checkIfInRequestedBboxesAndIfNotaddTo: outside other bboxes, add a new");
+    return false;
+}
+
 function loadPoi() {
-  if(window.filters)
-      updateFilterCount(); // here because it is called on every map move
-  updatePOIlist();
+
   var notificationbar =  document.getElementById("notificationbar");
   if (map.getZoom() < overpass_config.minzoom ) {
     notificationbar.style.display = "block";
-    if(on_start_loaded) {
+    if(on_start_loaded && window.createSideBar) {
       var json_date = new Date(pois_lz.osm3s.timestamp_osm_base);
       $('#tall').html("Lowzoom data: " + json_date.toLocaleString());
       $('#tnode').css("display", "hidden");
@@ -655,11 +528,13 @@ function loadPoi() {
       changeLoadingIndicator("loading_rel",+1);
       handleRelations(pois_lz); 
 
-      var json_date = new Date(pois_lz.osm3s.timestamp_osm_base);
-      $('#tall').html("Lowzoom data: " + json_date.toLocaleString());
-      $('#tnode').css("display", "hidden");
-      $('#tway').css("display", "hidden");
-      $('#trel').css("display", "hidden");
+      if(window.createSideBar) {
+          var json_date = new Date(pois_lz.osm3s.timestamp_osm_base);
+          $('#tall').html("Lowzoom data: " + json_date.toLocaleString());
+          $('#tnode').css("display", "hidden");
+          $('#tway').css("display", "hidden");
+          $('#trel').css("display", "hidden");
+      }
 
       on_start_loaded = 1;
     }
@@ -667,21 +542,6 @@ function loadPoi() {
     return;
   }
   notificationbar.style.display = "none";
-
-  // if Graz (start position, gets called once first) do nothing
-  var centre = map.getCenter();
-  if (centre.lat == 47.07 && centre.lng == 15.43) {
-    var splitstr = window.location.href.split('#');
-    if (splitstr[1]) {
-      var coords_href = splitstr[1].split('/');
-      if ( coords_href[1] == 47.07 && coords_href[2] == 15.43 )
-        console.log("look, we are really in Graz");
-      else {
-        console.log("1st call, return");
-        return;
-      }
-    }
-  }
 
   var current_zoom = map.getZoom();
   console.log("loadPOI called, z" + current_zoom);
@@ -695,6 +555,10 @@ function loadPoi() {
   if(disableLoadPOI)
       return;
 
+  var bounds = map.getBounds();
+  if(checkIfInRequestedBboxesAndIfNotaddTo(bounds))
+      return;
+
   function url_ify(link,linktext) {
     if (/@/.test(link)) {
       return '<a href="mailto:' + link + '">' + secHTML(linktext) + '</a>';
@@ -705,7 +569,6 @@ function loadPoi() {
         link = "http://" + link;
       return $("<div>").append( $('<a>').attr('href', link).text(linktext) ).html();
     }
-
   }
 
   function fillPopup(tags,type,id,lat,lon) {
@@ -942,7 +805,6 @@ function loadPoi() {
     return retval.html();
   }
 
-
   function bindPopupOnData(data) {
     // first: check if no item with this osm-id exists...
     var hashtable_key = data.type + data.id; // e.g. "node1546484546"
@@ -1016,7 +878,7 @@ function loadPoi() {
     centroid.lon = centroid.coordinates[0];
     centroid.lat = centroid.coordinates[1];
     return bindPopupOnData(centroid);
-  };
+  }
   function relationFunction(data) {
     // calculate mean coordinates as center
     // for all members, calculate centroid
@@ -1109,15 +971,18 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        if(window.filters)
-            updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
-        updatePOIlist();
+        if(window.createSideBar) {
+            var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
+            $('#tnode').css("display", "block");
+            $('#tnode').html(json_date.toLocaleString());
+            updateElementCount();
+            updatePOIlist();
+            if(window.filters)
+                updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        }
         new_markers = [];
     }
 
-    var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
-    $('#tnode').css("display", "block");
-    $('#tnode').html(json_date.toLocaleString());
     changeLoadingIndicator("loading_node", -1);
     if(! open_popup_on_load.already_shown && open_popup_on_load.type == "node") {
         open_popup_on_load.already_shown = true;
@@ -1127,7 +992,6 @@ function loadPoi() {
     }
     console.log("handleNodes (pid " + pid + ") done, " + number + " added.");
   }
-
   function handleWays(overpassJSON) {
     var pid;
     for(i_pid in pids.way.active) {
@@ -1185,15 +1049,18 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        if(window.filters)
-            updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
-        updatePOIlist();
+        if(window.createSideBar) {
+            var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
+            $('#tway').css("display", "block");
+            $('#tway').html(json_date.toLocaleString());
+            updateElementCount();
+            updatePOIlist();
+            if(window.filters)
+                updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        }
         new_markers = [];
     }
 
-    var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
-    $('#tway').css("display", "block");
-    $('#tway').html(json_date.toLocaleString());
     changeLoadingIndicator("loading_way", -1);
     if(! open_popup_on_load.already_shown && open_popup_on_load.type == "way") {
         open_popup_on_load.already_shown = true;
@@ -1203,7 +1070,6 @@ function loadPoi() {
     }
     console.log("handleWays (pid " + pid + ") done, " + number + " added.");
   }
-
   function handleRelations(overpassJSON) {
     var pid;
     for(i_pid in pids.relation.active) {
@@ -1267,8 +1133,9 @@ function loadPoi() {
       // p has type=relaton, id, tags={k:v}, members=[{role, obj}]
       var retval = relationFunction(p);
       if (retval) {
-        retval.filtered = ! getFilterStatusOnPoi(retval);
-        new_markers.push(retval);
+          if(window.filters)
+            retval.filtered = ! getFilterStatusOnPoi(retval);
+          new_markers.push(retval);
       }
     }
     
@@ -1276,15 +1143,18 @@ function loadPoi() {
     if(number) {
         markers.RegisterMarkers(new_markers);
         markers.ProcessView();
-        if(window.filters)
-            updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
-        updatePOIlist();
+        if(window.createSideBar) {
+            var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
+            $('#trel').css("display", "block");
+            $('#trel').html(json_date.toLocaleString());
+            updateElementCount();
+            updatePOIlist();
+            if(window.filters)
+                updateFilterCount(); // TODO it is relatively inefficient to run check all filters every time a single entry is changed - later only the filters affected on change should be counted 
+        }
         new_markers = [];
     }
 
-    var json_date = new Date(overpassJSON.osm3s.timestamp_osm_base);
-    $('#trel').css("display", "block");
-    $('#trel').html(json_date.toLocaleString());
     changeLoadingIndicator("loading_rel", -1);
     if(! open_popup_on_load.already_shown && open_popup_on_load.type == "relation") {
         open_popup_on_load.already_shown = true;
@@ -1300,19 +1170,19 @@ function loadPoi() {
   var node_query = overpass_query_nodes;
   var way_query = overpass_query_ways;
   var rel_query = overpass_query_rels;
-  var bounds = map.getBounds()
+  var op_bounds = bounds.toOverpassBBoxString();
 
-  var allUrl = query.replace(/BBOX/g, bounds.toOverpassBBoxString());
+  var allUrl = query.replace(/BBOX/g, op_bounds);
 
-  var node_url = node_query.replace(/BBOX/g, bounds.toOverpassBBoxString());
-  var way_url = way_query.replace(/BBOX/g, bounds.toOverpassBBoxString());
-  var rel_url = rel_query.replace(/BBOX/g, bounds.toOverpassBBoxString());
+  var node_url = node_query.replace(/BBOX/g, op_bounds);
+  var way_url = way_query.replace(/BBOX/g, op_bounds);
+  var rel_url = rel_query.replace(/BBOX/g, op_bounds);
 
   var bounds_rounded = { // the 'bounds' is the only way where we can identify to which pid a returned overpassJSON belongs
-      minlat : Math.round(bounds._southWest.lat,4),
-      minlon : Math.round(bounds._southWest.lng,4),
-      maxlat : Math.round(bounds._northEast.lat,4),
-      maxlon : Math.round(bounds._northEast.lng,4)
+      minlat : L.Util.formatNum(bounds._southWest.lat,4),
+      minlon : L.Util.formatNum(bounds._southWest.lng,4),
+      maxlat : L.Util.formatNum(bounds._northEast.lat,4),
+      maxlon : L.Util.formatNum(bounds._northEast.lng,4)
   }
 
   changeLoadingIndicator("loading_node", +1);
@@ -1351,36 +1221,16 @@ function timeOutOverpassCall(osm_type,pid) {
     }
 }
 
-// taken from https://stackoverflow.com/questions/246193/how-do-i-round-a-number-in-javascript
-// 'improve' Math.round() to support a second argument
-var _round = Math.round;
-Math.round = function(number, decimals /* optional, default 0 */)
-{
-    if (arguments.length == 1)
-        return _round(number);
-
-    var multiplier = Math.pow(10, decimals);
-        return _round(number * multiplier) / multiplier;
-}
-
 function updateLinks() {
   var centre = map.getCenter();
-  var maps_container = document.getElementById("mapswitcher");
-  var childs = maps_container.childNodes;
-  for ( var i=0; i < childs.length; i++) {
-    var li_child = childs[i];
-    var a_child = li_child.firstChild;
-    var href = a_child.getAttribute ("href");
-    var splitstr = href.split('#');
-    href = splitstr[0] + "#" + map.getZoom() + "/" + centre.lat + "/" + centre.lng;
-    a_child.setAttribute("href",href);
-  }
-
   var query = encodeURIComponent(overpass_ql_text);
   turbolink = "<a href=\'http://overpass-turbo.eu/?Q=" 
       + query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()) 
       + '&R&C=' + centre.lat + ';' + centre.lng + ';' + map.getZoom() 
       + '\' title="Export OSM data with Overpass Turbo">Export data <img src="assets/turbo.png" height=12px style="margin-bottom:-2px"/></a>';
+
+  if(window.updateMapSwitcherLinks)
+      updateMapSwitcherLinks();
 }
 
 

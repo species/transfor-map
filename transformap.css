@@ -98,10 +98,10 @@ div.leaflet-popup-content { width: auto !important; }
     text-shadow: 2px 2px 2px white ,-2px -2px 2px white, 2px -2px 2px white, -2px 2px 2px white;
 }
 
-    #map {
-      height: 100%;
-      overflow: hidden;
-    }
+#map {
+  height: 100%;
+  overflow: hidden;
+}
 
 
   .mmmactive {
@@ -181,14 +181,13 @@ padding:0px;
   top: 50px;
   bottom: 0px;
   overflow:hidden;
-  left:0px;
-  right:250px;
+  left:0;
+  right:0;
   transition: right 0.8s;
 }
-#content.full {
-
-    right:0;
-    transition: right 0.8s;
+#content.sidebar {
+  right:250px;
+  transition: right 0.8s;
 }
 
 /*html {

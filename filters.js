@@ -371,7 +371,6 @@ function runFiltersOnAll() {
     }
 
     markers.ProcessView();
-    updatePOIlist();
 }
 
 
@@ -395,8 +394,7 @@ function createValidDOMid (source) {
 }
 
 function updateFilterCount(force) {
-    updatePOIlist();
-    if(!force && $('#sidebox-filters').attr('class').match(/hidden/)) //run only when menu open
+    if(!force && open_sidebox != "sidebox-filters") //run only when menu open
         return;
 
     //at first, reset all counts
@@ -410,12 +408,10 @@ function updateFilterCount(force) {
 
     //list of visible markers needed because we need to know their amount
     var visible_markers = getVisibleMarkers();
-    var nr_pois = { node: 0, way: 0, relation:0 };
 
     for(var i = 0; i < visible_markers.length; i++) {
         var marker = visible_markers[i];
         var marker_id = marker.data.type + marker.data.id;
-        nr_pois[marker.data.type]++;
         for(filtername in filters) {
 
             var is_marker_unknown = true;
@@ -449,10 +445,6 @@ function updateFilterCount(force) {
             }
         }
     }
-
-    $('#tnode').attr('element-nrs',nr_pois.node);
-    $('#tway').attr('element-nrs',nr_pois.way);
-    $('#trel').attr('element-nrs',nr_pois.relation);
 }
 
 /* precondition: in global var filters, an object $filtername must exist.
