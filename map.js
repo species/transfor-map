@@ -425,23 +425,55 @@ var bboxes_requested = [
     /* e.g. { outer_bbox: L.LatLngBounds, inner_polyboxes: [ L.LatLngBounds, L.LatLngBounds, ... ]  }, { ... } */
     ]; //VERY SIMPLE list of areas already requested, don't load if new one is inside
 
+/*contains(2) {
+    return (sw2.lat >= sw.lat) && (ne2.lat <= ne.lat) &&     // south2 >= south && north2 <= north &&
+           (sw2.lng >= sw.lng) && (ne2.lng <= ne.lng);       // west2 >= west && east2 <= east
+}
+intersects(2) {
+    latIntersects = (ne2.lat >= sw.lat) && (sw2.lat <= ne.lat),
+    lngIntersects = (ne2.lng >= sw.lng) && (sw2.lng <= ne.lng);
+
+    return latIntersects && lngIntersects;
+}*/
+
 /*
  * returns true if it already was in BBOX,
  * and false if it had to be added
  */
 function checkIfInRequestedBboxesAndIfNotaddTo(bounds) {
+    var north = bounds._northEast.lat,  // for performance reasons, do this one time
+        east  = bounds._northEast.lng,
+        south = bounds._southWest.lat,
+        west  = bounds._southWest.lng;
+
+    var viewbox_height = north - south,
+        zoom_delta_to_max = map.getMaxZoom() - map.getZoom(),
+        min_height = viewbox_height / (Math.pow(2,zoom_delta_to_max));
+//      console.log("checkIfInRequestedBboxesAndIfNotaddTo: viewbox_height = " + viewbox_height + "°, min_heigh = " + min_height);
+    var min_width = ( east - west ) / (Math.pow(2,zoom_delta_to_max));
+
  //   console.log("checkIfInRequestedBboxesAndIfNotaddTo: called. bboxes_requested:" + JSON.stringify(bboxes_requested));
     for(var i=0; i < bboxes_requested.length; i++) { //for-loop over outer bboxes
         var current_bound = bboxes_requested[i];
         if(! current_bound.outer_bbox.intersects(bounds)) //neither crossing nor inside
             continue;
-         if(current_bound.outer_bbox.contains(bounds)) { // only if it doesn't cross outer bbox it is possible that it's already covered
+        if(current_bound.outer_bbox.contains(bounds)) { // only if it doesn't cross outer bbox it is possible that it's already covered
+            console.log("checkIfInRequestedBboxesAndIfNotaddTo: " + current_bound.inner_polyboxes.length + " inner polyboxes");
             for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
                 current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
-                if(current_inner_bbox.contains(bounds)) {
+                //contains:
+                if(south < current_inner_bbox._southWest.lat || 
+                   north > current_inner_bbox._northEast.lat ||
+                   west  < current_inner_bbox._southWest.lng ||
+                   east  > current_inner_bbox._northEast.lng)
+                    continue;
+                return true; // all ¬ contains-checks failed, must be contained
+
+/*                if(current_inner_bbox.contains(bounds)) {
  //                   console.log("checkIfInRequestedBboxesAndIfNotaddTo: bbox already here");
                     return true;
-                }
+                    
+                } //false == continue*/
             }
         }
           else //intersects one border
@@ -449,38 +481,43 @@ function checkIfInRequestedBboxesAndIfNotaddTo(bounds) {
         // either intersects with outer bbox or is not in any inner bbox
         // add one horizontal and one vertical box that it intersects for EACH box!
         var new_bboxes = [];
-        var viewbox_height = bounds.getNorth() - bounds.getSouth(),
-            zoom_delta_to_max = map.getMaxZoom() - map.getZoom(),
-            min_height = viewbox_height / (Math.pow(2,zoom_delta_to_max));
-  //      console.log("checkIfInRequestedBboxesAndIfNotaddTo: viewbox_height = " + viewbox_height + "°, min_heigh = " + min_height);
-        var min_width = ( bounds.getEast() - bounds.getWest() ) / (Math.pow(2,zoom_delta_to_max));
-
         for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
             current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
-            if(current_inner_bbox.intersects(bounds)) {
+            if(south > current_inner_bbox._northEast.lat ||
+               north < current_inner_bbox._southWest.lat ||
+               east  < current_inner_bbox._southWest.lng ||
+               west  > current_inner_bbox._northEast.lng)
+                continue;
 
-                //latLngBounds(SW,NE) (bottomleft, topright)
-                //latlng is y,x !
+            //for performance reasons: check first if heigh is enough, then if width is enough finally create object and add to bboxes
 
-                // new_x_stretching_box =  new L.latLngBounds ( SW[ y, x ], NE[y, x]
-                var new_x_stretching_box = new L.latLngBounds( [ Math.max(bounds.getSouth(), current_inner_bbox.getSouth() ), Math.min(bounds.getWest(), current_inner_bbox.getWest() ) ],   //SW
-                                                               [ Math.min(bounds.getNorth(), current_inner_bbox.getNorth() ), Math.max(bounds.getEast(), current_inner_bbox.getEast() ) ] ); //NE
-                var new_y_stretching_box = new L.latLngBounds( [ Math.min(bounds.getSouth(), current_inner_bbox.getSouth() ), Math.max(bounds.getWest(), current_inner_bbox.getWest() ) ],   //SW
-                                                               [ Math.max(bounds.getNorth(), current_inner_bbox.getNorth() ), Math.min(bounds.getEast(), current_inner_bbox.getEast() ) ] ); //NE
+            //latLngBounds(SW,NE) (bottomleft, topright)
+            //latlng is y,x !
 
-                if( (new_x_stretching_box.getNorth() - new_x_stretching_box.getSouth() ) > min_height &&
-                        (new_x_stretching_box.getEast() - new_x_stretching_box.getWest() ) > min_width)
-                    new_bboxes.push(new_x_stretching_box);
-/*                else
-                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: xbox too small: h=" + (new_x_stretching_box.getNorth() - new_x_stretching_box.getSouth()) + "°, w="
-                            +(new_x_stretching_box.getEast() - new_x_stretching_box.getWest()) + "°" );*/
+            // new_x_stretching_box =  new L.latLngBounds ( SW[ y, x ], NE[y, x]
+            var new_x_stretching_box_S = Math.max(south, current_inner_bbox._southWest.lat ),
+                new_x_stretching_box_N = Math.min(north, current_inner_bbox._northEast.lat );
+            if(new_x_stretching_box_N - new_x_stretching_box_S > min_height) {
+                var new_x_stretching_box_W = Math.min(west, current_inner_bbox._southWest.lng ),
+                    new_x_stretching_box_E = Math.max(east, current_inner_bbox._northEast.lng );
+                if(new_x_stretching_box_E - new_x_stretching_box_W > min_width) 
+                    new_bboxes.push( new L.latLngBounds( [ new_x_stretching_box_S, new_x_stretching_box_W ], [ new_x_stretching_box_N, new_x_stretching_box_E ] ) );
+                else
+                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: xbox too small: h=" + ( new_x_stretching_box_N - new_x_stretching_box_S ) + "°, w="
+                        +(new_x_stretching_box_E - new_x_stretching_box_W ) + "°" );
+            }
 
-                if( (new_y_stretching_box.getNorth() - new_y_stretching_box.getSouth() ) > min_height &&
-                        (new_y_stretching_box.getEast() - new_y_stretching_box.getWest() ) > min_width)
-                    new_bboxes.push(new_y_stretching_box);
-   /*             else
-                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: ybox too small: h=" + (new_y_stretching_box.getNorth() - new_y_stretching_box.getSouth()) + "°, w="
-                            +(new_y_stretching_box.getEast() - new_y_stretching_box.getWest()) + "°" );*/
+            // new_y_stretching_box =  new L.latLngBounds ( SW[ y, x ], NE[y, x]
+            var new_y_stretching_box_S = Math.min(south, current_inner_bbox._southWest.lat ),
+                new_y_stretching_box_N = Math.max(north, current_inner_bbox._northEast.lat );
+            if(new_y_stretching_box_N - new_y_stretching_box_S > min_height ) {
+                var new_y_stretching_box_W = Math.max(west, current_inner_bbox._southWest.lng ),
+                    new_y_stretching_box_E = Math.min(east, current_inner_bbox._northEast.lng );
+                if(new_y_stretching_box_E - new_y_stretching_box_W > min_width)
+                    new_bboxes.push( new L.latLngBounds( [ new_y_stretching_box_S, new_y_stretching_box_W ], [new_y_stretching_box_N, new_y_stretching_box_E ] ) ) ;
+                else
+                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: ybox too small: h=" + (new_y_stretching_box_N - new_y_stretching_box_S) + "°, w="
+                            +(new_y_stretching_box_E - new_y_stretching_box_W) + "°" );
             }
         }
  /*       if(new_bboxes) {
@@ -492,7 +529,7 @@ function checkIfInRequestedBboxesAndIfNotaddTo(bounds) {
         current_bound.inner_polyboxes.push(bounds);
         for(var new_i=0; new_i < new_bboxes.length; new_i++)
             current_bound.inner_polyboxes.push(new_bboxes[new_i]);
-   
+
         return false;
     }
     //it is completely outside from every outer bbox, create a new one
@@ -554,6 +591,21 @@ function loadPoi() {
 
   if(disableLoadPOI)
       return;
+
+  // if Graz (start position, gets called once first) do nothing
+      var centre = map.getCenter();
+  if (centre.lat == 47.07 && centre.lng == 15.43) {
+      var splitstr = window.location.href.split('#');
+      if (splitstr[1]) {
+          var coords_href = splitstr[1].split('/');
+          if ( coords_href[1] == 47.07 && coords_href[2] == 15.43 )
+              console.log("look, we are really in Graz");
+          else {
+              console.log("1st call, return");
+              return;
+          }
+      }
+  }
 
   var bounds = map.getBounds();
   if(checkIfInRequestedBboxesAndIfNotaddTo(bounds))
