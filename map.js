@@ -218,6 +218,7 @@ function buildOverpassQuery() {
     console.log(overpass_query_rels);
 }
 
+var debugLayer;
 
 function initMap(defaultlayer,base_maps,overlay_maps) {
   var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
@@ -263,7 +264,7 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
 
   $('body').append('<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />');
   $('body').append('<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />');
-  $('body').append('<img src="assets/ajax-loader.gif" id="loading_rel" class="loading" />');
+  $('body').append('<img src="assets/ajax-loader.gif" id="loading_relation" class="loading" />');
   $('body').append('<div id="notificationbar">Please zoom in to update POIs!</div>');
 
   map.on('moveend', updateLinks);
@@ -274,6 +275,9 @@ function initMap(defaultlayer,base_maps,overlay_maps) {
       open_popup_on_load.type = popup_param.match(/^(node|way|relation)/)[1];
       open_popup_on_load.id = popup_param.replace(/^(node|way|relation)/,'' );
   }
+
+  debugLayer = L.layerGroup();
+  debugLayer.addTo(map);
 
   return map;
 }
@@ -368,12 +372,12 @@ var pids = {
     }
 }
 
-var mutex_loading = { "loading_node" : 0, "loading_way" : 0, "loading_rel" : 0 };
+var mutex_loading = { "loading_node" : 0, "loading_way" : 0, "loading_relation" : 0 };
 
 var on_start_loaded = 0;
 
 /*
- *  type: "loading_node" / "loading_way" / "loading_rel"
+ *  type: "loading_node" / "loading_way" / "loading_relation"
  *  change: (+)1 or -1
  */
 function changeLoadingIndicator(type, change) {
@@ -445,23 +449,30 @@ function checkIfInRequestedBboxesAndIfNotaddTo(bounds) {
         east  = bounds._northEast.lng,
         south = bounds._southWest.lat,
         west  = bounds._southWest.lng;
+    var b_height = north - south,
+        b_width  = east - west,
+        width_to_height = b_width/b_height;
 
-    var viewbox_height = north - south,
-        zoom_delta_to_max = map.getMaxZoom() - map.getZoom(),
-        min_height = viewbox_height / (Math.pow(2,zoom_delta_to_max));
+    var zoom_delta_to_max = map.getMaxZoom() - map.getZoom(),
+        min_height = b_height / (Math.pow(2,zoom_delta_to_max));
 //      console.log("checkIfInRequestedBboxesAndIfNotaddTo: viewbox_height = " + viewbox_height + "°, min_heigh = " + min_height);
-    var min_width = ( east - west ) / (Math.pow(2,zoom_delta_to_max));
+    var min_width = b_width / (Math.pow(2,zoom_delta_to_max));
 
  //   console.log("checkIfInRequestedBboxesAndIfNotaddTo: called. bboxes_requested:" + JSON.stringify(bboxes_requested));
     for(var i=0; i < bboxes_requested.length; i++) { //for-loop over outer bboxes
         var current_bound = bboxes_requested[i];
         if(! current_bound.outer_bbox.intersects(bounds)) //neither crossing nor inside
             continue;
+        console.log("checkIfInRequestedBboxesAndIfNotaddTo begin: " + current_bound.inner_polyboxes.length + " inner polyboxes");
         if(current_bound.outer_bbox.contains(bounds)) { // only if it doesn't cross outer bbox it is possible that it's already covered
-            console.log("checkIfInRequestedBboxesAndIfNotaddTo: " + current_bound.inner_polyboxes.length + " inner polyboxes");
             for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
                 current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
-                //contains:
+                if(!current_inner_bbox.hasOwnProperty("_southWest")) {
+                    console.log("current_inner_bbox error:");
+                    console.log(current_inner_bbox);
+                    console.log(current_bound);
+                }
+                //current_inner_bbox.contains(bounds):
                 if(south < current_inner_bbox._southWest.lat || 
                    north > current_inner_bbox._northEast.lat ||
                    west  < current_inner_bbox._southWest.lng ||
@@ -476,48 +487,308 @@ function checkIfInRequestedBboxesAndIfNotaddTo(bounds) {
                 } //false == continue*/
             }
         }
-          else //intersects one border
-              current_bound.outer_bbox.extend(bounds);
+        else //intersects one border
+            current_bound.outer_bbox.extend(bounds);
         // either intersects with outer bbox or is not in any inner bbox
         // add one horizontal and one vertical box that it intersects for EACH box!
-        var new_bboxes = [];
+        var new_bboxes = [],
+            new_bounds_north_stretched = null,
+            new_bounds_south_stretched = null,
+            new_bounds_west_stretched = null,
+            new_bounds_east_stretched = null;
+        var nr_of_deletions = 0;
+        var addbounds = true;
         for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
             current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
-            if(south > current_inner_bbox._northEast.lat ||
-               north < current_inner_bbox._southWest.lat ||
-               east  < current_inner_bbox._southWest.lng ||
-               west  > current_inner_bbox._northEast.lng)
+
+            //if ! current_inner_bbox.intersects(bounds) continue (both boxes completely disjunct)
+            if(south >= current_inner_bbox._northEast.lat ||
+               north <= current_inner_bbox._southWest.lat ||
+               east  <= current_inner_bbox._southWest.lng ||
+               west  >= current_inner_bbox._northEast.lng)
                 continue;
 
-            //for performance reasons: check first if heigh is enough, then if width is enough finally create object and add to bboxes
+            /* 16 cases:
+                1.: bounds completely inside current_inner_bbox
+                    -> is already covered by 1st for-loop with inner_polyboxes
+                2.: current_inner_bbox completely inside -> delete it; continue (empty array slots cleared afterwards)
+                                                                        -> use delete array[i], it does not reindex. reindex afterwards, remove all undefined...
+                3-10: 8 where one box is crosses only one side of the other
+                   3-6:  4 where bounds is bigger
+                   7-10: 4 where current_inner_bbox is bigger
+                11-14: 4 where they cross them on two sides (corner-crossing)
+                15,15: as stretching boxes can be longer, heigher it can happen that they form a "cross" -> simply add bounds, no special handling needed
+                    =^= (bwb && beb && !bnb && !bsb) || (!bwb && !bwb && bnb && bsb)
 
-            //latLngBounds(SW,NE) (bottomleft, topright)
-            //latlng is y,x !
+             *  WHAT IF some bounds are equal? TODO
+             *  FIXME a lot of dual boxes seem to be generated... -OK they were if a box hits one with same border
+             */
 
-            // new_x_stretching_box =  new L.latLngBounds ( SW[ y, x ], NE[y, x]
-            var new_x_stretching_box_S = Math.max(south, current_inner_bbox._southWest.lat ),
-                new_x_stretching_box_N = Math.min(north, current_inner_bbox._northEast.lat );
-            if(new_x_stretching_box_N - new_x_stretching_box_S > min_height) {
-                var new_x_stretching_box_W = Math.min(west, current_inner_bbox._southWest.lng ),
-                    new_x_stretching_box_E = Math.max(east, current_inner_bbox._northEast.lng );
-                if(new_x_stretching_box_E - new_x_stretching_box_W > min_width) 
-                    new_bboxes.push( new L.latLngBounds( [ new_x_stretching_box_S, new_x_stretching_box_W ], [ new_x_stretching_box_N, new_x_stretching_box_E ] ) );
-                else
-                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: xbox too small: h=" + ( new_x_stretching_box_N - new_x_stretching_box_S ) + "°, w="
-                        +(new_x_stretching_box_E - new_x_stretching_box_W ) + "°" );
+            /* TODO shrinking of bounds:
+             *   stretching of inner_polyboxes is still needed, because: you don't know which side gets cut first, and if inner_polyboxes don't overlap,
+             * only a corner would get cutted out (which isn't possible on rectangles)
+             *
+             * with each run of the inner for-loop we can cut bounds smaller. if nothing left, it ... have to move first for-loop in!
+             */
+
+            var boundsnorth_bigger = (north >= current_inner_bbox._northEast.lat),
+                boundssouth_bigger = (south <= current_inner_bbox._southWest.lat),
+                boundseast_bigger = (east >= current_inner_bbox._northEast.lng),
+                boundswest_bigger = (west <= current_inner_bbox._southWest.lng);
+            console.log("bnb:"+boundsnorth_bigger+" bsb:"+boundssouth_bigger+" beb:"+boundseast_bigger+" bwb:"+boundswest_bigger);
+
+            var bounds_bigger_on_howmany_sides = (boundsnorth_bigger ? 1 : 0) + (boundssouth_bigger ? 1 : 0) + (boundseast_bigger ? 1 : 0) + (boundswest_bigger);
+            console.log("bounds_bigger_on_howmany_sides: " + bounds_bigger_on_howmany_sides);
+
+            if(bounds_bigger_on_howmany_sides == 4) { // case 2
+                delete current_bound.inner_polyboxes[inner_bbox_i];
+                nr_of_deletions++;
+                continue;
             }
 
-            // new_y_stretching_box =  new L.latLngBounds ( SW[ y, x ], NE[y, x]
-            var new_y_stretching_box_S = Math.min(south, current_inner_bbox._southWest.lat ),
-                new_y_stretching_box_N = Math.max(north, current_inner_bbox._northEast.lat );
-            if(new_y_stretching_box_N - new_y_stretching_box_S > min_height ) {
-                var new_y_stretching_box_W = Math.max(west, current_inner_bbox._southWest.lng ),
-                    new_y_stretching_box_E = Math.min(east, current_inner_bbox._northEast.lng );
-                if(new_y_stretching_box_E - new_y_stretching_box_W > min_width)
-                    new_bboxes.push( new L.latLngBounds( [ new_y_stretching_box_S, new_y_stretching_box_W ], [new_y_stretching_box_N, new_y_stretching_box_E ] ) ) ;
-                else
-                    console.log("checkIfInRequestedBboxesAndIfNotaddTo: ybox too small: h=" + (new_y_stretching_box_N - new_y_stretching_box_S) + "°, w="
-                            +(new_y_stretching_box_E - new_y_stretching_box_W) + "°" );
+            //box is an autogenerated stretching box - these are always inside downloaded boxes, ignore for generating more.
+            if(current_inner_bbox.hasOwnProperty('stretch'))
+                continue;
+
+            if(bounds_bigger_on_howmany_sides == 3) { // cases 3-6
+                if(!boundsnorth_bigger) { // current_inner_bbox crosses bounds on north, stretch southward
+                    console.log("3-6: !bnb");
+                    var inner_height = current_inner_bbox._northEast.lat - current_inner_bbox._southWest.lat;
+                    var max_to_stretch = north - inner_height;
+                    current_inner_bbox._southWest.lat = (max_to_stretch < south) ? south : max_to_stretch;
+                    continue;
+                }
+                if(!boundssouth_bigger) {
+                    console.log("3-6: !bsb");
+                    var inner_height = current_inner_bbox._northEast.lat - current_inner_bbox._southWest.lat;
+                    var max_to_stretch = south + inner_height;
+                    current_inner_bbox._northEast.lat = (max_to_stretch > north) ? north : max_to_stretch;
+                    continue;
+                }
+                if(!boundseast_bigger) {
+                    console.log("3-6: !beb");
+                    var inner_width = current_inner_bbox._northEast.lng - current_inner_bbox._southWest.lng;
+                    var max_to_stretch = east - inner_width;
+                    current_inner_bbox._southWest.lng = (max_to_stretch < west) ? west : max_to_stretch;
+                    continue;
+                }
+                if(!boundswest_bigger) {
+                    console.log("3-6: !bwb");
+                    var inner_width = current_inner_bbox._northEast.lng - current_inner_bbox._southWest.lng;
+                    var max_to_stretch = west + inner_width;
+                    current_inner_bbox._northEast.lng = (max_to_stretch > east) ? east : max_to_stretch;
+                    continue;
+                }
+                console.log("shouldn't have reached bounds_bigger_on_howmany_sides == 3 after ????????????");
+            }
+            if(bounds_bigger_on_howmany_sides == 1) { // cases 7-10
+                addbounds = false; // we add a bigger box instead
+                if(boundssouth_bigger) { // bounds crosses current_inner_bbox on south, stretch northwards
+                    console.log("7-10: bsb");
+                    var max_to_stretch = current_inner_bbox._southWest.lat + b_height;
+                    var new_north = (max_to_stretch > current_inner_bbox._northEast.lat) ? current_inner_bbox._northEast.lat : max_to_stretch;
+                    if(!new_bounds_north_stretched) {
+                        new_bounds_north_stretched = new L.latLngBounds( [ south, west ], [ new_north, east ] );
+                    } else {
+                        if(new_bounds_north_stretched._northEast.lat < new_north)
+                            new_bounds_north_stretched._northEast.lat = new_north;
+                    }
+                    //TODO shrink bounds!
+                    continue;
+                }
+                if(boundsnorth_bigger) { // bounds crosses current_inner_bbox on north, stretch southwards
+                    console.log("7-10: bnb");
+                    var max_to_stretch = current_inner_bbox._northEast.lat - b_height;
+                    var new_south = (max_to_stretch < current_inner_bbox._southWest.lat) ? current_inner_bbox._southWest.lat : max_to_stretch;
+                    if(!new_bounds_south_stretched) {
+                        new_bounds_south_stretched = new L.latLngBounds( [ new_south, west ], [ north, east ] );
+                    } else {
+                        if(new_bounds_south_stretched._southWest.lat > new_south)
+                            new_bounds_south_stretched._southWest.lat = new_south;
+                    }
+                    //TODO shrink bounds!
+                    continue;
+                }
+                if(boundseast_bigger) { // bounds crosses current_inner_bbox on east, stretch westwards
+                    console.log("7-10: beb");
+                    var max_to_stretch = current_inner_bbox._northEast.lng - b_width;
+                    var new_west = (max_to_stretch < current_inner_bbox._southWest.lng) ? current_inner_bbox._southWest.lng : max_to_stretch;
+                    if(!new_bounds_west_stretched) {
+                        new_bounds_west_stretched = new L.latLngBounds( [ south, new_west ], [ north, east ] );
+                    } else {
+                        if(new_bounds_west_stretched._southWest.lng > new_west)
+                            new_bounds_west_stretched._southWest.lng = new_west;
+                    }
+                    //TODO shrink bounds!
+                    continue;
+                }
+                if(boundswest_bigger) { // bounds crosses current_inner_bbox on west, stretch eastwards
+                    console.log("7-10: bwb");
+                    var max_to_stretch = current_inner_bbox._southWest.lng + b_width;
+                    var new_east = (max_to_stretch > current_inner_bbox._northEast.lng) ? current_inner_bbox._northEast.lng : max_to_stretch;
+                    if(!new_bounds_east_stretched) {
+                        new_bounds_east_stretched = new L.latLngBounds( [ south, west ], [ north, new_east ] );
+                    } else {
+                        if(new_bounds_east_stretched._northEast.lng < new_east)
+                            new_bounds_east_stretched._northEast.lng = new_east;
+                    }
+                    //TODO shrink bounds!
+                    continue;
+                }
+                console.log("shouldn't have reached bounds_bigger_on_howmany_sides == 1 after ????????????");
+            }
+            if(bounds_bigger_on_howmany_sides == 2) { //cases 11-16
+                if( (boundswest_bigger && boundseast_bigger && !boundsnorth_bigger && !boundssouth_bigger) ||
+                    (!boundswest_bigger && !boundseast_bigger && boundsnorth_bigger && boundssouth_bigger) )
+                    continue;  // case 15+16
+
+                    /*we only need an stretching box if:
+                     *  xbox only if overlapping_x / width_to_height < overlap_y
+                     *  ybox only if overlapping_x < overlap_y * width_to_height
+                     *  -> either an x OR an y-box!
+                     */
+                if(boundsnorth_bigger && boundseast_bigger && !boundssouth_bigger && !boundswest_bigger) {
+                    console.log("11-14: b topright, cib bottomleft ");
+                    var overlap_x = current_inner_bbox._northEast.lng - west,
+                        overlap_y = current_inner_bbox._northEast.lat - south;
+                    if(overlap_x < overlap_y * width_to_height) {
+                        //x stretching box
+                        var b_N = current_inner_bbox._northEast.lat,
+                            b_S = south,
+                            xb_height = b_N - b_S;
+                        if(xb_height <= min_height) continue; //console.log("no xb, to small");
+
+                        var x_stretch_value = xb_height * width_to_height;
+
+                        var xb_E_max = west + x_stretch_value,
+                            b_E = (xb_E_max > east) ? east : xb_E_max;
+
+                        var xb_W_max = current_inner_bbox._northEast.lng - x_stretch_value,
+                            b_W = (xb_W_max < current_inner_bbox._southWest.lng) ? current_inner_bbox._southWest.lng : xb_W_max;
+                        console.log("new xb");
+                    } else {
+                        //y stretching box
+                        var b_E = current_inner_bbox._northEast.lng,
+                            b_W = west,
+                            yb_width = b_E - b_W;
+                        if(yb_width <= min_width) continue; //console.log("no yb, to small");
+
+                        var y_stretch_value = yb_width / width_to_height;
+
+                        var yb_N_max = south + y_stretch_value,
+                            b_N = (yb_N_max > north) ? north : yb_N_max;
+
+                        var yb_S_max = current_inner_bbox._northEast.lat - y_stretch_value,
+                            b_S = (yb_S_max < current_inner_bbox._southWest.lat) ? current_inner_bbox._southWest.lat : yb_S_max;
+                        console.log("new yb");
+                    }
+                }
+                if(boundsnorth_bigger && !boundseast_bigger && !boundssouth_bigger && boundswest_bigger) {
+                    console.log("11-14: b topleft, cib bottomright ");
+                    var overlap_x = east - current_inner_bbox._southWest.lng,
+                        overlap_y = current_inner_bbox._northEast.lat - south;
+                    if(overlap_x < overlap_y * width_to_height) {//x stretching box
+                        var b_N = current_inner_bbox._northEast.lat,
+                            b_S = south,
+                            xb_height = b_N - b_S;
+                        if(xb_height <= min_height) continue;//console.log("no xb, to small");
+
+                        var x_stretch_value = xb_height * width_to_height;
+
+                        var xb_E_max = current_inner_bbox._southWest.lng + x_stretch_value,
+                            b_E = (xb_E_max > current_inner_bbox._northEast.lng) ? current_inner_bbox._northEast.lng : xb_E_max;
+
+                        var xb_W_max = east - x_stretch_value,
+                            b_W = (xb_W_max < west) ? west : xb_W_max;
+                        console.log("new xb");
+                    } else {//y stretching box
+                        var b_E = east,
+                            b_W = current_inner_bbox._southWest.lng,
+                            yb_width = b_E - b_W;
+                        if(yb_width <= min_width) continue; //console.log("no yb, to small");
+
+                        var y_stretch_value = yb_width / width_to_height;
+
+                        var yb_N_max = south + y_stretch_value,
+                            b_N = (yb_N_max > north) ? north : yb_N_max;
+
+                        var yb_S_max = current_inner_bbox._northEast.lat - y_stretch_value,
+                            b_S = (yb_S_max < current_inner_bbox._southWest.lat) ? current_inner_bbox._southWest.lat : yb_S_max;
+                        console.log("new yb");
+                    }
+                }
+                if(!boundsnorth_bigger && !boundseast_bigger && boundssouth_bigger && boundswest_bigger) {
+                    console.log("11-14: b bottomleft, cib topright ");
+                    var overlap_x = east - current_inner_bbox._southWest.lng,
+                        overlap_y = north - current_inner_bbox._southWest.lat;
+                    if(overlap_x < overlap_y * width_to_height) {//x stretching box
+                        var b_N = north,
+                            b_S = current_inner_bbox._southWest.lat,
+                            xb_height = b_N - b_S;
+                        if(xb_height <= min_height) continue;//console.log("no xb, to small");
+
+                        var x_stretch_value = xb_height * width_to_height;
+
+                        var xb_E_max = current_inner_bbox._southWest.lng + x_stretch_value,
+                            b_E = (xb_E_max > current_inner_bbox._northEast.lng) ? current_inner_bbox._northEast.lng : xb_E_max;
+
+                        var xb_W_max = east - x_stretch_value,
+                            b_W = (xb_W_max < west) ? west : xb_W_max;
+                        console.log("new xb");
+                    } else {//y stretching box
+                        var b_E = east,
+                            b_W = current_inner_bbox._southWest.lng,
+                            yb_width = b_E - b_W;
+                        if(yb_width <= min_width) continue; //console.log("no yb, to small");
+
+                        var y_stretch_value = yb_width / width_to_height;
+
+                        var yb_N_max = current_inner_bbox._southWest.lat + y_stretch_value,
+                            b_N = (yb_N_max > current_inner_bbox._northEast.lat) ? current_inner_bbox._northEast.lat : yb_N_max;
+
+                        var yb_S_max = north - y_stretch_value,
+                            b_S = (yb_S_max < south) ? south : yb_S_max;
+                        console.log("new yb");
+                    }
+                }
+                if(!boundsnorth_bigger && boundseast_bigger && boundssouth_bigger && !boundswest_bigger) {
+                    console.log("11-14: b bottomright, cib topleft ");
+                    var overlap_x = current_inner_bbox._northEast.lng - west,
+                        overlap_y = north - current_inner_bbox._southWest.lat;
+                    if(overlap_x < overlap_y * width_to_height) {//x stretching box
+                        var b_N = north,
+                            b_S = current_inner_bbox._southWest.lat,
+                            xb_height = b_N - b_S;
+                        if(xb_height <= min_height) continue;//console.log("no xb, to small");
+
+                        var x_stretch_value = xb_height * width_to_height;
+
+                        var xb_E_max = west + x_stretch_value,
+                             b_E = (xb_E_max > east) ? east : xb_E_max;
+
+                        var xb_W_max = current_inner_bbox._northEast.lng - x_stretch_value,
+                            b_W = (xb_W_max < current_inner_bbox._southWest.lng) ? current_inner_bbox._southWest.lng : xb_W_max;
+                        console.log("new xb");
+                    } else {//y stretching box
+                        var b_E = current_inner_bbox._northEast.lng,
+                            b_W = west,
+                            yb_width = b_E - b_W;
+                        if(yb_width <= min_width) continue; //console.log("no yb, to small");
+
+                        var y_stretch_value = yb_width / width_to_height;
+
+                        var yb_N_max = current_inner_bbox._southWest.lat + y_stretch_value,
+                            b_N = (yb_N_max > current_inner_bbox._northEast.lat) ? current_inner_bbox._northEast.lat : yb_N_max;
+
+                        var yb_S_max = north - y_stretch_value,
+                            b_S = (yb_S_max < south) ? south : yb_S_max;
+                        console.log("new yb");
+                    }
+                }
+                stretching_box = new L.latLngBounds( [ b_S, b_W ], [ b_N, b_E ] );
+                stretching_box.stretch = true; //add distinguishment from an orig box
+                new_bboxes.push( stretching_box );
+                continue;
             }
         }
  /*       if(new_bboxes) {
@@ -526,16 +797,151 @@ function checkIfInRequestedBboxesAndIfNotaddTo(bounds) {
         } else
             console.log("checkIfInRequestedBboxesAndIfNotaddTo: no net stretching bboxes to add.");*/
 
-        current_bound.inner_polyboxes.push(bounds);
+        //delete
+        if(nr_of_deletions)
+            console.log(nr_of_deletions + " to delete");
+        for(var inner_bbox_i = 0; nr_of_deletions ; inner_bbox_i++) {
+            if(! current_bound.inner_polyboxes[inner_bbox_i]) {
+                current_bound.inner_polyboxes.splice(inner_bbox_i--,1);
+                nr_of_deletions--;
+            }
+        }
+
+        if(addbounds)
+            current_bound.inner_polyboxes.push(bounds);
+
         for(var new_i=0; new_i < new_bboxes.length; new_i++)
             current_bound.inner_polyboxes.push(new_bboxes[new_i]);
 
+        var stretchbounds = { 1: new_bounds_east_stretched, 2: new_bounds_west_stretched, 3: new_bounds_south_stretched, 4: new_bounds_north_stretched };
+        for (i in stretchbounds)
+            if(stretchbounds[i])
+                current_bound.inner_polyboxes.push(stretchbounds[i]);
+
+        console.log("checkIfInRequestedBboxesAndIfNotaddTo: " + current_bound.inner_polyboxes.length + " inner polyboxes now.");
         return false;
     }
     //it is completely outside from every outer bbox, create a new one
-    bboxes_requested.push( { outer_bbox: bounds, inner_polyboxes: [ bounds ] } );
+    var new_outer_box_deep_copy = new L.latLngBounds( [ south, west ], [ north, east ] );
+    var bounds_deep_copy = new L.latLngBounds( [ south, west ], [ north, east ] );
+    bboxes_requested.push( { outer_bbox: new_outer_box_deep_copy, inner_polyboxes: [ bounds_deep_copy ] } );
  //   console.log("checkIfInRequestedBboxesAndIfNotaddTo: outside other bboxes, add a new");
     return false;
+}
+
+//https://stackoverflow.com/questions/1484506/random-color-generator-in-javascript
+function rainbow(numOfSteps, step) {
+    // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
+    // Adam Cole, 2011-Sept-14
+    // HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
+    var r, g, b;
+    var h = step / numOfSteps;
+    var i = ~~(h * 6);
+    var f = h * 6 - i;
+    var q = 1 - f;
+    switch(i % 6){
+        case 0: r = 1; g = f; b = 0; break;
+        case 1: r = q; g = 1; b = 0; break;
+        case 2: r = 0; g = 1; b = f; break;
+        case 3: r = 0; g = q; b = 1; break;
+        case 4: r = f; g = 0; b = 1; break;
+        case 5: r = 1; g = 0; b = q; break;
+    }
+    var c = "#" + ("00" + (~ ~(r * 255)).toString(16)).slice(-2) + ("00" + (~ ~(g * 255)).toString(16)).slice(-2) + ("00" + (~ ~(b * 255)).toString(16)).slice(-2);
+    return (c);
+}
+
+var debugLayerShown = false;
+function toggleDebugLayer() {
+    debugLayerShown = !debugLayerShown;
+    disableLoadPOI = true;
+    if(!debugLayerShown) {
+        debugLayer.clearLayers();
+        disableLoadPOI = false;
+        return;
+    }
+
+    for(var i=0; i < bboxes_requested.length; i++) {
+        var current_bound = bboxes_requested[i];
+        for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
+            current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
+            if(current_inner_bbox.stretch)
+                console.log("stretch");
+            var rect = L.rectangle(current_inner_bbox, {color: rainbow(256, Math.floor(Math.random() * 256)), weight: (current_inner_bbox.stretch) ? 2 : 8, fill: false}).on('click',clickOnLayer);
+            debugLayer.addLayer(rect);
+            //debugLayer.addLayer(L.rectangle(current_inner_bbox, {color: rainbow(256, 128), weight: 1, fill: false}));
+        }
+
+    }
+
+    var dup_dump = {};
+    var sum = 0;
+    //find dups - there were a LOT of dups!
+    for(var i=0; i < bboxes_requested.length; i++) {
+        var current_bound = bboxes_requested[i];
+        for(var inner_bbox_i = 0; inner_bbox_i < current_bound.inner_polyboxes.length; inner_bbox_i++) {
+            current_inner_bbox = current_bound.inner_polyboxes[inner_bbox_i];
+            var north = L.Util.formatNum(current_inner_bbox._northEast.lat,7),
+                east  = L.Util.formatNum(current_inner_bbox._northEast.lng,7),
+                south = L.Util.formatNum(current_inner_bbox._southWest.lat,7),
+                west  = L.Util.formatNum(current_inner_bbox._southWest.lng,7);
+
+            //sort dup_dumps on north,east,south,west coordinate
+            // dump[north][east][south][west] = true if bbox exists
+            if(!dup_dump[north]) {
+                var west_obj = 1;
+                var south_obj = {};
+                    south_obj[west] = west_obj;
+                var east_obj = {};
+                    east_obj[south] = south_obj;
+                var north_obj = {};
+                    north_obj[east] = east_obj;
+                dup_dump[north] = north_obj;
+            } else {
+                if(!dup_dump[north][east]) {
+                    var west_obj = 1;
+                    var south_obj = {};
+                        south_obj[west] = west_obj;
+                    var east_obj = {};
+                        east_obj[south] = south_obj;
+                    dup_dump[north][east] = east_obj;
+                } else {
+                    if(!dup_dump[north][east][south]) {
+                        var west_obj = 1;
+                        var south_obj = {};
+                            south_obj[west] = west_obj;
+                        dup_dump[north][east][south] = south_obj;
+                    } else {
+                        if(!dup_dump[north][east][south][west]) {
+                            dup_dump[north][east][south][west] = 1;
+                        } else {
+                            dup_dump[north][east][south][west]++;
+                        }
+                    }
+                }
+            }
+        }
+        var different = 0;
+        var dups = 0;
+        for(n in dup_dump) {
+            for(e in dup_dump[n]) {
+                for(s in dup_dump[n][e]) {
+                    for(w in dup_dump[n][e][s]) {
+                        console.log("n"+n+" e"+e+" s"+s+" w"+w+" : "+ dup_dump[n][e][s][w]);
+                        dups = dups + dup_dump[n][e][s][w] -1;
+                        different++;
+                    }
+                }
+            }
+        }
+        console.log(dup_dump);
+        console.log("unique: "+different+" of " + current_bound.inner_polyboxes.length + ", " + dups + " dups");
+    }
+}
+
+function clickOnLayer(e) {
+    console.log(e.target._parts);
+//    e.bringToFront();
 }
 
 function loadPoi() {
@@ -562,7 +968,7 @@ function loadPoi() {
       changeLoadingIndicator("loading_way",+1);
       handleWays(pois_lz); 
 
-      changeLoadingIndicator("loading_rel",+1);
+      changeLoadingIndicator("loading_relation",+1);
       handleRelations(pois_lz); 
 
       if(window.createSideBar) {
@@ -1207,7 +1613,7 @@ function loadPoi() {
         new_markers = [];
     }
 
-    changeLoadingIndicator("loading_rel", -1);
+    changeLoadingIndicator("loading_relation", -1);
     if(! open_popup_on_load.already_shown && open_popup_on_load.type == "relation") {
         open_popup_on_load.already_shown = true;
         setTimeout(function () {
@@ -1255,7 +1661,7 @@ function loadPoi() {
       timeOutOverpassCall("way", this_pid);
   },1000*overpass_config.timeout);
 
-  changeLoadingIndicator("loading_rel", +1);
+  changeLoadingIndicator("loading_relation", +1);
   this_pid = pids.relation.counter++;
   pids.relation.active[this_pid] = { state : "running", bounds : bounds_rounded } ;
   console.log("loadPOI: before JSON call pid rel"+this_pid+": " + rel_url);
@@ -1317,7 +1723,7 @@ L.Control.MousePosition = L.Control.extend({
   _onMouseMove: function (e) {
     var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
     var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
-    var lng_length = lng.toString().split(".")[1].length;
+    var lng_length = lng.toString().split(".")[1].length; // it MAY be if you're on exactly one integer coordinate to throw an error, but I don't care
     var lat_length = lat.toString().split(".")[1].length;
     for(var i = 0; i < this.options.numDigits - lng_length; i++) {
         lng += "0";
