@@ -49,7 +49,6 @@ function getVisibleMarkers() {
 
 function updatePOIlist(force) {
     if(!force && open_sidebox != "sidebox-list") //run only when menu open
-    if(!force && $('#sidebox-list').attr('class').match(/hidden/))
         return;
 
     $('#POIlist').html("");
