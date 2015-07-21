@@ -7,6 +7,7 @@ var attr = {
   osm_tiles : 'Tiles &copy; OSM - <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA</a>',
   search : 'Search by OSM - <a href="http://wiki.openstreetmap.org/wiki/Nominatim">Nominatim</a>',
   mapbox : 'Tiles &copy; <a href="http://mapbox.com/about/maps/">MapBox</a>',
+  mapquest : 'Tiles courtesy of <a href="http://www.mapquest.com/">MapQuest</a>',
   greenmap : 'Green Map Icons used by permission &copy; <a href="http://www.greenmap.org">Green Map System 2015</a>',
   overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
 }
