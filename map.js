@@ -221,11 +221,13 @@ function buildOverpassQuery() {
 
 var debugLayer;
 
-function initMap(defaultlayer,base_maps,overlay_maps) {
+function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
+  var center = new L.LatLng(lat ? lat : 47.07, lon ? lon : 15.43);
+
   var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
   map = new L.Map('map', {
-    center: new L.LatLng(47.07, 15.43),
-    zoom: 13,
+    center: center,
+    zoom: zoom ? zoom : 13,
     layers: defaultlayer,
     editInOSMControlOptions: {
         position: 'topright',
