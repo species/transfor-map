@@ -140,8 +140,8 @@ function toggleSideBar() { //TODO rewrite with jQuery toggleClass
 }
 
 function createSideBar() {
-  $('body').append('<div id="sidebar" class=hidden><h1>' + document.title + '</h1></div>');
-  $('body').append('<div id="sidebar_toggle" class=hidden onClick="toggleSideBar()">»</div>');
+  $('#content').append('<div id="sidebar" class=hidden><h1>' + document.title + '</h1></div>');
+  $('#content').append('<div id="sidebar_toggle" class=hidden onClick="toggleSideBar()">»</div>');
 
   // switching to other maps
   $('#sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');

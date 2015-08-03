@@ -177,7 +177,7 @@ function buildOverpassQuery() {
 
     if(! overpass_config.timeout)             overpass_config.timeout = 180;
     if(! overpass_config.minzoom)             overpass_config.minzoom = 12;
-    if(! overpass_config.servers)             overpass_config.servers = [ "http://overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ];
+    if(! overpass_config.servers)             overpass_config.servers = [ "//overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ]; //fr does'n have https, ru too
     if(! overpass_config.q_array)             overpass_config.q_array = [ [ '"identity"' ] ];
     if(! overpass_config.icon_folder)         overpass_config.icon_folder = "identities";
     if(! overpass_config.icon_tags)           overpass_config.icon_tags = [ "identity" ];
@@ -262,13 +262,13 @@ function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
           map.on('updateFilterCount'); // here because it is called on every map move
   }
 
-  $('body').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
+  $('#map').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
   $('#forkme').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" />');
 
-  $('body').append('<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />');
-  $('body').append('<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />');
-  $('body').append('<img src="assets/ajax-loader.gif" id="loading_relation" class="loading" />');
-  $('body').append('<div id="notificationbar">Please zoom in to update POIs!</div>');
+  $('#map').append('<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />');
+  $('#map').append('<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />');
+  $('#map').append('<img src="assets/ajax-loader.gif" id="loading_relation" class="loading" />');
+  $('#map').append('<div id="notificationbar">Please zoom in to update POIs!</div>');
 
   map.on('moveend', updateLinks);
   map.on('popupopen', setImageInPopup);
@@ -1796,9 +1796,9 @@ window.onload = function () {
     }
         else return;
     h.innerHTML = text;
-    document.getElementById('map').appendChild(h);
 
-    var body = document.getElementsByTagName('body')[0];
-    body.setAttribute( 'class', body.getAttribute('class') + ' ie');
+    var map = document.getElementById('map');
+    map.appendChild(h);
+    map.setAttribute( 'class', map.getAttribute('class') + ' ie');
 }
 

@@ -81,24 +81,6 @@ div.leaflet-popup-content { width: auto !important; }
     text-shadow: 2px 2px 2px white ,-2px -2px 2px white, 2px -2px 2px white, -2px 2px 2px white;
 }
 
-#content {
-    overflow:hidden;
-}
-
-#maps li {
-  display:block;
-  padding:5px;
-  border: 2px solid gray;
-  border-radius:5px;
-  margin:10px;
-  width: 215px;
-  float:left;
-  background: #f5f1e8;
-}
-#maps h4 {
-  margin: 0 3px 3px 3px;
-  text-align: center;
-}
 
 .leaflet-marker-icon.k-organic.v-only, #mapkey .k-organic.v-only {
   background:#00B100;
@@ -143,10 +125,8 @@ body.ie #notificationbar {
 
 .loading {
   position: absolute;
-  top: 60px;
+  top: 10px;
   left:45px;
-/*  border: 1.5px solid black;
-  border-radius:5px;*/
   background-image:url("assets/20px-Mf_node.svg.png");
   background-position:center;
   background-repeat:no-repeat;
@@ -162,6 +142,10 @@ body.ie #notificationbar {
 #loading_relation {
   left: 155px;
   background-image:url("assets/20px-Mf_relation.svg.png");
+}
+
+#sidebar, #sidebar_toggle {
+    font-family: "PT Sans", sans-serif, 'DejaVu';
 }
 
 #sidebar .box {
@@ -459,7 +443,7 @@ body.ie #notificationbar {
 
 #sidebar {
     position:absolute;
-    top:50px;
+    top:0;
     right:0;
     width:250px;
     bottom:0;
@@ -467,12 +451,30 @@ body.ie #notificationbar {
     box-shadow: -3px 0px 5px 1px #6374A6;
     color:#6374A6;
     overflow:auto;
+    margin-right:0;
     transition: margin-right 0.8s;
 }
 #sidebar.hidden {
     margin-right:-250px;
     transition: margin-right 0.8s;
 }
+#content {
+    position:relative;
+    overflow:hidden;
+}
+#content #map {
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    transition: right 0.8s;
+}
+#content.sidebar #map {
+    right:250px;
+    transition: right 0.8s;
+}
+
 #sidebar h1 {
     padding:5px 10px;
     margin:0;
@@ -482,7 +484,7 @@ body.ie #notificationbar {
 }
 #sidebar_toggle {
     position:absolute;
-    right:248px;
+    right:250px;
     bottom:100px;
     height:50px;
     width:30px;

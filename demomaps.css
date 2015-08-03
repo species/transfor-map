@@ -90,11 +90,6 @@ padding:0px;
   bottom: 0px;
   left:0;
   right:0;
-  transition: right 0.8s;
-}
-#content.sidebar {
-  right:250px;
-  transition: right 0.8s;
 }
 
 .startpage {
