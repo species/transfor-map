@@ -98,8 +98,7 @@
 
     $(function () {
 
-      map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps);
-      map.zoomIn();
+      map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps, 47,15,10);
 
       var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 

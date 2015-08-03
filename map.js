@@ -222,12 +222,12 @@ function buildOverpassQuery() {
 var debugLayer;
 
 function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
-  var center = new L.LatLng(lat ? lat : 47.07, lon ? lon : 15.43);
+  var center = new L.LatLng(lat ? lat : 0, lon ? lon : 0);
 
   var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
   map = new L.Map('map', {
     center: center,
-    zoom: zoom ? zoom : 13,
+    zoom: zoom ? zoom : 3,
     layers: defaultlayer,
     editInOSMControlOptions: {
         position: 'topright',
@@ -1758,7 +1758,7 @@ L.control.mousePosition = function (options) {
 };
 
 var pois_lz;
-if (window.url_pois_lz) {
+if (window.url_pois_lz) { //TODO: must be called after map pois_lz set ... but how to have it in global namespace?
   var http_request_lz = new XMLHttpRequest();
   http_request_lz.open("GET", url_pois_lz, true);
   http_request_lz.onreadystatechange = function () {
