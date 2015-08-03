@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="leaflet-search.min.css" />
   <link rel="stylesheet" href="Leaflet.EditInOSM.css" />
   <link rel="stylesheet" href="transformap.css" />
+  <link rel="stylesheet" href="demomaps.css" />
 
   <link href='L.Control.Locate.mine.css' rel='stylesheet' />
   <!--[if lt IE 9]>
@@ -78,9 +79,17 @@
         maxNativeZoom: 18 ,
         noWrap: true
     });
+    var MapQuestOpen_SAT = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg', {
+        subdomains: '1234',
+        attribution: [attr.mapquest, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        maxNativeZoom: 18 ,
+        noWrap: true
+    });
 
     var base_maps = {
       'MapQuestOpen': MapQuestOpen_OSM,
+      'MapQuestOpen Satellite': MapQuestOpen_SAT,
       'OpenSteetMap - Mapnik': osm
     };
     markers = new PruneClusterForLeaflet(60,20);
