@@ -175,9 +175,13 @@ function buildOverpassQuery() {
     if(! window.overpass_config )
         window.overpass_config = {};
 
+    var op_server1 = "//overpass-api.de/api/",
+        op_server2 = (window.parent.document.location.protocol == "https:") ? op_server1 : "http://api.openstreetmap.fr/oapi/", //fr does'n have https, ru too
+        op_server3 = (window.parent.document.location.protocol == "https:") ? op_server1 : "http://overpass.osm.rambler.ru/cgi/";
+
     if(! overpass_config.timeout)             overpass_config.timeout = 180;
     if(! overpass_config.minzoom)             overpass_config.minzoom = 12;
-    if(! overpass_config.servers)             overpass_config.servers = [ "//overpass-api.de/api/", "http://api.openstreetmap.fr/oapi/", "http://overpass.osm.rambler.ru/cgi/" ]; //fr does'n have https, ru too
+    if(! overpass_config.servers)             overpass_config.servers = [ op_server1, op_server2, op_server3 ];
     if(! overpass_config.q_array)             overpass_config.q_array = [ [ '"identity"' ] ];
     if(! overpass_config.icon_folder)         overpass_config.icon_folder = "identities";
     if(! overpass_config.icon_tags)           overpass_config.icon_tags = [ "identity" ];
