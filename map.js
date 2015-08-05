@@ -1767,7 +1767,6 @@ L.Control.MousePosition = L.Control.extend({
   },
 
   _onMouseMove: function (e) {
-    console.log(e);
     var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
     var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
     var lng_length = lng.toString().split(".")[1].length; // it MAY be if you're on exactly one integer coordinate to throw an error, but I don't care
