@@ -96,7 +96,7 @@ function toggleSideBox(id) {//TODO rewrite with jQuery toggleClass
     var clicked_on_open_item = ( clicked_element.getAttribute("class").indexOf("shown") >= 0 ) ? 1 : 0; 
 
     //close all
-    var sidebar = document.getElementById("sidebar");
+    var sidebar = document.getElementById("tmap_sidebar");
     var childs = sidebar.childNodes;
     for ( var i=0; i < childs.length; i++) {
         var item_child = childs[i];
@@ -118,7 +118,7 @@ function toggleInfoBox(id) {
     element.style.display = ( element.style.display == "block" ) ? "none" : "block";
 }
 function toggleSideBar() { //TODO rewrite with jQuery toggleClass
-    var sidebar = document.getElementById("sidebar");
+    var sidebar = document.getElementById("tmap_sidebar");
     var sidebar_toggle = document.getElementById("sidebar_toggle");
     if(!sidebar_toggle || !sidebar) {
         console.log("Error, no sidebar found");
@@ -150,11 +150,11 @@ function createSideBar() {
   if(!$) {
       $=jQuery;
   }
-  $('#tmapcontent').append('<div id="sidebar" class=hidden><h1>' + document.title + '</h1></div>');
+  $('#tmapcontent').append('<div id="tmap_sidebar" class=hidden><h1>' + document.title + '</h1></div>');
   $('#tmapcontent').append('<div id="sidebar_toggle" class=hidden onClick="toggleSideBar()">»</div>');
 
   // switching to other maps
-  $('#sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');
+  $('#tmap_sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');
   $('#sidebox-maps').append('<h2 onClick="toggleSideBox(\'sidebox-maps\');">Explore other Maps</h2>');
   $('#sidebox-maps').append('<ul id="mapswitcher" class="boxcontent"></ul>');
 
@@ -171,7 +171,7 @@ function createSideBar() {
   }
   // Filters
   if(window.filters) {
-      $('#sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
+      $('#tmap_sidebar').append('<div id="sidebox-filters" class="box hidden"></div>');
       $('#sidebox-filters').append('<h2 onClick="updatePOIlist();updateFilterCount(true);toggleSideBox(\'sidebox-filters\');">Filters</h2>');
       $('#sidebox-filters').append('<ul id="filters" class="boxcontent"></ul>');
       for (filtername in filters) {
@@ -181,12 +181,12 @@ function createSideBar() {
   }
 
   // List of POIs
-  $('#sidebar').append('<div id="sidebox-list" class="box hidden"></div>');
+  $('#tmap_sidebar').append('<div id="sidebox-list" class="box hidden"></div>');
   $('#sidebox-list').append('<h2 onClick="updatePOIlist(true);toggleSideBox(\'sidebox-list\');">List of <span title="Point of Interest">POIs</span></h2>');
   $('#sidebox-list').append('<ul id="POIlist" class="boxcontent"></ul>');
 
   // Map Key
-  $('#sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
+  $('#tmap_sidebar').append('<div id="sidebox-mapkey" class="box hidden"></div>');
   $('#sidebox-mapkey').append('<h2 onClick="toggleSideBox(\'sidebox-mapkey\');">Map Key</h2>');
   $('#sidebox-mapkey').append('<ul id="mapkey" class="boxcontent"></ul>');
 
@@ -198,13 +198,13 @@ function createSideBar() {
   // map key derived from taxonomy gets added when taxonomy.json is loaded
 
   // About
-  $('#sidebar').append('<div id="sidebox-about" class="box hidden"></div>');
+  $('#tmap_sidebar').append('<div id="sidebox-about" class="box hidden"></div>');
   $('#sidebox-about').append('<h2 onClick="toggleSideBox(\'sidebox-about\');">About this Map</h2>');
   $('#sidebox-about').append('<div id="about" class="boxcontent"></div>');
   if(window.about_text)
       $('#about').append(window.about_text);
 
-  $('#sidebar').append('<div id="timestamp"></div>');
+  $('#tmap_sidebar').append('<div id="timestamp"></div>');
   $('#timestamp').append('<div id="tall" title="Local copy"></div>'); // alert() is only for dev, works only in FF if you SELECT TEXT.
   $('#timestamp').append('<div id="tnode" onmouseover="alert(\'' + overpass_config.servers[0].replace(/^http:\/\//,"") + '\');"></div>');
   $('#timestamp').append('<div id="tway"  onmouseover="alert(\'' + overpass_config.servers[1].replace(/^http:\/\//,"") + '\');"></div>');

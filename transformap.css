@@ -185,50 +185,50 @@ body.ie #notificationbar {
   background-image:url("assets/20px-Mf_relation.svg.png");
 }
 
-#sidebar, #sidebar_toggle {
+#tmap_sidebar, #sidebar_toggle {
     font-family: "PT Sans", sans-serif, 'DejaVu';
 }
 
-#sidebar .box {
+#tmap_sidebar .box {
   background:#D6D2D0;
   margin: 2px 0;
   padding:0 2px;
 }
 
-#sidebar .box .boxcontent {
+#tmap_sidebar .box .boxcontent {
     margin:0;
     padding:0;
     overflow:hidden;
 }
 
-#sidebar .box.shown #mapswitcher {
+#tmap_sidebar .box.shown #mapswitcher {
     max-height:200px;
 }
-#sidebar .box.shown #about {
+#tmap_sidebar .box.shown #about {
     max-height:500px;
     padding:0 2px;
 }
-#sidebar .box.shown #POIlist {
+#tmap_sidebar .box.shown #POIlist {
     max-height:10000px
 }
 
-#sidebar .box.shown .boxcontent {
+#tmap_sidebar .box.shown .boxcontent {
     max-height:1000px;
     margin:2px 0;
     transition: max-height 0.5s ease, margin 0.5s ease;
 }
 
-#sidebar .box.hidden .boxcontent {
+#tmap_sidebar .box.hidden .boxcontent {
     max-height:0;
     border:0;
     transition: max-height 0.5s ease, margin 0.5s ease;
 }
 
-#sidebar .box.hidden h2 {
+#tmap_sidebar .box.hidden h2 {
     color: #6374A6;
     transition: background 0.2s, color 0.5s;
 }
-#sidebar .box.shown h2 {
+#tmap_sidebar .box.shown h2 {
     color:#FBFCFA;
 
     background: #6374A6;
@@ -238,7 +238,7 @@ body.ie #notificationbar {
     background: -o-linear-gradient(top, #7286BF, #6374A6, #6374A6, #7286BF);
     transition: background 0.2s, color 0.2s;
 }
-#sidebar .box h2 {
+#tmap_sidebar .box h2 {
     margin: 0;
     font-size: 24px;
     padding: 2px 2px 2px 22px;
@@ -252,7 +252,7 @@ body.ie #notificationbar {
     background: -o-linear-gradient(top, #DDDDDD, #BFBFBF, #DDDDDD);
     transition: background 0.2s, color 0.2s;
 }
-#sidebar .box h2:hover {
+#tmap_sidebar .box h2:hover {
     background: #BFBFBF;
     background: -webkit-linear-gradient(top, #BFBFBF, #A1A1A1, #BFBFBF);
     background: -moz-linear-gradient(top, #BFBFBF, #A1A1A1, #BFBFBF);
@@ -260,7 +260,7 @@ body.ie #notificationbar {
     background: -o-linear-gradient(top, #BFBFBF, #A1A1A1, #BFBFBF);
     transition: background 0.5s, color 0.2s;
 }
-#sidebar .box.shown h2:hover {
+#tmap_sidebar .box.shown h2:hover {
     color:white;
 
     background: #6374A6;
@@ -272,14 +272,14 @@ body.ie #notificationbar {
     transition: background 0.5s, color 0.2s;
 }
 
-#sidebar .box h2:before {
+#tmap_sidebar .box h2:before {
     content:"»";
     position: absolute;
     top: 1px;
     left: 5px;
     transition: transform 0.1s, top 0.1s, left 0.1s;
 }
-#sidebar .box h2:hover:before, #sidebar .box.shown h2:before {
+#tmap_sidebar .box h2:hover:before, #tmap_sidebar .box.shown h2:before {
     content:"»";
     position: absolute;
     top: 3px;
@@ -288,20 +288,20 @@ body.ie #notificationbar {
 }
 
 /* lists in sidebar */
-#sidebar .box ul.boxcontent li {
+#tmap_sidebar .box ul.boxcontent li {
   list-style: none;
   margin:0 5px;
   border-top:2px dotted #FBFCFA;
   text-indent: -29px;
   padding-left:29px;
 }
-#sidebar .box ul.boxcontent li:first-child, #mapswitcher li.current:first-child + li {
+#tmap_sidebar .box ul.boxcontent li:first-child, #mapswitcher li.current:first-child + li {
     border-top:none;
 }
-#sidebar .box ul.boxcontent li:hover {
+#tmap_sidebar .box ul.boxcontent li:hover {
   background:#DDDDDD;
 }
-#sidebar .box ul.boxcontent li img {
+#tmap_sidebar .box ul.boxcontent li img {
     margin:0 5px -7px 0;
 }
 
@@ -323,16 +323,16 @@ body.ie #notificationbar {
 #mapswitcher a:hover {
     text-decoration:underline;
 }
-#sidebar #POIlist li img {
+#tmap_sidebar #POIlist li img {
     margin:0 5px -2px 0;
 }
-#sidebar #POIlist li {
+#tmap_sidebar #POIlist li {
     cursor:pointer;
     text-indent:-22px;
     padding-left:22px;
 }
 
-#sidebar #mapkey li.manual {
+#tmap_sidebar #mapkey li.manual {
   text-indent:0;
   padding-left:0;
 }
@@ -372,23 +372,23 @@ body.ie #notificationbar {
 #filters ul.subfilter div.InfoBox:before:hover {
     opacity:0.5;
 }
-#sidebar .box #filters h3 {
+#tmap_sidebar .box #filters h3 {
     padding:0 0 0 20px;
     margin:0;
     position:relative;
 }
-#sidebar .box #filters h3:hover {
+#tmap_sidebar .box #filters h3:hover {
     background:#DDDDDD;
     cursor:pointer;
 }
-#sidebar .box #filters li { 
+#tmap_sidebar .box #filters li { 
     text-indent:0;
     padding:0;
 }
-#sidebar .box #filters > li:hover { 
+#tmap_sidebar .box #filters > li:hover { 
     background:inherit;
 }
-#sidebar .box #filters li.hidden h3:before {
+#tmap_sidebar .box #filters li.hidden h3:before {
     content: ">";
     margin-right:5px;
     position: absolute;
@@ -396,7 +396,7 @@ body.ie #notificationbar {
     left: 5px;
     transition: transform 0.1s, top 0.1s, left 0.1s;
 }
-#sidebar .box #filters li.shown h3:before, #sidebar .box #filters li.hidden h3:hover:before {
+#tmap_sidebar .box #filters li.shown h3:before, #tmap_sidebar .box #filters li.hidden h3:hover:before {
     content: ">";
     margin-right:5px;
     position: absolute;
@@ -404,8 +404,8 @@ body.ie #notificationbar {
     left: 7px;
     transform: rotate(90deg);
 }
-#sidebar .box ul#filters ul.subfilter li div.disabled:before,
-#sidebar .box ul#filters ul.subfilter li div.enabled:before {
+#tmap_sidebar .box ul#filters ul.subfilter li div.disabled:before,
+#tmap_sidebar .box ul#filters ul.subfilter li div.enabled:before {
     margin:5px 5px 0 0;
     line-height:12px;
     display:block;
@@ -413,21 +413,21 @@ body.ie #notificationbar {
     height:12px;
     float:left;
 }
-#sidebar .box ul#filters ul.subfilter li div.disabled:before { content: "\2610"; }
-#sidebar .box ul#filters ul.subfilter li div.enabled:before {  content: "\2611"; }
-#sidebar .box ul#filters ul.subfilter li div.enabled:hover:before,
-#sidebar .box ul#filters ul.subfilter li div.disabled:hover:before {
+#tmap_sidebar .box ul#filters ul.subfilter li div.disabled:before { content: "\2610"; }
+#tmap_sidebar .box ul#filters ul.subfilter li div.enabled:before {  content: "\2611"; }
+#tmap_sidebar .box ul#filters ul.subfilter li div.enabled:hover:before,
+#tmap_sidebar .box ul#filters ul.subfilter li div.disabled:hover:before {
     background:white;
 }
-#sidebar .box ul.boxcontent ul.subfilter li div:first-child  {
+#tmap_sidebar .box ul.boxcontent ul.subfilter li div:first-child  {
     width:189px;
     float:left;
 }
-#sidebar .box ul#filters ul.subfilter li div:first-child + div:hover {
+#tmap_sidebar .box ul#filters ul.subfilter li div:first-child + div:hover {
     background:#8198D9;
     border:1px solid #8198D9;
 }
-#sidebar .box ul#filters ul.subfilter li div:first-child + div { /* (?) */
+#tmap_sidebar .box ul#filters ul.subfilter li div:first-child + div { /* (?) */
     text-align:center;
     border:1px solid #6374A6;
     box-shadow: 0px 0px 1px 1px rgba(99,116,166,1);
@@ -442,47 +442,47 @@ body.ie #notificationbar {
     font-weight:900;
     float:right;
 }
-#sidebar .box ul#filters ul.subfilter li:after { /*small hack to clear float cleanly https://css-tricks.com/all-about-floats/ */
+#tmap_sidebar .box ul#filters ul.subfilter li:after { /*small hack to clear float cleanly https://css-tricks.com/all-about-floats/ */
     content: ".";
     visibility: hidden;
     display: block;
     height: 0;
     clear: both;
 }
-#sidebar .box ul#filters ul.subfilter li div:first-child + div div.InfoBox {
+#tmap_sidebar .box ul#filters ul.subfilter li div:first-child + div div.InfoBox {
     margin-left:-195px;
     line-height:1.3em;
     font-size:16px;
     font-weight:normal;
     color:#6374A6;
 }
-#sidebar .box ul#filters ul.subfilter li div:first-child + div:hover div.InfoBox {
+#tmap_sidebar .box ul#filters ul.subfilter li div:first-child + div:hover div.InfoBox {
     color:#6374A6;
 }
 
-#sidebar .box ul#filters ul.subfilter li span { font-size:0.8em; color:#ADADAD;} 
-#sidebar .box ul#filters ul.subfilter li span:before { content: " (";  } 
-#sidebar .box ul#filters ul.subfilter li span:after { content: ")";  } 
+#tmap_sidebar .box ul#filters ul.subfilter li span { font-size:0.8em; color:#ADADAD;} 
+#tmap_sidebar .box ul#filters ul.subfilter li span:before { content: " (";  } 
+#tmap_sidebar .box ul#filters ul.subfilter li span:after { content: ")";  } 
 
-#sidebar .box ul.boxcontent ul.subfilter li {
+#tmap_sidebar .box ul.boxcontent ul.subfilter li {
     border-top:1px dotted #FBFCFA;
 }
-#sidebar .box ul.boxcontent ul.subfilter li:hover {
+#tmap_sidebar .box ul.boxcontent ul.subfilter li:hover {
     background:#DDDDDD;
     cursor:pointer;
 }
-#sidebar .box ul.boxcontent ul.subfilter {
+#tmap_sidebar .box ul.boxcontent ul.subfilter {
     padding:0 0 0 0px;
     max-height:1000px;
     transition: max-height 0.5s ease, margin 0.5s ease;
     overflow:hidden;
 }
-#sidebar .box ul.boxcontent li.hidden ul.subfilter {
+#tmap_sidebar .box ul.boxcontent li.hidden ul.subfilter {
     max-height:0;
     transition: max-height 0.5s ease, margin 0.5s ease;
 }
 
-#sidebar {
+#tmap_sidebar {
     position:absolute;
     top:0;
     right:0;
@@ -495,7 +495,7 @@ body.ie #notificationbar {
     margin-right:0;
     transition: margin-right 0.8s;
 }
-#sidebar.hidden {
+#tmap_sidebar.hidden {
     margin-right:-250px;
     transition: margin-right 0.8s;
 }
@@ -516,7 +516,7 @@ body.ie #notificationbar {
     transition: right 0.8s;
 }
 
-#sidebar h1 {
+#tmap_sidebar h1 {
     padding:5px 10px;
     margin:0;
     border-bottom:2px solid #6374A6;
@@ -553,7 +553,7 @@ body.ie #notificationbar {
     cursor:w-resize;
 }
 
-#sidebar #timestamp {
+#tmap_sidebar #timestamp {
     display:block;
     font-size:13px;
     padding:3px;
@@ -564,20 +564,20 @@ body.ie #notificationbar {
     z-index:-1;
     text-align:right;
 }
-#sidebar #timestamp div:before {
+#tmap_sidebar #timestamp div:before {
   background-repeat: no-repeat;
   background-position: center right 4px ;
   background-size:14px;
 }
-#sidebar #timestamp #tnode:before {
+#tmap_sidebar #timestamp #tnode:before {
   content:attr(element-nrs) "\00A0\00A0\00A0\00A0\00A0\00A0:";
   background-image: url(assets/20px-Mf_node.svg.png);
 }
-#sidebar #timestamp #tway:before {
+#tmap_sidebar #timestamp #tway:before {
   content:attr(element-nrs) "\00A0\00A0\00A0\00A0\00A0\00A0:";
   background-image: url(assets/20px-Mf_way.svg.png);
 }
-#sidebar #timestamp #trel:before {
+#tmap_sidebar #timestamp #trel:before {
   content:attr(element-nrs) '\00A0\00A0\00A0\00A0\00A0\00A0:';
   background-image: url(assets/20px-Mf_relation.svg.png);
 }
