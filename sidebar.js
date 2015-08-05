@@ -242,6 +242,6 @@ function reDrawMap() {
 }
 
 function toggleSideBarOnLoad() {
-  if(! jQuery.browser.mobile && ! hide_sidebar)
+  if(! jQuery.browser.mobile && ! window.hide_sidebar)
     toggleSideBar();
 }
