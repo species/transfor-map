@@ -223,12 +223,32 @@ function buildOverpassQuery() {
     console.log(overpass_query_rels);
 }
 
-var debugLayer;
+var debugLayer,
+    map,
+    markers = new PruneClusterForLeaflet(60,20),
+    lc = {},
+    default_overlay = {
+      "POIs" : markers
+    };
 
 function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
   var center = new L.LatLng(lat ? lat : 0, lon ? lon : 0);
 
-  var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" }),
+  var overriddenId = new L.Control.EditInOSM.Editors.Id({ url: "http://editor.transformap.co/#background=Bing&map=" });
+
+  var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+      subdomains: '1234',
+      attribution: [attr.osm, attr.mapquest, attr.overpass, attr.greenmap].join(', '),
+      maxZoom : 19,
+      maxNativeZoom: 18 ,
+      noWrap: true
+  });
+
+  if(!defaultlayer)
+    defaultlayer = MapQuestOpen_OSM;
+  if(!overlay_maps)
+    overlay_maps = default_overlay;
+
   map = new L.Map('map', {
     center: center,
     zoom: zoom ? zoom : 3,
@@ -240,6 +260,21 @@ function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
         editors: [overriddenId] 
         }
   });
+  
+  if(!base_maps) {
+    var osm = new L.TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        noWrap: true
+    });
+
+    base_maps = {
+      'MapQuestOpen': MapQuestOpen_OSM,
+      'OpenSteetMap - Mapnik': osm
+    };
+  }
+
+  map.addLayer(markers);
 
   var ctrl = new L.Control.Layers(base_maps,overlay_maps)
   map.addControl(ctrl);

@@ -60,36 +60,11 @@
         + '<li title="leisure=playground"><img src="assets/transformap/pngs/pois/' + 24 + '/leisure=playground.png" /> Playground</li>'
         + '<li title="leisure=dog_park"><img src="assets/transformap/pngs/pois/' + 24 + '/leisure=dog_park.png" /> Dog Park</li>';
 
-    var map, ids, markers, lc = {};
-    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
-        maxZoom : 19,
-        noWrap: true
-    });
-    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
-        subdomains: '1234',
-        attribution: [attr.osm, attr.mapquest, attr.overpass, attr.greenmap].join(', '),
-        maxZoom : 19,
-        maxNativeZoom: 18 ,
-        noWrap: true
-    });
-
-    var base_maps = {
-      'MapQuestOpen': MapQuestOpen_OSM,
-      'OpenSteetMap - Mapnik': osm
-    };
-    markers = new PruneClusterForLeaflet(60,20);
-    var overlay_maps = {
-      "POIs" : markers
-    };
-
     $(function () {
 
-      map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps, 48.2084, 16.3733, 15);
+      map = initMap(null, null, null, 48.2084, 16.3733, 15);
 
       var hash = new L.Hash(map); // Leaflet persistent Url Hash function
-
-      map.addLayer(markers);
 
       loadPoi();
       map.on('moveend', loadPoi);

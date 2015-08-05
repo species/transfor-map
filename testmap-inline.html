@@ -6,25 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
 
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-  <link rel="stylesheet" href="leaflet-search.min.css" />
-  <link rel="stylesheet" href="Leaflet.EditInOSM.css" />
-  <link rel="stylesheet" href="transformap.css" />
-
 </head>
 <body>
 
 <noscript>
   <br><hr><br>
   <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
-  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for this site!</p>
 </noscript>
 
 
   <script src="//code.jquery.com/jquery-latest.min.js"></script>
   <script src="jquery.geo-1.0.0-b1.5.min.js"></script>
 
-  <!-- <scr ipt src="leaflet.js"></script> -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 
   <script src="PruneCluster.js"></script>
@@ -54,7 +48,7 @@
     var overpass_config = {
         q_array: [ [ '"identity"' ] ],
         icon_folder : "identities",
-        icon_tags : [ "identity" ],
+        icon_tags : [ "identity" ], //also generates map_key if tag is part of TransforMap Taxonomy
         class_selector_key : { key: "identity" }
     }
 
@@ -66,58 +60,41 @@
     + about.osm_edit
     + about.export_opendata ;
 
-    var map, ids, markers, lc = {};
-    var osm = new L.TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
-        maxZoom : 19,
-        noWrap: true
-    });
-    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
-        subdomains: '1234',
-        attribution: [attr.osm, attr.mapquest, attr.overpass, attr.greenmap].join(', '),
-        maxZoom : 19,
-        maxNativeZoom: 18 ,
-        noWrap: true
-    });
-
-    var base_maps = {
-      'MapQuestOpen': MapQuestOpen_OSM,
-      'OpenSteetMap - Mapnik': osm
-    };
-    markers = new PruneClusterForLeaflet(60,20);
-    var overlay_maps = {
-      "POIs" : markers
-    };
-
     $(function () {
 
-      map = initMap(MapQuestOpen_OSM, base_maps, overlay_maps, 47.07, 15.43, 12);
+      // (defaultlayer,base_maps,overlay_maps, lat,lon,zoom) // if not set, use TransforMap defaults
+      map = initMap(null, null, null, 47.07, 15.43, 12);
 
       var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
-      map.addLayer(markers);
-
-      loadPoi();
+      loadPoi(); 
       map.on('moveend', loadPoi);
       map.on('viewreset', loadPoi);
 
       setTimeout(addSearch,500); //seems to break with prunecluster when loaded instantly, this fix helps
       addLocate();
       L.control.scale({imperial: false}).addTo(map);
-      L.control.mousePosition().addTo(map);
+      L.control.mousePosition().addTo(map); // also export function is located here
 
     });
 
   </script>
 
-  <div id="content" style="
-      height:700px;
-      width:900px;
-      margin:20px;
-      border:1px solid black;
-      ">
-  <div id="map"></div>
-</div>
+  <div id="scoped-content">
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" scoped />
+      <link rel="stylesheet" href="leaflet-search.min.css" scoped />
+      <link rel="stylesheet" href="Leaflet.EditInOSM.css" scoped />
+      <link rel="stylesheet" href="transformap.css" scoped />
+
+      <div id="content" style="
+          height:700px;
+          width:900px;
+          margin:20px;
+          border:1px solid black;
+          ">
+      <div id="map"></div>
+    </div>
+  </div>
 
 </body>
 </html>
