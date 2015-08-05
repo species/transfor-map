@@ -12,6 +12,9 @@ var attr = {
   overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
 }
 
+if(!assethost)
+    var assethost = "http://demo.transformap.co/";
+
 /*
  * takes a two args: osm datatype and osm id
  * if marker in field of view, toggle popup.
@@ -110,7 +113,7 @@ function getVisibleMarker(osm_type,osm_id) {
 // fetch taxonomy, containing all translations, and implicit affiliations
 // taken from Wikipedia:JSON
 var taxonomy, turbolink;
-var url = "taxonomy.json";
+var url = assethost+"taxonomy.json";
 var http_request = new XMLHttpRequest();
 http_request.open("GET", url, true);
 http_request.onreadystatechange = function () {
@@ -140,7 +143,7 @@ http_request.onreadystatechange = function () {
                           var li = $("<li>");
                           var new_id = item['osm:key'] + item['osm:values'][osmvalue_counter];
                           li.attr("onClick", "toggleInfoBox('" + new_id + "');");
-                          li.append('<img src="assets/transformap/pngs/identities/24/' + item['osm:key'] + '=' + item['osm:values'][osmvalue_counter] + '.png" /> '
+                          li.append('<img src="'+assethost+'assets/transformap/pngs/identities/24/' + item['osm:key'] + '=' + item['osm:values'][osmvalue_counter] + '.png" /> '
                                   + item['label']['en']
                                   + '<div class=InfoBox ' 
                                       + 'id="' + new_id + '">'
@@ -302,11 +305,11 @@ function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
   }
 
   $('#map').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
-  $('#forkme').append('<img src="assets/forkme-on-github.png" alt="Fork me on GitHub" />');
+  $('#forkme').append('<img src="'+assethost+'assets/forkme-on-github.png" alt="Fork me on GitHub" />');
 
-  $('#map').append('<img src="assets/ajax-loader.gif" id="loading_node" class="loading" />');
-  $('#map').append('<img src="assets/ajax-loader.gif" id="loading_way" class="loading" />');
-  $('#map').append('<img src="assets/ajax-loader.gif" id="loading_relation" class="loading" />');
+  $('#map').append('<img src="'+assethost+'assets/ajax-loader.gif" id="loading_node" class="loading" />');
+  $('#map').append('<img src="'+assethost+'assets/ajax-loader.gif" id="loading_way" class="loading" />');
+  $('#map').append('<img src="'+assethost+'assets/ajax-loader.gif" id="loading_relation" class="loading" />');
   $('#map').append('<div id="notificationbar">Please zoom in to update POIs!</div>');
 
   map.on('moveend', updateLinks);
@@ -454,13 +457,13 @@ function chooseIconSrc(tags,iconsize) {
 
     var icon_url = "";
     if(!icon_tag) {
-      icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/unknown.png";
+      icon_url = assethost+"assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/unknown.png";
     } else {
 
       if (tags[icon_tag].indexOf(";") >= 0) // more than one item, take generic icon
-        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/generic.png";
+        icon_url = assethost+"assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/generic.png";
       else
-        icon_url = "assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/" + icon_tag + "=" + tags[icon_tag] + ".png";
+        icon_url = assethost+"assets/transformap/pngs/" + overpass_config.icon_folder + "/" + iconsize + "/" + icon_tag + "=" + tags[icon_tag] + ".png";
     }
     return icon_url;
 }
@@ -1090,7 +1093,7 @@ function loadPoi() {
         );
     r.append($('<tr>')
             .attr('class','header')
-            .append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '" title="Link to ' + type + ' ' + id + ' on OpenStreetMap" target=_blank><img src="assets/20px-Mf_' + type + '.svg.png" />' + type.substring(0,1) + id + '</a>'))
+            .append($('<td>').append('<a href="https://www.openstreetmap.org/' + type + "/" + id + '" title="Link to ' + type + ' ' + id + ' on OpenStreetMap" target=_blank><img src="'+assethost+'assets/20px-Mf_' + type + '.svg.png" />' + type.substring(0,1) + id + '</a>'))
             .append($('<td>').append('<a href="http://map.project-osrm.org/?dest=' + lat + ',' + lon + '&destname=' + tags['name'] + '" target=_blank title="Route here with OSRM">Route Here</a>'))
         );
     var wikipedia_link = "";
@@ -1101,7 +1104,7 @@ function loadPoi() {
         for (key in tags) {
             var value = tags[key].replace(/^http[s]?:\/\//,""); //we add https later, regardless of link
             var valuestring = decodeURIComponent(value); 
-            var img = "<img src='assets/";
+            var img = "<img src='"+assethost+"assets/";
 
             if(/twitter/.test(key)) {
                 if(! /twitter.com\//.test(value)) valuestring = "twitter.com/" + valuestring;
@@ -1156,7 +1159,7 @@ function loadPoi() {
               (tags["addr:city"] ? tags["addr:city"] : "" ) + 
               (tags["addr:suburb"] ? "-" + tags["addr:suburb"] : "") +
               (tags["addr:country"] ? "<br>" + tags["addr:country"] : "") +
-              (tags["wheelchair"] ? ("<br><img class='wheelchair " + tags["wheelchair"] + "' src='assets/disability-18.png' title='wheelchair: " + 
+              (tags["wheelchair"] ? ("<br><img class='wheelchair " + tags["wheelchair"] + "' src='"+assethost+"assets/disability-18.png' title='wheelchair: " + 
                                      ( (tags["wheelchair"] == "yes") ? "100% accessible" :
                                        ( (tags["wheelchair"] == "limited" ) ? "limited (assist needed)" :
                                          ( (tags["wheelchair"] == "no") ? "no" : tags["wheelchair"] ) ) ) +
@@ -1727,7 +1730,7 @@ function updateLinks() {
   turbolink = "<a href=\'http://overpass-turbo.eu/?Q=" 
       + query.replace(/BBOX/g, map.getBounds().toOverpassBBoxString()) 
       + '&R&C=' + centre.lat + ';' + centre.lng + ';' + map.getZoom() 
-      + '\' title="Export OSM data with Overpass Turbo">Export data <img src="assets/turbo.png" height=12px style="margin-bottom:-2px"/></a>';
+      + '\' title="Export OSM data with Overpass Turbo">Export data <img src="'+assethost+'assets/turbo.png" height=12px style="margin-bottom:-2px"/></a>';
 
   if(window.updateMapSwitcherLinks)
       updateMapSwitcherLinks();
@@ -1754,7 +1757,8 @@ L.Control.MousePosition = L.Control.extend({
     this._container = L.DomUtil.create('div', 'leaflet-control-mouseposition');
     L.DomEvent.disableClickPropagation(this._container);
     map.on('mousemove', this._onMouseMove, this);
-    this._container.innerHTML=this.options.emptyString;
+    updateLinks();
+    this._container.innerHTML= ' | ' + turbolink;
     return this._container;
   },
 
@@ -1763,6 +1767,7 @@ L.Control.MousePosition = L.Control.extend({
   },
 
   _onMouseMove: function (e) {
+    console.log(e);
     var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
     var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
     var lng_length = lng.toString().split(".")[1].length; // it MAY be if you're on exactly one integer coordinate to throw an error, but I don't care

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TransforMap of Identities</title>
+  <title>Inline TransforMap</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
@@ -16,26 +16,27 @@
 </noscript>
 
 
-  <script src="//code.jquery.com/jquery-latest.min.js"></script>
-  <script src="jquery.geo-1.0.0-b1.5.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="jquery.geo-1.0.0-b1.5.min.js"></script>
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 
-  <script src="PruneCluster.js"></script>
+  <script type="text/javascript" src="PruneCluster.js"></script>
 
-  <script src="leaflet-hash.js"></script>
-  <script src="leaflet-search.min.js"></script>
-  <script src="Leaflet.EditInOSM.js"></script>
+  <script type="text/javascript" src="leaflet-hash.js"></script>
+  <script type="text/javascript" src="leaflet-search.min.js"></script>
+  <script type="text/javascript" src="Leaflet.EditInOSM.js"></script>
 
-  <script src='L.Control.Locate.mine.js'></script>
+  <script type="text/javascript" src='L.Control.Locate.mine.js'></script>
 
-  <script>
+  <script type="text/javascript">
     var url_pois_lz = "identities.json";
   </script>
-  <script src="sidebar.js"></script>
-  <script src="filters.js"></script>
-  <script src="map.js"></script>
-  <script>
+  <script type="text/javascript" src="sidebar.js"></script>
+  <script type="text/javascript" src="filters.js"></script>
+  <script type="text/javascript" src="map.js"></script>
+  <script type="text/javascript">
+  // <!--
     /*
      * overpass syntax:
      * [out:json][timeout:180][bbox:BBOX];
@@ -78,6 +79,7 @@
 
     });
 
+  // -->
   </script>
 
   <div id="scoped-content">
@@ -86,7 +88,7 @@
       <link rel="stylesheet" href="Leaflet.EditInOSM.css" scoped />
       <link rel="stylesheet" href="transformap.css" scoped />
 
-      <div id="content" style="
+      <div id="tmapcontent" style="
           height:700px;
           width:900px;
           margin:20px;

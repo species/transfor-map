@@ -67,11 +67,10 @@
     transform: rotate(-45deg);
 }
 
+/* fix for wordpress */
+#map .leaflet-tile,
+#map .loading {border-radius:0;box-shadow:none;}
 
-/* FIXME readd after clusters working
-    .leaflet-marker-icon { padding: 2px; border-radius: 2px; }
-    .leaflet-marker-icon:hover { background: yellow; }
-*/
 .leaflet-marker-icon:hover { box-shadow: 0 0 5px 5px #6374A6; }
 .leaflet-marker-icon.prunecluster:hover { box-shadow: none; }
 .leaflet-marker-icon:hover div { box-shadow: 0 0 5px 5px yellow, inset 0 0 2px 2px yellow; }
@@ -500,11 +499,11 @@ body.ie #notificationbar {
     margin-right:-250px;
     transition: margin-right 0.8s;
 }
-#content {
+#tmapcontent {
     position:relative;
     overflow:hidden;
 }
-#content #map {
+#tmapcontent #map {
     position:absolute;
     top:0;
     bottom:0;
@@ -512,7 +511,7 @@ body.ie #notificationbar {
     left:0;
     transition: right 0.8s;
 }
-#content.sidebar #map {
+#tmapcontent.sidebar #map {
     right:250px;
     transition: right 0.8s;
 }

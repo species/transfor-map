@@ -1,3 +1,6 @@
+if(!assethost)
+    var assethost = "http://demo.transformap.co/";
+
 var about = {
     overpass : '<p>Items are loaded via <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>, it may take some minutes for newly added items to appear.</p>',
     osm_edit : '<p>You can improve this map with the “Edit” Button in the top right corner!</p>',
@@ -7,29 +10,29 @@ var about = {
 var different_maps = [ 
     { url : "identities.html" ,
       name : "TransforMap of Identities",
-      image: "assets/transformap/pngs/" + 24 + "/political_identity.png"
+      image: assethost+"assets/transformap/pngs/" + 24 + "/political_identity.png"
     } ,
     /*   { url : "transformap.html" ,
       name : "Needs-based TransforMap" } , */
     { url : "organic.html" ,
       name : "Organic TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=supermarket.png"
+      image : assethost+"assets/transformap/pngs/pois/" + 24 + "/shop=supermarket.png"
     } ,
     { url : "regional.html" ,
       name : "Regional TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=convenience.png"
+      image : assethost+"assets/transformap/pngs/pois/" + 24 + "/shop=convenience.png"
     } ,
     { url : "fairtrade.html" ,
       name : "Fairtrade TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=fairtrade.png"
+      image : assethost+"assets/transformap/pngs/pois/" + 24 + "/shop=fairtrade.png"
     } ,
     { url : "secondhand.html" ,
       name : "Second Hand TransforMap",
-      image : "assets/transformap/pngs/pois/" + 24 + "/shop=second_hand.png"
+      image : assethost+"assets/transformap/pngs/pois/" + 24 + "/shop=second_hand.png"
     } ,
     { url : "greenmap.html" ,
       name : "Green TransforMap",
-      image : "assets/greenmap/png/" + 24  + "/Park-_Recreation_Area.png"
+      image : assethost+"assets/greenmap/png/" + 24  + "/Park-_Recreation_Area.png"
     } 
 ];
 
@@ -117,7 +120,11 @@ function toggleInfoBox(id) {
 function toggleSideBar() { //TODO rewrite with jQuery toggleClass
     var sidebar = document.getElementById("sidebar");
     var sidebar_toggle = document.getElementById("sidebar_toggle");
-    var content = document.getElementById("content");
+    if(!sidebar_toggle || !sidebar) {
+        console.log("Error, no sidebar found");
+        return;
+    }
+    var content = document.getElementById("tmapcontent");
     if( sidebar_toggle.hasAttribute("class") ) { // is hidden, show
         sidebar_toggle.removeAttribute("class");
         sidebar.removeAttribute("class");
@@ -140,8 +147,11 @@ function toggleSideBar() { //TODO rewrite with jQuery toggleClass
 }
 
 function createSideBar() {
-  $('#content').append('<div id="sidebar" class=hidden><h1>' + document.title + '</h1></div>');
-  $('#content').append('<div id="sidebar_toggle" class=hidden onClick="toggleSideBar()">»</div>');
+  if(!$) {
+      $=jQuery;
+  }
+  $('#tmapcontent').append('<div id="sidebar" class=hidden><h1>' + document.title + '</h1></div>');
+  $('#tmapcontent').append('<div id="sidebar_toggle" class=hidden onClick="toggleSideBar()">»</div>');
 
   // switching to other maps
   $('#sidebar').append('<div id="sidebox-maps" class="box hidden"></div>');
@@ -232,6 +242,6 @@ function reDrawMap() {
 }
 
 function toggleSideBarOnLoad() {
-  if(! jQuery.browser.mobile)
+  if(! jQuery.browser.mobile && ! hide_sidebar)
     toggleSideBar();
 }
