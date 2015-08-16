@@ -404,6 +404,7 @@ body.ie #notificationbar {
     left: 7px;
     transform: rotate(90deg);
 }
+#tmap_sidebar .box ul#filters ul.subfilter li div.mixed:before,
 #tmap_sidebar .box ul#filters ul.subfilter li div.disabled:before,
 #tmap_sidebar .box ul#filters ul.subfilter li div.enabled:before {
     margin:5px 5px 0 0;
@@ -415,6 +416,7 @@ body.ie #notificationbar {
 }
 #tmap_sidebar .box ul#filters ul.subfilter li div.disabled:before { content: "\2610"; }
 #tmap_sidebar .box ul#filters ul.subfilter li div.enabled:before {  content: "\2611"; }
+#tmap_sidebar .box ul#filters ul.subfilter li div.mixed:before {  content: "\2611"; color:gray;}
 #tmap_sidebar .box ul#filters ul.subfilter li div.enabled:hover:before,
 #tmap_sidebar .box ul#filters ul.subfilter li div.disabled:hover:before {
     background:white;
@@ -422,6 +424,10 @@ body.ie #notificationbar {
 #tmap_sidebar .box ul.boxcontent ul.subfilter li div:first-child  {
     width:189px;
     float:left;
+}
+#tmap_sidebar .box ul.boxcontent ul.subfilter li.allswitch div {
+    font-style: italic;
+    margin-left:-5px;
 }
 #tmap_sidebar .box ul#filters ul.subfilter li div:first-child + div:hover {
     background:#8198D9;
