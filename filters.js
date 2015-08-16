@@ -447,6 +447,60 @@ function updateFilterCount(force) {
     }
 }
 
+function toggleAllFiltersInGroup(filtername) {
+    var old_state = getFilterGroupState(filtername);
+    var new_state = (old_state == "disabled") ? true : false; // if mixed or enabled, disable all
+
+    var filter = filters[filtername];
+    if(filter["sub_criteria"]) {
+        for(itemname in filter.sub_criteria) {
+            var item = filter.sub_criteria[itemname];
+            item.state = new_state;
+        }
+        var parent_element = document.getElementById("subfilter_" + filtername);
+        for(var i=1; i < parent_element.children.length; i++) { //i=1 because first is "toggle all"
+            var div_node = parent_element.children[i].firstChild;
+            div_node.className = (new_state) ? "enabled" : "disabled";
+        }
+    }
+    else
+        console.log("error in toggleAllFiltersInGroup('"+filtername+"'): no subcriterias");
+}
+
+function getFilterGroupState(filtername) {
+    var all_enabled = false;
+    var all_disabled = false;
+
+    var filter = filters[filtername];
+    if(filter["sub_criteria"]) {
+        for(itemname in filter.sub_criteria) {
+            var item = filter.sub_criteria[itemname];
+            if(item.state) {
+                if(all_enabled)
+                    continue;
+                //else
+                if(!all_disabled) { //begin state
+                    all_enabled = true;
+                    continue;
+                } // item enabled, until now all disabled → mixed
+                return "mixed";
+            } else { //item disabled
+                if(all_enabled)
+                    return "mixed";
+                if(all_disabled)
+                    continue;
+                all_disabled = true;
+            }
+        }
+        if(all_disabled)
+            return "disabled";
+        if(all_enabled)
+            return "enabled";
+        console.log("error in getFilterGroupState('"+filtername+"'): no end state reached");
+    }
+    console.log("error in getFilterGroupState('"+filtername+"'): no subcriterias");
+}
+
 /* precondition: in global var filters, an object $filtername must exist.
  *  returns a piece of HTML which can be added to filters sidebar 
  */
@@ -454,14 +508,26 @@ function createFilterHTML(filtername) {
   var filter = filters[filtername];
   var sub_filters = null;
   if(filter["sub_criteria"]) {
-      sub_filters = $('<ul>').attr('class', "subfilter");
+      sub_filters = $('<ul>')
+          .attr('class', "subfilter")
+          .attr('id',"subfilter_" + filtername);
+      var all_state = getFilterGroupState(filtername); // enabled, disabled, mixed
+      sub_filters.append( '<li class="allswitch"><div class='+ all_state +' '
+              + 'onClick="toggleAllFiltersInGroup(\''+filtername+'\'); runFiltersOnAll(); this.className = getFilterGroupState(\''+filtername+'\');" '
+              + 'title="check/uncheck all entries in this group">'
+              + 'Toggle all'
+              + '</div>'
+              +'</li>');
 
       for(itemname in filter.sub_criteria) {
           var item = filter.sub_criteria[itemname];
           var statevarname = 'filters.'+filtername+'.sub_criteria[\''+itemname+'\'].state'; //filters.provides.sub_criteria['food+drink'].state
           var title = "“" + item.key + "” = “" + item.value + "”";
           sub_filters.append('<li><div class='+item.default_state+' '
-           + 'onClick="'+statevarname+' = ! '+statevarname+'; runFiltersOnAll(); this.className = ('+statevarname+') ? \'enabled\' : \'disabled\';"'
+           + 'onClick="'+statevarname+' = ! '+statevarname
+               +'; runFiltersOnAll();'
+               +'this.className = ('+statevarname+') ? \'enabled\' : \'disabled\';'
+               +'document.getElementById(\'subfilter_' + filtername + '\').firstChild.firstChild.className = getFilterGroupState(\''+filtername+'\');"'
            + ' title="' + title + '">'
            + item.label 
            + '<span id="filter_'+ createValidDOMid(filtername+'_'+itemname) +'_counter">-</span>'
