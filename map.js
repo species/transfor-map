@@ -1204,7 +1204,7 @@ function loadPoi() {
             wp_articlename = wp_articlename.replace(/^[a-z-]{2,7}:/,'');
             var article_id = "wpimage_" + wp_articlename; // we must omit LANG here, as we don't have a way to get lang in callback function run on wikipedia's answer FIXME breaks on 2 wp links, when the first one is non-english...
 
-            var req_string = "https://" + lang + ".wikipedia.org/w/api.php?action=query&titles=" + wp_articlename + "&prop=pageimages&format=json&pithumbsize=260";
+            var req_string = "https://" + lang + ".wikipedia.org/w/api.php?action=query&titles=" + wp_articlename + "&prop=pageimages&format=json&pithumbsize=276";
 
             $.getJSON(req_string + "&callback=?", function(data) {
                     for(obj_id in data.query.pages) {
@@ -1227,11 +1227,44 @@ function loadPoi() {
 
         }
     }
-    if(tags['image'] && ! (wp_articlename && tags['image'].match(/wiki(pedia|media)/)) ) {
-        r.append($('<tr>')
-                .attr('class','header')
-                .append("<td colspan=2 id='image'><img src='" + tags['image'] + "' style='width:260px;' /></td>" )//only one popup shall be open at a time for the id to be unique
+    if(tags['image']) {
+        if(tags['image'].match(/^File:/)) {
+            var req_string = "https://commons.wikimedia.org/w/api.php"
+                + "?action=query"
+                + "&format=json"
+                + "&titles=" + tags['image']
+                + "&prop=imageinfo"
+                + "&iiprop=url"
+                + "&iiurlwidth=276";
+            $.getJSON(req_string+ "&callback=?", function(data) {
+                for(obj_id in data.query.pages) {
+                    var item = data.query.pages[obj_id];
+                    console.log("got answer from wikimedia commons for " + item.title + ".");
+                    if(item.imageinfo[0]) {
+                        var item_name = decodeURIComponent(item.imageinfo[0].descriptionurl.replace(/.*\//,'')); //item.title is with spaces instead of underscores.
+                        wikipedia_images["wpimage_" + item_name] = item.imageinfo[0].thumburl;
+                    } else {
+                        wikipedia_images["wpimage_" + item.title.replace(/ /,"_") ] = "UNDEF";
+                        console.log("no WP image for " + item.title);
+                    }
+                }
+                setTimeout(setImageInPopup,100);
+            });
+
+            r.append($('<tr>')
+                    .attr('class','header')
+                    .append("<td colspan=2 id='wp-image'><img id='" + tags['image'] + "' title='" + tags['image'] + "'/><a href='https://commons.wikimedia.org/wiki/" + tags['image'] +"'>© Wikipedia</a></td>" )
+                        // FIXME attribution/License must be set on return of call
+                    );
+
+
+        }
+        else if( ! (wp_articlename && tags['image'].match(/wiki(pedia|media)/)) ) {
+            r.append($('<tr>')
+                    .attr('class','header')
+                    .append("<td colspan=2 id='image'><img src='" + tags['image'] + "' style='width:276px;' /></td>" )//only one popup shall be open at a time for the id to be unique
                 );
+        }
     }
 
 
