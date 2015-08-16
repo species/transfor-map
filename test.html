@@ -25,6 +25,10 @@
 
   <script src='L.Control.Locate.mine.js'></script>
 
+  <script>
+    var assethost = window.parent.document.location.origin + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
+  </script>
+
   <script src="sidebar.js"></script>
   <script src="filters.js"></script>
   <script src="map.js"></script>
@@ -41,8 +45,8 @@
     // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
     var overpass_config = {
         minzoom: 16,
-//        q_array: [ [ 'amenity', '"access"!="private"' ], [ 'shop'], [ 'leisure', '"access"!="private"' ], [ 'tourism' ] ],
-        q_array: [ [ 'shop'] ],
+        q_array: [ [ 'amenity', '"access"!="private"' ], [ 'shop'], [ 'leisure', '"access"!="private"' ], [ 'tourism' ] ],
+ //       q_array: [ [ 'shop'] ],
         icon_folder : "pois",
         icon_tags : [ "farm_boxes", "garden:type", "shop","amenity","leisure" ] 
     }
