@@ -12,7 +12,7 @@ var attr = {
   overpass : 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>'
 }
 
-if(!assethost)
+if(!window.assethost)
     var assethost = "http://demo.transformap.co/";
 
 /*
