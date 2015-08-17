@@ -246,9 +246,14 @@ function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
       maxNativeZoom: 18 ,
       noWrap: true
   });
+  var osm = new L.TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
+      maxZoom : 19,
+      noWrap: true
+  });
 
   if(!defaultlayer)
-    defaultlayer = MapQuestOpen_OSM;
+    defaultlayer = (window.parent.document.location.protocol == "https:") ? osm : MapQuestOpen_OSM;
   if(!overlay_maps)
     overlay_maps = default_overlay;
 
@@ -265,11 +270,6 @@ function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
   });
   
   if(!base_maps) {
-    var osm = new L.TileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
-        maxZoom : 19,
-        noWrap: true
-    });
 
     base_maps = {
       'MapQuestOpen': MapQuestOpen_OSM,
