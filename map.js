@@ -417,7 +417,6 @@ function setTranslationsInPopup(obj) {
         for(var i=0; i < language.length; i++) {
             var targetlang = language[i];
             if(translations.tags[tag][targetlang]) {
-                console.log(jqitem.attr("translated"));
                 if(jqitem.attr("translated") != targetlang) {
                     jqitem.text(translations.tags[tag][targetlang].value);
                     jqitem.attr("translated",targetlang);
@@ -1048,6 +1047,65 @@ function clickOnLayer(e) {
 var wikidata_mappings = { tags : {}, ids : {} },
     translations = { tags: {} };
 
+/* how to get object descriptions:
+ask wikidata for an object that has osm property $object_tag
+https://wdq.wmflabs.org/api?q=string[214:%2264192849%22]
+osm tag property is P1282
+
+https://wdq.wmflabs.org/api?q=string[1282:"Tag:amenity=restaurant"]
+* takes  object_tag = "key=value"
+*/
+function fetchTranslationsFromWikiData(object_tag) {
+    if(!wikidata_mappings.tags[object_tag]) {
+        var wikidata_query = 'https://wdq.wmflabs.org/api?q=string[1282:"Tag:' + object_tag + '"]'; //FIXME is it possible to retrieve page Q$id in one call?
+        /*
+           returns
+                {"status":{
+                    "error":"OK",
+                    "items":1,
+                    "querytime":"0ms",
+                    "parsed_query":"STRING[1282:'Tag:amenity=restaurant']"},
+                  "items":[11707]
+                }
+        */
+
+        $.getJSON(wikidata_query + "&callback=?", function(data) {
+            if(data.status.error != "OK") {
+                console.log("wikidata returned " + data.status.error + " for query '" + data.status.parsed_query + "'.");
+                return;
+            }
+            var tag = data.status.parsed_query.match(/1282:'Tag:([a-z:_0-9-]*=.*)']$/)[1];
+            if(data.items.length == 0) {
+                console.log("nothing found in wikidata for query '" + data.status.parsed_query + "'.");
+                console.log(data);
+                wikidata_mappings.tags[tag] = -1;
+                return;
+            }
+            var item;
+            for(var i=0; i < data.items.length; i++) {
+                item = data.items[i];
+                //console.log("got answer from wikidata for query '" + data.status.parsed_query + "': '" + item + "'.");
+            }
+
+            wikidata_mappings.tags[tag] = "Q" + item;
+            wikidata_mappings.ids["Q" + item] = tag;
+
+            var wikidata_object_query = "https://www.wikidata.org/wiki/Special:EntityData/Q" + item + ".json"; //Note: throws CORS error if item == undefined
+            $.getJSON(wikidata_object_query, function(data) {
+                if(!data.entities) {
+                    console.log("wikidata returned no entities");
+                    return;
+                }
+                for(q_number in data.entities) {
+                    var item = data.entities[q_number];
+                    translations.tags[wikidata_mappings.ids[q_number]] = item.labels;
+                }
+                setTimeout(setTranslationsInPopup,100);
+            });
+        });
+    }
+}
+
 function loadPoi() {
 
   var notificationbar =  document.getElementById("notificationbar");
@@ -1397,6 +1455,7 @@ function loadPoi() {
     s.append(r);
     var retval = $('<div>').append(s);
 
+
     // TODO multiple key/values!
     var object_type = null,
         object_text = "unknown feature";
@@ -1406,65 +1465,11 @@ function loadPoi() {
             break;
         }
     }
+
     if(object_type) {
         var object_tag = object_type + "=" + tags[object_type];
-        //how to get object descriptions:
-        //ask wikidata for an object that has osm property $object_tag
-        /* https://wdq.wmflabs.org/api?q=string[214:%2264192849%22]
-           osm tag property is P1282
-
-           https://wdq.wmflabs.org/api?q=string[1282:"Tag:amenity=restaurant"]
-           */
-        if(!wikidata_mappings.tags[object_tag]) {
-            var wikidata_query = 'https://wdq.wmflabs.org/api?q=string[1282:"Tag:' + object_tag + '"]';
-            /*
-               returns
-                    {"status":{
-                        "error":"OK",
-                        "items":1,
-                        "querytime":"0ms",
-                        "parsed_query":"STRING[1282:'Tag:amenity=restaurant']"},
-                      "items":[11707]
-                    }
-            */
-
-            $.getJSON(wikidata_query + "&callback=?", function(data) {
-                if(data.status.error != "OK") {
-                    console.log("wikidata returned " + data.status.error + " for query '" + data.status.parsed_query + "'.");
-                    return;
-                }
-                var tag = data.status.parsed_query.match(/1282:'Tag:([a-z:_0-9-]*=.*)']$/)[1];
-                if(data.items.length == 0) {
-                    console.log("nothing found in wikidata for query '" + data.status.parsed_query + "'.");
-                    console.log(data);
-                    wikidata_mappings.tags[tag] = -1;
-                    return;
-                }
-                var item;
-                for(var i=0; i < data.items.length; i++) {
-                    item = data.items[i];
-                    //console.log("got answer from wikidata for query '" + data.status.parsed_query + "': '" + item + "'.");
-                }
-
-                wikidata_mappings.tags[tag] = "Q" + item;
-                wikidata_mappings.ids["Q" + item] = tag;
-
-                var wikidata_object_query = "https://www.wikidata.org/wiki/Special:EntityData/Q" + item + ".json"; //Note: throws CORS error if item == undefined
-                $.getJSON(wikidata_object_query, function(data) {
-                    if(!data.entities) {
-                        console.log("wikidata returned no entities");
-                        return;
-                    }
-                    for(q_number in data.entities) {
-                        var item = data.entities[q_number];
-                        translations.tags[wikidata_mappings.ids[q_number]] = item.labels;
-                    }
-                    setTimeout(setTranslationsInPopup,100);
-                });
-            });
-
-            object_text = object_tag;
-        }
+        fetchTranslationsFromWikiData(object_tag);
+        object_text = object_tag;
     }
 
     retval.prepend($('<h3>')
