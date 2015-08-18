@@ -82,6 +82,7 @@ body.marker-backgroundless .leaflet-marker-icon.prunecluster:hover { background-
 .leaflet-popup-content a:hover { text-decoration:underline;}
 div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; padding:0 5px; margin-bottom:2px; }
+.leaflet-popup-content h3 { width: 100% ; text-align: left; color: black; padding:0 5px; margin:5px 0; }
 
 .leaflet-popup-content div table,
 .leaflet-popup-content div table td { margin: 0; border-width:0px; padding:0; border-spacing:0;}
@@ -95,7 +96,7 @@ div.leaflet-popup-content { width: auto !important; }
 
 /* header spacing line */
 .leaflet-popup-content div table tr.header td { vertical-align:top; padding:5px 0; border-bottom:2px solid #FFB698;} 
-.leaflet-popup-content div table tr.header:first-child td { border-bottom:0; padding:0}
+.leaflet-popup-content div table tr.header:first-child td { border-bottom:0; padding:5px 0 0 0; border-top:2px solid #FFB698;}
 
 /* edit and contact fields */
 .leaflet-popup-content div table tr.header td + td { text-align:right; }

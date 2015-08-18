@@ -1,6 +1,31 @@
 if(!window.console)  // for very old browser
     var console = { log : function(i){}}
 
+var language = window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
+
+if(typeof language === 'string')
+    language = [ language ];
+
+// we need to have the following languages:
+// browserlang
+// a short one (de instead of de-AT) if not present
+// en as fallback if not present
+
+if(language.indexOf("en") == -1)
+    language.push("en");
+
+for(var i = 0; i < language.length; i++) {
+    if(language[i].match(/-/)) {
+        var short_lang = language[i].match(/^([a-zA-Z]*)-/)[1];
+        if(language.indexOf(short_lang) == -1) {
+            language.push(short_lang);
+            continue;
+        }
+    }
+}
+
+console.log(language);
+
 // global texts
 var attr = {
   osm : 'Map data &copy; <a href="https://openstreetmap.org/">OpenStreetMap</a> contributors - <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>',
@@ -168,7 +193,8 @@ var overpass_ql_text,
     overpass_query,
     overpass_query_nodes,
     overpass_query_ways,
-    overpass_query_rels;
+    overpass_query_rels,
+    object_type_keys = [ "amenity", "shop", "tourism", "craft", "garden:type", "leisure", "office", "man_made", "landuse"] ;
 
 /*
  * sets global the vars above
@@ -314,6 +340,7 @@ function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
 
   map.on('moveend', updateLinks);
   map.on('popupopen', setImageInPopup);
+  map.on('popupopen', setTranslationsInPopup);
 
   var popup_param = getUrlVars()["popup"];
   if(popup_param) {
@@ -371,6 +398,35 @@ function setImageInPopup(obj) {
 //    console.log("setImageInPopup: setting src " + source);
     $('#wp-image').css('display','table-cell');
     img.attr('src', source);
+}
+
+function setTranslationsInPopup(obj) {
+    var elements = $('.leaflet-popup-content [translated]');
+    if(!elements.length)
+        return;
+
+    //console.log(elements.length + " untranslated elements found.");
+    elements.each(function ( index ) {
+        var jqitem = $(this);
+        var tag = jqitem.attr("title");
+        if(!translations.tags[tag]) {
+            console.log("setTranslationsInPopup: no entry in translations found for " + tag);
+            return;
+        }
+
+        for(var i=0; i < language.length; i++) {
+            var targetlang = language[i];
+            if(translations.tags[tag][targetlang]) {
+                console.log(jqitem.attr("translated"));
+                if(jqitem.attr("translated") != targetlang) {
+                    jqitem.text(translations.tags[tag][targetlang].value);
+                    jqitem.attr("translated",targetlang);
+                    break;
+                }
+            }
+        }
+
+    });
 }
 
 function addSearch() {
@@ -989,6 +1045,9 @@ function clickOnLayer(e) {
 //    e.bringToFront();
 }
 
+var wikidata_mappings = { tags : {}, ids : {} },
+    translations = { tags: {} };
+
 function loadPoi() {
 
   var notificationbar =  document.getElementById("notificationbar");
@@ -1217,7 +1276,7 @@ function loadPoi() {
                             console.log("no WP image for " + item.title);
                         }
                     }
-                    setTimeout(setImageInPopup,100);
+                    setTimeout(setImageInPopup,100); //needed here too if site called with popup open
             });
 
             r.append($('<tr>')
@@ -1248,7 +1307,7 @@ function loadPoi() {
                         console.log("no WP image for " + item.title);
                     }
                 }
-                setTimeout(setImageInPopup,100);
+                setTimeout(setImageInPopup,100); //needed here too if site called with popup open
             });
 
             r.append($('<tr>')
@@ -1337,6 +1396,81 @@ function loadPoi() {
     var s = $('<div>');
     s.append(r);
     var retval = $('<div>').append(s);
+
+    // TODO multiple key/values!
+    var object_type = null,
+        object_text = "unknown feature";
+    for(var i=0; i < object_type_keys.length; i++) {
+        if(tags[object_type_keys[i]]) {
+            object_type = object_type_keys[i];
+            break;
+        }
+    }
+    if(object_type) {
+        var object_tag = object_type + "=" + tags[object_type];
+        //how to get object descriptions:
+        //ask wikidata for an object that has osm property $object_tag
+        /* https://wdq.wmflabs.org/api?q=string[214:%2264192849%22]
+           osm tag property is P1282
+
+           https://wdq.wmflabs.org/api?q=string[1282:"Tag:amenity=restaurant"]
+           */
+        if(!wikidata_mappings.tags[object_tag]) {
+            var wikidata_query = 'https://wdq.wmflabs.org/api?q=string[1282:"Tag:' + object_tag + '"]';
+            /*
+               returns
+                    {"status":{
+                        "error":"OK",
+                        "items":1,
+                        "querytime":"0ms",
+                        "parsed_query":"STRING[1282:'Tag:amenity=restaurant']"},
+                      "items":[11707]
+                    }
+            */
+
+            $.getJSON(wikidata_query + "&callback=?", function(data) {
+                if(data.status.error != "OK") {
+                    console.log("wikidata returned " + data.status.error + " for query '" + data.status.parsed_query + "'.");
+                    return;
+                }
+                var tag = data.status.parsed_query.match(/1282:'Tag:([a-z:_0-9-]*=.*)']$/)[1];
+                if(data.items.length == 0) {
+                    console.log("nothing found in wikidata for query '" + data.status.parsed_query + "'.");
+                    console.log(data);
+                    wikidata_mappings.tags[tag] = -1;
+                    return;
+                }
+                var item;
+                for(var i=0; i < data.items.length; i++) {
+                    item = data.items[i];
+                    //console.log("got answer from wikidata for query '" + data.status.parsed_query + "': '" + item + "'.");
+                }
+
+                wikidata_mappings.tags[tag] = "Q" + item;
+                wikidata_mappings.ids["Q" + item] = tag;
+
+                var wikidata_object_query = "https://www.wikidata.org/wiki/Special:EntityData/Q" + item + ".json"; //Note: throws CORS error if item == undefined
+                $.getJSON(wikidata_object_query, function(data) {
+                    if(!data.entities) {
+                        console.log("wikidata returned no entities");
+                        return;
+                    }
+                    for(q_number in data.entities) {
+                        var item = data.entities[q_number];
+                        translations.tags[wikidata_mappings.ids[q_number]] = item.labels;
+                    }
+                    setTimeout(setTranslationsInPopup,100);
+                });
+            });
+
+            object_text = object_tag;
+        }
+    }
+
+    retval.prepend($('<h3>')
+            .text(object_text)
+            .attr("translated","untranslated")
+            .attr("title",object_text));
     retval.prepend($('<h1>').text(tags["name"]));
     return retval.html();
   }
