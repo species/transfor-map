@@ -408,23 +408,42 @@ function setTranslationsInPopup(obj) {
     //console.log(elements.length + " untranslated elements found.");
     elements.each(function ( index ) {
         var jqitem = $(this);
-        var tag = jqitem.attr("title");
-        if(!translations.tags[tag]) {
-            console.log("setTranslationsInPopup: no entry in translations found for " + tag);
+        var tags_string = jqitem.attr("title");
+        if(tags_string == "unknown feature")
             return;
-        }
+        var tags = tags_string.split(",");
+        var new_strings = [];
+        var langs_used = [];
+        for(var i=0; i < tags.length; i++) {
+            var tag = tags[i].trim();
+            if(!translations.tags[tag]) {
+                console.log("setTranslationsInPopup: no entry in translations found for '" + tag + "'");
+                new_strings.push(tag);
+                continue;
+            }
 
-        for(var i=0; i < language.length; i++) {
-            var targetlang = language[i];
-            if(translations.tags[tag][targetlang]) {
-                if(jqitem.attr("translated") != targetlang) {
-                    jqitem.text(translations.tags[tag][targetlang].value);
-                    jqitem.attr("translated",targetlang);
+            var found_transl = 0;
+            for(var j=0; j < language.length; j++) {
+                var targetlang = language[j];
+                if(translations.tags[tag][targetlang]) {
+                    new_strings.push(translations.tags[tag][targetlang].value);
+                    if(langs_used.indexOf(targetlang) == -1)
+                        langs_used.push(targetlang);
+                    found_transl = 1;
                     break;
                 }
+            } 
+            if(!found_transl) {
+                console.log("no translation in your lang or en found for: '" + tag + "'");
+                new_strings.push(tag);
             }
-        }
 
+        }
+        var new_text = new_strings.join(", ");
+        if(jqitem.text() != new_text) {
+            jqitem.text(new_text);
+            jqitem.attr("translated",langs_used.join(","));
+        }
     });
 }
 
@@ -497,7 +516,7 @@ function secHTML(input) {
     return $("<div>").text( input ).html();
 }
 
-function getMainTag(tags) {
+function getIconTag(tags) {
     for (var i = 0; i < overpass_config.icon_tags.length; i++) {
       var key = overpass_config.icon_tags[i];
       if(tags[key] && ! ( key == "amenity" && tags[key] == "shop" ) ) {
@@ -508,7 +527,7 @@ function getMainTag(tags) {
 }
 
 function chooseIconSrc(tags,iconsize) {
-    var icon_tag = getMainTag(tags);
+    var icon_tag = getIconTag(tags);
 
     var icon_url = "";
     if(!icon_tag) {
@@ -1103,7 +1122,32 @@ function fetchTranslationsFromWikiData(object_tag) {
                 setTimeout(setTranslationsInPopup,100);
             });
         });
+        wikidata_mappings.tags[object_tag] = "loading";
     }
+}
+
+/* out of given tags, looks up "main keys" out of global var object_type_keys,
+ * and returns a nice array with each tag split up in a single entry
+ * tags[ "amenity=cafe; fast_food", "shop=bakery", ... ] → [ "amenity=cafe", "amenity=fast_food", "shop=bakery" ]
+ */
+function getMainTags(tags) {
+    object_tags = [];
+    for(var i=0; i < object_type_keys.length; i++) {
+        var key = object_type_keys[i];
+        if(tags[key]) {
+            var value = tags[key];
+            if(value.indexOf(";") >= 0) {
+                var values = value.split(";");
+                for (var j=0; j < values.length; j++) {
+                    object_tags.push(key + "=" + values[j].trim());
+                }
+            }
+            else
+                object_tags.push(key + "=" + value);
+        }
+    }
+    console.log(object_tags);
+    return object_tags;
 }
 
 function loadPoi() {
@@ -1455,21 +1499,15 @@ function loadPoi() {
     s.append(r);
     var retval = $('<div>').append(s);
 
-
-    // TODO multiple key/values!
-    var object_type = null,
+    var object_tags = getMainTags(tags),
         object_text = "unknown feature";
-    for(var i=0; i < object_type_keys.length; i++) {
-        if(tags[object_type_keys[i]]) {
-            object_type = object_type_keys[i];
-            break;
-        }
-    }
 
-    if(object_type) {
-        var object_tag = object_type + "=" + tags[object_type];
-        fetchTranslationsFromWikiData(object_tag);
-        object_text = object_tag;
+    if(object_tags.length) {
+        object_tags.forEach(function (currentValue) {
+            fetchTranslationsFromWikiData(currentValue);
+        });
+
+        object_text = object_tags.join(", ");
     }
 
     retval.prepend($('<h3>')

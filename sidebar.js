@@ -84,7 +84,7 @@ function updatePOIlist(force) {
     for(var i = 0; i < list_of_unnamed_POIs.length; i++) {
         marker = list_of_unnamed_POIs[i];
         var src = chooseIconSrc(marker.data.tags, 16);
-        var main_tag = getMainTag(marker.data.tags);
+        var main_tag = getIconTag(marker.data.tags);
         var ersatz_name = (marker.data.tags[main_tag] || "unknown");
         $('#POIlist').append("<li onClick='MytogglePopup(\""+marker.data.type+"\",\""+marker.data.id+"\");'><img src='" + src + "' />" + ersatz_name + "</li>");
     }
