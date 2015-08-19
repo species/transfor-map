@@ -1075,8 +1075,18 @@ https://wdq.wmflabs.org/api?q=string[1282:"Tag:amenity=restaurant"]
 * takes  object_tag = "key=value"
 */
 function fetchTranslationsFromWikiData(object_tag) {
+    if(object_tag.indexOf("=") == -1) {
+        console.log("Error in fetchTranslationsFromWikiData: tag has to be in key=value format, not :'" + object_tag + "'");
+        return;
+    }
+
+    var kv = object_tag.split("="),
+        value = kv[1],
+        osm_string = (value == "yes") ? "Key:" + kv[0] : "Tag:" + object_tag;
+
+
     if(!wikidata_mappings.tags[object_tag]) {
-        var wikidata_query = 'https://wdq.wmflabs.org/api?q=string[1282:"Tag:' + object_tag + '"]'; //FIXME is it possible to retrieve page Q$id in one call?
+        var wikidata_query = 'https://wdq.wmflabs.org/api?q=string[1282:"' + osm_string + '"]'; //FIXME is it possible to retrieve page Q$id in one call?
         /*
            returns
                 {"status":{
@@ -1093,7 +1103,9 @@ function fetchTranslationsFromWikiData(object_tag) {
                 console.log("wikidata returned " + data.status.error + " for query '" + data.status.parsed_query + "'.");
                 return;
             }
-            var tag = data.status.parsed_query.match(/1282:'Tag:([a-z:_0-9-]*=.*)']$/)[1];
+            var tag_array = data.status.parsed_query.match(/1282:'(Tag|Key):([a-z:_0-9-]+)[=]?(.*)']$/);
+            var tag = (tag_array[1] == "Key" ) ? tag_array[2] + "=yes" : tag_array[2] + "=" + tag_array[3];
+            console.log("wdm: " + tag);
             if(data.items.length == 0) {
                 console.log("nothing found in wikidata for query '" + data.status.parsed_query + "'.");
                 console.log(data);
@@ -1101,7 +1113,7 @@ function fetchTranslationsFromWikiData(object_tag) {
                 return;
             }
             var item;
-            for(var i=0; i < data.items.length; i++) {
+            for(var i=0; i < data.items.length; i++) { //takes last one
                 item = data.items[i];
                 //console.log("got answer from wikidata for query '" + data.status.parsed_query + "': '" + item + "'.");
             }
