@@ -53,6 +53,24 @@
 
     buildOverpassQuery();
 
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        noWrap: true
+    });
+    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+        subdomains: '1234',
+        attribution: [attr.osm, attr.mapquest, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 21,
+        maxNativeZoom: 18 ,
+        noWrap: true
+    });
+
+    var base_maps = {
+      'MapQuestOpen': MapQuestOpen_OSM,
+      'OpenSteetMap - Mapnik': osm
+    };
+
     var about_text = 'demo map with simply a lot of POIs to test filters etc.'
         + about.overpass
         + about.osm_edit
@@ -65,7 +83,7 @@
 
     $(function () {
 
-      map = initMap(null, null, null, 47.07, 15.43, 14);
+      map = initMap(MapQuestOpen_OSM, base_maps, null, 47.07, 15.43, 14);
 
       var hash = new L.Hash(map); // Leaflet persistent Url Hash function
 
