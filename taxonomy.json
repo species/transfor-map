@@ -95,6 +95,7 @@
         "osm:objects" : [ 
           { "amenity" : "car_sharing" },
           { "amenity" : "bicycle_rental" },
+          { "amenity" : "charging_station" },
           { "shop" : "bicycle" },
           { "shop" : "car" },
           { "shop" : "car_repair" }
