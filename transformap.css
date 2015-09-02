@@ -83,6 +83,18 @@ body.marker-backgroundless .leaflet-marker-icon.prunecluster:hover { background-
 div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content h1 { width: 100% ; text-align: center; background-color:#FFB698; padding:0 5px; margin-bottom:2px; }
 .leaflet-popup-content h3 { width: 100% ; text-align: left; color: black; padding:0 5px; margin:5px 0; }
+.leaflet-popup-content h3 span:first-child { display:block; float:left}
+.leaflet-popup-content h3 span + span { margin-right:0; display:block; float:right; color:#DDDDDD; font-weight:normal;}
+.leaflet-popup-content h3:hover span + span {color:black}
+.leaflet-popup-content h3 span + span:hover {cursor:help}
+.leaflet-popup-content h3:after { /*small hack to clear float cleanly https://css-tricks.com/all-about-floats/ */
+    content: ".";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+}
+
 
 .leaflet-popup-content div table,
 .leaflet-popup-content div table td { margin: 0; border-width:0px; padding:0; border-spacing:0;}
@@ -92,7 +104,8 @@ div.leaflet-popup-content { width: auto !important; }
 .leaflet-popup-content div table tr.tag th {padding-left:10px; text-indent:-10px; vertical-align:top;} 
 .leaflet-popup-content div table tr.tag td span {margin:0 -3px 0 -6px; color:white;}  /* "=" before value */
 
-.leaflet-popup-content div table tr.tag:hover {background-color:#DDDDDD}
+.leaflet-popup-content div table tr.tag:hover,
+.leaflet-popup-content h3:hover {background-color:#DDDDDD}
 
 /* header spacing line */
 .leaflet-popup-content div table tr.header td { vertical-align:top; padding:5px 0; border-bottom:2px solid #FFB698;} 

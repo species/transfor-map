@@ -194,7 +194,7 @@ var overpass_ql_text,
     overpass_query_nodes,
     overpass_query_ways,
     overpass_query_rels,
-    object_type_keys = [ "amenity", "shop", "tourism", "craft", "garden:type", "leisure", "office", "man_made", "landuse"] ;
+    object_type_keys = [ "amenity", "shop", "tourism", "craft", "garden:type", "leisure", "office", "man_made", "landuse", "club" ] ;
 
 /*
  * sets global the vars above
@@ -408,7 +408,7 @@ function setTranslationsInPopup(obj) {
     //console.log(elements.length + " untranslated elements found.");
     elements.each(function ( index ) {
         var jqitem = $(this);
-        var tags_string = jqitem.attr("title");
+        var tags_string = jqitem.attr("sourcetext");
         if(tags_string == "unknown feature")
             return;
         var tags = tags_string.split(",");
@@ -440,8 +440,8 @@ function setTranslationsInPopup(obj) {
 
         }
         var new_text = new_strings.join(", ");
-        if(jqitem.text() != new_text) {
-            jqitem.text(new_text);
+        if(jqitem.children().first().text() != new_text) {
+            jqitem.children().first().text(new_text);
             jqitem.attr("translated",langs_used.join(","));
         }
     });
@@ -1523,9 +1523,15 @@ function loadPoi() {
     }
 
     retval.prepend($('<h3>')
-            .text(object_text)
             .attr("translated","untranslated")
-            .attr("title",object_text));
+            .attr("title", (object_text == "unknown feature") ? "This Object has no known OSM tag set" : object_text )
+            .attr("sourcetext", object_text )
+            .append($("<span>")
+                .text(object_text))
+            .append($("<span>")
+                .text("?")
+                .attr("title","Click here to show where this value comes from"))
+                    );
     retval.prepend($('<h1>').text(tags["name"]));
     return retval.html();
   }
