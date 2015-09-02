@@ -27,7 +27,8 @@
 
   <script>
     var url_pois_lz = "all.json";
-    var assethost = window.parent.document.location.origin + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
+    var hostname = window.parent.document.location.origin ? window.parent.document.location.origin : window.parent.document.location.protocol + "//" + window.parent.document.location.hostname;
+    var assethost = hostname + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
   </script>
   <script src="sidebar.js"></script>
   <script src="filters.js"></script>

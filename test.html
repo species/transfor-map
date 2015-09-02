@@ -26,7 +26,8 @@
   <script src='L.Control.Locate.mine.js'></script>
 
   <script>
-    var assethost = window.parent.document.location.origin + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
+    var hostname = window.parent.document.location.origin ? window.parent.document.location.origin : window.parent.document.location.protocol + "//" + window.parent.document.location.hostname;
+    var assethost = hostname + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
   </script>
 
   <script src="sidebar.js"></script>
