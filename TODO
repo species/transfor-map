@@ -21,6 +21,7 @@ Done:
 • The Current Map has to be named in the Header! -> OK sidebar
 • maxzoom up to 19 -OK
 • icon for shop=mobile_phone -OK
+• nominatim HTTPS -OK
 
 
 github issues
@@ -62,8 +63,8 @@ Todo:
     • diet (vegan, veggie, ?
     • fairtrade
     • secondhand
-    • opening hours -> below address
-    • route here -> below address
+    • opening hours -> below address -OK
+    • route here -> below address -OK
 
     
 
@@ -146,3 +147,59 @@ feedback user-test:
     zoom bei cluster auflösen zu schnell, man sieht nicht dass die Karte reinzoomt  
 
 POIlist maxheight - calc dynamically, too small -> set to 10K
+
+linking: for PERMA-Links, do not link to popup, use overpass-style queries...
+
+images: when from wikimedia commons linked, the link maybe for the site and not for the file - extract via API
+images: when more than one (on wikipedia articles?) provide |<| |>| - bars left and right to switch images in popup
+
+bug: POIlist gets not updated on click on filter -OK
+-> for performance, run updateFilterCount and updatePOIlist only when the list/filters are open/or clicked on -OK
+
+filters: make filters selectable per map
+
+filters-filesplit: nr of POIs in sidebar must be split into sidebar file -OK
+
+downloading-bboxes problem:
+
+bboxes have a fixed size ½ the length each side for each zoomlevel
+
+matching cornerpoints:
+    if ANY cornerpoint is not in an area, bbox has to be downloaded (or modified?)
+
+    a function should be run regularly (e.g. every 10 times) in the background which removes inner boxes (and expand outer boxes? maybe before?)
+    
+    for performance, define an outer bbox with max/min lon/lats for every polygon
+        there can be more outer bboxes if a user zooms in&out beyond the minzoom download thresholda
+        
+    if a BBOX is contained fully in another -> .contains -> OK.
+        corner checkpoins are not reliable, because of holes in bbox figures.
+    -> if overlap, create rectangles that fill out every space maximala
+
+    with EVERY box that the new one intersects, add 2 new ones: 
+        one that stretches in x from min(x1,x2) to max(x1,x2) (and max .... einmal horizontal lang und einmal vertikal lang -_-
+        aber nur, wenn die x-oder y-länge größer als die aktuelle bounding-box auf z19 (aktuelle == bildschirmhöhe auf akt. z19) ist.
+
+performance improvements 
+poilist: 
+    zeige nur 100 an, + 'show more to zoom in'
+bboxes
+    L.intersects is ineffizient
+        zuerst: bounds.intersects statt jedesmal $i.intersects - geht natürlich nur mit intersects und nicht mit contains
+        funktionsaufrufe weniger machen "$i._southWest.lng" statt getWest()
+        contains/intersects hat ineffiziente funktionsweise - berechnet zuerst alles, anstatt bei negativbedingung abzubrechen - implement self!
+
+todo bbox-system
+    eigentlich sollte ja nur fehlende Fläche downgeloaded weren ... funktion sollte beschnittene bounds zurückgeben, die zu downloaden is!
+    return false, wenn nichts zu downloaden is
+    return bbox, die zu downloaden ist
+        fraglich ist, ob mehrere zurückgegeben werden, wenn in beide Richtungen verschoben...
+
+Wikidata query system
+    used for
+        translations of tag keys (& values)
+            e.g. amenity=restaurant into text de:Restaurant
+        feeding filters
+            e.g. building filter "food"
+
+    TODO: fetch item only once! -OK
