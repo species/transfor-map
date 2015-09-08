@@ -327,7 +327,7 @@ function initMap(defaultlayer,base_maps,overlay_maps,lat,lon,zoom) {
       setTimeout(toggleSideBarOnLoad,200);
       map.on('moveend', updatePOIlist);
       if(window.filters)
-          map.on('updateFilterCount'); // here because it is called on every map move
+          map.on('moveend',updateFilterCount); // here because it is called on every map move
   }
 
   $('#map').append('<a href="https://github.com/TransforMap/transfor-map" title="Fork me on GitHub" id=forkme></a>');
