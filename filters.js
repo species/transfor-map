@@ -214,10 +214,183 @@ var filters = {
                              state : true
                         }
                     }
+    },
+    diet : {  label : "Veggie Diet",
+                    displayed : false,
+                    function_name : function filter_diet(osm_object){
+                         if(!osm_object['tags']) {
+                             console.log("error in filters.diet: no tags attached!");
+                             return false;
+                         }
+                         
+                         var crits = filters.diet.sub_criteria;
+                         //vegan - false can mean vegan=no or vegan=unknown
+                         var current_key = "diet:vegan";
+                         var vegan = (osm_object.tags.hasOwnProperty(current_key) &&
+                                          osm_object.tags[current_key].match(/^only$|^yes$|^limited$/)) ||
+                                 (osm_object.tags.hasOwnProperty("cuisine") && osm_object.tags["cuisine"] == "vegan");
+
+                         if(crits.vegan.state == true) {
+                             if(vegan)
+                                 return true;
+                         }
+
+                         //vegetarian - false can mean vegetarian=no or vegetarian=unknown
+                         current_key = "diet:vegetarian";
+                         var vegetarian = vegan ||
+                                 (osm_object.tags.hasOwnProperty(current_key) && 
+                                       osm_object.tags[current_key].match(/^only$|^yes$|^limited$/)) ||
+                                 (osm_object.tags.hasOwnProperty("cuisine") &&
+                                       osm_object.tags["cuisine"] == "vegetarian");
+
+                         if(crits.vegetarian.state == true) {
+                             if(vegetarian)
+                                 return true;
+                         }
+
+                         // no -has diet:vegetarian=no and not cuisine=veggie
+                         // or diet:pescetarian=only or meat shop
+                         var nonveg_only = (osm_object.tags.hasOwnProperty("diet:pescetarian") &&
+                                  osm_object.tags["diet:pescetarian"] == "only") ||
+                             (osm_object.tags.hasOwnProperty("shop") &&
+                                   osm_object.tags["shop"].match(/butcher|seafood/));
+                         if(crits.noveg.state == true ) {
+                             if(!vegan && !vegetarian) { //!cuisine=veggie
+                                 if(osm_object.tags.hasOwnProperty("diet:vegetarian") &&
+                                           osm_object.tags["diet:vegetarian"] == "no")
+                                     return true;
+                                 if(nonveg_only)
+                                     return true;
+
+                             }
+                         }
+
+                         //unknown
+                         if(crits.unknown.state == true) {
+                             if(!vegan && !vegetarian) { //includes cuisine=veggie
+                                 if(! osm_object.tags.hasOwnProperty("diet:vegetarian") &&
+                                         ! osm_object.tags.hasOwnProperty("diet:vegan") &&
+                                         ! nonveg_only )
+                                     return true;
+                             }
+                         }
+
+                         return false;
+                    },
+                    sub_criteria : {
+                        vegan : {
+                             key : "diet:vegan",
+                             value : "yes|only|limited",
+                             label : "Vegan",
+                             default_state : "enabled",
+                             state : true,
+                             function_name : function filter_diet_vegan(osm_object) {
+                                 if(!osm_object['tags']) {
+                                     console.log("error in filters.diet.vegan: no tags attached!");
+                                     return false;
+                                 }
+                                 var vegan = (osm_object.tags.hasOwnProperty("diet:vegan") &&
+                                                  osm_object.tags["diet:vegan"].match(/^only$|^yes$|^limited$/)) ||
+                                         (osm_object.tags.hasOwnProperty("cuisine") && osm_object.tags["cuisine"] == "vegan");
+
+                                 return vegan;
+                             }
+
+                        },
+                        vegetarian : {
+                             key : "diet:vegetarian",
+                             value : "yes",
+                             label : "Vegetarian",
+                             default_state : "enabled",
+                             state : true,
+                             function_name : function filter_diet_vegetarian(osm_object) {
+                                 if(!osm_object['tags']) {
+                                     console.log("error in filters.diet.vegetarian: no tags attached!");
+                                     return false;
+                                 }
+                                 var vegan = (osm_object.tags.hasOwnProperty("diet:vegan") &&
+                                                  osm_object.tags["diet:vegan"].match(/^only$|^yes$|^limited$/)) ||
+                                         (osm_object.tags.hasOwnProperty("cuisine") && osm_object.tags["cuisine"] == "vegan");
+
+                                 current_key = "diet:vegetarian";
+                                 var vegetarian = vegan ||
+                                         (osm_object.tags.hasOwnProperty(current_key) && 
+                                               osm_object.tags[current_key].match(/^only$|^yes$|^limited$/)) ||
+                                         (osm_object.tags.hasOwnProperty("cuisine") &&
+                                               osm_object.tags["cuisine"] == "vegetarian");
+
+                                 return vegetarian;
+                             }
+                        },
+                        noveg : {
+                             key : "diet:*",
+                             value : "no",
+                             label : "Non-Vegetarian",
+                             default_state : "enabled",
+                             state : true,
+                             function_name : function filter_diet_noveg(osm_object) {
+                                 if(!osm_object['tags']) {
+                                     console.log("error in filters.diet.noveg: no tags attached!");
+                                     return false;
+                                 }
+                                 var crits = filters.diet.sub_criteria;
+                                 //vegan - false can mean vegan=no or vegan=unknown
+                                 var current_key = "diet:vegan";
+                                 var vegan = (osm_object.tags.hasOwnProperty(current_key) &&
+                                                  osm_object.tags[current_key].match(/^only$|^yes$|^limited$/)) ||
+                                         (osm_object.tags.hasOwnProperty("cuisine") && osm_object.tags["cuisine"] == "vegan");
+
+                                 //vegetarian - false can mean vegetarian=no or vegetarian=unknown
+                                 current_key = "diet:vegetarian";
+                                 var vegetarian = vegan ||
+                                         (osm_object.tags.hasOwnProperty(current_key) && 
+                                               osm_object.tags[current_key].match(/^only$|^yes$|^limited$/)) ||
+                                         (osm_object.tags.hasOwnProperty("cuisine") &&
+                                               osm_object.tags["cuisine"] == "vegetarian");
+
+                                 // no -has diet:vegetarian=no and not cuisine=veggie
+                                 // or diet:pescetarian=only or meat shop
+                                 var nonveg_only = (osm_object.tags.hasOwnProperty("diet:pescetarian") &&
+                                          osm_object.tags["diet:pescetarian"] == "only") ||
+                                     (osm_object.tags.hasOwnProperty("shop") &&
+                                           osm_object.tags["shop"].match(/butcher|seafood/));
+                                 if(crits.noveg.state == true ) {
+                                     if(!vegan && !vegetarian) { //!cuisine=veggie
+                                         if(osm_object.tags.hasOwnProperty("diet:vegetarian") &&
+                                                   osm_object.tags["diet:vegetarian"] == "no")
+                                             return true;
+                                         if(nonveg_only)
+                                             return true;
+
+                                     }
+                                 }
+                                 return false;
+                             }
+                        },
+                        unknown : {
+                            key : "diet:*",
+                             value : null,
+                             label : "Unknown",
+                             default_state : "enabled",
+                             state : true,
+                             function_name : function filter_diet_unknown(osm_object) {
+                                 if(!osm_object['tags']) {
+                                     console.log("error in filters.diet.noveg: no tags attached!");
+                                     return false;
+                                 }
+                             }
+                        }
+                    }
     }
 }
 
+//returns if a single sub-filter matches on an osm-object (used e.g. for counting)
 function filterMatches(object_tags, filter) {
+    if(filter.hasOwnProperty("function_name")) {
+        var osm_object = { tags : object_tags };
+        return filter.function_name(osm_object);
+    }
+
     if(object_tags.hasOwnProperty(filter.key) && checkIfInMultiValue(object_tags[filter.key],filter.value))
         return true;
     if(filter["tags_whitelist"] && isPOIinWhiteList(filter["tags_whitelist"],object_tags))
@@ -319,6 +492,7 @@ function filterFunctionNeeds(osm_object) {
      return true;
 }
 
+// whitelists are used, if some POIs imply a value, e.g. amenity=restaurant implies provides=food
 function isPOIinWhiteList(whitelist,osm_tags) {
     if(! $.isArray(whitelist)) {
         console.log("isPOIinWhiteList: no array given as whitelist");
