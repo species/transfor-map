@@ -253,7 +253,7 @@ var filters = {
                          var nonveg_only = (osm_object.tags.hasOwnProperty("diet:pescetarian") &&
                                   osm_object.tags["diet:pescetarian"] == "only") ||
                              (osm_object.tags.hasOwnProperty("shop") &&
-                                   osm_object.tags["shop"].match(/butcher|seafood/));
+                                   osm_object.tags["shop"].match(/butcher|seafood|fishmonger/));
                          if(crits.noveg.state == true ) {
                              if(!vegan && !vegetarian) { //!cuisine=veggie
                                  if(osm_object.tags.hasOwnProperty("diet:vegetarian") &&
