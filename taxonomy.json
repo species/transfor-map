@@ -186,6 +186,7 @@
           { "tourism" : "wilderness_hut" },
           { "tourism" : "chalet" },
           { "amenity" : "dormitory" },
+          { "building" : "residential" },
           { "amenity" : "social_facility", "social_facility" : "group_home" },
           { "amenity" : "social_facility", "social_facility" : "assisted_living" }
         ]
@@ -239,6 +240,8 @@
           "de" : "Hier bekommst Du Kleidung."
         },
         "osm:objects" : [ 
+          { "craft" : "tailor" },
+          { "shop" : "boutique" },
           { "shop" : "clothes" },
           { "shop" : "second_hand" } 
         ]
