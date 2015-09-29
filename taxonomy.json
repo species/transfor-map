@@ -508,6 +508,7 @@
             "osm:objects" : [
                 { "amenity" : "bicycle_repair_station" },
                 { "service:bicycle:tools" : "yes" },
+                { "service:bicycle:diy" : "yes" },
                 { "amenity" : "fablab" },
                 { "leisure" : "hackerspace" }
             ]
