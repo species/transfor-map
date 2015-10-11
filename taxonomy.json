@@ -402,7 +402,8 @@
               "de" : ""
             },
             "osm:objects" : [
-                { "amenity" : "car_sharing" }
+                { "amenity" : "car_sharing" },
+                { "club" : "ttb" }
             ]
           },
           {
@@ -526,6 +527,9 @@
               "de" : ""
             },
             "osm:objects" : [
+                { "¬payment:none" : "yes" },
+                { "¬fee" : "no" },
+                { "fee" : "yes" },
                 { "amenity" : "restaurant" },
                 { "amenity" : "cafe" },
                 { "amenity" : "bar" },
@@ -577,7 +581,16 @@
             "description" : {
                 "en" : "<a href=\"http://p2pfoundation.net/Commons\">\"Commons\"</a>-based communities collectively and democratically produce, steward, develop or manage shared places, projects, resources, assets or knowledge. See also <a href=\"http://www.onthecommons.org/magazine/elinor-ostroms-8-principles-managing-commmons\">Eight Design Principles for Managing a Commons</a> set forth by Nobel Prize Laureate Elinor Ostrom.",
                 "de" : ""
-            }
+            },
+            "osm:objects" : [
+                { "garden:type" : "community" },
+                { "fee" : "no" },
+                { "payment:none" : "yes" },
+                { "interaction" : "gifting" },
+                { "interaction" : "bartering" },
+                { "service:bicycle:diy" : "yes" },
+                { "club" : "ttb" }
+            ]
         },
         {
             "transformap:key" : "community_based_currencies",
@@ -616,7 +629,16 @@
             "description" : {
                 "en" : "Places where people live or attempt to live without money. Projects and initiatives that avoid commodity exchange and conventional money.",
                 "de" : ""
-            }
+            },
+            "osm:objects" : [
+                { "fee" : "no" },
+                { "fee" : "no" },
+                { "payment:none" : "yes" },
+                { "interaction" : "gifting" },
+                { "interaction" : "bartering" },
+                { "service:bicycle:diy" : "yes" },
+                { "club" : "ttb" }
+            ]
         },
         {
             "transformap:key" : "economy_for_the_common_good",

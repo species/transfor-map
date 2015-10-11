@@ -498,11 +498,24 @@ function isPOIinWhiteList(whitelist,osm_tags) {
         console.log("isPOIinWhiteList: no array given as whitelist");
         return false;
     }
-    for(var whitelist_nr = 0; whitelist_nr < whitelist.length; whitelist_nr++) {
+    for(var whitelist_nr = 0; whitelist_nr < whitelist.length; whitelist_nr++) { // for each object, e.g. amenity=bar
         var tags_whitelist = whitelist[whitelist_nr];
 
+        for(wl_key in tags_whitelist) { // handle negation first: if this tag is set, filter exclude, regardless of others
+            //FIXME doesn't handle combinations of ¬ (¬a AND ¬b)
+            if(wl_key[0] == "¬") {
+                var bl_key = wl_key.substring(1);
+                var bl_value = tags_whitelist[wl_key];
+                console.log("isPOIinWhiteList: negation:" + bl_key + "=" + bl_value);
+                if(osm_tags.hasOwnProperty(bl_key) && checkIfInMultiValue(osm_tags[bl_key],bl_value) ) {
+                    console.log("isPOIinWhiteList: negation found:" + bl_key + "=" + bl_value);
+                    return false;
+                }
+            }
+        }
+
         var all_wl_keys_ok = false;
-        for(wl_key in tags_whitelist) {
+        for(wl_key in tags_whitelist) { // there maybe multiple keys as requirement, e.g. leisure=garden + garden:type=community
             var wl_value = tags_whitelist[wl_key];
             if(! osm_tags.hasOwnProperty(wl_key) ) {
                 all_wl_keys_ok = false;
