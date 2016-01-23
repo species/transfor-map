@@ -2,11 +2,54 @@
   "version": 0.6,
   "generator": "Overpass API",
   "osm3s": {
-    "timestamp_osm_base": "2015-09-29T12:21:03Z",
+    "timestamp_osm_base": "2016-01-23T17:45:02Z",
     "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
   },
   "elements": [
 
+{
+  "type": "node",
+  "id": 266698132,
+  "lat": 48.1342594,
+  "lon": 11.5971612,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "52",
+    "addr:postcode": "81667",
+    "addr:street": "Innere Wiener Straße",
+    "identity": "permaculture",
+    "interaction": "buying_and_selling",
+    "name": "Grüner Markt",
+    "old_name": "Reformhaus Vitalia",
+    "organic": "only",
+    "provides": "food+drink",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 296304342,
+  "lat": 60.4503889,
+  "lon": 22.2756098,
+  "tags": {
+    "addr:housenumber": "3",
+    "addr:postcode": "20500",
+    "addr:street": "Vanha Suurtori",
+    "amenity": "cafe",
+    "contact:website": "http://www.kirjakahvila.org/",
+    "cuisine": "vegan",
+    "diet:vegetarian": "only",
+    "identity": "solidarity_economy;commons;economy_for_the_common_good;collaborative_economy",
+    "interaction": "buying_and_selling;sharing;gifting;diy_and_dit",
+    "name": "Kirjakahvila",
+    "name:sv": "Bokcafé",
+    "provides": "food+drink;culture;learning_opportunities;community;participation",
+    "website": "http://www.kirjakahvila.org/",
+    "wifi": "free"
+  }
+},
 {
   "type": "node",
   "id": 350460866,
@@ -22,7 +65,6 @@
     "amenity": "cinema",
     "brand": "independent",
     "contact:email": "post@fsk-kino.de",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 6142464",
     "contact:website": "http://fsk-kino.de",
     "description": "fsk-Kino und Peripher Filmverleih",
@@ -65,6 +107,8 @@
     "addr:housenumber": "25",
     "addr:postcode": "10587",
     "addr:street": "Einsteinufer",
+    "addr:suburb": "Charlottenburg",
+    "contact:website": "http://ula.blogsport.de/",
     "identity": "solidarity_economy;degrowth",
     "long_name": "Ula - Die erste Umsonstlädin",
     "name": "Ula",
@@ -72,7 +116,6 @@
     "payment:none": "yes",
     "shop": "second_hand",
     "source": "Solikon 2015",
-    "website": "http://ula.blogsport.de/",
     "wheelchair": "yes"
   }
 },
@@ -90,8 +133,8 @@
     "addr:suburb": "Kreuzberg",
     "contact:email": "krautis@kraut-und-rüben-berlin.de",
     "contact:phone": "+49 30 6141075",
+    "contact:website": "http://www.kraut-und-rueben-berlin.de/",
     "identity": "solidarity_economy",
-    "is_in": "Kreuzberg,Friedrichshain-Kreuzberg,Berlin,Bundesrepublik Deutschland,Europe",
     "mode_of_organisation:hierarchy_chef": "flat_hierarchy",
     "name": "Kraut & Rüben",
     "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-16:00",
@@ -103,7 +146,6 @@
     "shop": "supermarket",
     "source": "Solikon 2015",
     "start_date": "1978",
-    "website": "http://www.kraut-und-rueben-berlin.de/",
     "wheelchair": "no"
   }
 },
@@ -120,7 +162,6 @@
     "addr:street": "Gneisenaustraße",
     "addr:suburb": "Kreuzberg",
     "contact:email": "mehringhof@schwarzerisse.de",
-    "contact:fixme": "yes",
     "identity": "solidarity_economy;degrowth",
     "mode_of_organisation:self_managed": "yes",
     "name": "Schwarze Risse",
@@ -145,7 +186,6 @@
     "addr:suburb": "Kreuzberg",
     "amenity": "pub",
     "contact:email": "meuterei@riseup.net",
-    "contact:fixme": "yes",
     "contact:website": "http://meute.blogsport.de/",
     "description": "bar collective;political work;events",
     "identity": "solidarity_economy",
@@ -169,11 +209,14 @@
     "addr:housenumber": "4",
     "addr:postcode": "10999",
     "addr:street": "Ratiborstraße",
+    "addr:suburb": "Kreuzberg",
     "alt_name": "Weltraum - Nachbarschaftsladen",
     "amenity": "community_centre",
-    "contact:email": "andreas@kiezwandler.de;kiezwandler@transition-berlin-brandenburg.de",
+    "contact:email": "andreas@kiezwandler.de",
+    "contact:email_1": "kiezwandler@transition-berlin-brandenburg.de",
     "contact:name": "Andreas Teuchert",
     "contact:phone": "+49 30 61652466",
+    "contact:website": "http://www.kiezweltraum.de",
     "description": "offener Raum für die Nachbarschaft - durch Spenden und selbstgewählte Beiträge finanziert - für Treffen, Workshops, Angebote etc. im Sinne einer nachhaltigen, solidarischen Alltagskultur",
     "fee": "no",
     "identity": "solidarity_economy;transition_initiative;demonetized_economy;commons;p2p_economy",
@@ -209,7 +252,6 @@
     "smoking:outside": "yes",
     "source": "Solikon 2015",
     "start_date": "2009",
-    "website": "http://www.kiezweltraum.de",
     "wheelchair": "limited",
     "wheelchair:description": "Straßenniveau, aber 1 Stufe"
   }
@@ -244,7 +286,8 @@
     "production_input:knowledge:public_domain": "yes",
     "provides": "learning_opportunities",
     "source": "survey",
-    "website": "http://www.realraum.at"
+    "website": "http://www.realraum.at",
+    "wheelchair": "no"
   }
 },
 {
@@ -280,14 +323,13 @@
     "addr:street": "Oranienstraße",
     "addr:suburb": "Kreuzberg",
     "contact:email": "kontakt@oh21.de",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 615 2226",
+    "contact:website": "http://www.oh21.de",
     "identity": "solidarity_economy",
     "name": "oh 21",
     "phone": "+493092106311",
     "shop": "books",
     "source": "Solikon 2015",
-    "website": "http://www.oh21.de",
     "wheelchair": "no"
   }
 },
@@ -300,11 +342,11 @@
     "addr:city": "Berlin",
     "addr:country": "DE",
     "addr:housenumber": "45",
-    "addr:postcode": "10999",
+    "addr:postcode": "10969",
     "addr:street": "Oranienstraße",
+    "addr:suburb": "Kreuzberg",
     "amenity": "cafe",
     "contact:email": "info@tantehorst.de",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 39509022",
     "contact:website": "http://tantehorst.de",
     "identity": "solidarity_economy",
@@ -334,12 +376,13 @@
     "addr:suburb": "Kreuzberg",
     "amenity": "theatre",
     "contact:email": "mehringhof@ipn.de",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 6918021",
     "identity": "commons;solidarity_economy",
     "name": "Mehringhof Theater",
     "phone": "+49306915099",
+    "provides": "culture",
     "source": "Solikon 2015",
+    "topic": "culture",
     "website": "http://www.mehringhoftheater.de/",
     "wheelchair": "limited"
   }
@@ -360,14 +403,14 @@
     "amenity": "nightclub",
     "contact:email": "post@so36.de",
     "contact:facebook": "http://www.facebook.com/pages/_/171604075171",
+    "contact:google_plus": "https://plus.google.com/u/0/113966892973134215750",
     "contact:phone": "+49 30 61401306",
     "contact:website": "http://so36.de",
+    "contact:yelp": "http://www.yelp.com/biz/so36-berlin",
     "description": "concert collective;concert venue;events",
     "identity": "solidarity_economy",
-    "link:google_plus": "https://plus.google.com/u/0/113966892973134215750",
     "link:qype": "http://www.qype.com/place/3091",
     "link:unlike": "http://unlike.net/berlin/after-dark/so36",
-    "link:yelp": "http://www.yelp.com/biz/so36-berlin",
     "name": "SO36",
     "provides": "culture;spaces",
     "smoking": "isolated",
@@ -421,7 +464,6 @@
     "addr:suburb": "Kreuzberg",
     "contact:email": "die.backstube@web.de",
     "contact:fax": "+49 30 616 75 158",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 6143080",
     "contact:website": "http://die-backstube.de",
     "description": "bakery collective",
@@ -451,12 +493,12 @@
     "addr:postcode": "10999",
     "addr:street": "Lausitzer Straße",
     "addr:suburb": "Kreuzberg",
+    "contact:website": "http://www.regenbogenfabrik.de/",
     "identity": "solidarity_economy",
     "name": "Regenbogenhostel",
     "operator": "Regenbogenfabrik",
     "source": "Solikon 2015",
     "tourism": "guest_house",
-    "website": "http://www.regenbogenfabrik.de/",
     "wheelchair": "no"
   }
 },
@@ -473,11 +515,11 @@
     "addr:street": "Lausitzer Straße",
     "addr:suburb": "Kreuzberg",
     "amenity": "cinema",
+    "contact:website": "http://www.regenbogenfabrik.de/",
     "identity": "solidarity_economy",
     "name": "Kino",
     "operator": "Regenbogenfabrik",
     "source": "Solikon 2015",
-    "website": "http://www.regenbogenfabrik.de/",
     "wheelchair": "limited"
   }
 },
@@ -496,6 +538,7 @@
     "amenity": "bicycle_rental",
     "contact:email": "kontakt@regenbogenfabrik.de",
     "contact:phone": "+49 30 6957950",
+    "contact:website": "http://www.regenbogenfabrik.de/fahrrad.html",
     "email": "info@regenbogenfabrik.de",
     "identity": "solidarity_economy",
     "interaction": "diy_and_dit",
@@ -504,7 +547,7 @@
     "provides": "learning_opportunities",
     "service:bicycle:diy": "yes",
     "source": "Solikon 2015",
-    "website": "http://www.regenbogenfabrik.de/fahrrad.html"
+    "wheelchair": "no"
   }
 },
 {
@@ -538,12 +581,12 @@
     "addr:suburb": "Kreuzberg",
     "alt_name": "Meet & Eat",
     "amenity": "restaurant",
+    "contact:phone": "+49306957950",
+    "contact:website": "http://www.regenbogenfabrik.de/",
     "identity": "solidarity_economy",
     "name": "Kantine",
     "operator": "Regenbogenfabrik",
-    "phone": "+49306957950",
     "source": "Solikon 2015",
-    "website": "http://www.regenbogenfabrik.de/",
     "wheelchair": "limited"
   }
 },
@@ -582,6 +625,7 @@
     "addr:housenumber": "78",
     "addr:postcode": "13088",
     "addr:street": "Bernkasteler Straße",
+    "addr:suburb": "Weißensee",
     "amenity": "nightclub",
     "contact:email": "bunte-kuh@KuBiZ-Wallenberg.de",
     "contact:phone": "+49 30 927 43 85",
@@ -610,7 +654,6 @@
     "addr:suburb": "Neukölln",
     "amenity": "bar",
     "contact:email": "info@tristeza.org",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 27497066",
     "identity": "solidarity_economy",
     "mode_of_organisation:self_managed": "yes",
@@ -635,7 +678,6 @@
     "addr:suburb": "Neukölln",
     "amenity": "cafe",
     "contact:email": "info@k-fetisch.net",
-    "contact:fixme": "yes",
     "contact:website": "http://kfetisch.blogsport.de/kontakt/",
     "identity": "solidarity_economy",
     "internet_access": "wlan",
@@ -679,7 +721,7 @@
     "owner": "Radio Helsinki - Verein Freies Radio Steiermark",
     "provides": "culture",
     "source": "survey",
-    "type": "audio",
+    "studio": "radio",
     "website": "http://helsinki.at/",
     "wheelchair": "yes",
     "wikipedia": "de:Radio Helsinki – Verein freies Radio Steiermark"
@@ -692,12 +734,14 @@
   "lon": 13.0518946,
   "tags": {
     "addr:city": "Potsdam",
+    "addr:country": "DE",
     "addr:housenumber": "47",
     "addr:postcode": "14467",
     "addr:street": "Lindenstraße",
     "alcohol": "no",
     "amenity": "cafe",
     "contact:facebook": "https://facebook.com/madiapotsdam",
+    "contact:website": "http://www.madia-potsdam.de/",
     "cuisine": "regional",
     "diet:vegan": "only",
     "food": "yes",
@@ -709,7 +753,7 @@
     "old_operator": "Madia-Arbeitskreis 2/3 Welt e.V.",
     "operator": "Madia e.V.",
     "organic": "only",
-    "provides": "food+drink;water;culture;spaces;clothes;learning_opportunities;participation",
+    "provides": "culture;spaces;clothes;learning_opportunities;participation",
     "smoking": "no",
     "wheelchair": "limited",
     "wheelchair:description": "Barrierfreies WC vorhanden, 1 Stufe am Eingang"
@@ -762,22 +806,22 @@
     "addr:postcode": "8010",
     "addr:street": "Münzgrabenstraße",
     "amenity": "cafe",
+    "contact:facebook": "https://www.facebook.com/pages/GMOTA-das-Kollektiv-Caf%C3%A9/496030790419074",
+    "contact:phone": "+4368181917493",
+    "contact:website": "http://www.gmota.at",
     "cuisine": "vegetarian",
     "description": "Das Kollektiv-Café",
     "diet:vegan": "yes",
     "diet:vegetarian": "only",
-    "facebook:page": "https://www.facebook.com/pages/GMOTA-das-Kollektiv-Caf%C3%A9/496030790419074",
     "identity": "commons",
     "internet_access": "yes",
     "mode_of_organisation:self_managed": "yes",
     "name": "Gmota",
     "note": "Vereinslokal, Jeder willkommen! Kollektivcafé, Werkstätten und Open Space",
     "opening_hours": "Sa,Su 11:00-18:00",
-    "phone": "+4368181917493",
     "provides": "food+drink;spaces",
     "smoking": "no",
-    "source": "survey",
-    "website": "http://www.gmota.at"
+    "source": "survey"
   }
 },
 {
@@ -843,14 +887,15 @@
     "addr:street": "Bernkasteler Straße",
     "addr:suburb": "Weißensee",
     "contact:email": "umsonstladen@kubiz-wallenberg.de",
+    "contact:website": "http://www.kubiz-wallenberg.de/wordpress/?page_id=230",
     "identity": "commons",
     "name": "Umsonstladen Weißensee",
-    "opening_hours": "Tu 09:00-13:00, 15:00-19:00; We-Th 15:00-19:00; Fr 09:00-13:00",
+    "opening_hours": "Tu 09:00-13:00, 15:00-19:00; We-Th 15:00-19:00; Fr 09:00-13:00;Sa,Su,PH off",
+    "operator": "KuBiZ / trägerwerk e.V.",
     "payment:none": "yes",
     "shop": "doityourself",
     "source": "local_knowledge",
-    "source:opening_hours": "website",
-    "website": "http://www.kubiz-wallenberg.de/wordpress/?page_id=230"
+    "source:opening_hours": "website"
   }
 },
 {
@@ -867,7 +912,6 @@
     "addr:suburb": "Wedding",
     "amenity": "pub",
     "contact:email": "cafecralle@riseup.net",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 4553001",
     "identity": "solidarity_economy",
     "mode_of_organisation:self_managed": "yes",
@@ -942,6 +986,7 @@
     "diet:vegan": "yes",
     "diet:vegetarian": "only",
     "drink:club-mate": "yes",
+    "fee": "no",
     "identity": "commons",
     "internet_access": "terminal;wlan",
     "internet_access:fee": "no",
@@ -988,6 +1033,7 @@
     "commons": "food+drink",
     "description": "community supported agriculture",
     "farm_boxes": "pickup",
+    "farm_boxes:type": "csa",
     "identity": "commons",
     "name": "GeLaWi Kleine Farm (Abholpunkt)",
     "organic": "only",
@@ -1005,8 +1051,10 @@
     "commons": "food+drink",
     "description": "CSA",
     "farm_boxes": "pickup",
+    "farm_boxes:type": "csa",
     "identity": "commons",
     "name": "GeLaWi Kleine Farm (Abholpunkt)",
+    "organic": "only",
     "provides": "food+drink",
     "website": "http://www.kleinefarm.org/"
   }
@@ -1028,7 +1076,8 @@
     "mode_of_organisation:self_managed": "yes",
     "name": "Open Biolab Graz Austria (OLGA)",
     "provides": "learning_opportunities",
-    "website": "http://olga.realraum.at/"
+    "website": "http://olga.realraum.at/",
+    "wheelchair": "no"
   }
 },
 {
@@ -1069,7 +1118,9 @@
     "mode_of_organisation:self_managed": "yes",
     "name": "Kost-Nix-Laden",
     "opening_hours": "Th-Su 11:00-18:00",
-    "provides": "objects_of_utility;clothes"
+    "payment:none": "yes",
+    "provides": "objects_of_utility;clothes",
+    "shop": "yes"
   }
 },
 {
@@ -1123,10 +1174,9 @@
     "addr:street": "Kottbusser Straße",
     "addr:suburb": "Kreuzberg",
     "contact:email": "mail@rad-spannerei.de",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 61507218",
+    "contact:website": "http://www.rad-spannerei.de/",
     "identity": "solidarity_economy",
-    "is_in": "Kreuzberg,Friedrichshain-Kreuzberg,Berlin,Bundesrepublik Deutschland,Europe",
     "name": "Radspannerei",
     "opening_hours": "Mo,Tu 11:00-19:00; We 12:00-20:00; Th,Fr 11:00-19:00; Sa 12:00-17:00",
     "phone": "+49 30 615 29 39",
@@ -1135,7 +1185,6 @@
     "service:bicycle:retail": "yes",
     "shop": "bicycle",
     "source": "Solikon 2015",
-    "website": "http://www.rad-spannerei.de/",
     "wheelchair": "no"
   }
 },
@@ -1186,8 +1235,8 @@
     "addr:housenumber": "1-8",
     "addr:postcode": "10245",
     "addr:street": "Rudolfstraße",
+    "addr:suburb": "Friedrichshain",
     "contact:email": "info@oktoberdruck.de",
-    "contact:fixme": "yes",
     "contact:phone": "+49 30 6953860",
     "contact:website": "http://oktoberdruck.de",
     "description": "printing collective",
@@ -1237,8 +1286,8 @@
     "addr:postcode": "10119",
     "addr:street": "Fehrbelliner Straße",
     "addr:suburb": "Prenzlauer Berg",
+    "alt_name": "Leihladen Berlin",
     "contact:email": "hallo@leila-berlin.de",
-    "contact:fixme": "yes",
     "contact:website": "http://leila-berlin.de",
     "identity": "collaborative_economy;transition_initiative;economy_for_the_common_good;degrowth",
     "interaction": "sharing;rebuying_reselling;lending",
@@ -1499,7 +1548,7 @@
     "contact:facebook": "www.facebook.com/transitiongraz",
     "contact:name": "Verein Transition Graz",
     "description": "Netzwerken von Transition Initiativen in Graz",
-    "identity": "transition_initiative;commons",
+    "identity": "transition_initiative",
     "indoor": "yes",
     "interaction": "cousing;diy_and_dit",
     "internet_access": "tba",
@@ -1721,41 +1770,6 @@
     "website": "http://www.naturgenuss.org",
     "wheelchair": "limited",
     "wheelchair:description": "eine Stufe, 6cm"
-  }
-},
-{
-  "type": "node",
-  "id": 3188552718,
-  "lat": 46.8339495,
-  "lon": 15.4754526,
-  "tags": {
-    "access": "private",
-    "addr:city": "St. Nikolai im Sausal",
-    "addr:country": "AT",
-    "addr:housenumber": "32",
-    "addr:postcode": "8505",
-    "addr:street": "Flamberg",
-    "contact:email": "scott.ulli.klein@gmail.com",
-    "contact:name": "Scott und Ulrike Klein",
-    "diet:vegan": "yes",
-    "diet:vegetarian": "yes",
-    "identity": "commons",
-    "mode_of_organisation:decision_making": "by_consensus",
-    "mode_of_organisation:members": "users",
-    "mode_of_organisation:purpose": "non_profit",
-    "mode_of_organisation:scale_of_activity": "regional",
-    "name": "GeLaWi Kleine Farm",
-    "operator": "Kleine Farm",
-    "organic": "only",
-    "owner": "Kleine Farm",
-    "production_input:money:crowdfunding": "partially",
-    "production_input:natural_recources:democratic": "yes",
-    "production_input:natural_recources:fair": "yes",
-    "production_input:natural_recources:regional": "yes",
-    "production_input:natural_resources:sustainable": "yes",
-    "provides": "food+drink;learning_opportunities;community;participation",
-    "start_date": "2011",
-    "website": "http://kleinefarm.org"
   }
 },
 {
@@ -2215,10 +2229,11 @@
     "name": "AllerLEIHLaden",
     "opening_hours": "Tu,We 14:00-18:00; Th 10:00-14:00",
     "provides": "objects_of_utility",
-    "shop": "convenience",
+    "shop": "hardware",
     "source": "facebook",
     "start_date": "2.5.2015",
-    "website": "http://www.allerleihladen.at"
+    "website": "http://www.allerleihladen.at",
+    "wheelchair": "no"
   }
 },
 {
@@ -2413,6 +2428,7 @@
     "addr:housenumber": "100",
     "addr:postcode": "10967",
     "addr:street": "Urbanstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "schnittstelle@jpberlin.de",
     "contact:phone": "+49 176 54392783",
     "description": "producer-to-consumer direct marketing",
@@ -2541,6 +2557,38 @@
 },
 {
   "type": "node",
+  "id": 3595898661,
+  "lat": 48.1371417,
+  "lon": 11.5793836,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "17",
+    "addr:postcode": "80331",
+    "addr:street": "Ledererstraße",
+    "children": "designated",
+    "club": "yes",
+    "contact:email": "info@bene-muenchen.de",
+    "contact:name": "Thomas Schwab",
+    "contact:phone": "+49 89 230 027 84",
+    "contact:website": "http://www.bene-muenchen.de/",
+    "description": "Regionales Kompetenzzentrum zur Förderung der Bildung für nachhaltige Entwicklung",
+    "identity": "commons",
+    "interaction": "cousing",
+    "internet_access": "wlan",
+    "internet_access:access": "private",
+    "level": "2",
+    "name": "BenE München (RCE)",
+    "office": "ngo",
+    "official_name": "BenE München e.V.",
+    "provides": "learning_opportunities",
+    "source": "survey by BenE München",
+    "topic": "learning_opportunities",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
   "id": 3596001046,
   "lat": 52.0887068,
   "lon": 5.1374014,
@@ -2640,6 +2688,7 @@
     "addr:housenumber": "109",
     "addr:postcode": "10179",
     "addr:street": "Singerstraße",
+    "addr:suburb": "Mitte",
     "club": "yes",
     "contact:website": "http://okfn.de",
     "description:de": "Der Open Knowledge Foundation Deutschland e.V. ist ein gemeinnßtziger Verein mit Sitz in Berlin, der sich seit der Grßndung 2011 fßr die Verbreitung von freiem und offen zugänglichem Wissen in der Gesellschaft einsetzt.",
@@ -2655,9 +2704,11 @@
   "lon": 13.4303097,
   "tags": {
     "addr:city": "Berlin",
+    "addr:country": "DE",
     "addr:housenumber": "50",
     "addr:postcode": "12053",
     "addr:street": "Mittelweg",
+    "addr:suburb": "Neukölln",
     "contact:website": "http://agoracollective.org/",
     "description": "Agora is a project space in Berlin that hosts people and projects based on a philosophy that reflects the values of its community: diversity, self-organisation and social ties. A restaurant space serves lunch during the week.",
     "identity": "collaborative_economy",
@@ -2709,11 +2760,14 @@
   "lon": 19.0801908,
   "tags": {
     "addr:city": "Budapest",
+    "addr:country": "HU",
     "addr:housenumber": "32",
     "addr:postcode": "1071",
     "addr:street": "Dembinszky utca",
     "club": "foodcoop",
-    "contact:website": "yes",
+    "contact:email": "info@haziko.farm",
+    "contact:phone": "+36 20 513 1323",
+    "contact:website": "http://www.haziko.farm/",
     "cuisine": "regional",
     "delivery": "yes",
     "identity": "solidarity_economy;transition_initiative;economy_for_the_common_good;collaborative_economy",
@@ -2767,6 +2821,7 @@
   "lon": 12.3694596,
   "tags": {
     "addr:city": "Leipzig",
+    "addr:country": "DE",
     "addr:housenumber": "18a",
     "addr:postcode": "04277",
     "addr:street": "Gustav-Freytag-Straße",
@@ -2787,15 +2842,19 @@
   "lon": 11.9922209,
   "tags": {
     "addr:city": "Halle (Saale)",
+    "addr:housenumber": "16",
     "addr:postcode": "06112",
     "addr:street": "Landsberger Straße",
+    "amenity": "arts_centre",
     "club": "yes",
     "description": "Open Air Graffiti Galerie, kultureller Freiraum, Urban Gardening, Hip Hop Jam-session Montag Abend",
     "identity": "transition_initiative;commons",
     "interaction": "diy_and_dit",
     "name": "Freiraumgalerie",
+    "phone": "+49015201770266",
     "provides": "culture;spaces;participation;community",
-    "topic": "culture;spaces;participation"
+    "topic": "culture;spaces;participation",
+    "website": "http://www.freiraumgalerie.com/"
   }
 },
 {
@@ -2823,6 +2882,7 @@
     "addr:housenumber": "78",
     "addr:postcode": "13088",
     "addr:street": "Bernkasteler Straße",
+    "addr:suburb": "Weißensee",
     "amenity": "public_bookcase",
     "identity": "commons",
     "image": "File:Bücherregal Kubiz.JPG",
@@ -2841,6 +2901,7 @@
     "addr:housenumber": "78",
     "addr:postcode": "13088",
     "addr:street": "Bernkasteler Straße",
+    "addr:suburb": "Weißensee",
     "contact:email": "tagungswerk@gmail.com",
     "identity": "commons",
     "name": "Tagungswerk",
@@ -2902,6 +2963,7 @@
     "addr:housenumber": "74",
     "addr:postcode": "10783",
     "addr:street": "Bülowstraße",
+    "addr:suburb": "Schöneberg",
     "club": "yes",
     "contact:email": "garten@allmende-kontor.de;severinhalder@googlemail.com;gerda-muennich-im-allmende-kontor@gmx.de",
     "contact:website": "http://allmende-kontor.de",
@@ -2954,9 +3016,12 @@
     "contact:youtube": "http://www.youtube.com/user/BerlinerBuechertisch",
     "identity": "solidarity_economy",
     "name": "Berliner Büchertisch",
-    "opening_hours": "Jan-Sep Tu-Sa 12:00-20:00; Oct-Dec Tu-Sa 11:00-19:00",
+    "opening_hours": "Tu-Sa 11:00-19:00",
+    "operator": "Berliner Büchertisch eG",
     "shop": "books",
-    "source": "Solikon 2015"
+    "source": "Solikon 2015",
+    "toilets:wheelchair": "no",
+    "wheelchair": "yes"
   }
 },
 {
@@ -2992,6 +3057,7 @@
     "addr:housenumber": "11",
     "addr:postcode": "10967",
     "addr:street": "Freiligrathstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "office@martinakolarek.com",
     "contact:phone": "+49 30 61655752",
     "contact:website": "http://die-boden-schafft.de/activities.aspx",
@@ -3061,6 +3127,7 @@
     "addr:housenumber": "183",
     "addr:postcode": "10999",
     "addr:street": "Oranienstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "info@ecobasa.org",
     "contact:website": "http://ecobasa.org",
     "description": "Postanschrift",
@@ -3081,6 +3148,7 @@
     "addr:housenumber": "59a",
     "addr:postcode": "10243",
     "addr:street": "Warschauer Straße",
+    "addr:suburb": "Friedrichshain",
     "contact:email": "info@fahrwerk-berlin.de",
     "contact:phone": "+49 30 40585100",
     "contact:website": "http://fahrwerk-berlin.de",
@@ -3104,6 +3172,7 @@
     "addr:housenumber": "183",
     "addr:postcode": "10999",
     "addr:street": "Oranienstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "info@fairbindung.org",
     "contact:phone": "+49 30 577044752",
     "contact:website": "http://fairbindung.org",
@@ -3129,6 +3198,7 @@
     "addr:housenumber": "21",
     "addr:postcode": "10999",
     "addr:street": "Glogauer Straße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "email@fairmondo.de",
     "contact:phone": "+49 30 89615845",
     "contact:website": "https://fairmondo.de",
@@ -3136,7 +3206,8 @@
     "identity": "solidarity_economy;economy_for_the_common_good",
     "name": "Fairmondo",
     "office": "company",
-    "source": "Solikon 2015"
+    "source": "Solikon 2015",
+    "wheelchair": "limited"
   }
 },
 {
@@ -3148,8 +3219,9 @@
     "addr:city": "Berlin",
     "addr:country": "DE",
     "addr:housenumber": "174",
-    "addr:postcode": "10997",
+    "addr:postcode": "12355",
     "addr:street": "Köpenicker Straße",
+    "addr:suburb": "Rudow",
     "amenity": "theatre",
     "contact:email": "office@forumkreuzberg.de",
     "contact:phone": "+49 30 6110890",
@@ -3197,6 +3269,7 @@
     "addr:housenumber": "26-29",
     "addr:postcode": "10997",
     "addr:street": "Köpeniker Straße",
+    "addr:suburb": "Kreuzberg",
     "fair_trade": "only",
     "identity": "solidarity_economy",
     "mode_of_organisation:self_managed": "yes",
@@ -3216,6 +3289,7 @@
     "addr:housenumber": "19",
     "addr:postcode": "10243",
     "addr:street": "Helsingforser Straße",
+    "addr:suburb": "Friedrichshain",
     "contact:email": "bella@gleisbeet.de",
     "contact:name": "Annabella Jakab",
     "contact:phone": "+49 176 25 48 56 97",
@@ -3263,6 +3337,7 @@
     "addr:housenumber": "36",
     "addr:postcode": "10999",
     "addr:street": "Waldemarstraße",
+    "addr:suburb": "Kreuzberg",
     "amenity": "cafe",
     "club": "yes",
     "contact:email": "heilehaus@gmx.de",
@@ -3289,6 +3364,7 @@
     "addr:housenumber": "15",
     "addr:postcode": "10997",
     "addr:street": "Lausitzer Platz",
+    "addr:suburb": "Kreuzberg",
     "contact:fax": "+49 30 42089802",
     "contact:phone": "+49 30 4224853",
     "contact:website": "http://hinkelstein-druck.de",
@@ -3391,6 +3467,7 @@
     "addr:housenumber": "20a",
     "addr:postcode": "10997",
     "addr:street": "Cuvrystraße",
+    "addr:suburb": "Kreuzberg",
     "description": "taxi collective",
     "identity": "solidarity_economy",
     "name": "Kreuzberger Taxi-Genossenschaft",
@@ -3402,8 +3479,8 @@
 {
   "type": "node",
   "id": 3763639071,
-  "lat": 52.4870194,
-  "lon": 13.3284109,
+  "lat": 52.5656655,
+  "lon": 13.4119443,
   "tags": {
     "addr:city": "Berlin",
     "addr:country": "DE",
@@ -3433,6 +3510,7 @@
     "addr:housenumber": "6",
     "addr:postcode": "13353",
     "addr:street": "Föhrer Straße",
+    "addr:suburb": "Wedding",
     "contact:email": "info@lavidaver.de",
     "contact:website": "http://lavidaver.de/",
     "description": "collective housing project",
@@ -3463,8 +3541,8 @@
 {
   "type": "node",
   "id": 3763639074,
-  "lat": 52.4904421,
-  "lon": 13.4493312,
+  "lat": 52.4904488,
+  "lon": 13.4493373,
   "tags": {
     "addr:city": "Berlin",
     "addr:country": "DE",
@@ -3472,6 +3550,7 @@
     "addr:inclusion": "actual",
     "addr:postcode": "12435",
     "addr:street": "Bouchéstraße",
+    "addr:suburb": "Alt-Treptow",
     "club": "yes",
     "contact:email": "info@mundraub.org",
     "contact:phone": "+49 3054821101",
@@ -3495,6 +3574,7 @@
     "addr:housenumber": "6",
     "addr:postcode": "10827",
     "addr:street": "Crellestraße",
+    "addr:suburb": "Schöneberg",
     "club": "yes",
     "contact:email": "info@netz-bb.de",
     "contact:website": "http://netz-bb.de",
@@ -3541,6 +3621,7 @@
     "addr:housenumber": "183",
     "addr:postcode": "10999",
     "addr:street": "Oranienstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "info@quartiermeister.org",
     "contact:phone": "+49 178 1897899;+49 176 55167588",
     "contact:website": "http://quartiermeister.org/de/",
@@ -3565,6 +3646,7 @@
     "addr:housenumber": "4",
     "addr:postcode": "10969",
     "addr:street": "Alexandrinenstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "repaircafe@kunst-stoffe-berlin.de",
     "contact:website": "http://repaircafe.org/de/geschehen/repair-cafe-berlin-kreuzberg/",
     "identity": "subsistence_economy;degrowth",
@@ -3588,8 +3670,9 @@
     "addr:housenumber": "23",
     "addr:postcode": "10247",
     "addr:street": "Kreutzigerstraße",
+    "addr:suburb": "Friedrichshain",
     "contact:email": "buero@sogeg.de",
-    "contact:fax": "+49 30 293 65 718",
+    "contact:fax": "+49 30 293 65718",
     "contact:phone": "+49 30 54719690",
     "contact:website": "http://sogeg.de",
     "craft": "metal_construction",
@@ -3638,6 +3721,7 @@
     "addr:housenumber": "36",
     "addr:postcode": "10247",
     "addr:street": "Voigtstraße",
+    "addr:suburb": "Friedrichshain",
     "contact:email": "info@spentcollective.de",
     "contact:facebook": "https://www.facebook.com/spentcollective",
     "contact:phone": "+49 178 7108005",
@@ -3662,8 +3746,9 @@
     "addr:city": "Berlin",
     "addr:country": "DE",
     "addr:housenumber": "23",
-    "addr:postcode": "10923",
+    "addr:postcode": "10969",
     "addr:street": "Rudi-Dutschke-Straße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "geno@taz.de",
     "contact:fax": "+49 30 25902516",
     "contact:phone": "+49 30 25902213",
@@ -3712,6 +3797,7 @@
     "addr:housenumber": "10",
     "addr:postcode": "12055",
     "addr:street": "Mareschstraße",
+    "addr:suburb": "Neukölln",
     "club": "yes",
     "contact:email": "email@trial-error.org",
     "contact:website": "http://trial-error.org/",
@@ -3736,6 +3822,7 @@
     "addr:housenumber": "10",
     "addr:postcode": "10999",
     "addr:street": "Lausitzer Straße",
+    "addr:suburb": "Kreuzberg",
     "club": "yes",
     "contact:email": "post@umbruch-bildarchiv.de",
     "contact:fax": "+49 30 61115 83",
@@ -3753,14 +3840,15 @@
 {
   "type": "node",
   "id": 3763639086,
-  "lat": 52.5231351,
-  "lon": 13.2008580,
+  "lat": 52.5361650,
+  "lon": 13.4207575,
   "tags": {
     "addr:city": "Berlin",
     "addr:country": "DE",
     "addr:housenumber": "28",
     "addr:postcode": "10405",
     "addr:street": "Wörther Straße",
+    "addr:suburb": "Prenzlauer Berg",
     "contact:email": "info@weltladen-zeichenderzeit.de",
     "contact:phone": "+49 30 65075586",
     "contact:website": "http://weltladen-zeichenderzeit.de/",
@@ -3784,6 +3872,7 @@
     "addr:housenumber": "13",
     "addr:postcode": "12435",
     "addr:street": "Karpfenteichstraße",
+    "addr:suburb": "Plänterwald",
     "contact:email": "netzwerk@werkstatt-lastenrad.de",
     "contact:website": "http://werkstatt-lastenrad.de",
     "identity": "commons;p2p_economy",
@@ -3848,6 +3937,7 @@
     "addr:housenumber": "27b",
     "addr:postcode": "10997",
     "addr:street": "Schlesische Straße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "info@cucula.org",
     "contact:phone": "+49 176 54983356",
     "contact:website": "http://cucula.org",
@@ -3896,6 +3986,7 @@
     "addr:housenumber": "121",
     "addr:postcode": "10999",
     "addr:street": "Reichenberger Straße",
+    "addr:suburb": "Kreuzberg",
     "amenity": "doctors",
     "contact:fax": "+49 30 6118277",
     "contact:phone": "+49 30 6126643",
@@ -3912,6 +4003,431 @@
     "source": "Solikon 2015",
     "start_date": "1979"
   }
+},
+{
+  "type": "node",
+  "id": 3781344598,
+  "lat": 47.8241820,
+  "lon": 13.0060962,
+  "tags": {
+    "access": "private",
+    "addr:city": "Salzburg",
+    "addr:country": "AT",
+    "addr:housenumber": "9B",
+    "addr:postcode": "5020",
+    "addr:street": "Törringstraße",
+    "bulk_purchase": "limited",
+    "contact:website": "https://bonaudelta.wordpress.com/uber-uns/",
+    "description": "Foodcoop Salzburg",
+    "identity": "commons",
+    "indoor": "yes",
+    "interaction": "buying_and_selling",
+    "name": "Bonaudelta",
+    "organic": "yes",
+    "provides": "food+drink",
+    "regional": "yes",
+    "start_date": "2013",
+    "topic": "food+drink"
+  }
+},
+{
+  "type": "node",
+  "id": 3781344600,
+  "lat": 47.7966507,
+  "lon": 13.0498102,
+  "tags": {
+    "access": "private",
+    "addr:city": "Salzburg",
+    "addr:country": "AT",
+    "addr:housenumber": "28",
+    "addr:postcode": "5020",
+    "addr:street": "Kaigasse",
+    "bulk_purchase": "limited",
+    "contact:email": "info@salzkoerndl.org",
+    "contact:facebook": "https://www.facebook.com/salzkoerndlsalzburg?fref=ts",
+    "contact:website": "http://salzkoerndl.org/",
+    "description": "Foodcoop Salzburg",
+    "identity": "commons",
+    "indoor": "yes",
+    "interaction": "buying_and_selling",
+    "name": "Salzkörndl",
+    "organic": "only",
+    "provides": "food+drink",
+    "regional": "only",
+    "start_date": "2013",
+    "topic": "food+drink"
+  }
+},
+{
+  "type": "node",
+  "id": 3831529258,
+  "lat": 50.8376798,
+  "lon": 4.3870293,
+  "tags": {
+    "addr:city": "Etterbeek - Etterbeek",
+    "addr:housenumber": "97",
+    "addr:postcode": "1040",
+    "addr:street": "Rue du Cornet - Hoornstraat",
+    "contact:website": "https://www.facebook.com/Repair-Caf%C3%A9-1040-1056204851079871/",
+    "description": "Que faire d'un grille-pain qui ne marche plus ? D'une bicyclette ou d'un pull troué ? Les jeter ? Pas question ! [Supporté par Repair Together asbl]",
+    "identity": "transition_initiative;commons",
+    "interaction": "diy_and_dit",
+    "leisure": "hackerspace",
+    "name": "Repair Cafe - De Maalbeek",
+    "provides": "objects_of_utility;learning_opportunities",
+    "website": "https://www.facebook.com/Repair-Caf%C3%A9-1040-1056204851079871/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3831700578,
+  "lat": 50.8345817,
+  "lon": 4.3990140,
+  "tags": {
+    "addr:city": "Etterbeek - Etterbeek",
+    "addr:housenumber": "105",
+    "addr:postcode": "1040",
+    "addr:street": "Rue de la Grande Haie - Grote Haagstraat",
+    "description": "Groupement d'achat solidaire de l'agriculture paysanne à Etterbeek.",
+    "farm_boxes": "yes",
+    "identity": "transition_initiative;solidarity_economy",
+    "interaction": "rebuying_reselling",
+    "name": "Rutabagas",
+    "organic": "only",
+    "provides": "food+drink",
+    "regional": "only",
+    "website": "http://rutabagas.broebelair.be/"
+  }
+},
+{
+  "type": "node",
+  "id": 3904589708,
+  "lat": 51.3375453,
+  "lon": 9.8664235,
+  "tags": {
+    "addr:city": "Witzenhausen",
+    "addr:housenumber": "6",
+    "addr:postcode": "37213",
+    "addr:street": "In der Aue",
+    "contact:email": "info@spiritsoundart.de",
+    "contact:name": "johannes baehr",
+    "contact:phone": "055425070522",
+    "contact:website": "www.Spiritsoundart.de",
+    "description": "Der Klangraum ist der Versuch,  mit den Mitteln von Musik und Kunst  Räume zu schaffen, in denen wir  zusammen der alles verbindenden  Kraft der Liebe nachspüren können. Musik, Klänge, Klangmassage, Instrumente Bau, Gemeinschaft, Austausch, Unterkunft",
+    "identity": "solidarity_economy;collaborative_economy",
+    "name": "Klangraum Witzenhausen",
+    "provides": "culture",
+    "topic": "culture;spaces;learning_opportunities;objects_of_utility;spirituality;health;food+drink"
+  }
+},
+{
+  "type": "node",
+  "id": 3906420250,
+  "lat": 47.5064677,
+  "lon": 19.0802706,
+  "tags": {
+    "addr:city": "Budapest",
+    "addr:country": "HU",
+    "addr:housenumber": "32",
+    "addr:postcode": "1071",
+    "addr:street": "Dembinszky utca",
+    "contact:website": "budapest.degrowth.org",
+    "identity": "degrowth",
+    "name": "Degrowth Center (Budapest Degrowth conference team)",
+    "office": "yes",
+    "website": "nemnovekedes.net"
+  }
+},
+{
+  "type": "node",
+  "id": 3916223260,
+  "lat": 47.4584686,
+  "lon": 19.1279006,
+  "tags": {
+    "addr:city": "Budapest",
+    "addr:housenumber": "7",
+    "addr:postcode": "1192",
+    "addr:street": "Petúr utca",
+    "contact:email": "atalakulo.wekerle@gmail.com",
+    "contact:website": "https://www.transitionnetwork.org/initiatives/talakul-wekerle-transition-wekerle",
+    "identity": "transition_initiative",
+    "name": "Transition Wekerle",
+    "office": "association"
+  }
+},
+{
+  "type": "node",
+  "id": 3916223262,
+  "lat": 47.5069833,
+  "lon": 19.0541693,
+  "tags": {
+    "addr:city": "Budapest",
+    "addr:country": "HU",
+    "addr:housenumber": "25",
+    "addr:postcode": "1054",
+    "addr:street": "Kálmán Imre utca",
+    "contact:email": "iroda@vedegylet.hu",
+    "contact:phone": "+36 339 07 13",
+    "contact:website": "http://vedegylet.hu/",
+    "identity": "transition_initiative",
+    "name": "Vedegylet Transition",
+    "office": "association"
+  }
+},
+{
+  "type": "node",
+  "id": 3929291569,
+  "lat": 48.1466458,
+  "lon": 11.5722450,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "40",
+    "addr:postcode": "80333",
+    "addr:street": "Barer Straße",
+    "amenity": "marketplace",
+    "contact:email": "info@muenchner-bauernmaerkte.de",
+    "contact:fax": "+49 89 55873470",
+    "contact:phone": "+49 89 55873450",
+    "contact:website": "www.muenchner-bauernmaerkte.de",
+    "food": "yes",
+    "identity": "collaborative_economy",
+    "interaction": "buying_and_selling",
+    "operator": "Bauernmarkt München e.V.",
+    "organic": "limited",
+    "provides": "food+drink",
+    "regional": "yes",
+    "source": "survey by BenE München"
+  }
+},
+{
+  "type": "node",
+  "id": 3929291615,
+  "lat": 48.1315470,
+  "lon": 11.6220760,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "33",
+    "addr:postcode": "81673",
+    "addr:street": "Streitfeldstraße",
+    "contact:website": "http://rewig-muenchen.de/",
+    "identity": "community_based_currencies;economy_for_the_common_good",
+    "name": "ReWiG - Regionale Wirtschaftsgemeinschaft",
+    "office": "yes",
+    "source": "survey by BenE München",
+    "topic": "food+drink"
+  }
+},
+{
+  "type": "node",
+  "id": 3929291654,
+  "lat": 48.1387982,
+  "lon": 11.5417953,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "9",
+    "addr:postcode": "80339",
+    "addr:street": "Schrenkstraße",
+    "contact:email": "info@waldgaertner.de",
+    "contact:phone": "+49 8951099831",
+    "contact:website": "www.waldgaertner.de/",
+    "farm_boxes": "pickup",
+    "identity": "solidarity_economy",
+    "name": "Waldgärtner, Siggi Fuchs",
+    "source": "survey by BenE München"
+  }
+},
+{
+  "type": "node",
+  "id": 3929292582,
+  "lat": 48.1536321,
+  "lon": 11.5682081,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:postcode": "80799",
+    "addr:street": "Zieblandstraße",
+    "amenity": "marketplace",
+    "contact:email": "info@muenchner-bauernmaerkte.de",
+    "contact:fax": "+49 89 55873470",
+    "contact:phone": "+49 89 55873450",
+    "contact:website": "www.muenchner-bauernmaerkte.de",
+    "food": "yes",
+    "identity": "collaborative_economy",
+    "interaction": "buying_and_selling",
+    "operator": "Bauernmarkt München e.V.",
+    "organic": "limited",
+    "provides": "food+drink",
+    "regional": "yes",
+    "source": "survey by BenE München"
+  }
+},
+{
+  "type": "node",
+  "id": 3929292584,
+  "lat": 48.1727900,
+  "lon": 11.5954260,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:postcode": "80805",
+    "addr:street": "Fritz-Hommel-Weg",
+    "amenity": "marketplace",
+    "contact:email": "info@muenchner-bauernmaerkte.de",
+    "contact:fax": "+49 89 55873470",
+    "contact:phone": "+49 89 55873450",
+    "contact:website": "www.muenchner-bauernmaerkte.de",
+    "food": "yes",
+    "identity": "collaborative_economy",
+    "interaction": "buying_and_selling",
+    "operator": "Bauernmarkt München e.V.",
+    "organic": "limited",
+    "provides": "food+drink",
+    "regional": "yes",
+    "source": "survey by BenE München"
+  }
+},
+{
+  "type": "node",
+  "id": 3929292595,
+  "lat": 48.1307431,
+  "lon": 11.5747523,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "37",
+    "addr:postcode": "80469",
+    "addr:street": "Klenzestraße",
+    "club": "yes",
+    "contact:email": "info@urbane-gaerten-muenchen.de",
+    "contact:website": "http://urbane-gaerten-muenchen.de/",
+    "identity": "permaculture",
+    "name": "urbane gärten münchen",
+    "source": "survey by BenE München"
+  }
+},
+{
+  "type": "node",
+  "id": 3953617908,
+  "lat": 62.5991732,
+  "lon": 29.7631328,
+  "tags": {
+    "addr:city": "Joensuu",
+    "addr:housenumber": "1",
+    "addr:postcode": "80100",
+    "addr:street": "Koskikatu",
+    "identity": "economy_for_the_common_good;solidarity_economy",
+    "interaction": "buying_and_selling",
+    "name": "Hyväntekijä",
+    "opening_hours": "arkisin/week days 10-17, lauantaisin/Saturdays 10-14",
+    "provides": "objects_of_utility;clothes",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 3953645172,
+  "lat": 60.1866333,
+  "lon": 24.9517300,
+  "tags": {
+    "addr:city": "Helsinki",
+    "addr:housenumber": "15",
+    "addr:postcode": "00530",
+    "addr:street": "Kaarlenkatu",
+    "amenity": "community_centre",
+    "contact:website": "https://stadinaikapankki.wordpress.com/",
+    "identity": "solidarity_economy;demonetized_economy;community_based_currencies;commons;economy_for_the_common_good;collaborative_economy;degrowth;p2p_economy",
+    "interaction": "sharing;diy_and_dit",
+    "name": "Stadin aikapankki / Helsinki Timebank",
+    "provides": "culture;learning_opportunities;community;participation",
+    "topic": "culture;learning_opportunities;community;participation"
+  }
+},
+{
+  "type": "node",
+  "id": 3953651082,
+  "lat": 60.1829489,
+  "lon": 24.9569804,
+  "tags": {
+    "addr:city": "Helsinki",
+    "addr:housenumber": "1",
+    "addr:postcode": "00530",
+    "addr:street": "Kaikukuja",
+    "contact:website": "http://www.elavamaa.fi",
+    "identity": "solidarity_economy;economy_for_the_common_good",
+    "interaction": "buying_and_selling;diy_and_dit",
+    "name": "Elävä maa luomupiiri / food circle",
+    "provides": "food+drink;community;participation"
+  }
+},
+{
+  "type": "node",
+  "id": 302727834,
+  "lat": 48.1422786,
+  "lon": 11.5526103
+},
+{
+  "type": "node",
+  "id": 302727835,
+  "lat": 48.1420960,
+  "lon": 11.5537075
+},
+{
+  "type": "node",
+  "id": 302727836,
+  "lat": 48.1423223,
+  "lon": 11.5538107
+},
+{
+  "type": "node",
+  "id": 302727837,
+  "lat": 48.1425584,
+  "lon": 11.5527379
+},
+{
+  "type": "node",
+  "id": 303769132,
+  "lat": 48.1422466,
+  "lon": 11.5527678
+},
+{
+  "type": "node",
+  "id": 303769133,
+  "lat": 48.1422631,
+  "lon": 11.5527753
+},
+{
+  "type": "node",
+  "id": 303769134,
+  "lat": 48.1421767,
+  "lon": 11.5532007
+},
+{
+  "type": "node",
+  "id": 303769135,
+  "lat": 48.1421971,
+  "lon": 11.5532100
+},
+{
+  "type": "node",
+  "id": 303769136,
+  "lat": 48.1424394,
+  "lon": 11.5533241
+},
+{
+  "type": "node",
+  "id": 303769178,
+  "lat": 48.1424226,
+  "lon": 11.5533164
+},
+{
+  "type": "node",
+  "id": 333753368,
+  "lat": 46.8342034,
+  "lon": 15.4760751
 },
 {
   "type": "node",
@@ -3960,6 +4476,12 @@
   "id": 667748344,
   "lat": 52.5048146,
   "lon": 13.4237351
+},
+{
+  "type": "node",
+  "id": 731818998,
+  "lat": 52.4739765,
+  "lon": 13.4162698
 },
 {
   "type": "node",
@@ -4250,60 +4772,6 @@
 },
 {
   "type": "node",
-  "id": 1240682002,
-  "lat": 47.0692653,
-  "lon": 15.4302126
-},
-{
-  "type": "node",
-  "id": 1240682004,
-  "lat": 47.0692548,
-  "lon": 15.4304256
-},
-{
-  "type": "node",
-  "id": 1240682006,
-  "lat": 47.0689380,
-  "lon": 15.4304722
-},
-{
-  "type": "node",
-  "id": 1240682008,
-  "lat": 47.0693164,
-  "lon": 15.4305201
-},
-{
-  "type": "node",
-  "id": 1240682011,
-  "lat": 47.0693215,
-  "lon": 15.4304326
-},
-{
-  "type": "node",
-  "id": 1240682018,
-  "lat": 47.0692787,
-  "lon": 15.4300404
-},
-{
-  "type": "node",
-  "id": 1240682019,
-  "lat": 47.0691015,
-  "lon": 15.4304936
-},
-{
-  "type": "node",
-  "id": 1240682022,
-  "lat": 47.0692851,
-  "lon": 15.4299398
-},
-{
-  "type": "node",
-  "id": 1240682035,
-  "lat": 47.0688056,
-  "lon": 15.4298767
-},
-{
-  "type": "node",
   "id": 1240706485,
   "lat": 47.0694523,
   "lon": 15.4291499
@@ -4319,30 +4787,6 @@
   "id": 1240706494,
   "lat": 47.0696286,
   "lon": 15.4292344
-},
-{
-  "type": "node",
-  "id": 1240713742,
-  "lat": 47.0688960,
-  "lon": 15.4305285
-},
-{
-  "type": "node",
-  "id": 1240713751,
-  "lat": 47.0688969,
-  "lon": 15.4305124
-},
-{
-  "type": "node",
-  "id": 1240713783,
-  "lat": 47.0689336,
-  "lon": 15.4305335
-},
-{
-  "type": "node",
-  "id": 1240713790,
-  "lat": 47.0687734,
-  "lon": 15.4304904
 },
 {
   "type": "node",
@@ -4382,6 +4826,30 @@
   "id": 1301937526,
   "lat": 47.9822327,
   "lon": 7.8163701
+},
+{
+  "type": "node",
+  "id": 1370430019,
+  "lat": 46.8347079,
+  "lon": 15.4756903
+},
+{
+  "type": "node",
+  "id": 1370430049,
+  "lat": 46.8345424,
+  "lon": 15.4759413
+},
+{
+  "type": "node",
+  "id": 1370430146,
+  "lat": 46.8344013,
+  "lon": 15.4760287
+},
+{
+  "type": "node",
+  "id": 1370430318,
+  "lat": 46.8346723,
+  "lon": 15.4754656
 },
 {
   "type": "node",
@@ -4821,6 +5289,60 @@
 },
 {
   "type": "node",
+  "id": 1780522372,
+  "lat": 52.2568529,
+  "lon": 0.2290963
+},
+{
+  "type": "node",
+  "id": 1780522423,
+  "lat": 52.2567163,
+  "lon": 0.2290578
+},
+{
+  "type": "node",
+  "id": 1780522486,
+  "lat": 52.2567064,
+  "lon": 0.2290961
+},
+{
+  "type": "node",
+  "id": 1780522558,
+  "lat": 52.2567050,
+  "lon": 0.2291375
+},
+{
+  "type": "node",
+  "id": 1780522636,
+  "lat": 52.2568437,
+  "lon": 0.2290595
+},
+{
+  "type": "node",
+  "id": 1780522637,
+  "lat": 52.2568278,
+  "lon": 0.2290294
+},
+{
+  "type": "node",
+  "id": 1838845836,
+  "lat": 52.4741223,
+  "lon": 13.4176162
+},
+{
+  "type": "node",
+  "id": 1838845837,
+  "lat": 52.4747890,
+  "lon": 13.4161320
+},
+{
+  "type": "node",
+  "id": 1838845838,
+  "lat": 52.4749127,
+  "lon": 13.4173931
+},
+{
+  "type": "node",
   "id": 1839628597,
   "lat": 47.1007597,
   "lon": 15.4530099
@@ -5050,6 +5572,25 @@
 },
 {
   "type": "node",
+  "id": 2475749826,
+  "lat": 48.1424181,
+  "lon": 11.5533387,
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "15",
+    "addr:postcode": "80335",
+    "addr:street": "Arnulfstraße"
+  }
+},
+{
+  "type": "node",
+  "id": 2496235208,
+  "lat": 52.4744780,
+  "lon": 13.4175152
+},
+{
+  "type": "node",
   "id": 2510385155,
   "lat": 47.0782870,
   "lon": 15.4476759
@@ -5119,6 +5660,30 @@
   "id": 2510447795,
   "lat": 47.0902501,
   "lon": 15.5062776
+},
+{
+  "type": "node",
+  "id": 2628858437,
+  "lat": 51.7508333,
+  "lon": -1.2579478
+},
+{
+  "type": "node",
+  "id": 2628858438,
+  "lat": 51.7509548,
+  "lon": -1.2580260
+},
+{
+  "type": "node",
+  "id": 2628858439,
+  "lat": 51.7510202,
+  "lon": -1.2577610
+},
+{
+  "type": "node",
+  "id": 2628858440,
+  "lat": 51.7508987,
+  "lon": -1.2576828
 },
 {
   "type": "node",
@@ -5476,6 +6041,12 @@
   "id": 3149497675,
   "lat": 47.0694460,
   "lon": 15.4292362
+},
+{
+  "type": "node",
+  "id": 3188552718,
+  "lat": 46.8336411,
+  "lon": 15.4752866
 },
 {
   "type": "node",
@@ -6105,20 +6676,14 @@
 {
   "type": "node",
   "id": 3763639103,
-  "lat": 52.9190784,
-  "lon": 12.2603290
+  "lat": 52.9192704,
+  "lon": 12.2600649
 },
 {
   "type": "node",
   "id": 3763639104,
-  "lat": 52.9194508,
-  "lon": 12.2597384
-},
-{
-  "type": "node",
-  "id": 3763639105,
-  "lat": 52.9194549,
-  "lon": 12.2612589
+  "lat": 52.9194632,
+  "lon": 12.2597795
 },
 {
   "type": "node",
@@ -6159,14 +6724,14 @@
 {
   "type": "node",
   "id": 3763639112,
-  "lat": 52.9204289,
-  "lon": 12.2581908
+  "lat": 52.9203514,
+  "lon": 12.2583450
 },
 {
   "type": "node",
   "id": 3763639113,
-  "lat": 52.9206335,
-  "lon": 12.2591072
+  "lat": 52.9205406,
+  "lon": 12.2593744
 },
 {
   "type": "node",
@@ -6283,6 +6848,251 @@
   "lon": 13.5013506
 },
 {
+  "type": "node",
+  "id": 3781764397,
+  "lat": 46.8336004,
+  "lon": 15.4757630
+},
+{
+  "type": "node",
+  "id": 3781764398,
+  "lat": 46.8336113,
+  "lon": 15.4755523
+},
+{
+  "type": "node",
+  "id": 3781764399,
+  "lat": 46.8336364,
+  "lon": 15.4758821
+},
+{
+  "type": "node",
+  "id": 3781764400,
+  "lat": 46.8337054,
+  "lon": 15.4751194
+},
+{
+  "type": "node",
+  "id": 3781764401,
+  "lat": 46.8338213,
+  "lon": 15.4759761
+},
+{
+  "type": "node",
+  "id": 3781764402,
+  "lat": 46.8338292,
+  "lon": 15.4750277
+},
+{
+  "type": "node",
+  "id": 3781764403,
+  "lat": 46.8340156,
+  "lon": 15.4751079
+},
+{
+  "type": "node",
+  "id": 3781764404,
+  "lat": 46.8343385,
+  "lon": 15.4753690
+},
+{
+  "type": "node",
+  "id": 3781764405,
+  "lat": 46.8344920,
+  "lon": 15.4754607
+},
+{
+  "type": "node",
+  "id": 3836220287,
+  "lat": 52.9193167,
+  "lon": 12.2601711
+},
+{
+  "type": "node",
+  "id": 3836220296,
+  "lat": 52.9202182,
+  "lon": 12.2586380
+},
+{
+  "type": "node",
+  "id": 3836220298,
+  "lat": 52.9204271,
+  "lon": 12.2579173
+},
+{
+  "type": "node",
+  "id": 3836220299,
+  "lat": 52.9204285,
+  "lon": 12.2581256
+},
+{
+  "type": "node",
+  "id": 3859762458,
+  "lat": 51.7508755,
+  "lon": -1.2577719
+},
+{
+  "type": "node",
+  "id": 3859762461,
+  "lat": 51.7508937,
+  "lon": -1.2577013
+},
+{
+  "type": "node",
+  "id": 3859762471,
+  "lat": 51.7508550,
+  "lon": -1.2578573,
+  "tags": {
+    "access": "customers",
+    "entrance": "main",
+    "name": "Broken Spoke"
+  }
+},
+{
+  "type": "node",
+  "id": 3871230414,
+  "lat": 52.2567333,
+  "lon": 0.2290271
+},
+{
+  "type": "node",
+  "id": 3871230415,
+  "lat": 52.2567557,
+  "lon": 0.2290074
+},
+{
+  "type": "node",
+  "id": 3871230416,
+  "lat": 52.2567808,
+  "lon": 0.2290010
+},
+{
+  "type": "node",
+  "id": 3871230417,
+  "lat": 52.2568058,
+  "lon": 0.2290086
+},
+{
+  "type": "node",
+  "id": 3871230418,
+  "lat": 52.2568545,
+  "lon": 0.2291360
+},
+{
+  "type": "node",
+  "id": 3871230419,
+  "lat": 52.2568481,
+  "lon": 0.2291744
+},
+{
+  "type": "node",
+  "id": 3871230420,
+  "lat": 52.2568346,
+  "lon": 0.2292076
+},
+{
+  "type": "node",
+  "id": 3871230421,
+  "lat": 52.2568153,
+  "lon": 0.2292319
+},
+{
+  "type": "node",
+  "id": 3871230422,
+  "lat": 52.2567923,
+  "lon": 0.2292448
+},
+{
+  "type": "node",
+  "id": 3871230423,
+  "lat": 52.2567680,
+  "lon": 0.2292451
+},
+{
+  "type": "node",
+  "id": 3871230424,
+  "lat": 52.2567448,
+  "lon": 0.2292326
+},
+{
+  "type": "node",
+  "id": 3871230425,
+  "lat": 52.2567254,
+  "lon": 0.2292086
+},
+{
+  "type": "node",
+  "id": 3871230426,
+  "lat": 52.2567116,
+  "lon": 0.2291758
+},
+{
+  "type": "node",
+  "id": 3953627184,
+  "lat": 61.5048421,
+  "lon": 23.7823681
+},
+{
+  "type": "node",
+  "id": 3953627185,
+  "lat": 61.5043981,
+  "lon": 23.7823815
+},
+{
+  "type": "node",
+  "id": 3953627186,
+  "lat": 61.5044045,
+  "lon": 23.7836072
+},
+{
+  "type": "node",
+  "id": 3953627187,
+  "lat": 61.5044416,
+  "lon": 23.7836904
+},
+{
+  "type": "node",
+  "id": 3953627188,
+  "lat": 61.5048523,
+  "lon": 23.7836609
+},
+{
+  "type": "way",
+  "id": 27570544,
+  "nodes": [
+    302727834,
+    303769132,
+    303769133,
+    303769134,
+    303769135,
+    302727835,
+    302727836,
+    2475749826,
+    303769178,
+    303769136,
+    302727837,
+    302727834
+  ],
+  "tags": {
+    "addr:city": "München",
+    "addr:country": "DE",
+    "addr:housenumber": "15",
+    "addr:postcode": "80335",
+    "addr:street": "Arnulfstraße",
+    "amenity": "bank",
+    "atm": "yes",
+    "building": "yes",
+    "contact:email": "info@sparda-m.de",
+    "contact:fax": "+49 89 55142100",
+    "contact:phone": "+49 8955142400",
+    "contact:website": "https://www.sparda-m.de",
+    "identity": "economy_for_the_common_good",
+    "name": "Sparda-Bank",
+    "official_name": "Sparda-Bank München eG",
+    "source": "survey by BenE München"
+  }
+},
+{
   "type": "way",
   "id": 30650293,
   "nodes": [
@@ -6323,6 +7133,7 @@
     "addr:housenumber": "78",
     "addr:postcode": "13088",
     "addr:street": "Bernkasteler Straße",
+    "addr:suburb": "Weißensee",
     "building": "yes",
     "gender": "queer",
     "identity": "commons",
@@ -6366,7 +7177,6 @@
     "addr:street": "Mariannenplatz",
     "alt_name": "Nachbarschaftsgarten Ton, Steine, Gärten",
     "contact:email": "tonsteinegaerten@gmx.de",
-    "contact:fixme": "yes",
     "contact:website": "http://gaerten-am-mariannenplatz.blogspot.de/",
     "identity": "subsistence_economy;commons",
     "landuse": "allotments",
@@ -6397,8 +7207,8 @@
     "addr:housenumber": "35-38",
     "addr:postcode": "10969",
     "addr:street": "Prinzenstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "kontakt@prinzessinnengarten.net",
-    "contact:fixme": "yes",
     "contact:phone": "+49 176 24332297",
     "contact:website": "http://prinzessinnengarten.net/",
     "garden:type": "community",
@@ -6462,7 +7272,6 @@
     "addr:street": "Rosa-Luxemburg-Straße",
     "amenity": "school",
     "contact:email": "empfang@zegg.de",
-    "contact:fixme": "yes",
     "contact:phone": "+49 33841 595100",
     "contact:website": "http://zegg.de",
     "identity": "global_ecovillage_network",
@@ -6709,6 +7518,45 @@
 },
 {
   "type": "way",
+  "id": 166615673,
+  "nodes": [
+    3871230418,
+    3871230419,
+    3871230420,
+    3871230421,
+    3871230422,
+    3871230423,
+    3871230424,
+    3871230425,
+    3871230426,
+    1780522558,
+    1780522486,
+    1780522423,
+    3871230414,
+    3871230415,
+    3871230416,
+    3871230417,
+    1780522637,
+    1780522636,
+    1780522372,
+    3871230418
+  ],
+  "tags": {
+    "addr:city": "Cambridge",
+    "addr:housename": "Willow Farm",
+    "addr:postcode": "CB25 9HF",
+    "addr:street": "Lode",
+    "building": "farm",
+    "description": "Supplier of our own organic vegetables to the people of Cambridgeshire and surrounding villages. Home of CSA Cambridge CropShare.",
+    "identity": "transition_initiative",
+    "name": "Waterland Organics (Willow Farm)",
+    "organic": "only",
+    "regional": "only",
+    "website": "http://www.waterlandorganics.com/"
+  }
+},
+{
+  "type": "way",
   "id": 175898159,
   "nodes": [
     1864585354,
@@ -6835,12 +7683,13 @@
     2342663728
   ],
   "tags": {
-    "access": "permissive",
+    "access": "public",
     "addr:city": "Graz",
     "addr:country": "AT",
     "addr:housenumber": "3",
     "addr:postcode": "8010",
     "addr:street": "Zinzendorfgasse",
+    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "fee": "yes",
     "garden:type": "community",
@@ -6889,6 +7738,7 @@
     2432859830
   ],
   "tags": {
+    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "garden:type": "community",
     "identity": "commons",
@@ -6937,7 +7787,7 @@
     "addr:housenumber": "25",
     "addr:postcode": "8010",
     "addr:street": "Attemsgasse",
-    "contact:name": "Verein Gemeinschaftsprojekt Attemsgarten",
+    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "garden:type": "community",
     "identity": "transition_initiative;commons",
@@ -6952,9 +7802,8 @@
     "mode_of_organisation:purpose": "non_profit",
     "mode_of_organisation:scale_of_activity": "local",
     "mode_of_organisation:self_managed": "yes",
-    "name": "Gemeinschaftsprojekt Attemsgarten",
+    "name": "Offener Lernraum Attemsgarten",
     "opening_hours": "24/7",
-    "operator": "Verein Gemeinschaftsprojekt - Attemsgarten",
     "organic": "yes",
     "payment:donations": "yes",
     "production_input:knowledge:public_domain": "yes",
@@ -6970,48 +7819,6 @@
     "start_date": "04-2013",
     "website": "http://atgarten.wordpress.com",
     "wheelchair": "yes"
-  }
-},
-{
-  "type": "way",
-  "id": 243661170,
-  "nodes": [
-    1240682022,
-    1240682035,
-    1240713790,
-    1240713751,
-    1240713742,
-    1240713783,
-    1240682006,
-    1240682019,
-    1240682008,
-    1240682011,
-    1240682004,
-    1240682002,
-    1240682018,
-    1240682022
-  ],
-  "tags": {
-    "addr:city": "Graz",
-    "addr:country": "AT",
-    "addr:housenumber": "9",
-    "addr:postcode": "8020",
-    "addr:street": "Grenadiergasse",
-    "diet:vegetarian": "yes",
-    "fee": "no",
-    "garden:type": "community",
-    "identity": "commons",
-    "leisure": "garden",
-    "name": "Garden Lab Graz",
-    "production_input:money:crowdfunding": "yes",
-    "production_input:money:gift": "yes",
-    "production_input:natural_recources:democratic": "yes",
-    "production_input:natural_recources:fair": "yes",
-    "production_input:natural_recources:regional": "yes",
-    "production_input:natural_resources:sustainable": "yes",
-    "provides": "food+drink;spaces;community;participation",
-    "start_date": "2013",
-    "url": "http://gardenlab-graz.over-blog.com/"
   }
 },
 {
@@ -7042,6 +7849,7 @@
     "addr:housenumber": "94",
     "addr:postcode": "8010",
     "addr:street": "Hochsteingasse",
+    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "garden:type": "community",
     "identity": "commons",
@@ -7094,6 +7902,36 @@
 },
 {
   "type": "way",
+  "id": 257323848,
+  "nodes": [
+    2628858437,
+    2628858438,
+    2628858439,
+    2628858440,
+    3859762461,
+    3859762458,
+    3859762471,
+    2628858437
+  ],
+  "tags": {
+    "addr:city": "Oxford",
+    "addr:housename": "The Gates",
+    "addr:housenumber": "42",
+    "addr:postcode": "OX1 1BP",
+    "addr:street": "Pembroke Street",
+    "building": "yes",
+    "identity": "solidarity_economy",
+    "name": "Broken Spoke Bike Co-op",
+    "opening_hours": "12:00-18:00",
+    "phone": "+44 7751 711 746",
+    "provides": "mobility;learning_opportunities",
+    "shop": "bicycle",
+    "short_name": "Broken Spoke",
+    "website": "http://bsbcoop.org/"
+  }
+},
+{
+  "type": "way",
   "id": 267398834,
   "nodes": [
     2728580880,
@@ -7115,12 +7953,10 @@
     "addr:postcode": "16359",
     "addr:street": "Ruhlsdorfer Straße",
     "contact:email": "info@wukania.net",
-    "contact:fixme": "yes",
     "contact:phone": "+49 3337 431926",
     "description": "collective housing;multigenerational housing project",
     "identity": "commons;p2p_economy",
     "interaction": "cousing",
-    "landuse": "residential",
     "name": "Wukania Projektehof",
     "operator": "Wukania e.V.",
     "provides": "housing",
@@ -7143,6 +7979,7 @@
     "addr:country": "AT",
     "addr:postcode": "8010",
     "addr:street": "Rechbauerstraße",
+    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "garden:type": "community",
     "identity": "commons",
@@ -7188,6 +8025,7 @@
     "addr:housenumber": "102",
     "addr:postcode": "8043",
     "addr:street": "Mariagrüner Straße",
+    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "garden:type": "community",
     "identity": "commons",
@@ -7225,6 +8063,7 @@
     "addr:street": "Salfeldstraße",
     "contact:email": "scherz.anneliese@gmx.at",
     "contact:name": "Anneliese Scherz",
+    "description": "Gemeinschaftsgarten",
     "diet:vegetarian": "yes",
     "fee": "yes",
     "garden:type": "community",
@@ -7283,6 +8122,39 @@
     "production_input:natural_resources:sustainable": "yes",
     "provides": "food+drink;spaces",
     "start_date": "2011"
+  }
+},
+{
+  "type": "way",
+  "id": 332251381,
+  "nodes": [
+    1838845838,
+    2496235208,
+    1838845836,
+    731818998,
+    1838845837,
+    1838845838
+  ],
+  "tags": {
+    "access": "public",
+    "addr:city": "Berlin",
+    "addr:country": "DE",
+    "addr:housenumber": "74",
+    "addr:street": "Bülowstraße",
+    "addr:suburb": "Neukölln",
+    "alt_name": "Rübezahl Gemeinschaftsgarten",
+    "contact:name": "c.o. Dr. Elisabeth Meyer-Renschhausen",
+    "contact:website": "http://www.allmende-kontor.de",
+    "garden:type": "community",
+    "identity": "commons",
+    "interaction": "cousing;diy_and_dit;sharing",
+    "leisure": "garden",
+    "name": "Gemeinschaftsgarten Allmende-Kontor",
+    "operator": "Gemeinschafsgarten Allmende-Kontor e.V.",
+    "provides": "learning_opportunities;land;spirituality;community;culture;spaces;participation",
+    "start_date": "04/2011",
+    "website": "http://www.allmende-kontor.de/ ; http://www.ruebezahl-tempelhof.de/",
+    "wheelchair": "limited"
   }
 },
 {
@@ -7381,10 +8253,12 @@
     "addr:postcode": "37213",
     "addr:street": "Brückenstraße",
     "building": "yes",
+    "description": "Über zwei Jahre hat die Transition Gruppe in Witzenhausen ein Haus gesucht, um dort gemeinschaftlich den Wandel voranzubringen. Ein Ort für Werkstätten, für Büros, Kinder, Essen, Feiern, Lesen, Fortbildungen, Treffen, zum Gärtnern und vielem mehr sollte e",
     "identity": "transition_initiative",
     "interaction": "sharing;lending;renting;diy_and_dit",
     "name": "Transition Haus",
-    "provides": "food+drink;water;culture;spaces;community;participation;learning_opportunities;telecommunication"
+    "provides": "food+drink;water;culture;spaces;community;participation;learning_opportunities;telecommunication",
+    "source:url": "http://ttwitzenhausen.de/projekte/transition-haus/was-ist-das-transition-haus.html"
   }
 },
 {
@@ -7485,6 +8359,7 @@
     "addr:housenumber": "78",
     "addr:postcode": "13088",
     "addr:street": "Bernkasteler Straße",
+    "addr:suburb": "Weißensee",
     "contact:email": "Garten@KuBiZ-Wallenberg.de",
     "contact:phone": "+49 30 96201345",
     "contact:website": "http://offenergarten.blogsport.de/kontakt/",
@@ -7580,7 +8455,7 @@
     "landuse": "farmyard",
     "mode_of_organisation:purpose": "non_profit",
     "mode_of_organisation:self_managed": "yes",
-    "name": "Projektehof Karlshof / Karla_hof",
+    "name": "Karlshof",
     "source": "Solikon 2015"
   }
 },
@@ -7618,13 +8493,16 @@
   "id": 372815476,
   "nodes": [
     3763639113,
+    3836220296,
     3763639112,
+    3836220299,
+    3836220298,
     3763639111,
     3763639108,
     3763639102,
     3763639104,
     3763639103,
-    3763639105,
+    3836220287,
     3763639106,
     3763639107,
     3763639109,
@@ -7649,38 +8527,79 @@
   }
 },
 {
-  "type": "relation",
-  "id": 4664326,
-  "members": [
-    {
-      "type": "way",
-      "ref": 173060106,
-      "role": "outer"
-    },
-    {
-      "type": "way",
-      "ref": 332251381,
-      "role": "outer"
-    }
+  "type": "way",
+  "id": 374797137,
+  "nodes": [
+    1370430318,
+    3781764405,
+    3781764404,
+    3781764403,
+    3781764402,
+    3781764400,
+    3188552718,
+    3781764398,
+    3781764397,
+    3781764399,
+    3781764401,
+    333753368,
+    1370430146,
+    1370430049,
+    1370430019,
+    1370430318
   ],
   "tags": {
-    "access": "public",
-    "addr:city": "Berlin",
-    "addr:housenumber": "74",
-    "addr:street": "Bülowstraße",
-    "contact:name": "c.o. Dr. Elisabeth Meyer-Renschhausen",
-    "contact:website": "www.allmende-kontor.de",
-    "garden:type": "community",
+    "access": "private",
+    "addr:city": "St. Nikolai im Sausal",
+    "addr:country": "AT",
+    "addr:housenumber": "32",
+    "addr:postcode": "8505",
+    "addr:street": "Flamberg",
+    "contact:email": "scott.ulli.klein@gmail.com",
+    "contact:name": "Scott und Ulrike Klein",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "farm_boxes": "source",
+    "farm_boxes:type": "csa",
     "identity": "commons",
-    "interaction": "cousing;diy_and_dit;sharing",
-    "leisure": "garden",
-    "name": "Gemeinschaftsgarten Allmende-Kontor",
-    "operator": "Gemeinschafsgarten Allmende-Kontor e.V.",
-    "provides": "community;land;culture;spaces;learning_opportunities;community;participation;spirituality",
-    "start_date": "04/2011",
-    "type": "multipolygon",
-    "website": "http://www.allmende-kontor.de/",
-    "wheelchair": "limited"
+    "landuse": "farmyard",
+    "mode_of_organisation:decision_making": "by_consensus",
+    "mode_of_organisation:members": "users",
+    "mode_of_organisation:purpose": "non_profit",
+    "mode_of_organisation:scale_of_activity": "regional",
+    "name": "GeLaWi Kleine Farm",
+    "operator": "Kleine Farm",
+    "organic": "only",
+    "owner": "Kleine Farm",
+    "production_input:money:crowdfunding": "partially",
+    "production_input:natural_recources:democratic": "yes",
+    "production_input:natural_recources:fair": "yes",
+    "production_input:natural_recources:regional": "yes",
+    "production_input:natural_resources:sustainable": "yes",
+    "provides": "food+drink;learning_opportunities;community;participation",
+    "start_date": "2011",
+    "website": "http://kleinefarm.org"
+  }
+},
+{
+  "type": "way",
+  "id": 392092388,
+  "nodes": [
+    3953627184,
+    3953627185,
+    3953627186,
+    3953627187,
+    3953627188,
+    3953627184
+  ],
+  "tags": {
+    "addr:city": "Tampere",
+    "addr:housenumber": "2",
+    "addr:street": "Annikinkuja",
+    "contact:website": "http://www.annikinkatu.net/",
+    "identity": "commons;economy_for_the_common_good;solidarity_economy",
+    "landuse": "residential",
+    "name": "Asunto-osakeyhtiö Tampereen Annikki",
+    "provides": "housing;culture;community"
   }
 },
 {
@@ -7730,42 +8649,6 @@
 },
 {
   "type": "node",
-  "id": 1838845835,
-  "lat": 52.4739765,
-  "lon": 13.4162698
-},
-{
-  "type": "node",
-  "id": 1838845836,
-  "lat": 52.4741223,
-  "lon": 13.4176162
-},
-{
-  "type": "node",
-  "id": 1838845837,
-  "lat": 52.4747890,
-  "lon": 13.4161320
-},
-{
-  "type": "node",
-  "id": 1838845838,
-  "lat": 52.4749127,
-  "lon": 13.4173931
-},
-{
-  "type": "node",
-  "id": 2496235208,
-  "lat": 52.4744780,
-  "lon": 13.4175152
-},
-{
-  "type": "node",
-  "id": 3393621811,
-  "lat": 52.4749127,
-  "lon": 13.4173931
-},
-{
-  "type": "node",
   "id": 3763638955,
   "lat": 52.5002254,
   "lon": 13.4198994,
@@ -7775,6 +8658,7 @@
     "addr:housenumber": "183",
     "addr:postcode": "10999",
     "addr:street": "Oranienstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "info@ecobasa.org",
     "contact:website": "http://ecobasa.org",
     "description": "Postanschrift",
@@ -7795,6 +8679,7 @@
     "addr:housenumber": "183",
     "addr:postcode": "10999",
     "addr:street": "Oranienstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "info@fairbindung.org",
     "contact:phone": "+49 30 577044752",
     "contact:website": "http://fairbindung.org",
@@ -7820,6 +8705,7 @@
     "addr:housenumber": "183",
     "addr:postcode": "10999",
     "addr:street": "Oranienstraße",
+    "addr:suburb": "Kreuzberg",
     "contact:email": "info@quartiermeister.org",
     "contact:phone": "+49 178 1897899;+49 176 55167588",
     "contact:website": "http://quartiermeister.org/de/",
@@ -7832,25 +8718,6 @@
     "regional": "yes",
     "source": "Solikon 2015"
   }
-},
-{
-  "type": "way",
-  "id": 173060106,
-  "nodes": [
-    1838845838,
-    2496235208,
-    1838845836,
-    1838845835
-  ]
-},
-{
-  "type": "way",
-  "id": 332251381,
-  "nodes": [
-    1838845835,
-    1838845837,
-    3393621811
-  ]
 }
 
   ]
