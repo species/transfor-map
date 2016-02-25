@@ -1402,10 +1402,11 @@ function loadPoi() {
     }
     if(tags['image']) {
         if(tags['image'].match(/^File:/)) {
+            var imagename = tags['image'].replace(/ /,"_");
             var req_string = "https://commons.wikimedia.org/w/api.php"
                 + "?action=query"
                 + "&format=json"
-                + "&titles=" + tags['image']
+                + "&titles=" + imagename
                 + "&prop=imageinfo"
                 + "&iiprop=url"
                 + "&iiurlwidth=276";
@@ -1426,7 +1427,7 @@ function loadPoi() {
 
             r.append($('<tr>')
                     .attr('class','header')
-                    .append("<td colspan=2 id='wp-image'><img id='" + tags['image'] + "' title='" + tags['image'] + "'/><a href='https://commons.wikimedia.org/wiki/" + tags['image'] +"'>© Wikipedia</a></td>" )
+                    .append("<td colspan=2 id='wp-image'><img id='" + imagename + "' title='" + imagename + "'/><a href='https://commons.wikimedia.org/wiki/" + imagename + "'>© Wikipedia</a></td>" )
                         // FIXME attribution/License must be set on return of call
                     );
 
