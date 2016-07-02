@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>POI Test map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="leaflet-search.min.css" />
+  <link rel="stylesheet" href="Leaflet.EditInOSM.css" />
+  <link rel="stylesheet" href="transformap.css" />
+  <link rel="stylesheet" href="demomaps.css" />
+
+  <script src="//code.jquery.com/jquery-latest.min.js"></script>
+  <script src="jquery.geo-1.0.0-b1.5.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+  <script src="PruneCluster.js"></script>
+
+  <script src="leaflet-hash.js"></script>
+  <script src="leaflet-search.min.js"></script>
+  <script src="Leaflet.EditInOSM.js"></script>
+
+  <script src='L.Control.Locate.mine.js'></script>
+
+  <script>
+    var hostname = window.parent.document.location.origin ? window.parent.document.location.origin : window.parent.document.location.protocol + "//" + window.parent.document.location.hostname;
+    var assethost = hostname + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
+  </script>
+
+  <script src="sidebar.js"></script>
+  <script src="filters.js"></script>
+  <script src="map.js"></script>
+  <script>
+    /*
+     * overpass syntax:
+     * [out:json][timeout:180][bbox:BBOX];
+     * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
+     * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
+     *
+     * human readable length of query is not important, query speed is!
+     */
+
+    // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
+    var overpass_config = {
+        minzoom: 16,
+        q_array: [ [ 'amenity', '"access"!="private"' ], [ 'shop'], [ 'leisure', '"access"!="private"' ], [ 'tourism' ] ],
+ //       q_array: [ [ 'shop'] ],
+        icon_folder : "pois",
+        icon_tags : [ "farm_boxes", "garden:type", "shop","amenity","leisure" ] 
+    }
+
+    buildOverpassQuery();
+
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: [attr.osm, attr.osm_tiles, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 19,
+        noWrap: true
+    });
+    var MapQuestOpen_OSM = new L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+        subdomains: '1234',
+        attribution: [attr.osm, attr.mapquest, attr.overpass, attr.greenmap].join(', '),
+        maxZoom : 21,
+        maxNativeZoom: 18 ,
+        noWrap: true
+    });
+
+    var base_maps = {
+      'MapQuestOpen': MapQuestOpen_OSM,
+      'OpenSteetMap - Mapnik': osm
+    };
+
+    var about_text = 'demo map with simply a lot of POIs to test filters etc.'
+        + about.overpass
+        + about.osm_edit
+        + about.export_opendata ;
+    var mapkey = '<li title="too much types to display a legend">When clicking on a POI, look for one of these tags: amenity, shop, leisure. They should tell you what type it is.</li>';
+
+    var icon_foldername = "pois";
+    var icon_tags = [ "farm_boxes", "garden:type", "shop", "amenity", "leisure", "tourism" ];
+    var class_selector_key = { key: "topic" };
+
+    $(function () {
+
+      map = initMap(MapQuestOpen_OSM, base_maps, null, 47.07, 15.43, 14);
+
+      var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
+      loadPoi();
+      map.on('moveend', loadPoi);
+      map.on('viewreset', loadPoi);
+
+      setTimeout(addSearch,500); //seems to break with prunecluster when loaded instantly, this fix helps
+      addLocate();
+      L.control.scale({imperial: false}).addTo(map);
+      L.control.mousePosition().addTo(map);
+
+    });
+
+  </script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
+</head>
+<body class="marker-backgroundless">
+
+<nav class="mmmnavbar">
+<ul>
+  <li id="mmmnavtitle" class="mmmactive">
+  <a href="http://transformap.co"><img src=logo_white.png height=30px></a>
+  </li>
+  <li>
+  <a href="http://transformap.co">Overview</a>
+  </li>
+  <li>
+  <a href="http://discourse.transformap.co">Forum</a>
+  </li>
+  <li>
+  <a href="http://blog.14mmm.org">Activities</a>
+  </li>
+  <li class=last>
+  <a href="http://transformap.co/about">About</a>
+  </li>
+</ul>
+</nav>
+
+<noscript>
+  <br><hr><br>
+  <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+</noscript>
+
+<div id="tmapcontent">
+  <div id="map"></div>
+</div>
+
+</body>
+</html>

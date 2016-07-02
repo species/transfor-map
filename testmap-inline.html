@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inline TransforMap</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+</head>
+<body>
+
+<noscript>
+  <br><hr><br>
+  <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for this site!</p>
+</noscript>
+
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="jquery.geo-1.0.0-b1.5.min.js"></script>
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+  <script type="text/javascript" src="PruneCluster.js"></script>
+
+  <script type="text/javascript" src="leaflet-hash.js"></script>
+  <script type="text/javascript" src="leaflet-search.min.js"></script>
+  <script type="text/javascript" src="Leaflet.EditInOSM.js"></script>
+
+  <script type="text/javascript" src='L.Control.Locate.mine.js'></script>
+
+  <script type="text/javascript">
+    var url_pois_lz = "identities.json";
+    var hostname = window.parent.document.location.origin ? window.parent.document.location.origin : window.parent.document.location.protocol + "//" + window.parent.document.location.hostname;
+    var assethost = hostname + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
+  </script>
+  <script type="text/javascript" src="sidebar.js"></script>
+  <script type="text/javascript" src="filters.js"></script>
+  <script type="text/javascript" src="map.js"></script>
+  <script type="text/javascript">
+  // <!--
+    /*
+     * overpass syntax:
+     * [out:json][timeout:180][bbox:BBOX];
+     * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
+     * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
+     *
+     * human readable length of query is not important, query speed is!
+     */
+    // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
+    var overpass_config = {
+        q_array: [ [ '"identity"' ] ],
+        icon_folder : "identities",
+        icon_tags : [ "identity" ], //also generates map_key if tag is part of TransforMap Taxonomy
+        class_selector_key : { key: "identity" }
+    }
+
+    buildOverpassQuery();
+
+    var about_text = '<p>The map of identities displays the different identities of the TransforMap movement.</p>'
+    + 'The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. For an OSM Object to appear on this map, it has to have the tag “<a href="https://wiki.openstreetmap.org/wiki/Proposed_features/TransforMap#Self-description_of_a_community">identity</a>” set.</p>'
+    + about.overpass
+    + about.osm_edit
+    + about.export_opendata ;
+
+    $(function () {
+
+      // (defaultlayer,base_maps,overlay_maps, lat,lon,zoom) // if not set, use TransforMap defaults
+      map = initMap(null, null, null, 47.07, 15.43, 12);
+
+      var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
+      loadPoi(); 
+      map.on('moveend', loadPoi);
+      map.on('viewreset', loadPoi);
+
+      setTimeout(addSearch,500); //seems to break with prunecluster when loaded instantly, this fix helps
+      addLocate();
+      L.control.scale({imperial: false}).addTo(map);
+      L.control.mousePosition().addTo(map); // also export function is located here
+
+    });
+
+  // -->
+  </script>
+
+  <div id="scoped-content">
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" scoped />
+      <link rel="stylesheet" href="leaflet-search.min.css" scoped />
+      <link rel="stylesheet" href="Leaflet.EditInOSM.css" scoped />
+      <link rel="stylesheet" href="transformap.css" scoped />
+
+      <div id="tmapcontent" style="
+          height:700px;
+          width:900px;
+          margin:20px;
+          border:1px solid black;
+          ">
+      <div id="map"></div>
+    </div>
+  </div>
+
+</body>
+</html>

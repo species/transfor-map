@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Second Hand TransforMap</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="leaflet-search.min.css" />
+  <link rel="stylesheet" href="Leaflet.EditInOSM.css" />
+  <link rel="stylesheet" href="transformap.css" />
+  <link rel="stylesheet" href="demomaps.css" />
+
+  <script src="//code.jquery.com/jquery-latest.min.js"></script>
+  <script src="jquery.geo-1.0.0-b1.5.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+  <script src="PruneCluster.js"></script>
+
+  <script src="leaflet-hash.js"></script>
+  <script src="leaflet-search.min.js"></script>
+  <script src="Leaflet.EditInOSM.js"></script>
+
+  <script src='L.Control.Locate.mine.js'></script>
+
+  <script>
+    var hostname = window.parent.document.location.origin ? window.parent.document.location.origin : window.parent.document.location.protocol + "//" + window.parent.document.location.hostname;
+    var assethost = hostname + window.parent.document.location.pathname.replace(/\/[^/]*$/,'/');
+  </script>
+
+  <script src="sidebar.js"></script>
+  <script src="filters.js"></script>
+  <script src="map.js"></script>
+  <script>
+    /*
+     * overpass syntax:
+     * [out:json][timeout:180][bbox:BBOX];
+     * first OR-CLAUSE: node[param1][param2];out;(way[param1][param2];node(w));out;rel[param1][param2];out;
+     * n'th OR-Clause:  node[param3][param4];out;(way[param3][param4];node(w));out;rel[param3][param4];out;
+     *
+     * human readable length of query is not important, query speed is!
+     */
+    // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
+    var overpass_config = {
+        q_array: [ [ '"second_hand"~"only|yes|limited"' ], [ '"shop"="second_hand"' ], [ '"amenity"="public_bookcase"' ], [ '"service:bicycle:second_hand"="yes"' ] ],
+        icon_folder : "pois",
+        icon_tags : [ "shop","amenity","leisure" ]
+    }
+
+    buildOverpassQuery();
+
+    var about_text = '<p>This map displays places where you can get second hand goods.</p>'
+        + '<p>The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. '
+        + 'For an item to be displayed, it must have the “<a href="https://wiki.openstreetmap.org/wiki/Key:second_hand">second_hand</a>” tag set or be a '
+        + '“shop=<a href="https://wiki.openstreetmap.org/wiki/Tag:shop%3Dsecond_hand">second_hand</a>”, '
+        + '“amenity=<a href="https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dpublic_bookcase">public_bookcase</a>”.</p>'
+        + about.overpass
+        + about.osm_edit
+        + about.export_opendata ;
+
+    var mapkey = '<li title="too much types to display a legend">When clicking on a POI, look for one of these tags: amenity, shop, leisure. They should tell you what type it is.</li>';
+
+    $(function () {
+
+      map = initMap(null, null, null, 47,15,10);
+
+      var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+
+      loadPoi();
+      map.on('moveend', loadPoi);
+      map.on('viewreset', loadPoi);
+
+      setTimeout(addSearch,500); //seems to break with prunecluster when loaded instantly, this fix helps
+      addLocate();
+      L.control.scale({imperial: false}).addTo(map);
+      L.control.mousePosition().addTo(map);
+
+    });
+
+  </script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
+</head>
+<body class="marker-backgroundless">
+<nav class="mmmnavbar">
+<ul>
+  <li id="mmmnavtitle" class="mmmactive">
+  <a href="http://transformap.co"><img src=logo_white.png height=30px></a>
+  </li>
+  <li>
+  <a href="http://transformap.co">Overview</a>
+  </li>
+  <li>
+  <a href="http://discourse.transformap.co">Forum</a>
+  </li>
+  <li>
+  <a href="http://blog.14mmm.org">Activities</a>
+  </li>
+  <li class=last>
+  <a href="http://transformap.co/about">About</a>
+  </li>
+</ul>
+</nav>
+
+<noscript>
+  <br><hr><br>
+  <h3>Thanks for your privacy-awareness and disabled JavaScript!</h3>
+  <p>Unfortunately, this interactive map only works with JavaScript enabled - please add an exception for transformap.co!</p>
+</noscript>
+
+<div id="tmapcontent">
+  <div id="map"></div>
+</div>
+
+</body>
+</html>

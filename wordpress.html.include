@@ -1,0 +1,69 @@
+<!--
+Notes for Wordpress:
+
+every script content must be HTML-Commentet out 
+and no dual <enter>! -> WP makes <p> </p> out of it...
+
+all loaded scripts must have external URLS beginning with src="//mm.li..."
+
+<div style="display:none;"> is here because then you can use enters to make code more readable
+
+note to jQuery:
+
+if you want to serve icons etc yourselves, set the "assethost=" variable to your hostname
+
+-->
+
+
+<div style="display:none;">
+<script type="text/javascript">// <![CDATA[
+var url_pois_lz = "http://demo.transformap.co/identities.json";
+var $ = jQuery.noConflict();
+// ]]></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/jquery.geo-1.0.0-b1.5.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/PruneCluster.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/leaflet-hash.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/leaflet-search.min.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/Leaflet.EditInOSM.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/L.Control.Locate.mine.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/sidebar.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/filters.js"></script>
+<script type="text/javascript" src="//mm.linuxtage.at/transfor-map/map.js"></script>
+<script type="text/javascript">// <![CDATA[
+// <!--
+    // var query_array = [ [ 'query1', "and-key2" ] , /*OR*/  ["and-key3", "and-key4" ] ]; // query may be all what goes inside [], e.g. '~"full?fill?s_needs:.*"~".*"' or 'addr:housenumber'
+    var overpass_config = {
+        q_array: [ [ '"identity"' ] ],
+        icon_folder : "identities",
+        icon_tags : [ "identity" ], //also generates map_key if tag is part of TransforMap Taxonomy
+        class_selector_key : { key: "identity" }
+    }
+    buildOverpassQuery();
+    var about_text = 'The map of identities displays the different identities of the TransforMap movement.'
+    + 'The <dfn title="Point of Interest">POIs</dfn> displayed are directly taken from the <a href="https://www.openstreetmap.org/">OpenStreetMap</a> database. For an OSM Object to appear on this map, it has to have the tag “<a href="https://wiki.openstreetmap.org/wiki/Proposed_features/TransforMap#Self-description_of_a_community">identity</a>” set.'
+    + about.overpass
+    + about.osm_edit
+    + about.export_opendata;
+    var hide_sidebar=true;
+  $(function () {
+      // (defaultlayer,base_maps,overlay_maps, lat,lon,zoom) // if not set, use TransforMap defaults
+      map = initMap(null, null, null, 47.07, 15.43, 12);
+      var hash = new L.Hash(map); // Leaflet persistent Url Hash function
+      loadPoi();
+      map.on('moveend', loadPoi);
+      map.on('viewreset', loadPoi);
+      setTimeout(addSearch,500); //seems to break with prunecluster when loaded instantly, this fix helps
+      addLocate();
+      L.control.scale({imperial: false}).addTo(map);
+      L.control.mousePosition().addTo(map); // also export function is located here
+    });
+// -->
+// ]]></script></div>
+<div id="scoped-content">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" scoped />
+<link rel="stylesheet" href="//mm.linuxtage.at/transfor-map/leaflet-search.min.css" scoped />
+<link rel="stylesheet" href="//mm.linuxtage.at/transfor-map/Leaflet.EditInOSM.css" scoped />
+<link rel="stylesheet" href="//mm.linuxtage.at/transfor-map/transformap.css" scoped />
+<div id="tmapcontent" style="height:500px;width:600px;margin:5px;border:1px solid black;"><div id="map">&nbsp;</div>
+</div></div>
